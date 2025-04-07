@@ -1,7 +1,7 @@
 # Release process
 
 1. Update the `maven-artifactVersion` in `gradle/libs.versions.toml`.
-2. Update the `ACTITO_VERSION` in `notificare/src/main/java/re/notifica/internal/Version.kt`.
+2. Update the `ACTITO_VERSION` in `actito/src/main/java/com/actito/internal/Version.kt`.
 3. Update the `CHANGELOG.md`.
 4. Push the changes to the repo.
 5. Run `./gradlew clean`.
