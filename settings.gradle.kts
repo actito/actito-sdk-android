@@ -29,6 +29,6 @@ include(":actito")
 //include(":actito-scannables")
 //include(":actito-user-inbox")
 include(":actito-utilities")
-//include(":sample")
+include(":sample")
 //include(":sample-user-inbox")
 
