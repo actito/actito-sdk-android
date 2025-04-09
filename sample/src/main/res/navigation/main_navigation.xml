@@ -20,10 +20,10 @@
         <action
             android:id="@+id/action_mainFragment_to_scannablesFragment"
             app:destination="@id/scannablesFragment" />
-            -->
         <action
             android:id="@+id/action_mainFragment_to_assetsFragment"
             app:destination="@id/assetsFragment" />
+            -->
         <action
             android:id="@+id/action_mainFragment_to_eventsFragment"
             app:destination="@id/eventsFragment" />
@@ -50,6 +50,7 @@
         android:label="@string/scannables_title"
         tools:layout="@layout/fragment_scannables" />
         -->
+    <!--
     <fragment
         android:id="@+id/assetsFragment"
         android:name="com.actito.sample.ui.assets.AssetsFragment"
@@ -58,6 +59,7 @@
             android:id="@+id/action_assetsFragment_to_assetDetailsFragment"
             app:destination="@id/assetDetailsFragment" />
     </fragment>
+    -->
     <fragment
         android:id="@+id/eventsFragment"
         android:name="com.actito.sample.ui.events.EventsFragment"
@@ -68,6 +70,7 @@
         android:name="com.actito.sample.ui.tags.TagsFragment"
         android:label="@string/tags_title"
         tools:layout="@layout/fragment_tags" />
+    <!--
     <fragment
         android:id="@+id/assetDetailsFragment"
         android:name="com.actito.sample.ui.assets.AssetDetailsFragment"
@@ -77,4 +80,5 @@
             android:name="asset"
             app:argType="com.actito.assets.models.ActitoAsset" />
     </fragment>
+    -->
 </navigation>
