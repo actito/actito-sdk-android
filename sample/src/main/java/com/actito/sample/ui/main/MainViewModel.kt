@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import com.actito.Actito
 // import com.actito.geo.ktx.geo
-// import com.actito.iam.ktx.inAppMessaging
+import com.actito.iam.ktx.inAppMessaging
 import com.actito.ktx.device
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDevice
@@ -67,12 +67,12 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
 
     private val _hasBluetoothPermission = MutableLiveData(checkBluetoothPermission)
     val hasBluetoothPermission: LiveData<Boolean> = _hasBluetoothPermission
-
+     */
     private var _iamEvaluateContext = false
 
     private val _iamSuppressed = MutableLiveData(isIamSuppressed)
     val iamSuppressed: LiveData<Boolean> = _iamSuppressed
-     */
+
     private val _deviceRegistrationData = MutableLiveData(deviceData)
     val deviceRegistrationData: LiveData<ActitoDevice?> = _deviceRegistrationData
 
@@ -126,10 +126,10 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
 
     private val checkBluetoothPermission: Boolean
         get() = Actito.geo().hasBluetoothCapabilities
-
+     */
     private val isIamSuppressed: Boolean
         get() = Actito.inAppMessaging().hasMessagesSuppressed
-     */
+
     private val deviceData: ActitoDevice?
         get() = Actito.device().currentDevice
 
@@ -301,7 +301,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
         _hasBluetoothEnabled.postValue(checkBluetoothEnabled)
         _hasBluetoothPermission.postValue(checkBluetoothPermission)
     }
-
+     */
     fun updateIamEvaluateContextStatus(evaluate: Boolean) {
         _iamEvaluateContext = evaluate
     }
@@ -310,7 +310,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
         Actito.inAppMessaging().setMessagesSuppressed(suppressed, _iamEvaluateContext)
         _iamSuppressed.postValue(isIamSuppressed)
     }
-     */
+
     fun registerDevice(userID: String?, userName: String?) {
         viewModelScope.launch {
             try {

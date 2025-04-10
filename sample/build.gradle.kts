@@ -151,7 +151,7 @@ dependencies {
     implementation(project(":actito-assets"))
     // implementation(project(":actito-geo"))
     // implementation(project(":actito-geo-beacons"))
-    // implementation(project(":actito-in-app-messaging"))
+    implementation(project(":actito-in-app-messaging"))
     // implementation(project(":actito-inbox"))
     // implementation(project(":actito-loyalty"))
     // implementation(project(":actito-push"))

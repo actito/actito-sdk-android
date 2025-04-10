@@ -92,12 +92,10 @@
             </intent-filter>
         </activity>
         -->
-        <!--
         <activity
             android:name="com.actito.iam.ui.InAppMessagingActivity"
             android:theme="@style/Theme.App.Actito.Iam"
             tools:replace="android:theme" />
-            -->
         <!--
         <receiver
             android:name=".SampleGeoIntentReceiver"
