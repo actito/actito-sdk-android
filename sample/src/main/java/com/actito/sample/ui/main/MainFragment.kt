@@ -310,11 +310,10 @@ class MainFragment : BaseFragment() {
             findNavController().navigate(R.id.action_mainFragment_to_scannablesFragment)
         }
          */
-        /*
+
         binding.otherFeaturesCard.assetsRow.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_assetsFragment)
         }
-         */
 
         binding.otherFeaturesCard.eventsRow.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_eventsFragment)

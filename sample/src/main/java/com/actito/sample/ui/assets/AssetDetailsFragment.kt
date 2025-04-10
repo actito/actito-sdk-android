@@ -1,5 +1,5 @@
 package com.actito.sample.ui.assets
-/*
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -75,4 +75,3 @@ class AssetDetailsFragment : Fragment() {
         binding.assetDetailsMetaFileLengthData.text = asset.metaData?.contentLength.toString()
     }
 }
-*/
