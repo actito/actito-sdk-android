@@ -17,7 +17,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "actito-sdk-android"
 
-//include(":actito")
+include(":actito")
 //include(":actito-assets")
 //include(":actito-geo")
 //include(":actito-geo-beacons")
@@ -29,6 +29,6 @@ rootProject.name = "actito-sdk-android"
 //include(":actito-scannables")
 //include(":actito-user-inbox")
 include(":actito-utilities")
-//include(":sample")
+include(":sample")
 //include(":sample-user-inbox")
 
