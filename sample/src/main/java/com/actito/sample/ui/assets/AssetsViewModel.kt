@@ -1,5 +1,5 @@
 package com.actito.sample.ui.assets
-/*
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -28,4 +28,3 @@ class AssetsViewModel : com.actito.sample.core.BaseViewModel() {
         }
     }
 }
-*/

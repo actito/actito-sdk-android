@@ -1,5 +1,5 @@
 package com.actito.sample.ui.assets
-/*
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -82,4 +82,3 @@ private class AssetsDiffCallback : DiffUtil.ItemCallback<ActitoAsset>() {
         return oldItem == newItem
     }
 }
-*/

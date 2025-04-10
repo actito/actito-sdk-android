@@ -1,5 +1,5 @@
 package com.actito.sample.ui.assets
-/*
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -103,4 +103,3 @@ class AssetsFragment : BaseFragment() {
         findNavController().navigate(R.id.action_assetsFragment_to_assetDetailsFragment, bundle)
     }
 }
-*/
