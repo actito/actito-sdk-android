@@ -35,7 +35,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-        <!--<item name="android:windowBackground">@color/notificare_translucent</item>-->
+        <item name="android:windowBackground">@color/actito_translucent</item>
 
         <!-- Customise your theme below -->
         <item name="cardViewStyle">@style/Widget.App.CardView.Filled</item>

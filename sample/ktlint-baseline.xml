@@ -30,18 +30,6 @@
     <file name="src/main/java/com/actito/sample/storage/datastore/ActitoDataStore.kt">
         <error line="1" column="1" source="standard:no-empty-file" />
     </file>
-    <file name="src/main/java/com/actito/sample/ui/assets/AssetDetailsFragment.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/ui/assets/AssetsFragment.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/ui/assets/AssetsListAdapter.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/ui/assets/AssetsViewModel.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
     <file name="src/main/java/com/actito/sample/ui/beacons/BeaconsFragment.kt">
         <error line="1" column="1" source="standard:no-empty-file" />
     </file>
@@ -62,6 +50,9 @@
     </file>
     <file name="src/main/java/com/actito/sample/ui/main/MainUiState.kt">
         <error line="1" column="1" source="standard:no-empty-file" />
+    </file>
+    <file name="src/main/java/com/actito/sample/ui/main/MainViewModel.kt">
+        <error line="71" column="17" source="standard:property-naming" />
     </file>
     <file name="src/main/java/com/actito/sample/ui/scannables/ScannablesFragment.kt">
         <error line="1" column="1" source="standard:no-empty-file" />

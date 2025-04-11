@@ -11,9 +11,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.elevation.SurfaceColors
 import com.actito.Actito
 // import com.actito.geo.ktx.INTENT_ACTION_BEACON_NOTIFICATION_OPENED
-// import com.actito.iam.ActitoInAppMessaging
-// import com.actito.iam.ktx.inAppMessaging
-// import com.actito.iam.models.ActitoInAppMessage
+import com.actito.iam.ActitoInAppMessaging
+import com.actito.iam.ktx.inAppMessaging
+import com.actito.iam.models.ActitoInAppMessage
 // import com.actito.push.ktx.push
 // import com.actito.push.ui.ActitoPushUI
 // import com.actito.push.ui.ktx.pushUI
@@ -47,14 +47,14 @@ class SampleActivity : AppCompatActivity()
         if (intent != null) handleIntent(intent)
 
         // Actito.pushUI().addLifecycleListener(this)
-        // Actito.inAppMessaging().addLifecycleListener(messageLifecycleListener)
+        Actito.inAppMessaging().addLifecycleListener(messageLifecycleListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
         // Actito.pushUI().removeLifecycleListener(this)
-        // Actito.inAppMessaging().removeLifecycleListener(messageLifecycleListener)
+        Actito.inAppMessaging().removeLifecycleListener(messageLifecycleListener)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -91,7 +91,7 @@ class SampleActivity : AppCompatActivity()
     }
 
     // Lifecycle Listeners
-    /*
+
     private val messageLifecycleListener = object : ActitoInAppMessaging.MessageLifecycleListener {
         override fun onMessagePresented(message: ActitoInAppMessage) {
             Timber.i("---> message presented '$message.name'")
@@ -122,7 +122,7 @@ class SampleActivity : AppCompatActivity()
             Toast.makeText(this@SampleActivity, "Action failed to execute", Toast.LENGTH_SHORT).show()
         }
     }
-     */
+
     /*
     override fun onNotificationWillPresent(notification: ActitoNotification) {
         Timber.i("---> notification will present '$notification.id'")
