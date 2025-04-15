@@ -14,10 +14,11 @@ import com.actito.Actito
 import com.actito.iam.ActitoInAppMessaging
 import com.actito.iam.ktx.inAppMessaging
 import com.actito.iam.models.ActitoInAppMessage
-// import com.actito.push.ktx.push
+import com.actito.push.ktx.push
 // import com.actito.push.ui.ActitoPushUI
 // import com.actito.push.ui.ktx.pushUI
 import com.actito.sample.databinding.ActivitySampleBinding
+import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
 class SampleActivity : AppCompatActivity()
@@ -64,20 +65,22 @@ class SampleActivity : AppCompatActivity()
     }
 
     private fun handleIntent(intent: Intent) {
-        // if (Actito.push().handleTrampolineIntent(intent)) return
+        if (Actito.push().handleTrampolineIntent(intent)) return
         if (Actito.handleTestDeviceIntent(intent)) return
         if (Actito.handleDynamicLinkIntent(this, intent)) return
 
-        /* Actito.push().parseNotificationOpenedIntent(intent)?.also { result ->
-            Actito.pushUI().presentNotification(this, result.notification)
+        Actito.push().parseNotificationOpenedIntent(intent)?.also { result ->
+            Snackbar.make(binding.root, "Notification opened.", Snackbar.LENGTH_SHORT).show()
+            // Actito.pushUI().presentNotification(this, result.notification)
             return
         }
 
         Actito.push().parseNotificationActionOpenedIntent(intent)?.also { result ->
-            Actito.pushUI().presentAction(this, result.notification, result.action)
+            Snackbar.make(binding.root, "Notification action opened.", Snackbar.LENGTH_SHORT).show()
+            // Actito.pushUI().presentAction(this, result.notification, result.action)
             return
         }
-
+        /*
         when (intent.action) {
             Actito.INTENT_ACTION_BEACON_NOTIFICATION_OPENED -> {
                 Snackbar.make(binding.root, "Beacon notification opened.", Snackbar.LENGTH_SHORT).show()

@@ -1,9 +1,19 @@
 package com.actito.sample.ui.main
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,22 +26,24 @@ import com.actito.Actito
 // import com.actito.inbox.ktx.inbox
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
-// import com.actito.push.ktx.push
+import com.actito.push.ktx.push
 import com.actito.sample.R
 import com.actito.sample.databinding.FragmentMainBinding
 // import com.actito.sample.ktx.LocationPermission
 import com.actito.sample.ktx.showBasicAlert
 import com.actito.sample.core.BaseFragment
+import com.actito.sample.live_activities.models.CoffeeBrewingState
+import timber.log.Timber
 
 class MainFragment : BaseFragment() {
-    // private val pendingRationales = mutableListOf<PermissionType>()
+    private val pendingRationales = mutableListOf<PermissionType>()
     private val viewModel: com.actito.sample.ui.main.MainViewModel by viewModels()
     private lateinit var binding: FragmentMainBinding
 
     override val baseViewModel: MainViewModel by viewModels()
     // Permission Launcher
 
-    /*private val notificationsPermissionLauncher = registerForActivityResult(
+    private val notificationsPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
@@ -46,7 +58,7 @@ class MainFragment : BaseFragment() {
 
         binding.notificationsCard.notificationsSwitch.isChecked = false
     }
-
+    /*
     private val foregroundLocationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -88,6 +100,7 @@ class MainFragment : BaseFragment() {
         // Enables location updates with whatever capabilities have been granted so far.
         viewModel.updateLocationUpdatesStatus(true)
     }
+     */
 
     private val openNotificationsSettingsLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -102,7 +115,7 @@ class MainFragment : BaseFragment() {
             }
         }
     }
-
+    /*
     private val openLocationSettingsLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -162,7 +175,7 @@ class MainFragment : BaseFragment() {
         // End region
 
         // Notifications card
-        /*
+
         binding.notificationsCard.notificationsSwitch.setOnCheckedChangeListener { _, checked ->
             if (checked == viewModel.notificationsEnabled.value) return@setOnCheckedChangeListener
 
@@ -172,7 +185,7 @@ class MainFragment : BaseFragment() {
                 viewModel.updateRemoteNotificationsStatus(false)
             }
         }
-         */
+
         binding.notificationsCard.tagsRow.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_tagsFragment)
         }
@@ -235,11 +248,11 @@ class MainFragment : BaseFragment() {
         // End region
 
         // Live Activities
-        /*
+
         binding.coffeeBrewerCard.coffeeBrewerCancelButton.setOnClickListener {
             viewModel.cancelCoffeeSession()
         }
-         */
+
         // End region
 
         // Location
@@ -322,11 +335,10 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setupObservers() {
-        /*
         Actito.push().observableSubscription.observe(viewLifecycleOwner) { subscription ->
             binding.notificationsCard.notificationsTokenStatusLabel.text = subscription?.token.toString()
         }
-
+        /*
         Actito.inbox().observableBadge.observe(viewLifecycleOwner) { badge ->
             binding.notificationsCard.inboxBadgeLabel.isVisible = badge > 0
             binding.notificationsCard.inboxBadgeLabel.text = if (badge <= 99) badge.toString() else "99+"
@@ -342,7 +354,7 @@ class MainFragment : BaseFragment() {
         viewModel.actitoConfigured.observe(viewLifecycleOwner) { isConfigured ->
             binding.launchCard.configuredStatusLabel.text = isConfigured.toString()
         }
-        /*
+
         viewModel.notificationsEnabled.observe(viewLifecycleOwner) { enabled ->
             binding.notificationsCard.notificationsSwitch.isChecked = enabled
         }
@@ -358,7 +370,7 @@ class MainFragment : BaseFragment() {
         viewModel.hasNotificationsPermissions.observe(viewLifecycleOwner) { granted ->
             binding.notificationsCard.notificationsPermissionStatusLabel.text = granted.toString()
         }
-         */
+
         viewModel.dndEnabled.observe(viewLifecycleOwner) { enabled ->
             binding.dndCard.dndSwitch.isChecked = enabled
             binding.dndCard.dndStartTimeContainer.isVisible = enabled
@@ -368,7 +380,7 @@ class MainFragment : BaseFragment() {
             binding.dndCard.dndStartLabel.text = dnd.start.format()
             binding.dndCard.dndEndLabel.text = dnd.end.format()
         }
-        /*
+
         viewModel.coffeeBrewerUiState.observe(viewLifecycleOwner) { uiState ->
             binding.coffeeBrewerCard.coffeeBrewerButton.isVisible = uiState.brewingState != CoffeeBrewingState.SERVED
             binding.coffeeBrewerCard.coffeeBrewerCancelButton.isVisible = uiState.brewingState != null
@@ -398,7 +410,7 @@ class MainFragment : BaseFragment() {
                 CoffeeBrewingState.SERVED -> {}
             }
         }
-
+        /*
         viewModel.hasLocationUpdatesEnabled.observe(viewLifecycleOwner) { enabled ->
             binding.locationCard.locationSwitch.isChecked = enabled
             binding.locationCard.locationEnabledStatusLabel.text = enabled.toString()
@@ -460,7 +472,7 @@ class MainFragment : BaseFragment() {
             }
         }
     }
-    /*
+
     private fun enableRemoteNotifications() {
         if (!ensureNotificationsPermission()) return
 
@@ -475,7 +487,7 @@ class MainFragment : BaseFragment() {
 
         viewModel.updateRemoteNotificationsStatus(true)
     }
-
+    /*
     private fun enableLocationUpdates() {
         if (!ensureForegroundLocationPermission()) return
         if (!ensureBackgroundLocationPermission()) return
@@ -483,7 +495,7 @@ class MainFragment : BaseFragment() {
 
         viewModel.updateLocationUpdatesStatus(true)
     }
-
+     */
     // Permissions Request
 
     private fun ensureNotificationsPermission(): Boolean {
@@ -521,7 +533,7 @@ class MainFragment : BaseFragment() {
 
         return false
     }
-
+    /*
     private fun ensureForegroundLocationPermission(): Boolean {
         val permission = Manifest.permission.ACCESS_FINE_LOCATION
         val granted = ContextCompat.checkSelfPermission(
@@ -641,7 +653,7 @@ class MainFragment : BaseFragment() {
 
         return false
     }
-
+     */
     // End region
 
     // Open settings region
@@ -656,7 +668,7 @@ class MainFragment : BaseFragment() {
                 }
             }
 
-            PermissionType.LOCATION -> Manifest.permission.ACCESS_FINE_LOCATION
+            // PermissionType.LOCATION -> Manifest.permission.ACCESS_FINE_LOCATION
         }
 
         if (permission != null) {
@@ -692,7 +704,7 @@ class MainFragment : BaseFragment() {
                             }
                         )
                     }
-
+                    /*
                     PermissionType.LOCATION -> {
                         openLocationSettingsLauncher.launch(
                             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -700,13 +712,14 @@ class MainFragment : BaseFragment() {
                             }
                         )
                     }
+                     */
                 }
             }
             .setNegativeButton(R.string.dialog_cancel_button) { _, _ ->
                 Timber.d("Redirect to OS Settings cancelled")
                 when (permissionType) {
                     PermissionType.NOTIFICATIONS -> binding.notificationsCard.notificationsSwitch.isChecked = false
-                    PermissionType.LOCATION -> binding.locationCard.locationSwitch.isChecked = false
+                    // PermissionType.LOCATION -> binding.locationCard.locationSwitch.isChecked = false
                 }
             }
             .show()
@@ -716,7 +729,6 @@ class MainFragment : BaseFragment() {
 
     enum class PermissionType {
         NOTIFICATIONS,
-        LOCATION
+        // LOCATION
     }
-     */
 }

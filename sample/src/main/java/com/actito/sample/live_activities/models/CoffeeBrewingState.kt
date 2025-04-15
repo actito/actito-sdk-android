@@ -1,5 +1,5 @@
 package com.actito.sample.live_activities.models
-/*
+
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -14,4 +14,3 @@ enum class CoffeeBrewingState {
     @Json(name = "served")
     SERVED,
 }
-*/

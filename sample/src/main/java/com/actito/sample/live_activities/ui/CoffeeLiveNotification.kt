@@ -1,5 +1,5 @@
 package com.actito.sample.live_activities.ui
-/*
+
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
@@ -53,7 +53,7 @@ class CoffeeLiveNotification(
         )
 
         return NotificationCompat.Builder(context, LiveActivitiesController.CHANNEL_LIVE_ACTIVITIES)
-            .setSmallIcon(R.drawable.ic_stat_notification)
+            .setSmallIcon(R.drawable.ic_rocket_black_24dp)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setCustomContentView(createStandardLayout())
             .setCustomBigContentView(createExpandedLayout())
@@ -162,4 +162,3 @@ class CoffeeLiveNotification(
         }
     }
 }
-*/

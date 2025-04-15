@@ -1,33 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <baseline version="1.0">
     <file name="src/main/java/com/actito/sample/SampleActivity.kt">
-        <error line="24" column="48" source="standard:comment-wrapping" />
+        <error line="25" column="48" source="standard:comment-wrapping" />
     </file>
     <file name="src/main/java/com/actito/sample/SampleGeoIntentReceiver.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/SamplePushIntentReceiver.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/ktx/Actito.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/live_activities/LiveActivitiesController.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/live_activities/LiveActivity.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/live_activities/models/CoffeeBrewerContentState.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/live_activities/models/CoffeeBrewingState.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/live_activities/ui/CoffeeLiveNotification.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/storage/datastore/ActitoDataStore.kt">
         <error line="1" column="1" source="standard:no-empty-file" />
     </file>
     <file name="src/main/java/com/actito/sample/ui/beacons/BeaconsFragment.kt">
@@ -48,16 +24,10 @@
     <file name="src/main/java/com/actito/sample/ui/inbox/InboxViewModel.kt">
         <error line="1" column="1" source="standard:no-empty-file" />
     </file>
-    <file name="src/main/java/com/actito/sample/ui/main/MainUiState.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
     <file name="src/main/java/com/actito/sample/ui/main/MainViewModel.kt">
-        <error line="71" column="17" source="standard:property-naming" />
+        <error line="74" column="17" source="standard:property-naming" />
     </file>
     <file name="src/main/java/com/actito/sample/ui/scannables/ScannablesFragment.kt">
-        <error line="1" column="1" source="standard:no-empty-file" />
-    </file>
-    <file name="src/main/java/com/actito/sample/workers/LiveActivityDismissalWorker.kt">
         <error line="1" column="1" source="standard:no-empty-file" />
     </file>
 </baseline>
