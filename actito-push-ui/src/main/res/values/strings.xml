@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="actito_dialog_ok_button">OK</string>
+    <string name="actito_dialog_close_button">Close</string>
+    <string name="actito_dialog_cancel_button">Cancel</string>
+
+    <string name="actito_camera_permission_rationale_description">We need your permission to use the camera to complete this action.</string>
+    <string name="actito_google_play_intent_failed">Could not launch Google Play Store app</string>
+
+    <string name="actito_action_camera_failed">Camera can not be used</string>
+    <string name="actito_action_title_intent_email">Send mail…</string>
+    <string name="actito_action_title_intent_sms">Send SMS…</string>
+    <string name="actito_action_title_intent_telephone">Call number…</string>
+    <string name="actito_action_callback_message_hint">type something</string>
+    <string name="actito_action_success">Action successful</string>
+    <string name="actito_action_failed">Could not perform the action</string>
+    <string name="actito_action_canceled">Action was canceled</string>
+    <string name="actito_action_dialog_title">Actions</string>
+    <string name="actito_action_error_no_email_clients">No email client installed.</string>
+    <string name="actito_action_error_no_sms_clients">Can not send SMS.</string>
+    <string name="actito_action_error_no_dialer">Can not make a phone call.</string>
+    <string name="actito_action_error_no_actions">No actions</string>
+
+
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground">
+
+    <ImageView
+        android:id="@+id/actito_callback_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/actito_send_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:background="@drawable/ic_actito_circle_black"
+        android:backgroundTint="?android:attr/colorPrimary"
+        android:elevation="6dp"
+        android:padding="16dp"
+        android:src="@drawable/ic_actito_send_black_24dp"
+        android:tint="?android:attr/textColorPrimaryInverse"
+        tools:ignore="ContentDescription,UseAppTint" />
+
+</FrameLayout>

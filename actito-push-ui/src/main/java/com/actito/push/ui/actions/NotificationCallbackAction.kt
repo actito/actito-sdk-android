@@ -1,0 +1,191 @@
+package com.actito.push.ui.actions
+
+import android.content.Context
+import android.net.Uri
+import android.os.Environment
+import androidx.core.content.FileProvider
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import com.actito.Actito
+import com.actito.utilities.threading.onMainThread
+import com.actito.models.ActitoNotification
+import com.actito.push.ui.R
+import com.actito.push.ui.actions.base.NotificationAction
+import com.actito.push.ui.internal.logger
+import com.actito.push.ui.ktx.pushUIImplementation
+import com.actito.push.ui.ktx.pushUIInternal
+import com.actito.push.ui.models.ActitoPendingResult
+import com.actito.utilities.coroutines.actitoCoroutineScope
+
+internal class NotificationCallbackAction(
+    context: Context,
+    notification: ActitoNotification,
+    action: ActitoNotification.Action
+) : NotificationAction(context, notification, action) {
+
+    override suspend fun execute(): ActitoPendingResult? = withContext(Dispatchers.IO) {
+        when {
+            action.camera -> {
+                // TODO check image vs video
+
+                val imageUri = getOutputMediaFileUri(MediaType.IMAGE)
+                    ?: throw IllegalStateException(context.getString(R.string.actito_action_camera_failed)) // Cannot save file.
+
+                val requestCode =
+                    if (action.keyboard) ActitoPendingResult.CAPTURE_IMAGE_AND_KEYBOARD_REQUEST_CODE
+                    else ActitoPendingResult.CAPTURE_IMAGE_REQUEST_CODE
+
+                ActitoPendingResult(
+                    notification = notification,
+                    action = action,
+                    requestCode = requestCode,
+                    imageUri = imageUri,
+                )
+            }
+
+            action.keyboard -> {
+                // Just Keyboard, return the result to the caller.
+                ActitoPendingResult(
+                    notification = notification,
+                    action = action,
+                    requestCode = ActitoPendingResult.KEYBOARD_REQUEST_CODE,
+                    imageUri = null,
+                )
+            }
+
+            else -> {
+                // Just do the call.
+                send(notification, action, null, null, null)
+
+                null
+            }
+        }
+    }
+
+    /**
+     * Create a file Uri for saving an image or video
+     * @param type the type, either [MediaType.IMAGE] or [MediaType.VIDEO]
+     * @return a ContentProvider URI
+     */
+    private fun getOutputMediaFileUri(type: MediaType): Uri? {
+        try {
+            val file = getOutputMediaFile(type) ?: return null
+            return FileProvider.getUriForFile(
+                Actito.requireContext(),
+                Actito.pushUIImplementation().contentFileProviderAuthority,
+                file
+            )
+        } catch (e: Exception) {
+            logger.warning("Failed to create image file.", e)
+            return null
+        }
+    }
+
+    /**
+     * Create a File for saving an image or video
+     * @param type the type, either [MediaType.IMAGE] or [MediaType.VIDEO]
+     * @return a File location
+     */
+    @Throws(IOException::class)
+    private fun getOutputMediaFile(type: MediaType): File? {
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        if (Environment.getExternalStorageState() == null) {
+            logger.warning("Failed to access external storage.")
+            return null
+        }
+
+        val mediaStorageDir = Actito.requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+        // Create a media file name
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        return when (type) {
+            MediaType.IMAGE -> File.createTempFile("IMG_$timeStamp", ".jpg", mediaStorageDir)
+            MediaType.VIDEO -> File.createTempFile("VID_$timeStamp", ".mp4", mediaStorageDir)
+        }.also {
+            logger.debug("Saving file to '${it.absolutePath}'.")
+        }
+    }
+
+    companion object {
+        suspend fun send(
+            notification: ActitoNotification,
+            action: ActitoNotification.Action,
+            message: String?,
+            mediaUrl: String?,
+            mimeType: String?
+        ): Unit = withContext(Dispatchers.IO) {
+            val targetUri = action.target?.let { Uri.parse(it) }
+            if (targetUri == null || targetUri.scheme == null || targetUri.host == null) {
+                Actito.createNotificationReply(
+                    notification = notification,
+                    action = action,
+                    message = message,
+                    media = mediaUrl,
+                    mimeType = mimeType
+                )
+
+                onMainThread {
+                    Actito.pushUIInternal().lifecycleListeners.forEach {
+                        it.get()?.onActionExecuted(
+                            notification,
+                            action
+                        )
+                    }
+                }
+
+                return@withContext
+            }
+
+            val params = mutableMapOf<String, String>()
+            params["notificationID"] = notification.id
+            params["label"] = action.label
+            message?.let { params["message"] = it }
+            mediaUrl?.let { params["media"] = it }
+            mimeType?.let { params["mimeType"] = it }
+
+            actitoCoroutineScope.launch {
+                try {
+                    Actito.callNotificationReplyWebhook(targetUri, params)
+
+                    onMainThread {
+                        Actito.pushUIInternal().lifecycleListeners.forEach {
+                            it.get()?.onActionExecuted(
+                                notification,
+                                action
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    onMainThread {
+                        Actito.pushUIInternal().lifecycleListeners.forEach {
+                            it.get()?.onActionFailedToExecute(
+                                notification,
+                                action,
+                                e
+                            )
+                        }
+                    }
+                }
+            }
+
+            Actito.createNotificationReply(
+                notification = notification,
+                action = action,
+                message = message,
+                media = mediaUrl,
+                mimeType = mimeType
+            )
+        }
+    }
+
+    enum class MediaType {
+        IMAGE,
+        VIDEO,
+    }
+}
