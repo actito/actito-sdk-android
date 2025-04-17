@@ -101,11 +101,9 @@
             android:name=".SampleGeoIntentReceiver"
             android:exported="false" />
             -->
-        <!--
         <receiver
             android:name=".SamplePushIntentReceiver"
             android:exported="false" />
-            -->
         <meta-data
             android:name="re.notifica.debug_logging_enabled"
             android:value="true" />
@@ -113,11 +111,10 @@
         <!--        <meta-data-->
         <!--            android:name="re.notifica.push.automatic_default_channel_enabled"-->
         <!--            android:value="true" />-->
-        <!--
         <meta-data
             android:name="re.notifica.push.notification_small_icon"
             android:resource="@drawable/ic_rocket_black_24dp" />
-
+        <!--
         <meta-data
             android:name="re.notifica.push.ui.show_notification_toasts"
             android:value="true" />

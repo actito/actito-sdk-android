@@ -1,5 +1,5 @@
 package com.actito.sample
-/*
+
 import android.content.Context
 import android.content.Intent
 import androidx.work.OneTimeWorkRequestBuilder
@@ -18,7 +18,7 @@ import com.actito.sample.workers.CoffeeBrewerDismissalWorker
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class SamplePushIntentReceiver : NotificarePushIntentReceiver() {
+class SamplePushIntentReceiver : ActitoPushIntentReceiver() {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val liveActivitiesController = LiveActivitiesController
 
@@ -99,4 +99,3 @@ class SamplePushIntentReceiver : NotificarePushIntentReceiver() {
         private const val DEFAULT_DISMISSAL_MILLISECONDS: Long = 4 * 60 * 60 * 1000
     }
 }
-*/

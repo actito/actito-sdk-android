@@ -3,7 +3,10 @@ package com.actito.sample.ui.main
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import com.actito.Actito
 // import com.actito.geo.ktx.geo
@@ -13,13 +16,15 @@ import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDevice
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
-// import com.actito.push.ktx.push
+import com.actito.push.ktx.push
 // import com.actito.sample.ktx.LocationPermission
 // import com.actito.sample.ktx.hasBackgroundTrackingCapabilities
 // import com.actito.sample.ktx.hasBluetoothCapabilities
 // import com.actito.sample.ktx.hasForegroundTrackingCapabilities
-// import com.actito.sample.ktx.hasNotificationsPermission
-// import com.actito.sample.live_activities.LiveActivitiesController
+import com.actito.sample.ktx.hasNotificationsPermission
+import com.actito.sample.live_activities.LiveActivitiesController
+import com.actito.sample.live_activities.models.CoffeeBrewerContentState
+import com.actito.sample.live_activities.models.CoffeeBrewingState
 import com.actito.sample.models.ApplicationInfo
 import timber.log.Timber
 
@@ -30,7 +35,6 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
     private val _actitoReady = MutableLiveData(isActitoReady)
     val actitoReady: LiveData<Boolean> = _actitoReady
 
-    /*
     private val _notificationsEnabled = MutableLiveData(hasNotificationsEnabled)
     val notificationsEnabled: LiveData<Boolean> = _notificationsEnabled
 
@@ -43,17 +47,16 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
     private val _hasNotificationsPermissions = MutableLiveData(hasNotificationsPermission)
     val hasNotificationsPermissions: LiveData<Boolean> = _hasNotificationsPermissions
 
+    /*
     private val _hasLocationUpdatesEnabled = MutableLiveData(isLocationUpdatesEnabled)
     val hasLocationUpdatesEnabled: LiveData<Boolean> = _hasLocationUpdatesEnabled
      */
     private val _dndEnabled = MutableLiveData(hasDndEnabled)
     val dndEnabled: LiveData<Boolean> = _dndEnabled
 
-    /*
     val coffeeBrewerUiState: LiveData<CoffeeBrewerUiState> = LiveActivitiesController.coffeeActivityStream
         .map { CoffeeBrewerUiState(it?.state) }
         .asLiveData()
-     */
 
     private val _dnd = MutableLiveData(Actito.device().currentDevice?.dnd ?: ActitoDoNotDisturb.default)
     val dnd: LiveData<ActitoDoNotDisturb> = _dnd
@@ -85,7 +88,6 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
     private val isActitoReady: Boolean
         get() = Actito.isReady
 
-    /*
     private val hasRemoteNotificationsEnabled: Boolean
         get() = Actito.push().hasRemoteNotificationsEnabled
 
@@ -97,7 +99,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
 
     private val hasNotificationsPermission: Boolean
         get() = Actito.push().hasNotificationsPermission
-     */
+
     private val hasDndEnabled: Boolean
         get() = Actito.device().currentDevice?.dnd != null
 
@@ -145,7 +147,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
 
     init {
         Actito.addListener(this)
-        /*
+
         viewModelScope.launch {
             Actito.push().observableAllowedUI
                 .asFlow()
@@ -163,7 +165,6 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
                     Timber.d("subscription changed = $subscription")
                 }
         }
-         */
     }
 
     override fun onCleared() {
@@ -184,7 +185,6 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
         _actitoReady.postValue(Actito.isReady)
     }
 
-    /*
     fun updateRemoteNotificationsStatus(enabled: Boolean) {
         viewModelScope.launch {
             try {
@@ -201,7 +201,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
             }
         }
     }
-     */
+
     fun updateDndStatus(enabled: Boolean) {
         viewModelScope.launch {
             try {
@@ -238,7 +238,6 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
         }
     }
 
-    /*
     fun createCoffeeSession() {
         viewModelScope.launch {
             try {
@@ -289,6 +288,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
         }
     }
 
+    /*
     fun updateLocationUpdatesStatus(enabled: Boolean) {
         if (enabled) {
             Actito.geo().enableLocationUpdates()

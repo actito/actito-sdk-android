@@ -1,5 +1,5 @@
 package com.actito.sample.storage.datastore
-/*
+
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -45,4 +45,3 @@ class ActitoDataStore(context: Context) {
         }
     }
 }
-*/

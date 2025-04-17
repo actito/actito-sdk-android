@@ -8,5 +8,6 @@
     <ID>PackageNaming:CoffeeLiveNotification.kt$package com.actito.sample.live_activities.ui</ID>
     <ID>PackageNaming:LiveActivitiesController.kt$package com.actito.sample.live_activities</ID>
     <ID>PackageNaming:LiveActivity.kt$package com.actito.sample.live_activities</ID>
+    <ID>SwallowedException:LiveActivityDismissalWorker.kt$CoffeeBrewerDismissalWorker$e: Exception</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -1,6 +1,7 @@
 package com.actito.sample
 
 import android.app.Application
+import android.os.Build
 import android.os.StrictMode
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -8,8 +9,8 @@ import com.actito.Actito
 // import com.actito.geo.ktx.geo
 import com.actito.ktx.device
 import com.actito.models.ActitoApplication
-// import com.actito.push.ktx.push
-// import com.actito.sample.live_activities.LiveActivitiesController
+import com.actito.push.ktx.push
+import com.actito.sample.live_activities.LiveActivitiesController
 import timber.log.Timber
 
 class MainApplication : Application(), Actito.Listener {
@@ -21,16 +22,16 @@ class MainApplication : Application(), Actito.Listener {
 
         Timber.plant(Timber.DebugTree())
 
-        // LiveActivitiesController.setup(this)
+        LiveActivitiesController.setup(this)
 
         // Actito.geo().intentReceiver = SampleGeoIntentReceiver::class.java
 
-        // Actito.push().intentReceiver = SamplePushIntentReceiver::class.java
-        /*
+        Actito.push().intentReceiver = SamplePushIntentReceiver::class.java
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LiveActivitiesController.registerLiveActivitiesChannel()
         }
-         */
+
         Actito.addListener(this)
 
         applicationScope.launch {

@@ -1,5 +1,5 @@
 package com.actito.sample.live_activities
-/*
+
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -130,4 +130,3 @@ object LiveActivitiesController {
 
     // endregion
 }
-*/

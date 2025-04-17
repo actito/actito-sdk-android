@@ -1,5 +1,5 @@
 package com.actito.sample.live_activities
-/*
+
 enum class LiveActivity {
     COFFEE_BREWER;
 
@@ -14,4 +14,3 @@ enum class LiveActivity {
         }
     }
 }
-*/
