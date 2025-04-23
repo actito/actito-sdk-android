@@ -23,7 +23,7 @@ import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.launch
 import com.actito.Actito
 // import com.actito.geo.ktx.geo
-// import com.actito.inbox.ktx.inbox
+import com.actito.inbox.ktx.inbox
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
 import com.actito.push.ktx.push
@@ -189,11 +189,11 @@ class MainFragment : BaseFragment() {
         binding.notificationsCard.tagsRow.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_tagsFragment)
         }
-        /*
+
         binding.notificationsCard.inboxRow.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_inboxFragment)
         }
-         */
+
         // End region
 
         // Do not disturb
@@ -338,12 +338,11 @@ class MainFragment : BaseFragment() {
         Actito.push().observableSubscription.observe(viewLifecycleOwner) { subscription ->
             binding.notificationsCard.notificationsTokenStatusLabel.text = subscription?.token.toString()
         }
-        /*
+
         Actito.inbox().observableBadge.observe(viewLifecycleOwner) { badge ->
             binding.notificationsCard.inboxBadgeLabel.isVisible = badge > 0
             binding.notificationsCard.inboxBadgeLabel.text = if (badge <= 99) badge.toString() else "99+"
         }
-         */
 
         viewModel.actitoReady.observe(viewLifecycleOwner) { isReady ->
             binding.launchCard.readyStatusLabel.text = isReady.toString()
@@ -427,11 +426,11 @@ class MainFragment : BaseFragment() {
         viewModel.hasBluetoothPermission.observe(viewLifecycleOwner) { granted ->
             binding.locationCard.locationBluetoothPermissionStatus.text = granted.toString()
         }
-
+        */
         viewModel.iamSuppressed.observe(viewLifecycleOwner) { suppressed ->
             binding.iamCard.iamSwitch.isChecked = suppressed
         }
-         */
+
         viewModel.deviceRegistrationData.observe(viewLifecycleOwner) { deviceData ->
             val userIdInput = binding.deviceRegistrationCard.userIdInput.editText
             val userNameInput = binding.deviceRegistrationCard.userNameInput.editText

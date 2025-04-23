@@ -1,5 +1,5 @@
 package com.actito.sample.ui.inbox
-/*
+
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -77,4 +77,3 @@ private class InboxDiffCallback : DiffUtil.ItemCallback<ActitoInboxItem>() {
         return oldItem == newItem
     }
 }
-*/

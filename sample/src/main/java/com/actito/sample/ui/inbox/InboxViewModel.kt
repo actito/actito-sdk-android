@@ -1,5 +1,5 @@
 package com.actito.sample.ui.inbox
-/*
+
 import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -112,4 +112,3 @@ class InboxViewModel : BaseViewModel() {
         }
     }
 }
-*/
