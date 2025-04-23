@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="actito_dialog_ok_button">Oke</string>
+    <string name="actito_dialog_close_button">Sluiten</string>
+    <string name="actito_dialog_cancel_button">Annuleren</string>
+
+    <string name="actito_camera_permission_rationale_description">We hebben uw toestemming nodig om de camera te gebruiken om deze actie te voltooien.</string>
+    <string name="actito_google_play_intent_failed">Kan de Google Play Store app niet starten</string>
+
+    <string name="actito_action_camera_failed">Camera kan niet gebruikt worden</string>
+    <string name="actito_action_title_intent_email">E-mail versturen…</string>
+    <string name="actito_action_title_intent_sms">SMS versturen…</string>
+    <string name="actito_action_title_intent_telephone">Nummer bellen…</string>
+    <string name="actito_action_callback_message_hint">type een tekst</string>
+    <string name="actito_action_success">Actie succesvol</string>
+    <string name="actito_action_failed">Actie kon niet uitgevoerd worden</string>
+    <string name="actito_action_canceled">Actie afgebroken</string>
+    <string name="actito_action_dialog_title">Acties</string>
+    <string name="actito_action_error_no_email_clients">Er is geen e-mailprogramma geïnstalleerd.</string>
+    <string name="actito_action_error_no_sms_clients">Kan geen SMS versturen.</string>
+    <string name="actito_action_error_no_dialer">Kan geen nummer bellen.</string>
+    <string name="actito_action_error_no_actions">Geen acties</string>
+</resources>

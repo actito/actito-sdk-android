@@ -1,6 +1,7 @@
 package com.actito.sample
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -14,15 +15,17 @@ import com.actito.Actito
 import com.actito.iam.ActitoInAppMessaging
 import com.actito.iam.ktx.inAppMessaging
 import com.actito.iam.models.ActitoInAppMessage
+import com.actito.models.ActitoNotification
 import com.actito.push.ktx.push
-// import com.actito.push.ui.ActitoPushUI
-// import com.actito.push.ui.ktx.pushUI
+import com.actito.push.ui.ActitoPushUI
+import com.actito.push.ui.ktx.pushUI
 import com.actito.sample.databinding.ActivitySampleBinding
-import com.google.android.material.snackbar.Snackbar
+// import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
-class SampleActivity : AppCompatActivity()
-/*ActitoPushUI.NotificationLifecycleListener*/ {
+class SampleActivity :
+    AppCompatActivity(),
+    ActitoPushUI.NotificationLifecycleListener {
 
     private lateinit var binding: ActivitySampleBinding
 
@@ -47,14 +50,14 @@ class SampleActivity : AppCompatActivity()
 
         if (intent != null) handleIntent(intent)
 
-        // Actito.pushUI().addLifecycleListener(this)
+        Actito.pushUI().addLifecycleListener(this)
         Actito.inAppMessaging().addLifecycleListener(messageLifecycleListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        // Actito.pushUI().removeLifecycleListener(this)
+        Actito.pushUI().removeLifecycleListener(this)
         Actito.inAppMessaging().removeLifecycleListener(messageLifecycleListener)
     }
 
@@ -70,14 +73,12 @@ class SampleActivity : AppCompatActivity()
         if (Actito.handleDynamicLinkIntent(this, intent)) return
 
         Actito.push().parseNotificationOpenedIntent(intent)?.also { result ->
-            Snackbar.make(binding.root, "Notification opened.", Snackbar.LENGTH_SHORT).show()
-            // Actito.pushUI().presentNotification(this, result.notification)
+            Actito.pushUI().presentNotification(this, result.notification)
             return
         }
 
         Actito.push().parseNotificationActionOpenedIntent(intent)?.also { result ->
-            Snackbar.make(binding.root, "Notification action opened.", Snackbar.LENGTH_SHORT).show()
-            // Actito.pushUI().presentAction(this, result.notification, result.action)
+            Actito.pushUI().presentAction(this, result.notification, result.action)
             return
         }
         /*
@@ -126,7 +127,6 @@ class SampleActivity : AppCompatActivity()
         }
     }
 
-    /*
     override fun onNotificationWillPresent(notification: ActitoNotification) {
         Timber.i("---> notification will present '$notification.id'")
         Toast.makeText(this, "Notification will present", Toast.LENGTH_SHORT).show()
@@ -179,5 +179,4 @@ class SampleActivity : AppCompatActivity()
         Timber.i("---> custom action received '$uri'")
         Toast.makeText(this, "Custom action received", Toast.LENGTH_SHORT).show()
     }
-     */
 }

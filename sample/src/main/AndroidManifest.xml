@@ -70,11 +70,9 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <!--
         <activity
             android:name="com.actito.push.ui.NotificationActivity"
             android:theme="@style/Theme.App.Actito.Translucent" />
-            -->
         <!--
         <activity
             android:name="com.actito.loyalty.PassbookActivity"
@@ -114,11 +112,10 @@
         <meta-data
             android:name="re.notifica.push.notification_small_icon"
             android:resource="@drawable/ic_rocket_black_24dp" />
-        <!--
         <meta-data
             android:name="re.notifica.push.ui.show_notification_toasts"
             android:value="true" />
-
+        <!--
         <meta-data
             android:name="re.notifica.geo.beacons.foreground_service_enabled"
             android:value="true" />

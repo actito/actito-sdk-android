@@ -1,0 +1,196 @@
+package com.actito.push.ui.utils
+
+import android.annotation.TargetApi
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import com.actito.Actito
+import com.actito.models.ActitoNotification
+import com.actito.push.ui.closeWindowQueryParameter
+import com.actito.push.ui.internal.logger
+import com.actito.push.ui.ktx.pushUIInternal
+import com.actito.push.ui.notifications.fragments.base.NotificationFragment
+import com.actito.push.ui.openActionQueryParameter
+import com.actito.push.ui.openActionsQueryParameter
+import com.actito.push.ui.urlSchemes
+import com.actito.utilities.threading.onMainThread
+
+internal open class NotificationWebViewClient(
+    private val notification: ActitoNotification,
+    private val callback: NotificationFragment.Callback,
+) : WebViewClient() {
+
+    private var loadingError: WebResourceError? = null
+
+    @TargetApi(Build.VERSION_CODES.N)
+    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+        return handleOpenActions(request.url) || handleOpenAction(request.url) || handleUri(view, request.url)
+    }
+
+    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        val uri = Uri.parse(url)
+        return handleOpenActions(uri) || handleOpenAction(uri) || handleUri(view, uri)
+    }
+
+    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+        super.onPageStarted(view, url, favicon)
+
+        // Clear any previous errors when starting to load the page.
+        loadingError = null
+    }
+
+    override fun onPageFinished(view: WebView, url: String) {
+        super.onPageFinished(view, url)
+
+        view.evaluateJavascript("(function() { return (document.body.innerHTML); })();") { html ->
+            val openActionQueryParameter = checkNotNull(Actito.options).openActionQueryParameter
+            val openActionsQueryParameter = checkNotNull(Actito.options).openActionsQueryParameter
+
+            if (html != null && (html.contains(openActionQueryParameter) || html.contains(openActionsQueryParameter))) {
+                callback.onNotificationFragmentCanHideActionsMenu()
+            }
+        }
+
+        if (loadingError == null) {
+            onMainThread {
+                Actito.pushUIInternal().lifecycleListeners.forEach {
+                    it.get()?.onNotificationPresented(notification)
+                }
+            }
+        }
+    }
+
+    override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+        super.onReceivedError(view, request, error)
+
+        // Keep a reference to the error that just occurred.
+        // The onPageFinished is triggered even when the loading fails.
+        loadingError = error
+
+        onMainThread {
+            Actito.pushUIInternal().lifecycleListeners.forEach {
+                it.get()?.onNotificationFailedToPresent(notification)
+            }
+        }
+    }
+
+    private fun shouldCloseWindow(uri: Uri?): Boolean {
+        if (uri != null && uri.isHierarchical) {
+            val closeWindowParameter = uri.getQueryParameter(checkNotNull(Actito.options).closeWindowQueryParameter)
+            return closeWindowParameter != null && (closeWindowParameter == "1" || closeWindowParameter == "true")
+        }
+
+        return false
+    }
+
+    private fun handleOpenActions(uri: Uri?): Boolean {
+        if (uri != null && uri.isHierarchical) {
+            val openActionsWindowParameter = uri.getQueryParameter(
+                checkNotNull(Actito.options).openActionsQueryParameter
+            )
+
+            if (
+                openActionsWindowParameter != null &&
+                (openActionsWindowParameter == "1" || openActionsWindowParameter == "true")
+            ) {
+                callback.onNotificationFragmentShowActions()
+                return true
+            }
+        }
+
+        return false
+    }
+
+    private fun handleOpenAction(uri: Uri?): Boolean {
+        if (uri != null && uri.isHierarchical) {
+            val openActionWindowParameter = uri.getQueryParameter(
+                checkNotNull(Actito.options).openActionQueryParameter
+            )
+
+            if (openActionWindowParameter != null) {
+                val action = notification.actions.firstOrNull { it.label == openActionWindowParameter }
+                if (action != null) {
+                    callback.onNotificationFragmentHandleAction(action)
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
+    private fun handleUri(@Suppress("UNUSED_PARAMETER") view: WebView, uri: Uri?): Boolean {
+        if (uri == null || uri.scheme == null) {
+            // Relative URL
+            if (shouldCloseWindow(uri)) {
+                callback.onNotificationFragmentFinished()
+            }
+
+            return false
+        }
+
+        val options = checkNotNull(Actito.options)
+        if (options.urlSchemes.contains(uri.scheme)) {
+            onMainThread {
+                Actito.pushUIInternal().lifecycleListeners.forEach {
+                    it.get()?.onNotificationUrlClicked(notification, uri)
+                }
+            }
+
+            if (shouldCloseWindow(uri)) {
+                callback.onNotificationFragmentFinished()
+            }
+
+            return true
+        } else if (uri.scheme == "http" || uri.scheme == "https") {
+            // Normal HTTP links will be handled by the webView itself, unless they match any of the app's intent filters
+            val httpIntent = Intent(Intent.ACTION_VIEW, uri).apply {
+                setPackage(Actito.requireContext().packageName)
+            }
+
+            if (httpIntent.resolveActivity(Actito.requireContext().packageManager) != null) {
+                // current application context can handle the intent itself
+                callback.onNotificationFragmentStartActivity(httpIntent)
+
+                if (shouldCloseWindow(uri)) {
+                    callback.onNotificationFragmentFinished()
+                }
+
+                return true
+            }
+
+            // let other http links be handled by the webView itself
+            return false
+        } else {
+            val uriIntent = Intent(Intent.ACTION_VIEW, uri).apply {
+                setPackage(Actito.requireContext().packageName)
+            }
+
+            if (uriIntent.resolveActivity(Actito.requireContext().packageManager) != null) {
+                // current application context can handle the intent itself
+                callback.onNotificationFragmentStartActivity(uriIntent)
+            } else {
+                try {
+                    // see if there is an application that can handle this intent
+                    uriIntent.setPackage(null)
+
+                    callback.onNotificationFragmentStartActivity(uriIntent)
+                } catch (e: ActivityNotFoundException) {
+                    logger.warning("Could not find an activity capable of opening the URL.", e)
+                }
+            }
+
+            if (shouldCloseWindow(uri)) {
+                callback.onNotificationFragmentFinished()
+            }
+
+            return true
+        }
+    }
+}
