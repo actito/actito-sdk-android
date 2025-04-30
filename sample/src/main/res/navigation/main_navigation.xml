@@ -36,7 +36,6 @@
         android:name="com.actito.sample.ui.inbox.InboxFragment"
         android:label="@string/inbox_title"
         tools:layout="@layout/fragment_inbox">
-        <deepLink app:uri="re.notifica.go://notifica.re/inbox" />
     </fragment>
     <!--
     <fragment
