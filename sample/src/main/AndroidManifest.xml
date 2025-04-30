@@ -143,11 +143,9 @@
         <!--        <meta-data-->
         <!--            android:name="re.notifica.loyalty.pass_notification_ongoing"-->
         <!--            android:value="true" />-->
-        <!--
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${googleMapsApiKey}" />
-            -->
     </application>
 
 </manifest>
