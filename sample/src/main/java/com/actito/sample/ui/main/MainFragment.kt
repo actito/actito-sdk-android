@@ -27,6 +27,7 @@ import com.actito.inbox.ktx.inbox
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
 import com.actito.push.ktx.push
+import com.actito.sample.BuildConfig
 import com.actito.sample.R
 import com.actito.sample.databinding.FragmentMainBinding
 // import com.actito.sample.ktx.LocationPermission
@@ -37,7 +38,7 @@ import timber.log.Timber
 
 class MainFragment : BaseFragment() {
     private val pendingRationales = mutableListOf<PermissionType>()
-    private val viewModel: com.actito.sample.ui.main.MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: FragmentMainBinding
 
     override val baseViewModel: MainViewModel by viewModels()
@@ -318,11 +319,10 @@ class MainFragment : BaseFragment() {
         // End region
 
         // Other features
-        /*
+
         binding.otherFeaturesCard.scannablesRow.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_scannablesFragment)
         }
-         */
 
         binding.otherFeaturesCard.assetsRow.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_assetsFragment)
@@ -466,7 +466,7 @@ class MainFragment : BaseFragment() {
             binding.applicationInfoCard.root.isVisible = info != null
 
             if (info != null) {
-                binding.applicationInfoCard.nameStatusLabel.text = "${info.name} (${com.actito.sample.BuildConfig.VERSION_CODE})"
+                binding.applicationInfoCard.nameStatusLabel.text = "${info.name} (${BuildConfig.VERSION_CODE})"
                 binding.applicationInfoCard.identifierStatusLabel.text = info.identifier
             }
         }

@@ -1,5 +1,5 @@
 package com.actito.sample.ui.scannables
-/*
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -85,4 +85,3 @@ class ScannablesFragment : Fragment(), ActitoScannables.ScannableSessionListener
         }
     }
 }
-*/

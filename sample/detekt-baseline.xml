@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>MaxLineLength:MainFragment.kt$MainFragment$binding.applicationInfoCard.nameStatusLabel.text = "${info.name} (${com.actito.sample.BuildConfig.VERSION_CODE})"</ID>
     <ID>PackageNaming:CoffeeBrewerContentState.kt$package com.actito.sample.live_activities.models</ID>
     <ID>PackageNaming:CoffeeBrewingState.kt$package com.actito.sample.live_activities.models</ID>
     <ID>PackageNaming:CoffeeLiveNotification.kt$package com.actito.sample.live_activities.ui</ID>
