@@ -10,10 +10,10 @@
         android:name="com.actito.sample.ui.main.MainFragment"
         android:label="@string/main_fragment_title"
         tools:layout="@layout/fragment_main">
-        <!--
         <action
             android:id="@+id/action_mainFragment_to_inboxFragment"
             app:destination="@id/inboxFragment" />
+        <!--
         <action
             android:id="@+id/action_mainFragment_to_beaconsFragment"
             app:destination="@id/beaconsFragment" />
@@ -31,14 +31,13 @@
             android:id="@+id/action_mainFragment_to_tagsFragment"
             app:destination="@id/tagsFragment" />
     </fragment>
-    <!--
     <fragment
         android:id="@+id/inboxFragment"
         android:name="com.actito.sample.ui.inbox.InboxFragment"
         android:label="@string/inbox_title"
         tools:layout="@layout/fragment_inbox">
-        <deepLink app:uri="re.notifica.go://notifica.re/inbox" />
     </fragment>
+    <!--
     <fragment
         android:id="@+id/beaconsFragment"
         android:name="com.actito.sample.ui.beacons.BeaconsFragment"

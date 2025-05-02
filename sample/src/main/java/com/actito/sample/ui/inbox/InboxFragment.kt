@@ -1,5 +1,5 @@
 package com.actito.sample.ui.inbox
-/*
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -124,4 +124,3 @@ class InboxFragment : BaseFragment() {
         viewModel.refresh()
     }
 }
-*/
