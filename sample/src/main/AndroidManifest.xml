@@ -73,7 +73,6 @@
         <activity
             android:name="com.actito.push.ui.NotificationActivity"
             android:theme="@style/Theme.App.Actito.Translucent" />
-        <!--
         <activity
             android:name="com.actito.loyalty.PassbookActivity"
             android:exported="true">
@@ -89,7 +88,6 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        -->
         <activity
             android:name="com.actito.iam.ui.InAppMessagingActivity"
             android:theme="@style/Theme.App.Actito.Iam"
@@ -135,11 +133,10 @@
         <!--        <meta-data-->
         <!--            android:name="re.notifica.geo.beacons.service_notification_progress"-->
         <!--            android:value="true" />-->
-        <!--
+
         <meta-data
             android:name="re.notifica.loyalty.pass_notification_small_icon"
             android:resource="@drawable/ic_baseline_style_24" />
-            -->
         <!--        <meta-data-->
         <!--            android:name="re.notifica.loyalty.pass_notification_ongoing"-->
         <!--            android:value="true" />-->
