@@ -156,5 +156,5 @@ dependencies {
     // implementation(project(":actito-loyalty"))
     implementation(project(":actito-push"))
     implementation(project(":actito-push-ui"))
-    // implementation(project(":actito-scannables"))
+    implementation(project(":actito-scannables"))
 }
