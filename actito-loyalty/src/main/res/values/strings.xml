@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="actito_dialog_ok_button">OK</string>
+
+    <string name="actito_passbook_error_loading_pass">There was an error while opening the pass.</string>
+</resources>

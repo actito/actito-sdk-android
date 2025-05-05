@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="actito_dialog_ok_button">Oke</string>
+
+    <string name="actito_passbook_error_loading_pass">Er is een fout opgetreden tijdens het openen van de kaart.</string>
+</resources>
