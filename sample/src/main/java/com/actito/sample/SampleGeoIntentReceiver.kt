@@ -1,5 +1,5 @@
 package com.actito.sample
-/*
+
 import android.content.Context
 import com.actito.geo.ActitoGeoIntentReceiver
 import com.actito.geo.models.ActitoBeacon
@@ -35,4 +35,3 @@ class SampleGeoIntentReceiver : ActitoGeoIntentReceiver() {
         Timber.d("beacons = $beacons")
     }
 }
-*/

@@ -1,5 +1,5 @@
 package com.actito.sample.ui.beacons
-/*
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.actito.geo.models.ActitoBeacon
@@ -13,4 +13,3 @@ class BeaconsViewModel : ViewModel() {
         val beacons: List<ActitoBeacon>
     )
 }
-*/

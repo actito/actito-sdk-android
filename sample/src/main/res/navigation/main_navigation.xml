@@ -13,11 +13,9 @@
         <action
             android:id="@+id/action_mainFragment_to_inboxFragment"
             app:destination="@id/inboxFragment" />
-        <!--
         <action
             android:id="@+id/action_mainFragment_to_beaconsFragment"
             app:destination="@id/beaconsFragment" />
-            -->
         <action
             android:id="@+id/action_mainFragment_to_scannablesFragment"
             app:destination="@id/scannablesFragment" />
@@ -37,13 +35,11 @@
         android:label="@string/inbox_title"
         tools:layout="@layout/fragment_inbox">
     </fragment>
-    <!--
     <fragment
         android:id="@+id/beaconsFragment"
         android:name="com.actito.sample.ui.beacons.BeaconsFragment"
         android:label="@string/beacons_title"
         tools:layout="@layout/fragment_beacons" />
-        -->
     <fragment
         android:id="@+id/scannablesFragment"
         android:name="com.actito.sample.ui.scannables.ScannablesFragment"

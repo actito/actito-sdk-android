@@ -1,5 +1,5 @@
 package com.actito.sample.ui.beacons
-/*
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -48,4 +48,3 @@ private class BeaconsDiffCallback : DiffUtil.ItemCallback<ActitoBeacon>() {
         return oldItem == newItem
     }
 }
-*/

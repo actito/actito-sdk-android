@@ -6,7 +6,7 @@ import android.os.StrictMode
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import com.actito.Actito
-// import com.actito.geo.ktx.geo
+import com.actito.geo.ktx.geo
 import com.actito.ktx.device
 import com.actito.models.ActitoApplication
 import com.actito.push.ktx.push
@@ -24,7 +24,7 @@ class MainApplication : Application(), Actito.Listener {
 
         LiveActivitiesController.setup(this)
 
-        // Actito.geo().intentReceiver = SampleGeoIntentReceiver::class.java
+        Actito.geo().intentReceiver = SampleGeoIntentReceiver::class.java
 
         Actito.push().intentReceiver = SamplePushIntentReceiver::class.java
 
