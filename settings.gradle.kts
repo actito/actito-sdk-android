@@ -20,7 +20,7 @@ rootProject.name = "actito-sdk-android"
 include(":actito")
 include(":actito-assets")
 include(":actito-geo")
-//include(":actito-geo-beacons")
+include(":actito-geo-beacons")
 include(":actito-in-app-messaging")
 include(":actito-inbox")
 include(":actito-loyalty")
