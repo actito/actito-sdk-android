@@ -1,8 +1,8 @@
 package com.actito.geo.ktx
 
-import com.actito.InternalActitoApi
 import com.actito.Actito
 import com.actito.ActitoInternalEventsModule
+import com.actito.InternalActitoApi
 import com.actito.geo.ActitoGeo
 import com.actito.geo.ActitoInternalGeo
 import com.actito.geo.internal.ActitoGeoImpl

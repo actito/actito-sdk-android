@@ -1,8 +1,8 @@
 package com.actito.geo.internal.network.push
 
-import com.squareup.moshi.JsonClass
 import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoRegion
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class FetchRegionsResponse(

@@ -14,14 +14,6 @@ import android.location.LocationManager
 import android.os.Build
 import androidx.annotation.Keep
 import androidx.core.content.ContextCompat
-import java.util.Date
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Response
 import com.actito.Actito
 import com.actito.ActitoApplicationUnavailableException
 import com.actito.ActitoCallback
@@ -59,13 +51,21 @@ import com.actito.geo.models.ActitoRegion
 import com.actito.geo.models.ActitoRegionSession
 import com.actito.geo.monitoredRegionsLimit
 import com.actito.internal.ActitoModule
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.ktx.events
 import com.actito.models.ActitoApplication
+import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Response
 import java.lang.ref.WeakReference
+import java.util.Date
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 @Keep
 @Suppress("detekt:LargeClass")

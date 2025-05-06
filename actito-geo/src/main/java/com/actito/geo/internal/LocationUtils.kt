@@ -1,14 +1,14 @@
 package com.actito.geo.internal
 
 import android.location.Location
+import com.actito.geo.models.ActitoBeacon
+import com.actito.geo.models.ActitoBeaconSession
+import com.actito.geo.models.ActitoRegion
 import java.util.Calendar
 import kotlin.math.abs
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
-import com.actito.geo.models.ActitoBeacon
-import com.actito.geo.models.ActitoBeaconSession
-import com.actito.geo.models.ActitoRegion
 
 private const val EARTH_RADIUS: Double = 6371000.0
 

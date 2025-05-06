@@ -6,6 +6,18 @@ import android.content.Intent
 import android.location.Location
 import android.os.Build
 import androidx.annotation.Keep
+import com.actito.Actito
+import com.actito.InternalActitoApi
+import com.actito.geo.gms.LocationReceiver
+import com.actito.geo.internal.ServiceManager
+import com.actito.geo.internal.logger
+import com.actito.geo.ktx.DEFAULT_GEOFENCE_RESPONSIVENESS
+import com.actito.geo.ktx.DEFAULT_LOCATION_UPDATES_FASTEST_INTERVAL
+import com.actito.geo.ktx.DEFAULT_LOCATION_UPDATES_INTERVAL
+import com.actito.geo.ktx.DEFAULT_LOCATION_UPDATES_SMALLEST_DISPLACEMENT
+import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION
+import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_LOCATION_UPDATED
+import com.actito.geo.models.ActitoRegion
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -19,18 +31,6 @@ import com.google.android.gms.location.Priority
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
-import com.actito.InternalActitoApi
-import com.actito.Actito
-import com.actito.geo.gms.LocationReceiver
-import com.actito.geo.internal.ServiceManager
-import com.actito.geo.internal.logger
-import com.actito.geo.ktx.DEFAULT_GEOFENCE_RESPONSIVENESS
-import com.actito.geo.ktx.DEFAULT_LOCATION_UPDATES_FASTEST_INTERVAL
-import com.actito.geo.ktx.DEFAULT_LOCATION_UPDATES_INTERVAL
-import com.actito.geo.ktx.DEFAULT_LOCATION_UPDATES_SMALLEST_DISPLACEMENT
-import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION
-import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_LOCATION_UPDATED
-import com.actito.geo.models.ActitoRegion
 
 @Keep
 @InternalActitoApi

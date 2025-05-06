@@ -1,7 +1,7 @@
 package com.actito.geo.internal
 
-import com.actito.InternalActitoApi
 import com.actito.Actito
+import com.actito.InternalActitoApi
 import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoRegion
 

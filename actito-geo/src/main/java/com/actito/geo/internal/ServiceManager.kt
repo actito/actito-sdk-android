@@ -1,10 +1,10 @@
 package com.actito.geo.internal
 
 import android.location.Location
-import kotlinx.coroutines.Deferred
 import com.actito.InternalActitoApi
 import com.actito.geo.models.ActitoRegion
 import com.actito.internal.AbstractServiceManager
+import kotlinx.coroutines.Deferred
 
 @InternalActitoApi
 public abstract class ServiceManager : AbstractServiceManager() {

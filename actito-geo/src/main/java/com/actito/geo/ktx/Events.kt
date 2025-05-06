@@ -1,14 +1,14 @@
 package com.actito.geo.ktx
 
-import java.util.Date
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.ActitoEventsModule
 import com.actito.geo.models.ActitoBeaconSession
 import com.actito.geo.models.ActitoRegionSession
 import com.actito.utilities.coroutines.toCallbackFunction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.util.Date
 
 @Suppress("unused")
 internal suspend fun ActitoEventsModule.logRegionSession(

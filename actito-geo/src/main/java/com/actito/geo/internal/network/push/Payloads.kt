@@ -1,7 +1,7 @@
 package com.actito.geo.internal.network.push
 
-import com.squareup.moshi.JsonClass
 import com.actito.utilities.moshi.EncodeNulls
+import com.squareup.moshi.JsonClass
 
 @EncodeNulls
 @JsonClass(generateAdapter = true)

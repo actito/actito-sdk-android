@@ -2,8 +2,8 @@ package com.actito.geo.models
 
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
-import java.util.Date
 import kotlinx.parcelize.Parcelize
+import java.util.Date
 
 @Parcelize
 @JsonClass(generateAdapter = true)

@@ -4,16 +4,8 @@ import android.app.PendingIntent
 import android.content.Intent
 import androidx.annotation.Keep
 import androidx.core.app.NotificationCompat
-import java.util.concurrent.atomic.AtomicInteger
-import org.altbeacon.beacon.BeaconManager
-import org.altbeacon.beacon.BeaconParser
-import org.altbeacon.beacon.Identifier
-import org.altbeacon.beacon.MonitorNotifier
-import org.altbeacon.beacon.RangeNotifier
-import org.altbeacon.beacon.Region
-import org.altbeacon.beacon.service.RangedBeacon
-import com.actito.InternalActitoApi
 import com.actito.Actito
+import com.actito.InternalActitoApi
 import com.actito.geo.beacons.beaconBackgroundScanInterval
 import com.actito.geo.beacons.beaconForegroundScanInterval
 import com.actito.geo.beacons.beaconForegroundServiceEnabled
@@ -28,6 +20,14 @@ import com.actito.geo.internal.BeaconServiceManager
 import com.actito.geo.ktx.INTENT_ACTION_BEACON_NOTIFICATION_OPENED
 import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoRegion
+import org.altbeacon.beacon.BeaconManager
+import org.altbeacon.beacon.BeaconParser
+import org.altbeacon.beacon.Identifier
+import org.altbeacon.beacon.MonitorNotifier
+import org.altbeacon.beacon.RangeNotifier
+import org.altbeacon.beacon.Region
+import org.altbeacon.beacon.service.RangedBeacon
+import java.util.concurrent.atomic.AtomicInteger
 
 private const val BEACON_LAYOUT_APPLE = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"
 

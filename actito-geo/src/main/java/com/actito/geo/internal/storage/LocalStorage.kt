@@ -3,8 +3,6 @@ package com.actito.geo.internal.storage
 import android.content.Context
 import android.location.Location
 import androidx.core.content.edit
-import com.squareup.moshi.Types
-import java.util.Date
 import com.actito.Actito
 import com.actito.geo.internal.canInsertBeacon
 import com.actito.geo.internal.logger
@@ -14,6 +12,8 @@ import com.actito.geo.models.ActitoLocation
 import com.actito.geo.models.ActitoRegion
 import com.actito.geo.models.ActitoRegionSession
 import com.actito.internal.moshi
+import com.squareup.moshi.Types
+import java.util.Date
 
 private const val PREFERENCES_FILE_NAME = "re.notifica.geo.preferences"
 private const val PREFERENCE_LOCATION_SERVICES_ENABLED = "re.notifica.geo.preferences.location_services_enabled"

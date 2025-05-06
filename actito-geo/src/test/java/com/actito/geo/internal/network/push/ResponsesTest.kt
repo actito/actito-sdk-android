@@ -1,12 +1,12 @@
 package com.actito.geo.internal.network.push
 
+import com.actito.geo.models.ActitoBeacon
+import com.actito.geo.models.ActitoRegion
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.geo.models.ActitoBeacon
-import com.actito.geo.models.ActitoRegion
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE)
