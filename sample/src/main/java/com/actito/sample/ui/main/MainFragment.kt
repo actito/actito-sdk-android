@@ -22,7 +22,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import kotlinx.coroutines.launch
 import com.actito.Actito
-// import com.actito.geo.ktx.geo
+import com.actito.geo.ktx.geo
 import com.actito.inbox.ktx.inbox
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
@@ -30,7 +30,7 @@ import com.actito.push.ktx.push
 import com.actito.sample.BuildConfig
 import com.actito.sample.R
 import com.actito.sample.databinding.FragmentMainBinding
-// import com.actito.sample.ktx.LocationPermission
+import com.actito.sample.ktx.LocationPermission
 import com.actito.sample.ktx.showBasicAlert
 import com.actito.sample.core.BaseFragment
 import com.actito.sample.live_activities.models.CoffeeBrewingState
@@ -59,7 +59,7 @@ class MainFragment : BaseFragment() {
 
         binding.notificationsCard.notificationsSwitch.isChecked = false
     }
-    /*
+
     private val foregroundLocationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -101,7 +101,6 @@ class MainFragment : BaseFragment() {
         // Enables location updates with whatever capabilities have been granted so far.
         viewModel.updateLocationUpdatesStatus(true)
     }
-     */
 
     private val openNotificationsSettingsLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -116,7 +115,7 @@ class MainFragment : BaseFragment() {
             }
         }
     }
-    /*
+
     private val openLocationSettingsLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -134,7 +133,7 @@ class MainFragment : BaseFragment() {
                 binding.locationCard.locationSwitch.isChecked = false
             }
         }
-    }*/
+    }
 
     // End Permission Launcher section
 
@@ -257,7 +256,7 @@ class MainFragment : BaseFragment() {
         // End region
 
         // Location
-        /*
+
         binding.locationCard.locationSwitch.setOnCheckedChangeListener { _, checked ->
             if (checked == viewModel.hasLocationUpdatesEnabled.value) return@setOnCheckedChangeListener
 
@@ -281,7 +280,7 @@ class MainFragment : BaseFragment() {
 
             findNavController().navigate(R.id.action_mainFragment_to_beaconsFragment)
         }
-         */
+
         // End region
 
         // In app messaging
@@ -409,7 +408,7 @@ class MainFragment : BaseFragment() {
                 CoffeeBrewingState.SERVED -> {}
             }
         }
-        /*
+
         viewModel.hasLocationUpdatesEnabled.observe(viewLifecycleOwner) { enabled ->
             binding.locationCard.locationSwitch.isChecked = enabled
             binding.locationCard.locationEnabledStatusLabel.text = enabled.toString()
@@ -426,7 +425,7 @@ class MainFragment : BaseFragment() {
         viewModel.hasBluetoothPermission.observe(viewLifecycleOwner) { granted ->
             binding.locationCard.locationBluetoothPermissionStatus.text = granted.toString()
         }
-        */
+
         viewModel.iamSuppressed.observe(viewLifecycleOwner) { suppressed ->
             binding.iamCard.iamSwitch.isChecked = suppressed
         }
@@ -486,7 +485,7 @@ class MainFragment : BaseFragment() {
 
         viewModel.updateRemoteNotificationsStatus(true)
     }
-    /*
+
     private fun enableLocationUpdates() {
         if (!ensureForegroundLocationPermission()) return
         if (!ensureBackgroundLocationPermission()) return
@@ -494,7 +493,7 @@ class MainFragment : BaseFragment() {
 
         viewModel.updateLocationUpdatesStatus(true)
     }
-     */
+
     // Permissions Request
 
     private fun ensureNotificationsPermission(): Boolean {
@@ -532,7 +531,7 @@ class MainFragment : BaseFragment() {
 
         return false
     }
-    /*
+
     private fun ensureForegroundLocationPermission(): Boolean {
         val permission = Manifest.permission.ACCESS_FINE_LOCATION
         val granted = ContextCompat.checkSelfPermission(
@@ -652,7 +651,7 @@ class MainFragment : BaseFragment() {
 
         return false
     }
-     */
+
     // End region
 
     // Open settings region
@@ -667,7 +666,7 @@ class MainFragment : BaseFragment() {
                 }
             }
 
-            // PermissionType.LOCATION -> Manifest.permission.ACCESS_FINE_LOCATION
+            PermissionType.LOCATION -> Manifest.permission.ACCESS_FINE_LOCATION
         }
 
         if (permission != null) {
@@ -703,7 +702,7 @@ class MainFragment : BaseFragment() {
                             }
                         )
                     }
-                    /*
+
                     PermissionType.LOCATION -> {
                         openLocationSettingsLauncher.launch(
                             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -711,14 +710,13 @@ class MainFragment : BaseFragment() {
                             }
                         )
                     }
-                     */
                 }
             }
             .setNegativeButton(R.string.dialog_cancel_button) { _, _ ->
                 Timber.d("Redirect to OS Settings cancelled")
                 when (permissionType) {
                     PermissionType.NOTIFICATIONS -> binding.notificationsCard.notificationsSwitch.isChecked = false
-                    // PermissionType.LOCATION -> binding.locationCard.locationSwitch.isChecked = false
+                    PermissionType.LOCATION -> binding.locationCard.locationSwitch.isChecked = false
                 }
             }
             .show()
@@ -728,6 +726,6 @@ class MainFragment : BaseFragment() {
 
     enum class PermissionType {
         NOTIFICATIONS,
-        // LOCATION
+        LOCATION
     }
 }

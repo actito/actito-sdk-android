@@ -6,9 +6,9 @@ import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.actito.Actito.requireContext
-// import com.actito.geo.ActitoGeo
+import com.actito.geo.ActitoGeo
 import com.actito.push.ActitoPush
-/*
+
 val ActitoGeo.hasForegroundTrackingCapabilities: Boolean
     get() {
         val permission = Manifest.permission.ACCESS_FINE_LOCATION
@@ -44,7 +44,7 @@ val ActitoGeo.hasBluetoothCapabilities: Boolean
 
         return granted
     }
-*/
+
 val ActitoPush.hasNotificationsPermission: Boolean
     get() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -59,10 +59,9 @@ val ActitoPush.hasNotificationsPermission: Boolean
 
         return granted
     }
-/*
+
 enum class LocationPermission {
     FOREGROUND,
     BACKGROUND,
     NONE
 }
-*/

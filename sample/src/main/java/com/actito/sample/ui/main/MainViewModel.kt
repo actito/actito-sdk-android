@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import com.actito.Actito
-// import com.actito.geo.ktx.geo
+import com.actito.geo.ktx.geo
 import com.actito.iam.ktx.inAppMessaging
 import com.actito.ktx.device
 import com.actito.models.ActitoApplication
@@ -17,10 +17,10 @@ import com.actito.models.ActitoDevice
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
 import com.actito.push.ktx.push
-// import com.actito.sample.ktx.LocationPermission
-// import com.actito.sample.ktx.hasBackgroundTrackingCapabilities
-// import com.actito.sample.ktx.hasBluetoothCapabilities
-// import com.actito.sample.ktx.hasForegroundTrackingCapabilities
+import com.actito.sample.ktx.LocationPermission
+import com.actito.sample.ktx.hasBackgroundTrackingCapabilities
+import com.actito.sample.ktx.hasBluetoothCapabilities
+import com.actito.sample.ktx.hasForegroundTrackingCapabilities
 import com.actito.sample.ktx.hasNotificationsPermission
 import com.actito.sample.live_activities.LiveActivitiesController
 import com.actito.sample.live_activities.models.CoffeeBrewerContentState
@@ -47,10 +47,9 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
     private val _hasNotificationsPermissions = MutableLiveData(hasNotificationsPermission)
     val hasNotificationsPermissions: LiveData<Boolean> = _hasNotificationsPermissions
 
-    /*
     private val _hasLocationUpdatesEnabled = MutableLiveData(isLocationUpdatesEnabled)
     val hasLocationUpdatesEnabled: LiveData<Boolean> = _hasLocationUpdatesEnabled
-     */
+
     private val _dndEnabled = MutableLiveData(hasDndEnabled)
     val dndEnabled: LiveData<Boolean> = _dndEnabled
 
@@ -61,7 +60,6 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
     private val _dnd = MutableLiveData(Actito.device().currentDevice?.dnd ?: ActitoDoNotDisturb.default)
     val dnd: LiveData<ActitoDoNotDisturb> = _dnd
 
-    /*
     private val _locationPermission = MutableLiveData(checkLocationPermission)
     val locationPermission: LiveData<LocationPermission> = _locationPermission
 
@@ -70,7 +68,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
 
     private val _hasBluetoothPermission = MutableLiveData(checkBluetoothPermission)
     val hasBluetoothPermission: LiveData<Boolean> = _hasBluetoothPermission
-     */
+
     private var _iamEvaluateContext = false
 
     private val _iamSuppressed = MutableLiveData(isIamSuppressed)
@@ -103,7 +101,6 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
     private val hasDndEnabled: Boolean
         get() = Actito.device().currentDevice?.dnd != null
 
-    /*
     private val isLocationUpdatesEnabled: Boolean
         get() = Actito.geo().hasLocationServicesEnabled && Actito.geo().hasForegroundTrackingCapabilities
 
@@ -128,7 +125,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
 
     private val checkBluetoothPermission: Boolean
         get() = Actito.geo().hasBluetoothCapabilities
-     */
+
     private val isIamSuppressed: Boolean
         get() = Actito.inAppMessaging().hasMessagesSuppressed
 
@@ -288,7 +285,6 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
         }
     }
 
-    /*
     fun updateLocationUpdatesStatus(enabled: Boolean) {
         if (enabled) {
             Actito.geo().enableLocationUpdates()
@@ -301,7 +297,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
         _hasBluetoothEnabled.postValue(checkBluetoothEnabled)
         _hasBluetoothPermission.postValue(checkBluetoothPermission)
     }
-     */
+
     fun updateIamEvaluateContextStatus(evaluate: Boolean) {
         _iamEvaluateContext = evaluate
     }

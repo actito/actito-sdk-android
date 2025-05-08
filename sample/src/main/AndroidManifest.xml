@@ -92,11 +92,9 @@
             android:name="com.actito.iam.ui.InAppMessagingActivity"
             android:theme="@style/Theme.App.Actito.Iam"
             tools:replace="android:theme" />
-        <!--
         <receiver
             android:name=".SampleGeoIntentReceiver"
             android:exported="false" />
-            -->
         <receiver
             android:name=".SamplePushIntentReceiver"
             android:exported="false" />
@@ -113,15 +111,13 @@
         <meta-data
             android:name="re.notifica.push.ui.show_notification_toasts"
             android:value="true" />
-        <!--
         <meta-data
             android:name="re.notifica.geo.beacons.foreground_service_enabled"
             android:value="true" />
-
         <meta-data
             android:name="re.notifica.geo.beacons.service_notification_small_icon"
             android:resource="@drawable/ic_baseline_bluetooth_searching_24" />
-        -->
+
         <!--        <meta-data-->
         <!--            android:name="re.notifica.geo.beacons.service_notification_content_title"-->
         <!--            android:value="Scanning for beacons" />-->

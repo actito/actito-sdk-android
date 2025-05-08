@@ -1,0 +1,199 @@
+package com.actito.geo
+
+import android.location.Location
+import androidx.annotation.MainThread
+import com.actito.InternalActitoApi
+import com.actito.geo.internal.BeaconServiceManager
+import com.actito.geo.models.ActitoBeacon
+import com.actito.geo.models.ActitoLocation
+import com.actito.geo.models.ActitoRegion
+
+public interface ActitoGeo {
+
+    /**
+     * Specifies the intent receiver class for handling geolocation intents.
+     *
+     * This property defines the class that will receive and process the intents related to geolocation services.
+     * The class must extend [ActitoGeoIntentReceiver].
+     */
+    public var intentReceiver: Class<out ActitoGeoIntentReceiver>
+
+    /**
+     * Indicates whether location services are enabled.
+     *
+     * This property returns `true` if the location services are enabled by the application, and `false` otherwise.
+     */
+    public val hasLocationServicesEnabled: Boolean
+
+    /**
+     * Indicates whether Bluetooth is enabled.
+     *
+     * This property returns `true` if Bluetooth is enabled and available for beacon detection and ranging, and `false`
+     * otherwise.
+     */
+    public val hasBluetoothEnabled: Boolean
+
+    /**
+     * Provides a list of regions currently being monitored.
+     *
+     * This property returns a list of [ActitoRegion] objects representing the geographical regions being actively
+     * monitored for entry and exit events.
+     *
+     * @see [ActitoRegion]
+     */
+    public val monitoredRegions: List<ActitoRegion>
+
+    /**
+     * Provides a list of regions the user has entered.
+     *
+     * This property returns a list of [ActitoRegion] objects representing the regions that the user has entered and
+     * not yet exited.
+     *
+     * @see [ActitoRegion]
+     */
+    public val enteredRegions: List<ActitoRegion>
+
+    /**
+     * Enables location updates, activating location tracking, region monitoring, and beacon detection.
+     *
+     * **Note**: This function requires explicit location permissions from the user. Starting with Android 10
+     * (API level 29), background location access requires the ACCESS_BACKGROUND_LOCATION permission. For beacon
+     * detection, Bluetooth permissions are also necessary. Ensure all permissions are requested before invoking
+     * this method.
+     *
+     * The behavior varies based on granted permissions:
+     * - **Permission denied**: Clears the device's location information.
+     * - **Foreground location permission granted**: Tracks location only while the app is in use.
+     * - **Background location permission granted**: Enables geofencing capabilities.
+     * - **Background location + Bluetooth permissions granted**: Enables geofencing and beacon detection.
+     */
+    public fun enableLocationUpdates()
+
+    /**
+     * Disables location updates.
+     *
+     * This method stops receiving location updates, monitoring regions, and detecting nearby beacons.
+     */
+    public fun disableLocationUpdates()
+
+    /**
+     * Adds a geolocation listener.
+     *
+     * This method registers a [Listener] to receive callbacks related to location updates, region monitoring events,
+     * and beacon proximity events.
+     *
+     * @param listener The [Listener] to add for receiving geolocation events.
+     *
+     * @see [Listener]
+     */
+    public fun addListener(listener: Listener)
+
+    /**
+     * Removes a geolocation listener.
+     *
+     * This method unregisters a previously added [Listener] to stop receiving callbacks related to location updates,
+     * region monitoring events, and beacon proximity events.
+     *
+     * @param listener The [Listener] to remove.
+     *
+     * @see [Listener]
+     */
+    public fun removeListener(listener: Listener)
+
+    /**
+     * Listener interface for receiving geolocation and beacon events.
+     *
+     * Implement this interface to handle location updates, region monitoring events, and beacon ranging events.
+     */
+    public interface Listener {
+        /**
+         * Called when a new location update is received.
+         *
+         * @param location The updated [ActitoLocation] representing the user's new location.
+         *
+         * @see [ActitoLocation]
+         */
+        @MainThread
+        public fun onLocationUpdated(location: ActitoLocation) {
+        }
+
+        /**
+         * Called when the user enters a monitored region.
+         *
+         * @param region The [ActitoRegion] representing the region the user has entered.
+         *
+         * @see [ActitoRegion]
+         */
+        @MainThread
+        public fun onRegionEntered(region: ActitoRegion) {
+        }
+
+        /**
+         * Called when the user exits a monitored region.
+         *
+         * @param region The [ActitoRegion] representing the region the user has exited.
+         *
+         * @see [ActitoRegion]
+         */
+        @MainThread
+        public fun onRegionExited(region: ActitoRegion) {
+        }
+
+        /**
+         * Called when the user enters the proximity of a beacon.
+         *
+         * @param beacon The [ActitoBeacon] representing the beacon the user has entered the proximity of.
+         *
+         * @see [ActitoBeacon]
+         */
+        @MainThread
+        public fun onBeaconEntered(beacon: ActitoBeacon) {
+        }
+
+        /**
+         * Called when the user exits the proximity of a beacon.
+         *
+         * @param beacon The [ActitoBeacon] representing the beacon the user has exited the proximity of.
+         *
+         * @see [ActitoBeacon]
+         */
+        @MainThread
+        public fun onBeaconExited(beacon: ActitoBeacon) {
+        }
+
+        /**
+         * Called when beacons are ranged in a monitored region.
+         *
+         * This method provides the list of beacons currently detected within the given region.
+         *
+         * @param region The [ActitoRegion] where beacons were ranged.
+         * @param beacons A list of [ActitoBeacon] that were detected in the region.
+         *
+         * @see [ActitoRegion]
+         * @see [ActitoBeacon]
+         */
+        @MainThread
+        public fun onBeaconsRanged(region: ActitoRegion, beacons: List<ActitoBeacon>) {
+        }
+    }
+}
+
+public interface ActitoInternalGeo {
+    @InternalActitoApi
+    public fun handleLocationUpdate(location: Location)
+
+    @InternalActitoApi
+    public fun handleRegionEnter(identifiers: List<String>)
+
+    @InternalActitoApi
+    public fun handleRegionExit(identifiers: List<String>)
+
+    @InternalActitoApi
+    public fun handleBeaconEnter(uniqueId: String, major: Int, minor: Int?)
+
+    @InternalActitoApi
+    public fun handleBeaconExit(uniqueId: String, major: Int, minor: Int?)
+
+    @InternalActitoApi
+    public fun handleRangingBeacons(regionId: String, beacons: List<BeaconServiceManager.Beacon>)
+}

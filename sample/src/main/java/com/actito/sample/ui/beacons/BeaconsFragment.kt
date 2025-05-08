@@ -1,5 +1,5 @@
 package com.actito.sample.ui.beacons
-/*
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -65,4 +65,3 @@ class BeaconsFragment : Fragment(), ActitoGeo.Listener {
         }
     }
 }
-*/
