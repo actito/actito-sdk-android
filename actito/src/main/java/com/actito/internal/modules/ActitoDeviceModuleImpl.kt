@@ -2,9 +2,6 @@ package com.actito.internal.modules
 
 import android.content.Intent
 import androidx.annotation.Keep
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.ActitoDeviceModule
@@ -13,6 +10,7 @@ import com.actito.ActitoNotReadyException
 import com.actito.internal.ACTITO_VERSION
 import com.actito.internal.ActitoModule
 import com.actito.internal.logger
+import com.actito.internal.network.NetworkException
 import com.actito.internal.network.push.CreateDevicePayload
 import com.actito.internal.network.push.CreateDeviceResponse
 import com.actito.internal.network.push.DeviceDoNotDisturbResponse
@@ -44,6 +42,9 @@ import com.actito.utilities.device.deviceRegion
 import com.actito.utilities.device.deviceString
 import com.actito.utilities.device.osVersion
 import com.actito.utilities.device.timeZoneOffset
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 @Keep
@@ -79,7 +80,32 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
         } else {
             val isApplicationUpgrade = storedDevice.appVersion != Actito.requireContext().applicationVersion
 
-            updateDevice()
+            try {
+                updateDevice()
+            } catch (e: NetworkException.ValidationException) {
+                if (e.response.code == 404) {
+                    logger.warning("The device was removed from Actito. Recovering...")
+
+                    logger.debug("Resetting local storage.")
+                    resetLocalStorage()
+
+                    logger.debug("Creating a new device.")
+                    createDevice()
+                    hasPendingDeviceRegistrationEvent = true
+
+                    // Ensure a session exists for the current device.
+                    Actito.session().launch()
+
+                    // We will log the Install & Registration events here since this will execute
+                    // only one time at the start.
+                    Actito.eventsImplementation().logApplicationInstall()
+                    Actito.eventsImplementation().logApplicationRegistration()
+
+                    return
+                }
+
+                throw e
+            }
 
             // Ensure a session exists for the current device.
             Actito.session().launch()
@@ -90,6 +116,27 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
                 Actito.eventsImplementation().logApplicationUpgrade()
             }
         }
+    }
+
+    private suspend fun resetLocalStorage() {
+        ActitoModule.Module.entries.forEach { module ->
+            module.instance?.run {
+                logger.debug("Resetting module: ${module.name.lowercase()}")
+                try {
+                    this.clearStorage()
+                } catch (e: Exception) {
+                    logger.debug("Failed to reset '${module.name.lowercase()}': $e")
+                    throw e
+                }
+            }
+        }
+
+        Actito.database.events().clear()
+
+        // Should only clear device-related local storage properties.
+        Actito.sharedPreferences.device = null
+        Actito.sharedPreferences.preferredLanguage = null
+        Actito.sharedPreferences.preferredRegion = null
     }
 
     override suspend fun postLaunch() {
