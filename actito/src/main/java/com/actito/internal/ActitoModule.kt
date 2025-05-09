@@ -1,8 +1,8 @@
 package com.actito.internal
 
 import android.content.SharedPreferences
-import com.squareup.moshi.Moshi
 import com.actito.InternalActitoApi
+import com.squareup.moshi.Moshi
 
 @InternalActitoApi
 public abstract class ActitoModule {
@@ -24,9 +24,9 @@ public abstract class ActitoModule {
     @InternalActitoApi
     public enum class Module(private val fqn: String) {
         // Default modules
-        EVENTS(fqn = "com.actito.internal.modules.ActitoEventsModuleImpl"),
-        SESSION(fqn = "com.actito.internal.modules.ActitoSessionModuleImpl"),
         DEVICE(fqn = "com.actito.internal.modules.ActitoDeviceModuleImpl"),
+        SESSION(fqn = "com.actito.internal.modules.ActitoSessionModuleImpl"),
+        EVENTS(fqn = "com.actito.internal.modules.ActitoEventsModuleImpl"),
         CRASH_REPORTER(fqn = "com.actito.internal.modules.ActitoCrashReporterModuleImpl"),
 
         // Peer modules

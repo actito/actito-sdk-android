@@ -5,12 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.inbox.ktx.inbox
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.push.ui.ktx.pushUI
 import com.actito.sample.core.BaseViewModel
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class InboxViewModel : BaseViewModel() {
@@ -84,7 +84,7 @@ class InboxViewModel : BaseViewModel() {
         }
     }
 
-    fun clear() {
+    fun clearInbox() {
         viewModelScope.launch {
             try {
                 Actito.inbox().clear()
