@@ -1,13 +1,8 @@
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.ksp)
-    alias(libs.plugins.notificare.services)
-    alias(libs.plugins.google.services)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.detekt)
+    id("linting")
+    id("apps")
 }
 
 val properties = loadProperties("local.properties")
@@ -105,19 +100,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
-}
-
-ktlint {
-    debug.set(true)
-    verbose.set(true)
-    android.set(true)
-    baseline.set(file("ktlint-baseline.xml"))
-}
-
-detekt {
-    config.setFrom(rootProject.files("config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
-    baseline = file("detekt-baseline.xml")
 }
 
 dependencies {

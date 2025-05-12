@@ -37,4 +37,4 @@ include(":actito-user-inbox")
 include(":actito-utilities")
 include(":sample")
 include(":sample-user-inbox")
-
+includeBuild("build-logic")
