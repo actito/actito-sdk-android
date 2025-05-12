@@ -92,32 +92,29 @@ detekt {
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines)
+    implementation(apps.kotlinx.coroutines)
 
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.fragment)
-    implementation(libs.androidx.lifecycle.livedata)
-    implementation(libs.androidx.lifecycle.runtime)
-    implementation(libs.androidx.lifecycle.viewModel)
-    implementation(libs.androidx.work.runtime)
-    implementation(libs.google.material)
-    implementation(libs.timber)
+    implementation(apps.androidx.appCompat)
+    implementation(apps.androidx.constraintLayout)
+    implementation(apps.androidx.core)
+    implementation(apps.androidx.datastore.preferences)
+    implementation(apps.androidx.fragment)
+    implementation(apps.bundles.androidx.lifecycle)
+    implementation(apps.bundles.androidx.navigation)
+    implementation(apps.androidx.work.runtime)
 
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
+    implementation(apps.google.material)
+    implementation(apps.timber)
 
     // Glide
-    implementation(libs.glide)
-    ksp(libs.glide.ksp)
+    implementation(apps.glide)
+    ksp(apps.glide.ksp)
 
     // Retrofit
-    implementation(libs.bundles.retrofit)
+    implementation(apps.bundles.retrofit)
 
     // Auth0
-    implementation(libs.auth0)
+    implementation(apps.auth0)
 
     implementation(project(":actito"))
     implementation(project(":actito-push"))

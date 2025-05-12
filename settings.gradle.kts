@@ -13,6 +13,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
+    versionCatalogs {
+        create("apps") {
+            from(files("gradle/apps.versions.toml"))
+        }
+    }
 }
 
 rootProject.name = "actito-sdk-android"
