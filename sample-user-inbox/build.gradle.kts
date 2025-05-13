@@ -9,13 +9,13 @@ val properties = loadProperties("local.properties")
 
 android {
     namespace = "com.actito.sample.user.inbox"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    buildToolsVersion = libs.versions.android.buildTools.get()
+    compileSdk = apps.versions.android.compileSdk.get().toInt()
+    buildToolsVersion = apps.versions.android.buildTools.get()
 
     defaultConfig {
         applicationId = "com.actito.sample.user.inbox.app"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk = apps.versions.android.minSdk.get().toInt()
+        targetSdk = apps.versions.android.targetSdk.get().toInt()
         versionCode = 12
         versionName = "3.0.0"
 
