@@ -24,5 +24,5 @@ dependencies {
     implementation(apps.plugins.google.services.asDependency())
 }
 
-fun Provider<PluginDependency>.asDependency(): Provider<String> =
+private fun Provider<PluginDependency>.asDependency(): Provider<String> =
     this.map { "${it.pluginId}:${it.pluginId}.gradle.plugin:${it.version}" }
