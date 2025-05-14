@@ -13,6 +13,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
+    versionCatalogs {
+        create("apps") {
+            from(files("gradle/apps.versions.toml"))
+        }
+    }
 }
 
 rootProject.name = "actito-sdk-android"
@@ -31,4 +37,4 @@ include(":actito-user-inbox")
 include(":actito-utilities")
 include(":sample")
 include(":sample-user-inbox")
-
+includeBuild("build-logic")

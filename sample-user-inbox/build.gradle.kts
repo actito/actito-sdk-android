@@ -1,26 +1,21 @@
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.ksp)
-    alias(libs.plugins.notificare.services)
-    alias(libs.plugins.google.services)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.detekt)
+    id("linting")
+    id("apps")
 }
 
 val properties = loadProperties("local.properties")
 
 android {
     namespace = "com.actito.sample.user.inbox"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    buildToolsVersion = libs.versions.android.buildTools.get()
+    compileSdk = apps.versions.android.compileSdk.get().toInt()
+    buildToolsVersion = apps.versions.android.buildTools.get()
 
     defaultConfig {
         applicationId = "com.actito.sample.user.inbox.app"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        minSdk = apps.versions.android.minSdk.get().toInt()
+        targetSdk = apps.versions.android.targetSdk.get().toInt()
         versionCode = 12
         versionName = "3.0.0"
 
@@ -78,46 +73,30 @@ android {
     }
 }
 
-ktlint {
-    debug.set(true)
-    verbose.set(true)
-    android.set(true)
-    baseline.set(file("ktlint-baseline.xml"))
-}
-
-detekt {
-    config.setFrom(rootProject.files("config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
-    baseline = file("detekt-baseline.xml")
-}
-
 dependencies {
-    implementation(libs.kotlinx.coroutines)
+    implementation(apps.kotlinx.coroutines)
 
-    implementation(libs.androidx.appCompat)
-    implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.fragment)
-    implementation(libs.androidx.lifecycle.livedata)
-    implementation(libs.androidx.lifecycle.runtime)
-    implementation(libs.androidx.lifecycle.viewModel)
-    implementation(libs.androidx.work.runtime)
-    implementation(libs.google.material)
-    implementation(libs.timber)
+    implementation(apps.androidx.appCompat)
+    implementation(apps.androidx.constraintLayout)
+    implementation(apps.androidx.core)
+    implementation(apps.androidx.datastore.preferences)
+    implementation(apps.androidx.fragment)
+    implementation(apps.bundles.androidx.lifecycle)
+    implementation(apps.bundles.androidx.navigation)
+    implementation(apps.androidx.work.runtime)
 
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
+    implementation(apps.google.material)
+    implementation(apps.timber)
 
     // Glide
-    implementation(libs.glide)
-    ksp(libs.glide.ksp)
+    implementation(apps.glide)
+    ksp(apps.glide.ksp)
 
     // Retrofit
-    implementation(libs.bundles.retrofit)
+    implementation(apps.bundles.retrofit)
 
     // Auth0
-    implementation(libs.auth0)
+    implementation(apps.auth0)
 
     implementation(project(":actito"))
     implementation(project(":actito-push"))

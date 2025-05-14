@@ -1,3 +1,12 @@
+plugins {
+    id("libraries")
+    id("publish")
+    id("linting")
+}
+
+group = rootProject.libs.versions.maven.artifactGroup.get()
+version = rootProject.libs.versions.maven.artifactVersion.get()
+
 android {
     namespace = "com.actito.scannables"
     compileSdk = libs.versions.android.compileSdk.get().toInt()

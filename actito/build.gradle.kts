@@ -1,3 +1,12 @@
+plugins {
+    id("libraries")
+    id("linting")
+    id("publish")
+}
+
+group = rootProject.libs.versions.maven.artifactGroup.get()
+version = rootProject.libs.versions.maven.artifactVersion.get()
+
 android {
     namespace = "com.actito"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
