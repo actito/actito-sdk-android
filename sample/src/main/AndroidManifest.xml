@@ -101,10 +101,6 @@
         <meta-data
             android:name="com.actito.debug_logging_enabled"
             android:value="true" />
-
-        <!--        <meta-data-->
-        <!--            android:name="re.notifica.push.automatic_default_channel_enabled"-->
-        <!--            android:value="true" />-->
         <meta-data
             android:name="com.actito.push.notification_small_icon"
             android:resource="@drawable/ic_rocket_black_24dp" />
@@ -117,25 +113,6 @@
         <meta-data
             android:name="com.actito.geo.beacons.service_notification_small_icon"
             android:resource="@drawable/ic_baseline_bluetooth_searching_24" />
-
-        <!--        <meta-data-->
-        <!--            android:name="re.notifica.geo.beacons.service_notification_content_title"-->
-        <!--            android:value="Scanning for beacons" />-->
-
-        <!--        <meta-data-->
-        <!--            android:name="re.notifica.geo.beacons.service_notification_content_text"-->
-        <!--            android:value="..." />-->
-
-        <!--        <meta-data-->
-        <!--            android:name="re.notifica.geo.beacons.service_notification_progress"-->
-        <!--            android:value="true" />-->
-
-        <meta-data
-            android:name="com.actito.loyalty.pass_notification_small_icon"
-            android:resource="@drawable/ic_baseline_style_24" />
-        <!--        <meta-data-->
-        <!--            android:name="re.notifica.loyalty.pass_notification_ongoing"-->
-        <!--            android:value="true" />-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${googleMapsApiKey}" />
