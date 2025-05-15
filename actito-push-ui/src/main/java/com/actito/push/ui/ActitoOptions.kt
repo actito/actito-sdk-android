@@ -8,22 +8,22 @@ import com.actito.push.ui.internal.logger
 
 public val ActitoOptions.closeWindowQueryParameter: String
     get() {
-        return metadata.getString("re.notifica.push.ui.close_window_query_parameter", "notificareCloseWindow")
+        return metadata.getString("com.actito.push.ui.close_window_query_parameter", "notificareCloseWindow")
     }
 
 public val ActitoOptions.openActionsQueryParameter: String
     get() {
-        return metadata.getString("re.notifica.push.ui.open_actions_query_parameter", "notificareOpenActions")
+        return metadata.getString("com.actito.push.ui.open_actions_query_parameter", "notificareOpenActions")
     }
 
 public val ActitoOptions.openActionQueryParameter: String
     get() {
-        return metadata.getString("re.notifica.push.ui.open_action_query_parameter", "notificareOpenAction")
+        return metadata.getString("com.actito.push.ui.open_action_query_parameter", "notificareOpenAction")
     }
 
 public val ActitoOptions.urlSchemes: List<String>
     get() {
-        val resource = metadata.getInt("re.notifica.push.ui.notification_url_schemes")
+        val resource = metadata.getInt("com.actito.push.ui.notification_url_schemes")
 
         if (resource != 0) {
             try {
@@ -38,35 +38,35 @@ public val ActitoOptions.urlSchemes: List<String>
 
 public val ActitoOptions.showNotificationProgress: Boolean
     get() {
-        return metadata.getBoolean("re.notifica.push.ui.show_notification_progress", true)
+        return metadata.getBoolean("com.actito.push.ui.show_notification_progress", true)
     }
 
 public val ActitoOptions.showNotificationToasts: Boolean
     get() {
-        return metadata.getBoolean("re.notifica.push.ui.show_notification_toasts", false)
+        return metadata.getBoolean("com.actito.push.ui.show_notification_toasts", false)
     }
 
 public val ActitoOptions.customTabsShowTitle: Boolean
     get() {
-        return metadata.getBoolean("re.notifica.push.ui.custom_tabs_show_title", true)
+        return metadata.getBoolean("com.actito.push.ui.custom_tabs_show_title", true)
     }
 
 public val ActitoOptions.customTabsColorScheme: String?
     get() {
-        return metadata.getString("re.notifica.push.ui.custom_tabs_color_scheme", null)
+        return metadata.getString("com.actito.push.ui.custom_tabs_color_scheme", null)
     }
 
 @get:ColorInt
 public val ActitoOptions.customTabsToolbarColor: Int?
     get() {
-        val resource = metadata.getInt("re.notifica.push.ui.custom_tabs_toolbar_color")
+        val resource = metadata.getInt("com.actito.push.ui.custom_tabs_toolbar_color")
 
         if (resource != 0) {
             try {
                 return Actito.requireContext().getColor(resource)
             } catch (e: NotFoundException) {
                 logger.warning(
-                    "Invalid color resource provided for 're.notifica.push.ui.custom_tabs_toolbar_color'.",
+                    "Invalid color resource provided for 'com.actito.push.ui.custom_tabs_toolbar_color'.",
                     e
                 )
             }
@@ -78,14 +78,14 @@ public val ActitoOptions.customTabsToolbarColor: Int?
 @get:ColorInt
 public val ActitoOptions.customTabsNavigationBarColor: Int?
     get() {
-        val resource = metadata.getInt("re.notifica.push.ui.custom_tabs_navigation_bar_color")
+        val resource = metadata.getInt("com.actito.push.ui.custom_tabs_navigation_bar_color")
 
         if (resource != 0) {
             try {
                 return Actito.requireContext().getColor(resource)
             } catch (e: NotFoundException) {
                 logger.warning(
-                    "Invalid color resource provided for 're.notifica.push.ui.custom_tabs_navigation_bar_color'.",
+                    "Invalid color resource provided for 'com.actito.push.ui.custom_tabs_navigation_bar_color'.",
                     e
                 )
             }
@@ -97,14 +97,14 @@ public val ActitoOptions.customTabsNavigationBarColor: Int?
 @get:ColorInt
 public val ActitoOptions.customTabsNavigationBarDividerColor: Int?
     get() {
-        val resource = metadata.getInt("re.notifica.push.ui.custom_tabs_navigation_bar_divider_color")
+        val resource = metadata.getInt("com.actito.push.ui.custom_tabs_navigation_bar_divider_color")
 
         if (resource != 0) {
             try {
                 return Actito.requireContext().getColor(resource)
             } catch (e: NotFoundException) {
                 logger.warning(
-                    "Invalid color resource provided for 're.notifica.push.ui.custom_tabs_navigation_bar_divider_color'.",
+                    "Invalid color resource provided for 'com.actito.push.ui.custom_tabs_navigation_bar_divider_color'.",
                     e
                 )
             }

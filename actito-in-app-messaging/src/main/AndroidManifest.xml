@@ -10,7 +10,7 @@
             android:theme="@style/Theme.Actito.Translucent">
 
             <meta-data
-                android:name="re.notifica.iam.ui.suppress_messages"
+                android:name="com.actito.iam.ui.suppress_messages"
                 android:value="true" />
 
         </activity>

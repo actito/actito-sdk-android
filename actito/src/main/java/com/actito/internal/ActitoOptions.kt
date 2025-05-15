@@ -21,16 +21,16 @@ public class ActitoOptions internal constructor(context: Context) {
 
     public val debugLoggingEnabled: Boolean
         get() {
-            return metadata.getBoolean("re.notifica.debug_logging_enabled", false)
+            return metadata.getBoolean("com.actito.debug_logging_enabled", false)
         }
 
     public val crashReportsEnabled: Boolean
         get() {
-            return metadata.getBoolean("re.notifica.crash_reports_enabled", true)
+            return metadata.getBoolean("com.actito.crash_reports_enabled", true)
         }
 
     public val notificationActionLabelPrefix: String?
         get() {
-            return metadata.getString("re.notifica.action_label_prefix", null)
+            return metadata.getString("com.actito.action_label_prefix", null)
         }
 }
