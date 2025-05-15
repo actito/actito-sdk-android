@@ -25,48 +25,48 @@ internal fun Actito.geoInternal(): ActitoInternalGeo {
 
 @InternalActitoApi
 public val Actito.INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String
-    get() = "re.notifica.intent.action.internal.LocationUpdated"
+    get() = "com.actito.intent.action.internal.LocationUpdated"
 
 @InternalActitoApi
 public val Actito.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String
-    get() = "re.notifica.intent.action.internal.GeofenceTransition"
+    get() = "com.actito.intent.action.internal.GeofenceTransition"
 
 public val Actito.INTENT_ACTION_LOCATION_UPDATED: String
-    get() = "re.notifica.intent.action.LocationUpdated"
+    get() = "com.actito.intent.action.LocationUpdated"
 
 public val Actito.INTENT_ACTION_REGION_ENTERED: String
-    get() = "re.notifica.intent.action.RegionEntered"
+    get() = "com.actito.intent.action.RegionEntered"
 
 public val Actito.INTENT_ACTION_REGION_EXITED: String
-    get() = "re.notifica.intent.action.RegionExited"
+    get() = "com.actito.intent.action.RegionExited"
 
 public val Actito.INTENT_ACTION_BEACON_ENTERED: String
-    get() = "re.notifica.intent.action.BeaconEntered"
+    get() = "com.actito.intent.action.BeaconEntered"
 
 public val Actito.INTENT_ACTION_BEACON_EXITED: String
-    get() = "re.notifica.intent.action.BeaconExited"
+    get() = "com.actito.intent.action.BeaconExited"
 
 public val Actito.INTENT_ACTION_BEACONS_RANGED: String
-    get() = "re.notifica.intent.action.BeaconsRanged"
+    get() = "com.actito.intent.action.BeaconsRanged"
 
 public val Actito.INTENT_ACTION_BEACON_NOTIFICATION_OPENED: String
-    get() = "re.notifica.intent.action.BeaconNotificationOpened"
+    get() = "com.actito.intent.action.BeaconNotificationOpened"
 
 // endregion
 
 // region Intent extras
 
 public val Actito.INTENT_EXTRA_LOCATION: String
-    get() = "re.notifica.intent.extra.Location"
+    get() = "com.actito.intent.extra.Location"
 
 public val Actito.INTENT_EXTRA_REGION: String
-    get() = "re.notifica.intent.extra.Region"
+    get() = "com.actito.intent.extra.Region"
 
 public val Actito.INTENT_EXTRA_BEACON: String
-    get() = "re.notifica.intent.extra.Beacon"
+    get() = "com.actito.intent.extra.Beacon"
 
 public val Actito.INTENT_EXTRA_RANGED_BEACONS: String
-    get() = "re.notifica.intent.extra.RangedBeacons"
+    get() = "com.actito.intent.extra.RangedBeacons"
 
 // endregion
 
