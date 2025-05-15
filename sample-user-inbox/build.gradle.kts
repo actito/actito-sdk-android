@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
     id("linting")
-    id("apps")
+    id("actito-application")
 }
 
 val properties = loadProperties("local.properties")
