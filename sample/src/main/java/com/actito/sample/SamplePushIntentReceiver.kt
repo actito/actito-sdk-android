@@ -94,7 +94,7 @@ class SamplePushIntentReceiver : ActitoPushIntentReceiver() {
 
     companion object {
         const val INTENT_ACTION_COFFEE_BREWER_DISMISS =
-            "re.notifica.sample.intent.action.CoffeeBrewerDismiss"
+            "com.actito.sample.intent.action.CoffeeBrewerDismiss"
 
         private const val DEFAULT_DISMISSAL_MILLISECONDS: Long = 4 * 60 * 60 * 1000
     }
