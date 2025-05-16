@@ -1,11 +1,10 @@
-package com.actito.geo.gms
+package com.actito.geo.internal
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.location.Location
 import com.actito.Actito
-import com.actito.geo.internal.logger
 import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION
 import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_LOCATION_UPDATED
 import com.actito.geo.ktx.geoInternal
