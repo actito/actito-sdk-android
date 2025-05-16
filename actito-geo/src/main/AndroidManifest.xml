@@ -12,7 +12,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.actito.intent.action.internal.LocationUpdated" />
-                <action android:name="com.actito.action.internal.GeofenceTransition" />
+                <action android:name="com.actito.intent.action.internal.GeofenceTransition" />
             </intent-filter>
         </receiver>
 
