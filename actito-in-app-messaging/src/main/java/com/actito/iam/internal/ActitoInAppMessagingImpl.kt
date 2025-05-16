@@ -30,7 +30,7 @@ import com.actito.ktx.device
 
 @Keep
 internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging {
-    private const val MANIFEST_SUPPRESS_MESSAGES_ACTIVITY_KEY = "re.notifica.iam.ui.suppress_messages"
+    private const val MANIFEST_SUPPRESS_MESSAGES_ACTIVITY_KEY = "com.actito.iam.ui.suppress_messages"
     private const val DEFAULT_BACKGROUND_GRACE_PERIOD_MILLIS = 5 * 60 * 1000L
 
     private var foregroundActivitiesCounter = 0

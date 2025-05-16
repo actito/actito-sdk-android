@@ -21,17 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="re.notifica.intent.action.RemoteMessageOpened" />
+                <action android:name="com.actito.intent.action.RemoteMessageOpened" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
-                <action android:name="re.notifica.intent.action.NotificationOpened" />
+                <action android:name="com.actito.intent.action.NotificationOpened" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
-                <action android:name="re.notifica.intent.action.ActionOpened" />
+                <action android:name="com.actito.intent.action.ActionOpened" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -55,15 +55,15 @@
             android:theme="@style/Theme.App.Actito.Translucent" />
 
         <meta-data
-            android:name="re.notifica.debug_logging_enabled"
+            android:name="com.actito.debug_logging_enabled"
             android:value="true" />
 
         <meta-data
-            android:name="re.notifica.push.notification_small_icon"
+            android:name="com.actito.push.notification_small_icon"
             android:resource="@drawable/ic_rocket_black_24dp" />
 
         <meta-data
-            android:name="re.notifica.push.ui.show_notification_toasts"
+            android:name="com.actito.push.ui.show_notification_toasts"
             android:value="true" />
 
         <meta-data

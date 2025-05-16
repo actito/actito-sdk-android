@@ -12,13 +12,13 @@ public fun Actito.loyalty(): ActitoLoyalty {
 // region Intent actions
 
 public val Actito.INTENT_ACTION_PASSBOOK_OPENED: String
-    get() = "re.notifica.intent.action.PassbookOpened"
+    get() = "com.actito.intent.action.PassbookOpened"
 
 // endregion
 
 // region Intent extras
 
 public val Actito.INTENT_EXTRA_PASSBOOK: String
-    get() = "re.notifica.intent.extra.Passbook"
+    get() = "com.actito.intent.extra.Passbook"
 
 // endregion

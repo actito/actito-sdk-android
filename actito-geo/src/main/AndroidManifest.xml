@@ -11,8 +11,8 @@
             android:name="com.actito.geo.gms.LocationReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="re.notifica.intent.action.internal.LocationUpdated" />
-                <action android:name="re.notifica.intent.action.internal.GeofenceTransition" />
+                <action android:name="com.actito.intent.action.internal.LocationUpdated" />
+                <action android:name="com.actito.intent.action.internal.GeofenceTransition" />
             </intent-filter>
         </receiver>
 

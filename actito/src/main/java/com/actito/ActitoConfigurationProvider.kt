@@ -58,6 +58,6 @@ internal class ActitoConfigurationProvider : ContentProvider() {
 
         val metadata = info.metaData ?: bundleOf()
 
-        return metadata.getBoolean("re.notifica.auto_configuration_enabled", true)
+        return metadata.getBoolean("com.actito.auto_configuration_enabled", true)
     }
 }

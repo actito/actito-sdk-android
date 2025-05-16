@@ -4,6 +4,6 @@ import com.actito.internal.ActitoOptions
 
 public val ActitoOptions.monitoredRegionsLimit: Int?
     get() {
-        if (!metadata.containsKey("re.notifica.geo.monitored_regions_limit")) return null
-        return metadata.getInt("re.notifica.geo.monitored_regions_limit")
+        if (!metadata.containsKey("com.actito.geo.monitored_regions_limit")) return null
+        return metadata.getInt("com.actito.geo.monitored_regions_limit")
     }
