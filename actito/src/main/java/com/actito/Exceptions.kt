@@ -21,3 +21,7 @@ public class ActitoServiceUnavailableException(
 ) : Exception(
     "Actito '$service' service is not available. Check the dashboard and documentation to enable it."
 )
+
+public class ActitoGoogleServicesUnavailableException : Exception(
+    "Google services are not available on this device. Ensure they are installed and up to date."
+)
