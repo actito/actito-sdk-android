@@ -26,27 +26,14 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.asLiveData
-import com.google.firebase.messaging.RemoteMessage
-import java.net.URLEncoder
-import java.util.Date
-import java.util.concurrent.atomic.AtomicInteger
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import com.actito.Actito
 import com.actito.ActitoApplicationUnavailableException
 import com.actito.ActitoCallback
 import com.actito.ActitoDeviceUnavailableException
+import com.actito.ActitoGoogleServicesUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
 import com.actito.internal.ActitoModule
-import com.actito.utilities.coroutines.actitoCoroutineScope
-import com.actito.utilities.parcel.parcelable
-import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.ktx.events
@@ -98,7 +85,26 @@ import com.actito.push.notificationLightsColor
 import com.actito.push.notificationLightsOff
 import com.actito.push.notificationLightsOn
 import com.actito.push.notificationSmallIcon
+import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.utilities.image.loadBitmap
+import com.actito.utilities.parcel.parcelable
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.RemoteMessage
+import com.google.firebase.messaging.ktx.messaging
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.net.URLEncoder
+import java.util.Date
+import java.util.concurrent.atomic.AtomicInteger
 
 @Keep
 internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush {
@@ -109,10 +115,11 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
     private val _subscriptionStream = MutableStateFlow<ActitoPushSubscription?>(null)
     private val _allowedUIStream = MutableStateFlow(false)
 
-    internal lateinit var sharedPreferences: ActitoSharedPreferences
-        private set
+    private val isGoogleServicesAvailable: Boolean
+        get() = GoogleApiAvailability.getInstance()
+            .isGooglePlayServicesAvailable(Actito.requireContext()) == ConnectionResult.SUCCESS
 
-    internal var serviceManager: ServiceManager? = null
+    internal lateinit var sharedPreferences: ActitoSharedPreferences
         private set
 
     // region Actito Module
@@ -148,7 +155,6 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
 
         sharedPreferences = ActitoSharedPreferences(Actito.requireContext())
-        serviceManager = ServiceManager.Companion.create()
 
         checkPushPermissions()
 
@@ -288,6 +294,11 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         if (application.services[ActitoApplication.ServiceKeys.GCM] != true) {
             logger.warning("Push notifications service is not enabled.")
             throw ActitoServiceUnavailableException(service = ActitoApplication.ServiceKeys.GCM)
+        }
+
+        if (!isGoogleServicesAvailable) {
+            logger.warning("Google Play Services are not available. Failed to enable push notifications")
+            throw ActitoGoogleServicesUnavailableException()
         }
 
         // Keep track of the status in local storage.
@@ -936,10 +947,8 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
     }
 
     private suspend fun updateDeviceSubscription(): Unit = withContext(Dispatchers.IO) {
-        val serviceManager = checkNotNull(serviceManager)
-
-        val transport = serviceManager.transport
-        val token = serviceManager.getPushToken()
+        val transport = ActitoTransport.GCM
+        val token = Firebase.messaging.token.await()
 
         updateDeviceSubscription(transport, token)
     }

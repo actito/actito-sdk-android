@@ -8,7 +8,7 @@
     <application>
 
         <receiver
-            android:name="com.actito.geo.gms.LocationReceiver"
+            android:name="com.actito.geo.internal.LocationReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.actito.intent.action.internal.LocationUpdated" />
