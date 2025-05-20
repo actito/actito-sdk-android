@@ -760,6 +760,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             }
         }
     }
+
     private fun setupLocationService(context: Context) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         geofencingClient = LocationServices.getGeofencingClient(context)
