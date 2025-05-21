@@ -5,7 +5,7 @@
     <ID>ComplexCondition:ActitoWebPassFragment.kt$ActitoWebPassFragment$content?.type != ActitoNotification.Content.TYPE_PK_PASS || passUrlStr == null || application == null || host == null</ID>
     <ID>ComplexCondition:NotificationContainerFragment.kt$NotificationContainerFragment$action == null &amp;&amp; notification.type != ActitoNotification.TYPE_ALERT &amp;&amp; notification.type != ActitoNotification.TYPE_PASSBOOK &amp;&amp; notification.actions.isNotEmpty()</ID>
     <ID>MaxLineLength:ActitoCallbackActionFragment.kt$ActitoCallbackActionFragment$ActitoPendingResult.CAPTURE_IMAGE_AND_KEYBOARD_REQUEST_CODE -&gt; R.layout.actito_action_callback_camera_keyboard</ID>
-    <ID>MaxLineLength:ActitoOptions.kt$"Invalid color resource provided for 're.notifica.push.ui.custom_tabs_navigation_bar_divider_color'."</ID>
+    <ID>MaxLineLength:ActitoOptions.kt$"Invalid color resource provided for 'com.actito.push.ui.custom_tabs_navigation_bar_divider_color'."</ID>
     <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Action failed to execute, please override onActionFailedToExecute if you want to receive these events."</ID>
     <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Notification failed to present, please override onNotificationFailedToPresent if you want to receive these events."</ID>
     <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Notification finished presenting, please override onNotificationFinishedPresenting if you want to receive these events."</ID>
