@@ -1,6 +1,6 @@
 plugins {
     id("actito-library")
-    id("publishing")
+    id("publish")
     id("linting")
 }
 

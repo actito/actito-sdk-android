@@ -1,7 +1,7 @@
 plugins {
     id("actito-library")
-    id("linting")
     id("publish")
+    id("linting")
 }
 
 android {
