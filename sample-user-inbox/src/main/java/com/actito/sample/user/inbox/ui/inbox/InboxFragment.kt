@@ -69,7 +69,7 @@ internal class InboxFragment : BaseFragment() {
                 }
             },
             viewLifecycleOwner,
-            Lifecycle.State.RESUMED
+            Lifecycle.State.RESUMED,
         )
     }
 
@@ -93,7 +93,7 @@ internal class InboxFragment : BaseFragment() {
         InboxItemActionsBottomSheet(
             onOpenClicked = { onInboxItemClicked(item) },
             onMarkAsReadClicked = { markItemAsRead(item) },
-            onRemoveClicked = { removeItem(item) }
+            onRemoveClicked = { removeItem(item) },
         ).show(childFragmentManager, "options-bottom-sheet")
     }
 

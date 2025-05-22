@@ -1,8 +1,8 @@
 package com.actito.scannables.internal.network.push
 
-import com.squareup.moshi.JsonClass
 import com.actito.internal.network.push.NotificationResponse
 import com.actito.scannables.models.ActitoScannable
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class FetchScannableResponse(
@@ -20,7 +20,7 @@ internal data class FetchScannableResponse(
 
         @JsonClass(generateAdapter = true)
         internal data class ScannableData(
-            val notification: NotificationResponse.Notification?
+            val notification: NotificationResponse.Notification?,
         )
 
         internal fun toModel(): ActitoScannable {

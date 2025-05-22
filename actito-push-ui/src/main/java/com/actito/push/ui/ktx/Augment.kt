@@ -34,7 +34,7 @@ internal fun Actito.loyaltyIntegration(): ActitoLoyaltyIntegration? {
 
     val integration = instance as? ActitoLoyaltyIntegration ?: run {
         logger.debug(
-            "Loyalty module instance does not comply with the ActitoLoyaltyIntegration interface."
+            "Loyalty module instance does not comply with the ActitoLoyaltyIntegration interface.",
         )
         return null
     }

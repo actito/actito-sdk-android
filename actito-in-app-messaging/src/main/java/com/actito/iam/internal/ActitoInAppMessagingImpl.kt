@@ -5,13 +5,6 @@ import android.app.Application
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.annotation.Keep
-import java.lang.ref.WeakReference
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoDeviceUnavailableException
 import com.actito.iam.ActitoInAppMessaging
@@ -21,12 +14,19 @@ import com.actito.iam.internal.network.push.InAppMessageResponse
 import com.actito.iam.models.ActitoInAppMessage
 import com.actito.iam.ui.InAppMessagingActivity
 import com.actito.internal.ActitoModule
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.content.activityInfo
-import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.internal.network.NetworkException
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
+import com.actito.utilities.content.activityInfo
+import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.ref.WeakReference
 
 @Keep
 internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging {
@@ -170,7 +170,7 @@ internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging 
 
         if (hasExpiredBackgroundPeriod) {
             logger.debug(
-                "The current in-app message should have been dismissed for being in the background for longer than the grace period."
+                "The current in-app message should have been dismissed for being in the background for longer than the grace period.",
             )
             isShowingMessage = false
         }
@@ -182,7 +182,7 @@ internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging 
 
         if (isShowingMessage) {
             logger.debug(
-                "Skipping context evaluation since there is another in-app message being presented."
+                "Skipping context evaluation since there is another in-app message being presented.",
             )
             return
         }
@@ -199,7 +199,7 @@ internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging 
             val suppressed = info.metaData.getBoolean(MANIFEST_SUPPRESS_MESSAGES_ACTIVITY_KEY, false)
             if (suppressed) {
                 logger.debug(
-                    "Skipping context evaluation since in-app messages on ${activity::class.java.simpleName} are being suppressed."
+                    "Skipping context evaluation since in-app messages on ${activity::class.java.simpleName} are being suppressed.",
                 )
                 return
             }
@@ -240,7 +240,7 @@ internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging 
             delayedMessageJob = actitoCoroutineScope.launch {
                 try {
                     logger.debug(
-                        "Waiting ${message.delaySeconds} seconds before presenting the in-app message."
+                        "Waiting ${message.delaySeconds} seconds before presenting the in-app message.",
                     )
                     delay(message.delaySeconds * 1000L)
                     present(message)
@@ -310,7 +310,7 @@ internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging 
 
             val activity = currentActivity?.get() ?: run {
                 logger.warning(
-                    "Cannot display an in-app message without a reference to the current activity."
+                    "Cannot display an in-app message without a reference to the current activity.",
                 )
 
                 onMainThread {
@@ -340,7 +340,7 @@ internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging 
     }
 
     private suspend fun fetchInAppMessage(
-        context: ApplicationContext
+        context: ApplicationContext,
     ): ActitoInAppMessage = withContext(Dispatchers.IO) {
         val device = Actito.device().currentDevice
             ?: throw ActitoDeviceUnavailableException()

@@ -3,13 +3,13 @@ package com.actito.inbox.internal.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
 import com.actito.inbox.internal.network.push.InboxResponse
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.models.ActitoNotification
+import java.util.Date
 
 @Entity(
-    tableName = "inbox"
+    tableName = "inbox",
 )
 internal data class InboxItemEntity(
     @PrimaryKey @ColumnInfo(name = "id") val id: String,

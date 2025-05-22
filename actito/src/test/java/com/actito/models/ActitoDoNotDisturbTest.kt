@@ -13,7 +13,7 @@ public class ActitoDoNotDisturbTest {
     public fun testActitoDoNotDisturbSerialization() {
         val dnd = ActitoDoNotDisturb(
             start = ActitoTime(hours = 20, minutes = 0),
-            end = ActitoTime(hours = 21, minutes = 0)
+            end = ActitoTime(hours = 21, minutes = 0),
         )
 
         val convertedDnd = ActitoDoNotDisturb.fromJson(dnd.toJson())

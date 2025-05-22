@@ -6,12 +6,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.actito.sample.live_activities.models.CoffeeBrewerContentState
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import com.actito.sample.live_activities.models.CoffeeBrewerContentState
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "com.actito.sample.datastore")
 private val KEY_COFFEE_BREWER_CONTENT_STATE = stringPreferencesKey("coffee_brewer_content_state")
@@ -29,7 +29,7 @@ class ActitoDataStore(context: Context) {
         }
 
     suspend fun updateCoffeeBrewerContentState(
-        contentState: CoffeeBrewerContentState?
+        contentState: CoffeeBrewerContentState?,
     ): Unit = withContext(Dispatchers.IO) {
         dataStore.edit { preferences ->
             val str = contentState?.let {

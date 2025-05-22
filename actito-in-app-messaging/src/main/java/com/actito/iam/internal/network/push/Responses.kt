@@ -1,8 +1,8 @@
 package com.actito.iam.internal.network.push
 
-import com.squareup.moshi.JsonClass
 import com.actito.iam.models.ActitoInAppMessage
 import com.actito.utilities.moshi.UseDefaultsWhenNull
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class InAppMessageResponse(

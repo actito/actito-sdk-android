@@ -18,9 +18,9 @@ public class ActitoDeviceTest {
             timeZoneOffset = 1.5,
             dnd = ActitoDoNotDisturb(
                 start = ActitoTime(hours = 20, minutes = 0),
-                end = ActitoTime(hours = 21, minutes = 0)
+                end = ActitoTime(hours = 21, minutes = 0),
             ),
-            userData = mapOf("testKey" to "testValue")
+            userData = mapOf("testKey" to "testValue"),
         )
 
         val convertedDevice = ActitoDevice.fromJson(device.toJson())
@@ -36,7 +36,7 @@ public class ActitoDeviceTest {
             userName = null,
             timeZoneOffset = 1.5,
             dnd = null,
-            userData = mapOf("testKey" to "testValue")
+            userData = mapOf("testKey" to "testValue"),
         )
 
         val convertedDevice = ActitoDevice.fromJson(device.toJson())

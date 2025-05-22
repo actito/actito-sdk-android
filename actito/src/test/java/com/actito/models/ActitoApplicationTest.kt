@@ -1,11 +1,11 @@
 package com.actito.models
 
+import com.actito.models.ActitoNotification.Action.Companion.TYPE_APP
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.models.ActitoNotification.Action.Companion.TYPE_APP
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE)
@@ -20,17 +20,17 @@ public class ActitoApplicationTest {
             inboxConfig = ActitoApplication.InboxConfig(
                 useInbox = true,
                 useUserInbox = true,
-                autoBadge = true
+                autoBadge = true,
             ),
             regionConfig = ActitoApplication.RegionConfig(
-                proximityUUID = "testProximityUUID"
+                proximityUUID = "testProximityUUID",
             ),
             userDataFields = listOf(
                 ActitoApplication.UserDataField(
                     type = "testType",
                     key = "testKey",
-                    label = "testLabel"
-                )
+                    label = "testLabel",
+                ),
             ),
             actionCategories = listOf(
                 ActitoApplication.ActionCategory(
@@ -48,12 +48,12 @@ public class ActitoApplicationTest {
                             icon = ActitoNotification.Action.Icon(
                                 android = "testAndroid",
                                 ios = "testIos",
-                                web = "testWeb"
-                            )
-                        )
-                    )
-                )
-            )
+                                web = "testWeb",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         )
 
         val convertedApplication = ActitoApplication.fromJson(application.toJson())
@@ -74,8 +74,8 @@ public class ActitoApplicationTest {
                 ActitoApplication.UserDataField(
                     type = "testType",
                     key = "testKey",
-                    label = "testLabel"
-                )
+                    label = "testLabel",
+                ),
             ),
             actionCategories = listOf(
                 ActitoApplication.ActionCategory(
@@ -93,12 +93,12 @@ public class ActitoApplicationTest {
                             icon = ActitoNotification.Action.Icon(
                                 android = "testAndroid",
                                 ios = "testIos",
-                                web = "testWeb"
-                            )
-                        )
-                    )
-                )
-            )
+                                web = "testWeb",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         )
 
         val convertedApplication = ActitoApplication.fromJson(application.toJson())
@@ -111,7 +111,7 @@ public class ActitoApplicationTest {
         val inboxConfig = ActitoApplication.InboxConfig(
             useInbox = true,
             useUserInbox = true,
-            autoBadge = true
+            autoBadge = true,
         )
 
         val convertedConfig = ActitoApplication.InboxConfig.fromJson(inboxConfig.toJson())
@@ -131,7 +131,7 @@ public class ActitoApplicationTest {
     @Test
     public fun testRegionConfigSerialization() {
         val regionConfig = ActitoApplication.RegionConfig(
-            proximityUUID = "testProximityUUID"
+            proximityUUID = "testProximityUUID",
         )
 
         val convertedRegionConfig = ActitoApplication.RegionConfig.fromJson(regionConfig.toJson())
@@ -142,7 +142,7 @@ public class ActitoApplicationTest {
     @Test
     public fun testRegionConfigSerializationWithNullProps() {
         val regionConfig = ActitoApplication.RegionConfig(
-            proximityUUID = null
+            proximityUUID = null,
         )
 
         val convertedRegionConfig = ActitoApplication.RegionConfig.fromJson(regionConfig.toJson())
@@ -155,7 +155,7 @@ public class ActitoApplicationTest {
         val userDataField = ActitoApplication.UserDataField(
             type = "testType",
             key = "testKey",
-            label = "testLabel"
+            label = "testLabel",
         )
 
         val convertedUserDataField = ActitoApplication.UserDataField.fromJson(userDataField.toJson())
@@ -180,10 +180,10 @@ public class ActitoApplicationTest {
                     icon = ActitoNotification.Action.Icon(
                         android = "testAndroid",
                         ios = "testIos",
-                        web = "testWeb"
-                    )
-                )
-            )
+                        web = "testWeb",
+                    ),
+                ),
+            ),
         )
 
         val convertedActionCategory = ActitoApplication.ActionCategory.fromJson(actionCategory.toJson())
@@ -208,10 +208,10 @@ public class ActitoApplicationTest {
                     icon = ActitoNotification.Action.Icon(
                         android = "testAndroid",
                         ios = "testIos",
-                        web = "testWeb"
-                    )
-                )
-            )
+                        web = "testWeb",
+                    ),
+                ),
+            ),
         )
 
         val convertedActionCategory = ActitoApplication.ActionCategory.fromJson(actionCategory.toJson())

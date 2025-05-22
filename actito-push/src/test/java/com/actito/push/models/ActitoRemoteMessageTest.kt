@@ -1,12 +1,12 @@
 package com.actito.push.models
 
 import android.net.Uri
+import com.actito.models.ActitoNotification
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.models.ActitoNotification
 import java.util.Date
 
 @RunWith(RobolectricTestRunner::class)
@@ -51,9 +51,9 @@ public class ActitoRemoteMessageTest {
                 notificationCount = 1,
                 eventTime = 1,
                 lightSettings = listOf(1),
-                vibrateSettings = listOf(1)
+                vibrateSettings = listOf(1),
             ),
-            data = mapOf("testKey" to "testValue")
+            data = mapOf("testKey" to "testValue"),
         )
 
         val notification = ActitoUnknownRemoteMessage(
@@ -93,9 +93,9 @@ public class ActitoRemoteMessageTest {
                 notificationCount = 1,
                 eventTime = 1,
                 lightSettings = listOf(1),
-                vibrateSettings = listOf(1)
+                vibrateSettings = listOf(1),
             ),
-            data = mapOf("testKey" to "testValue")
+            data = mapOf("testKey" to "testValue"),
         ).toNotification()
 
         assertEquals(expectedNotification, notification)
@@ -115,7 +115,7 @@ public class ActitoRemoteMessageTest {
             priority = 1,
             originalPriority = 1,
             notification = null,
-            data = mapOf("testKey" to "testValue")
+            data = mapOf("testKey" to "testValue"),
         )
 
         val notification = ActitoUnknownRemoteMessage(
@@ -130,7 +130,7 @@ public class ActitoRemoteMessageTest {
             priority = 1,
             originalPriority = 1,
             notification = null,
-            data = mapOf("testKey" to "testValue")
+            data = mapOf("testKey" to "testValue"),
         ).toNotification()
 
         assertEquals(expectedNotification, notification)
@@ -151,10 +151,10 @@ public class ActitoRemoteMessageTest {
             attachments = listOf(
                 ActitoNotification.Attachment(
                     mimeType = "testMimeType",
-                    uri = "testUri"
-                )
+                    uri = "testUri",
+                ),
             ),
-            extra = mapOf("testKey" to "testValue")
+            extra = mapOf("testKey" to "testValue"),
         )
 
         val notification = ActitoNotificationRemoteMessage(
@@ -172,7 +172,7 @@ public class ActitoRemoteMessageTest {
             alertSubtitle = "testAlertSubtitle",
             attachment = ActitoNotification.Attachment(
                 mimeType = "testMimeType",
-                uri = "testUri"
+                uri = "testUri",
             ),
             actionCategory = "testActionCategory",
             extra = mapOf("testKey" to "testValue"),
@@ -184,7 +184,7 @@ public class ActitoRemoteMessageTest {
             sound = "testSound",
             lightsColor = "testColor",
             lightsOn = 1,
-            lightsOff = 1
+            lightsOff = 1,
         ).toNotification()
 
         assertEquals(expectedNotification, notification)
@@ -203,7 +203,7 @@ public class ActitoRemoteMessageTest {
             content = emptyList(),
             actions = emptyList(),
             attachments = emptyList(),
-            extra = mapOf("testKey" to "testValue")
+            extra = mapOf("testKey" to "testValue"),
         )
 
         val notification = ActitoNotificationRemoteMessage(
@@ -230,7 +230,7 @@ public class ActitoRemoteMessageTest {
             sound = null,
             lightsColor = null,
             lightsOn = null,
-            lightsOff = null
+            lightsOff = null,
         ).toNotification()
 
         assertEquals(expectedNotification, notification)

@@ -15,8 +15,8 @@ import com.actito.iam.internal.logger
 import com.actito.iam.ktx.INTENT_EXTRA_IN_APP_MESSAGE
 import com.actito.iam.ktx.inAppMessagingImplementation
 import com.actito.iam.models.ActitoInAppMessage
-import com.actito.utilities.threading.onMainThread
 import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
 
 public open class InAppMessagingActivity : AppCompatActivity() {
 
@@ -52,7 +52,7 @@ public open class InAppMessagingActivity : AppCompatActivity() {
 
             if (expired) {
                 logger.debug(
-                    "Dismissing the current in-app message for being in the background for longer than the grace period."
+                    "Dismissing the current in-app message for being in the background for longer than the grace period.",
                 )
                 return finish()
             }
@@ -82,7 +82,7 @@ public open class InAppMessagingActivity : AppCompatActivity() {
 
         if (expired) {
             logger.debug(
-                "Dismissing the current in-app message for being in the background for longer than the grace period."
+                "Dismissing the current in-app message for being in the background for longer than the grace period.",
             )
             return finish()
         }
@@ -123,7 +123,7 @@ public open class InAppMessagingActivity : AppCompatActivity() {
         internal fun show(activity: Activity, message: ActitoInAppMessage) {
             activity.startActivity(
                 Intent(activity, InAppMessagingActivity::class.java)
-                    .putExtra(Actito.INTENT_EXTRA_IN_APP_MESSAGE, message)
+                    .putExtra(Actito.INTENT_EXTRA_IN_APP_MESSAGE, message),
             )
 
             // Disable the animation transition.

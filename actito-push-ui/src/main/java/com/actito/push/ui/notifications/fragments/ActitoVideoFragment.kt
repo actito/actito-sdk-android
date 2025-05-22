@@ -9,11 +9,11 @@ import android.webkit.WebChromeClient
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.push.ui.databinding.ActitoNotificationVideoFragmentBinding
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.utils.NotificationWebViewClient
+import com.actito.utilities.threading.onMainThread
 
 public class ActitoVideoFragment : NotificationFragment() {
 
@@ -47,7 +47,7 @@ public class ActitoVideoFragment : NotificationFragment() {
                 onMainThread {
                     Actito.pushUIInternal().lifecycleListeners.forEach {
                         it.get()?.onNotificationFailedToPresent(
-                            notification
+                            notification,
                         )
                     }
                 }
@@ -207,7 +207,7 @@ public class ActitoVideoFragment : NotificationFragment() {
 
             view.layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
+                FrameLayout.LayoutParams.MATCH_PARENT,
             )
 
             customView = view

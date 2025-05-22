@@ -6,20 +6,20 @@ import android.content.Intent
 import android.net.Uri
 import android.nfc.NfcManager
 import androidx.annotation.Keep
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.internal.ActitoModule
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.parcel.putEnumExtra
-import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.scannables.ActitoScannables
 import com.actito.scannables.ScannableActivity
 import com.actito.scannables.internal.network.push.FetchScannableResponse
 import com.actito.scannables.models.ActitoScannable
+import com.actito.utilities.coroutines.toCallbackFunction
+import com.actito.utilities.parcel.putEnumExtra
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 @Keep
@@ -36,7 +36,7 @@ internal object ActitoScannablesImpl : ActitoModule(), ActitoScannables {
         get() {
             if (!Actito.isConfigured) {
                 logger.warning(
-                    "You must configure Actito before executing 'canStartNfcScannableSession'."
+                    "You must configure Actito before executing 'canStartNfcScannableSession'.",
                 )
                 return false
             }

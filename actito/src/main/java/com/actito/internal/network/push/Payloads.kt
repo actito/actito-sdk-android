@@ -1,9 +1,9 @@
 package com.actito.internal.network.push
 
+import com.actito.models.ActitoDoNotDisturb
+import com.actito.utilities.moshi.EncodeNulls
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.actito.utilities.moshi.EncodeNulls
-import com.actito.models.ActitoDoNotDisturb
 
 @EncodeNulls
 @JsonClass(generateAdapter = true)

@@ -4,5 +4,5 @@ internal enum class ActitoLaunchState {
     NONE,
     CONFIGURED,
     LAUNCHING,
-    READY
+    READY,
 }

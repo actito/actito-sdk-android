@@ -24,14 +24,14 @@ public class ActitoPassTest {
             redeemHistory = listOf(
                 ActitoPass.Redemption(
                     comments = "testComments",
-                    date = Date()
-                )
+                    date = Date(),
+                ),
             ),
             limit = 1,
             token = "testToken",
             data = mapOf("testKey" to "testValue"),
             date = Date(),
-            googlePaySaveLink = "testGooglePaySaveLink"
+            googlePaySaveLink = "testGooglePaySaveLink",
         )
 
         val convertedPass = ActitoPass.fromJson(pass.toJson())
@@ -53,13 +53,13 @@ public class ActitoPassTest {
             redeemHistory = listOf(
                 ActitoPass.Redemption(
                     comments = "testComments",
-                    date = Date()
-                )
+                    date = Date(),
+                ),
             ),
             limit = 1,
             token = "testToken",
             date = Date(),
-            googlePaySaveLink = null
+            googlePaySaveLink = null,
         )
 
         val convertedPass = ActitoPass.fromJson(pass.toJson())

@@ -69,7 +69,7 @@ class AssetsFragment : BaseFragment() {
                                     override fun onQueryTextChange(s: String): Boolean {
                                         return false
                                     }
-                                }
+                                },
                             )
                         }
                     }
@@ -78,7 +78,7 @@ class AssetsFragment : BaseFragment() {
                 }
             },
             viewLifecycleOwner,
-            Lifecycle.State.RESUMED
+            Lifecycle.State.RESUMED,
         )
     }
 

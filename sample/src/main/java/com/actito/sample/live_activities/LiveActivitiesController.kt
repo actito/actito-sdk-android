@@ -6,10 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ktx.events
 import com.actito.push.ktx.push
@@ -18,7 +14,11 @@ import com.actito.sample.R
 import com.actito.sample.live_activities.models.CoffeeBrewerContentState
 import com.actito.sample.live_activities.ui.CoffeeLiveNotification
 import com.actito.sample.storage.datastore.ActitoDataStore
-import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.withContext
+import java.util.UUID
 import java.util.concurrent.atomic.AtomicInteger
 
 @SuppressLint("StaticFieldLeak")
@@ -50,7 +50,7 @@ object LiveActivitiesController {
         val channel = NotificationChannel(
             CHANNEL_LIVE_ACTIVITIES,
             context.getString(R.string.notification_channel_live_activities_title),
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_DEFAULT,
         )
 
         channel.description =
@@ -77,7 +77,7 @@ object LiveActivitiesController {
     // region Coffee Brewer
 
     suspend fun createCoffeeActivity(
-        contentState: CoffeeBrewerContentState
+        contentState: CoffeeBrewerContentState,
     ): Unit = withContext(Dispatchers.IO) {
         // Present the notification UI.
         updateCoffeeActivity(contentState)
@@ -88,7 +88,7 @@ object LiveActivitiesController {
             data = mapOf(
                 "activity" to LiveActivity.COFFEE_BREWER.identifier,
                 "activityId" to UUID.randomUUID().toString(),
-            )
+            ),
         )
 
         // Register on Actito to receive updates.
@@ -96,7 +96,7 @@ object LiveActivitiesController {
     }
 
     suspend fun updateCoffeeActivity(
-        contentState: CoffeeBrewerContentState
+        contentState: CoffeeBrewerContentState,
     ): Unit = withContext(Dispatchers.IO) {
         // Present the notification UI.
         val ongoingNotification = _notificationManager.activeNotifications
@@ -105,7 +105,7 @@ object LiveActivitiesController {
         _notificationManager.notify(
             LiveActivity.COFFEE_BREWER.identifier,
             ongoingNotification?.id ?: notificationCounter.incrementAndGet(),
-            CoffeeLiveNotification(context, contentState).build()
+            CoffeeLiveNotification(context, contentState).build(),
         )
 
         // Persist the state to storage.

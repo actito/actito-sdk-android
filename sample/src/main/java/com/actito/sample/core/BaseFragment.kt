@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.actito.sample.ktx.Event
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import com.actito.sample.ktx.Event
 
 abstract class BaseFragment : Fragment() {
     abstract val baseViewModel: BaseViewModel

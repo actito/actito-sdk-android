@@ -1,11 +1,11 @@
 package com.actito.push.ktx
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.ActitoEventsModule
 import com.actito.utilities.coroutines.toCallbackFunction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Suppress("unused")
 public suspend fun ActitoEventsModule.logNotificationReceived(id: String): Unit = withContext(Dispatchers.IO) {

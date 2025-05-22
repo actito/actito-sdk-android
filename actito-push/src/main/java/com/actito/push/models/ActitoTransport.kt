@@ -12,7 +12,9 @@ public enum class ActitoTransport : Parcelable {
     NOTIFICARE,
 
     @Json(name = "GCM")
-    GCM;
+    GCM,
+
+    ;
 
     public val rawValue: String
         get() = when (this) {

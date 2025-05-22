@@ -12,13 +12,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.util.isEmpty
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
+import com.actito.scannables.R
+import com.actito.scannables.ScannableActivity
+import com.actito.scannables.internal.logger
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
-import com.actito.scannables.R
-import com.actito.scannables.ScannableActivity
-import com.actito.scannables.internal.logger
 
 public class QrCodeScannerFragment : Fragment(R.layout.actito_scannable_qr_code_fragment) {
 
@@ -29,7 +29,7 @@ public class QrCodeScannerFragment : Fragment(R.layout.actito_scannable_qr_code_
         get() {
             return ActivityCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.CAMERA
+                Manifest.permission.CAMERA,
             ) == PackageManager.PERMISSION_GRANTED
         }
 

@@ -4,10 +4,10 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.internal.logger
+import com.actito.utilities.parcel.parcelable
 
 public class NotificationActionsDialog : DialogFragment() {
 

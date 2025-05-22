@@ -10,7 +10,7 @@ import com.actito.internal.storage.database.entities.ActitoEventEntity
 @Database(
     version = 2,
     entities = [
-        ActitoEventEntity::class
+        ActitoEventEntity::class,
     ],
 )
 internal abstract class ActitoDatabase : RoomDatabase() {
@@ -24,7 +24,7 @@ internal abstract class ActitoDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context,
                 ActitoDatabase::class.java,
-                DB_NAME
+                DB_NAME,
             ).fallbackToDestructiveMigration().build()
         }
     }

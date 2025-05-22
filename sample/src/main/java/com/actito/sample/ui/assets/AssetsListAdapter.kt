@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.actito.assets.models.ActitoAsset
 import com.actito.sample.R
 import com.actito.sample.databinding.ItemAssetBinding
+import com.bumptech.glide.Glide
 
 class AssetsListAdapter(
-    private val onAssetClicked: (ActitoAsset) -> Unit
+    private val onAssetClicked: (ActitoAsset) -> Unit,
 ) : ListAdapter<ActitoAsset, RecyclerView.ViewHolder>(AssetsDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ItemViewHolder(
-            ItemAssetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemAssetBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         )
     }
 
@@ -25,7 +25,7 @@ class AssetsListAdapter(
     }
 
     private inner class ItemViewHolder(
-        private val binding: ItemAssetBinding
+        private val binding: ItemAssetBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ActitoAsset) {

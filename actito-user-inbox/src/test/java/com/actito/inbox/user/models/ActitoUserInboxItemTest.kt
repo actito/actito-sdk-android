@@ -21,11 +21,11 @@ public class ActitoUserInboxItemTest {
                 time = Date(),
                 title = "testTitle",
                 subtitle = "testSubtitle",
-                message = "testMessage"
+                message = "testMessage",
             ),
             time = Date(),
             opened = true,
-            expires = Date()
+            expires = Date(),
         )
 
         val convertedItem = ActitoUserInboxItem.fromJson(item.toJson())
@@ -43,11 +43,11 @@ public class ActitoUserInboxItemTest {
                 time = Date(),
                 title = "testTitle",
                 subtitle = "testSubtitle",
-                message = "testMessage"
+                message = "testMessage",
             ),
             time = Date(),
             opened = true,
-            expires = null
+            expires = null,
         )
 
         val convertedItem = ActitoUserInboxItem.fromJson(item.toJson())

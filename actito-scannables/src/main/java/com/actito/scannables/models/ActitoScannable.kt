@@ -1,12 +1,12 @@
 package com.actito.scannables.models
 
 import android.os.Parcelable
-import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
-import org.json.JSONObject
 import com.actito.Actito
 import com.actito.internal.moshi
 import com.actito.models.ActitoNotification
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
+import org.json.JSONObject
 
 @Parcelize
 @JsonClass(generateAdapter = true)

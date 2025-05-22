@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.net.Uri
+import com.actito.iam.models.ActitoInAppMessage
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import com.actito.iam.models.ActitoInAppMessage
 
 internal object ActitoImageCache {
     private var portraitImage: Bitmap? = null
@@ -52,7 +52,7 @@ internal object ActitoImageCache {
 
     private suspend fun loadImage(
         context: Context,
-        uri: Uri
+        uri: Uri,
     ): Bitmap? = withContext(Dispatchers.IO) {
         Glide.with(context)
             .asBitmap()

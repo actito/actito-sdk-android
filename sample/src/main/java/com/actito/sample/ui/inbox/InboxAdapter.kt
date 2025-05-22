@@ -8,14 +8,14 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.sample.R
 import com.actito.sample.databinding.RowInboxItemBinding
 import com.actito.sample.ktx.dp
-import java.util.*
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import java.util.Calendar
 
 class InboxAdapter(
     private val onInboxItemClicked: (ActitoInboxItem) -> Unit,
@@ -23,7 +23,7 @@ class InboxAdapter(
 ) : ListAdapter<ActitoInboxItem, RecyclerView.ViewHolder>(InboxDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ItemViewHolder(
-            RowInboxItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            RowInboxItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         )
     }
 
@@ -33,7 +33,7 @@ class InboxAdapter(
     }
 
     private inner class ItemViewHolder(
-        private val binding: RowInboxItemBinding
+        private val binding: RowInboxItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ActitoInboxItem) {
@@ -51,7 +51,7 @@ class InboxAdapter(
             binding.timeAgo.text = DateUtils.getRelativeTimeSpanString(
                 item.time.time,
                 Calendar.getInstance().timeInMillis,
-                DateUtils.MINUTE_IN_MILLIS
+                DateUtils.MINUTE_IN_MILLIS,
             )
 
             binding.readStatus.isInvisible = item.opened

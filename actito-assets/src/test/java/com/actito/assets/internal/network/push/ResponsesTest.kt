@@ -1,11 +1,11 @@
 package com.actito.assets.internal.network.push
 
+import com.actito.assets.models.ActitoAsset
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.assets.models.ActitoAsset
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE)
@@ -19,14 +19,14 @@ public class ResponsesTest {
             url = null,
             button = ActitoAsset.Button(
                 label = "testLabel",
-                action = "testAction"
+                action = "testAction",
             ),
             metaData = ActitoAsset.MetaData(
                 originalFileName = "testOriginalFileName",
                 contentType = "testContentType",
-                contentLength = 1
+                contentLength = 1,
             ),
-            extra = mapOf("testKey" to "testValue")
+            extra = mapOf("testKey" to "testValue"),
         )
 
         val asset = FetchAssetsResponse.Asset(
@@ -36,14 +36,14 @@ public class ResponsesTest {
             url = null,
             button = FetchAssetsResponse.Asset.Button(
                 label = "testLabel",
-                action = "testAction"
+                action = "testAction",
             ),
             metaData = FetchAssetsResponse.Asset.MetaData(
                 originalFileName = "testOriginalFileName",
                 contentType = "testContentType",
-                contentLength = 1
+                contentLength = 1,
             ),
-            extra = mapOf("testKey" to "testValue")
+            extra = mapOf("testKey" to "testValue"),
         ).toModel()
 
         assertEquals(expectedAsset, asset)

@@ -1,9 +1,9 @@
 package com.actito.sample.ui.events
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.ktx.events
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class EventsViewModel : com.actito.sample.core.BaseViewModel() {
@@ -32,5 +32,5 @@ class EventsViewModel : com.actito.sample.core.BaseViewModel() {
 
 data class EventField(
     var key: String = "",
-    var value: String = ""
+    var value: String = "",
 )

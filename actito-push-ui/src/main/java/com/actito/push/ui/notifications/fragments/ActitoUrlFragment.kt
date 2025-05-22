@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.push.ui.databinding.ActitoNotificationUrlFragmentBinding
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.utils.NotificationWebViewClient
 import com.actito.push.ui.utils.removeQueryParameter
+import com.actito.utilities.threading.onMainThread
 
 public class ActitoUrlFragment : NotificationFragment() {
 

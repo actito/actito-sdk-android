@@ -1,15 +1,15 @@
 package com.actito.push.models
 
 import android.os.Parcelable
-import com.squareup.moshi.JsonClass
-import com.squareup.moshi.Moshi
-import java.util.Date
-import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.WriteWith
-import org.json.JSONObject
 import com.actito.Actito
 import com.actito.internal.moshi
 import com.actito.utilities.parcelize.JsonObjectParceler
+import com.squareup.moshi.JsonClass
+import com.squareup.moshi.Moshi
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.WriteWith
+import org.json.JSONObject
+import java.util.Date
 
 @Parcelize
 @JsonClass(generateAdapter = true)

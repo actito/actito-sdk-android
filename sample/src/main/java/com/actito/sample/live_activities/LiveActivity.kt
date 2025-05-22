@@ -1,7 +1,8 @@
 package com.actito.sample.live_activities
 
 enum class LiveActivity {
-    COFFEE_BREWER;
+    COFFEE_BREWER,
+    ;
 
     val identifier: String
         get() = when (this) {

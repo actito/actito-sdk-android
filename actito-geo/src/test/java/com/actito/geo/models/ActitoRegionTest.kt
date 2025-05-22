@@ -21,7 +21,7 @@ public class ActitoRegionTest {
                 coordinate = ActitoRegion.Coordinate(
                     latitude = 1.5,
                     longitude = 1.5,
-                )
+                ),
             ),
             advancedGeometry = ActitoRegion.AdvancedGeometry(
                 type = "testType",
@@ -29,13 +29,13 @@ public class ActitoRegionTest {
                     ActitoRegion.Coordinate(
                         latitude = 1.5,
                         longitude = 1.5,
-                    )
-                )
+                    ),
+                ),
             ),
             major = 1,
             distance = 1.5,
             timeZone = "testTimeZone",
-            timeZoneOffset = 1.5
+            timeZoneOffset = 1.5,
         )
 
         val convertedRegion = ActitoRegion.fromJson(region.toJson())
@@ -55,13 +55,13 @@ public class ActitoRegionTest {
                 coordinate = ActitoRegion.Coordinate(
                     latitude = 1.5,
                     longitude = 1.5,
-                )
+                ),
             ),
             advancedGeometry = null,
             major = null,
             distance = 1.5,
             timeZone = "testTimeZone",
-            timeZoneOffset = 1.5
+            timeZoneOffset = 1.5,
         )
 
         val convertedRegion = ActitoRegion.fromJson(region.toJson())
@@ -76,7 +76,7 @@ public class ActitoRegionTest {
             coordinate = ActitoRegion.Coordinate(
                 latitude = 1.5,
                 longitude = 1.5,
-            )
+            ),
         )
 
         val convertedGeometry = ActitoRegion.Geometry.fromJson(geometry.toJson())
@@ -92,8 +92,8 @@ public class ActitoRegionTest {
                 ActitoRegion.Coordinate(
                     latitude = 1.5,
                     longitude = 1.5,
-                )
-            )
+                ),
+            ),
         )
 
         val convertedAdvancedGeometry = ActitoRegion.AdvancedGeometry.fromJson(advancedGeometry.toJson())

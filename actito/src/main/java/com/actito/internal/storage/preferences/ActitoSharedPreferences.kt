@@ -25,7 +25,7 @@ internal class ActitoSharedPreferences(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences(
         PREFERENCES_FILE_NAME,
-        Context.MODE_PRIVATE
+        Context.MODE_PRIVATE,
     )
 
     var migrated: Boolean
@@ -55,13 +55,13 @@ internal class ActitoSharedPreferences(context: Context) {
                 }
         }
         set(value) {
-            sharedPreferences.edit().also {
-                if (value == null) it.remove(PREFERENCE_APPLICATION)
-                else it.putString(
+            sharedPreferences.edit {
+                if (value == null) remove(PREFERENCE_APPLICATION)
+                else putString(
                     PREFERENCE_APPLICATION,
-                    Actito.moshi.adapter(ActitoApplication::class.java).toJson(value)
+                    Actito.moshi.adapter(ActitoApplication::class.java).toJson(value),
                 )
-            }.apply()
+            }
         }
 
     var device: StoredDevice?
@@ -85,7 +85,7 @@ internal class ActitoSharedPreferences(context: Context) {
                 if (value == null) remove(PREFERENCE_DEVICE)
                 else putString(
                     PREFERENCE_DEVICE,
-                    Actito.moshi.adapter(StoredDevice::class.java).toJson(value)
+                    Actito.moshi.adapter(StoredDevice::class.java).toJson(value),
                 )
             }
         }
@@ -94,38 +94,34 @@ internal class ActitoSharedPreferences(context: Context) {
         get() {
             return sharedPreferences.getString(
                 PREFERENCE_PREFERRED_LANGUAGE,
-                null
+                null,
             )
         }
         set(value) {
-            sharedPreferences.edit()
-                .apply {
-                    if (value == null) {
-                        remove(PREFERENCE_PREFERRED_LANGUAGE)
-                    } else {
-                        putString(PREFERENCE_PREFERRED_LANGUAGE, value)
-                    }
+            sharedPreferences.edit {
+                if (value == null) {
+                    remove(PREFERENCE_PREFERRED_LANGUAGE)
+                } else {
+                    putString(PREFERENCE_PREFERRED_LANGUAGE, value)
                 }
-                .apply()
+            }
         }
 
     var preferredRegion: String?
         get() {
             return sharedPreferences.getString(
                 PREFERENCE_PREFERRED_REGION,
-                null
+                null,
             )
         }
         set(value) {
-            sharedPreferences.edit()
-                .apply {
-                    if (value == null) {
-                        remove(PREFERENCE_PREFERRED_REGION)
-                    } else {
-                        putString(PREFERENCE_PREFERRED_REGION, value)
-                    }
+            sharedPreferences.edit {
+                if (value == null) {
+                    remove(PREFERENCE_PREFERRED_REGION)
+                } else {
+                    putString(PREFERENCE_PREFERRED_REGION, value)
                 }
-                .apply()
+            }
         }
 
     var crashReport: ActitoEvent?
@@ -149,7 +145,7 @@ internal class ActitoSharedPreferences(context: Context) {
                 if (value == null) remove(PREFERENCE_CRASH_REPORT)
                 else putString(
                     PREFERENCE_CRASH_REPORT,
-                    Actito.moshi.adapter(ActitoEvent::class.java).toJson(value)
+                    Actito.moshi.adapter(ActitoEvent::class.java).toJson(value),
                 )
             }
         }

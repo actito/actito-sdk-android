@@ -26,7 +26,7 @@ public interface ActitoDeviceModule {
      */
     @Deprecated(
         message = "Use updateUser() instead.",
-        replaceWith = ReplaceWith("updateUser(userId, userName)")
+        replaceWith = ReplaceWith("updateUser(userId, userName)"),
     )
     public suspend fun register(userId: String?, userName: String?)
 
@@ -41,7 +41,7 @@ public interface ActitoDeviceModule {
      */
     @Deprecated(
         message = "Use updateUser() instead.",
-        replaceWith = ReplaceWith("updateUser(userId, userName, callback)")
+        replaceWith = ReplaceWith("updateUser(userId, userName, callback)"),
     )
     public fun register(userId: String?, userName: String?, callback: ActitoCallback<Unit>)
 

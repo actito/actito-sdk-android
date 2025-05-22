@@ -12,7 +12,8 @@ public val Exception.isRecoverable: Boolean
             // Network failures
             is UnknownHostException,
             is SocketException,
-            is TimeoutException -> true
+            is TimeoutException,
+            -> true
             is SSLException -> {
                 this.toString().lowercase().contains("connection reset by peer")
             }

@@ -1,11 +1,13 @@
 package com.actito.internal.network.request
 
-import java.io.IOException
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
-import kotlin.reflect.KClass
+import com.actito.Actito
+import com.actito.ActitoCallback
+import com.actito.InternalActitoApi
+import com.actito.internal.logger
+import com.actito.internal.moshi
+import com.actito.internal.network.ActitoHeadersInterceptor
+import com.actito.internal.network.NetworkException
+import com.actito.utilities.coroutines.toCallbackFunction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Call
@@ -22,14 +24,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
 import okhttp3.logging.HttpLoggingInterceptor
-import com.actito.InternalActitoApi
-import com.actito.Actito
-import com.actito.ActitoCallback
-import com.actito.internal.logger
-import com.actito.internal.moshi
-import com.actito.internal.network.NetworkException
-import com.actito.internal.network.ActitoHeadersInterceptor
-import com.actito.utilities.coroutines.toCallbackFunction
+import java.io.IOException
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
+import kotlin.reflect.KClass
 
 @InternalActitoApi
 public typealias DecodableForFn<T> = (responseCode: Int) -> KClass<T>?
@@ -55,7 +55,7 @@ public class ActitoRequest private constructor(
                     } else {
                         HttpLoggingInterceptor.Level.NONE
                     }
-                }
+                },
             )
             .build()
     }
@@ -70,7 +70,7 @@ public class ActitoRequest private constructor(
                 handleResponse(
                     response = response,
                     closeResponse = closeResponse,
-                    continuation = continuation
+                    continuation = continuation,
                 )
             }
         })
@@ -98,7 +98,7 @@ public class ActitoRequest private constructor(
 
         val body = response.body
             ?: throw IllegalArgumentException(
-                "The response contains an empty body. Cannot parse into '${klass.simpleName}'."
+                "The response contains an empty body. Cannot parse into '${klass.simpleName}'.",
             )
 
         return withContext(Dispatchers.IO) {
@@ -124,7 +124,7 @@ public class ActitoRequest private constructor(
 
             val body = response.body
                 ?: throw IllegalArgumentException(
-                    "The response contains an empty body. Cannot parse into '${klass.simpleName}'."
+                    "The response contains an empty body. Cannot parse into '${klass.simpleName}'.",
                 )
 
             try {
@@ -148,7 +148,7 @@ public class ActitoRequest private constructor(
                     NetworkException.ValidationException(
                         response = response,
                         validStatusCodes = validStatusCodes,
-                    )
+                    ),
                 )
 
                 return

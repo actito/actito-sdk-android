@@ -18,7 +18,7 @@ class CoffeeBrewerDismissalWorker(
                 .forEach {
                     LiveActivitiesController.notificationManager.cancel(
                         LiveActivity.COFFEE_BREWER.identifier,
-                        it.id
+                        it.id,
                     )
                 }
             Result.success()

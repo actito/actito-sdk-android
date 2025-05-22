@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.Keep
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
+import com.actito.utilities.threading.onMainThread
 
 @Keep
 public class ActitoStoreFragment : NotificationFragment() {
@@ -94,7 +94,7 @@ public class ActitoStoreFragment : NotificationFragment() {
                         }
                     } catch (_: ActivityNotFoundException) {
                         callback.onNotificationFragmentActionFailed(
-                            resources.getString(R.string.actito_google_play_intent_failed)
+                            resources.getString(R.string.actito_google_play_intent_failed),
                         )
                         callback.onNotificationFragmentFinished()
 
@@ -106,7 +106,7 @@ public class ActitoStoreFragment : NotificationFragment() {
                     }
                 } else {
                     callback.onNotificationFragmentActionFailed(
-                        resources.getString(R.string.actito_google_play_intent_failed)
+                        resources.getString(R.string.actito_google_play_intent_failed),
                     )
                     callback.onNotificationFragmentFinished()
 
@@ -119,7 +119,7 @@ public class ActitoStoreFragment : NotificationFragment() {
             }
         } else {
             callback.onNotificationFragmentActionFailed(
-                resources.getString(R.string.actito_google_play_intent_failed)
+                resources.getString(R.string.actito_google_play_intent_failed),
             )
             callback.onNotificationFragmentFinished()
 

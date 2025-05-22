@@ -12,7 +12,7 @@ public class ActitoDynamicLinkTest {
     @Test
     public fun testActitoDynamicLinkSerialization() {
         val dynamicLink = ActitoDynamicLink(
-            target = "testTarget"
+            target = "testTarget",
         )
 
         val convertedDynamicLink = ActitoDynamicLink.fromJson(dynamicLink.toJson())

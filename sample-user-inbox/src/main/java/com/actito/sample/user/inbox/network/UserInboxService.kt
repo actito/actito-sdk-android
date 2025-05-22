@@ -10,18 +10,18 @@ internal interface UserInboxService {
     @GET
     suspend fun fetchInbox(
         @Header("Authorization") authHeader: String,
-        @Url url: String
+        @Url url: String,
     ): String
 
     @PUT
     suspend fun registerDeviceWithUser(
         @Header("Authorization") authHeader: String,
-        @Url url: String
+        @Url url: String,
     )
 
     @DELETE
     suspend fun registerDeviceAsAnonymous(
         @Header("Authorization") authHeader: String,
-        @Url url: String
+        @Url url: String,
     )
 }

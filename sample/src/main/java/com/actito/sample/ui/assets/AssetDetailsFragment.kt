@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
 import com.actito.assets.models.ActitoAsset
 import com.actito.sample.R
 import com.actito.sample.databinding.FragmentAssetDetailsBinding
+import com.bumptech.glide.Glide
 
 class AssetDetailsFragment : Fragment() {
     private lateinit var binding: FragmentAssetDetailsBinding

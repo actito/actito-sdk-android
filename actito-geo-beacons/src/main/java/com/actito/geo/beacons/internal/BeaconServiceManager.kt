@@ -83,14 +83,14 @@ public class BeaconServiceManager(
                 beacon.id,
                 Identifier.parse(proximityUUID),
                 Identifier.fromInt(beacon.major),
-                null
+                null,
             )
         } else {
             Region(
                 beacon.id,
                 Identifier.parse(proximityUUID),
                 Identifier.fromInt(beacon.major),
-                Identifier.fromInt(minor)
+                Identifier.fromInt(minor),
             )
         }
 
@@ -143,7 +143,7 @@ public class BeaconServiceManager(
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         setPackage(Actito.requireContext().packageName)
                     },
-                    PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
             } else {
                 null
@@ -217,7 +217,7 @@ public class BeaconServiceManager(
                     minor = b.id3.toInt(),
                     proximity = b.distance,
                 )
-            }
+            },
         )
     }
 

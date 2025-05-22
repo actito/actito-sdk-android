@@ -38,7 +38,8 @@ public abstract class ActitoModule {
         GEO(fqn = "com.actito.geo.internal.ActitoGeoImpl"),
         LOYALTY(fqn = "com.actito.loyalty.internal.ActitoLoyaltyImpl"),
         IN_APP_MESSAGING(fqn = "com.actito.iam.internal.ActitoInAppMessagingImpl"),
-        USER_INBOX(fqn = "com.actito.inbox.user.internal.ActitoUserInboxImpl");
+        USER_INBOX(fqn = "com.actito.inbox.user.internal.ActitoUserInboxImpl"),
+        ;
 
         @InternalActitoApi
         public val isAvailable: Boolean

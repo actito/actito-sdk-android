@@ -1,13 +1,13 @@
 package com.actito.assets.models
 
 import android.os.Parcelable
+import com.actito.Actito
+import com.actito.internal.moshi
+import com.actito.internal.parcelize.ActitoExtraParceler
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.WriteWith
 import org.json.JSONObject
-import com.actito.Actito
-import com.actito.internal.moshi
-import com.actito.internal.parcelize.ActitoExtraParceler
 
 @Parcelize
 @JsonClass(generateAdapter = true)

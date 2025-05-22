@@ -120,12 +120,12 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 ContextCompat.checkSelfPermission(
                     Actito.requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
                 ) == PackageManager.PERMISSION_GRANTED
             } else {
                 ContextCompat.checkSelfPermission(
                     Actito.requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                 ) == PackageManager.PERMISSION_GRANTED
             }
         }
@@ -135,7 +135,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             val hasBackgroundAccess = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ContextCompat.checkSelfPermission(
                     Actito.requireContext(),
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                 ) == PackageManager.PERMISSION_GRANTED
             } else {
                 true
@@ -148,7 +148,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         get() {
             return ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) == PackageManager.PERMISSION_GRANTED
         }
 
@@ -156,7 +156,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         get() {
             return ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
-                Manifest.permission.BLUETOOTH
+                Manifest.permission.BLUETOOTH,
             ) == PackageManager.PERMISSION_GRANTED
         }
 
@@ -165,7 +165,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 ContextCompat.checkSelfPermission(
                     Actito.requireContext(),
-                    Manifest.permission.BLUETOOTH_SCAN
+                    Manifest.permission.BLUETOOTH_SCAN,
                 ) == PackageManager.PERMISSION_GRANTED
             } else {
                 true
@@ -193,7 +193,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         get() {
             if (beaconServiceManager == null) {
                 return ActitoBeaconSupport.Disabled(
-                    reason = "Beacons functionality requires peer dependency actito-geo-beacons to be included."
+                    reason = "Beacons functionality requires peer dependency actito-geo-beacons to be included.",
                 )
             }
 
@@ -209,20 +209,20 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
 
             if (!hasBluetoothScanPermission) {
                 return ActitoBeaconSupport.Disabled(
-                    reason = "Beacons functionality requires bluetooth scan permission."
+                    reason = "Beacons functionality requires bluetooth scan permission.",
                 )
             }
 
             val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager?
             if (bluetoothManager?.adapter?.isEnabled != true) {
                 return ActitoBeaconSupport.Disabled(
-                    reason = "Beacons functionality requires the bluetooth adapter to be enabled."
+                    reason = "Beacons functionality requires the bluetooth adapter to be enabled.",
                 )
             }
 
             if (Actito.application?.regionConfig?.proximityUUID == null) {
                 return ActitoBeaconSupport.Disabled(
-                    reason = "Beacons functionality required the application to be configured with the Proximity UUID."
+                    reason = "Beacons functionality required the application to be configured with the Proximity UUID.",
                 )
             }
 
@@ -242,14 +242,14 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
 
             if (limit <= 0) {
                 logger.warning(
-                    "The monitored regions limit needs to be a positive number. Using the default limit for geofences."
+                    "The monitored regions limit needs to be a positive number. Using the default limit for geofences.",
                 )
                 return DEFAULT_MONITORED_REGIONS_LIMIT
             }
 
             if (limit > MAX_MONITORED_REGIONS_LIMIT) {
                 logger.warning(
-                    "The monitored regions limit cannot exceed the OS limit of $MAX_MONITORED_REGIONS_LIMIT. Using the OS limit for geofences."
+                    "The monitored regions limit cannot exceed the OS limit of $MAX_MONITORED_REGIONS_LIMIT. Using the OS limit for geofences.",
                 )
                 return MAX_MONITORED_REGIONS_LIMIT
             }
@@ -420,7 +420,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
     override fun handleLocationUpdate(location: Location) {
         if (!location.isValid) {
             logger.warning(
-                "Received an invalid location update(${location.latitude}, ${location.longitude})."
+                "Received an invalid location update(${location.latitude}, ${location.longitude}).",
             )
             return
         }
@@ -446,7 +446,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                     Actito.requireContext().sendBroadcast(
                         Intent(Actito.requireContext(), intentReceiver)
                             .setAction(Actito.INTENT_ACTION_REGION_ENTERED)
-                            .putExtra(Actito.INTENT_EXTRA_REGION, region)
+                            .putExtra(Actito.INTENT_EXTRA_REGION, region),
                     )
                 } else if (entered && !inside) {
                     triggerRegionExit(region)
@@ -459,7 +459,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                     Actito.requireContext().sendBroadcast(
                         Intent(Actito.requireContext(), intentReceiver)
                             .setAction(Actito.INTENT_ACTION_REGION_EXITED)
-                            .putExtra(Actito.INTENT_EXTRA_REGION, region)
+                            .putExtra(Actito.INTENT_EXTRA_REGION, region),
                     )
                 }
 
@@ -516,7 +516,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         Actito.requireContext().sendBroadcast(
             Intent(Actito.requireContext(), intentReceiver)
                 .setAction(Actito.INTENT_ACTION_LOCATION_UPDATED)
-                .putExtra(Actito.INTENT_EXTRA_LOCATION, ActitoLocation(location))
+                .putExtra(Actito.INTENT_EXTRA_LOCATION, ActitoLocation(location)),
         )
     }
 
@@ -553,7 +553,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                                 Actito.requireContext().sendBroadcast(
                                     Intent(Actito.requireContext(), intentReceiver)
                                         .setAction(Actito.INTENT_ACTION_REGION_ENTERED)
-                                        .putExtra(Actito.INTENT_EXTRA_REGION, region)
+                                        .putExtra(Actito.INTENT_EXTRA_REGION, region),
                                 )
                             }
                         } catch (e: Exception) {
@@ -580,7 +580,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 Actito.requireContext().sendBroadcast(
                     Intent(Actito.requireContext(), intentReceiver)
                         .setAction(Actito.INTENT_ACTION_REGION_ENTERED)
-                        .putExtra(Actito.INTENT_EXTRA_REGION, region)
+                        .putExtra(Actito.INTENT_EXTRA_REGION, region),
                 )
             }
 
@@ -608,7 +608,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 Actito.requireContext().sendBroadcast(
                     Intent(Actito.requireContext(), intentReceiver)
                         .setAction(Actito.INTENT_ACTION_REGION_EXITED)
-                        .putExtra(Actito.INTENT_EXTRA_REGION, region)
+                        .putExtra(Actito.INTENT_EXTRA_REGION, region),
                 )
             }
 
@@ -640,7 +640,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             Actito.requireContext().sendBroadcast(
                 Intent(Actito.requireContext(), intentReceiver)
                     .setAction(Actito.INTENT_ACTION_BEACON_ENTERED)
-                    .putExtra(Actito.INTENT_EXTRA_BEACON, beacon)
+                    .putExtra(Actito.INTENT_EXTRA_BEACON, beacon),
             )
         }
     }
@@ -668,7 +668,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             Actito.requireContext().sendBroadcast(
                 Intent(Actito.requireContext(), intentReceiver)
                     .setAction(Actito.INTENT_ACTION_BEACON_EXITED)
-                    .putExtra(Actito.INTENT_EXTRA_BEACON, beacon)
+                    .putExtra(Actito.INTENT_EXTRA_BEACON, beacon),
             )
         }
     }
@@ -683,7 +683,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             val beacon = localStorage.monitoredBeacons.firstOrNull { it.major == b.major && it.minor == b.minor }
                 ?: run {
                     logger.warning(
-                        "Received a ranging beacons event for non-cached beacon '${b.major}:${b.minor}'."
+                        "Received a ranging beacons event for non-cached beacon '${b.major}:${b.minor}'.",
                     )
                     return@mapNotNull null
                 }
@@ -712,7 +712,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             Intent(Actito.requireContext(), intentReceiver)
                 .setAction(Actito.INTENT_ACTION_BEACONS_RANGED)
                 .putExtra(Actito.INTENT_EXTRA_REGION, region)
-                .putParcelableArrayListExtra(Actito.INTENT_EXTRA_RANGED_BEACONS, ArrayList(cachedBeacons))
+                .putParcelableArrayListExtra(Actito.INTENT_EXTRA_RANGED_BEACONS, ArrayList(cachedBeacons)),
         )
     }
 
@@ -749,13 +749,13 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             if (!locationManager.isLocationEnabled) {
                 logger.warning(
-                    "Location functionality is disabled by the user. Recovering when it has been enabled."
+                    "Location functionality is disabled by the user. Recovering when it has been enabled.",
                 )
             }
         } else {
             if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 logger.warning(
-                    "Location functionality is disabled by the user. Recovering when it has been enabled."
+                    "Location functionality is disabled by the user. Recovering when it has been enabled.",
                 )
             }
         }
@@ -775,14 +775,14 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 context,
                 0,
                 locationIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE,
             )
         } else {
             PendingIntent.getBroadcast(
                 context,
                 0,
                 locationIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT,
             )
         }
 
@@ -798,14 +798,14 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 context,
                 0,
                 geofencingIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE,
             )
         } else {
             PendingIntent.getBroadcast(
                 context,
                 0,
                 geofencingIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT,
             )
         }
 
@@ -845,7 +845,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 val intent = Intent()
                     .putExtra(
                         "com.google.android.gms.location.EXTRA_LOCATION_RESULT",
-                        LocationResult.create(arrayListOf(location))
+                        LocationResult.create(arrayListOf(location)),
                     )
 
                 try {
@@ -885,7 +885,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                     localStorage.monitoredRegions.values.filter { localStorage.enteredRegions.contains(it.id) }
                 if (enteredRegions.size > 1) {
                     logger.warning(
-                        "Detected multiple entered regions. Beacon monitoring is limited to a single region at a time."
+                        "Detected multiple entered regions. Beacon monitoring is limited to a single region at a time.",
                     )
                 }
 
@@ -1071,7 +1071,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 .setCircularRegion(
                     region.geometry.coordinate.latitude,
                     region.geometry.coordinate.longitude,
-                    region.distance.toFloat()
+                    region.distance.toFloat(),
                 )
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -1084,7 +1084,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             .setInitialTrigger(
                 GeofencingRequest.INITIAL_TRIGGER_ENTER
                     or GeofencingRequest.INITIAL_TRIGGER_DWELL
-                    or GeofencingRequest.INITIAL_TRIGGER_EXIT
+                    or GeofencingRequest.INITIAL_TRIGGER_EXIT,
             )
             .build()
 
@@ -1142,7 +1142,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                     override fun onFailure(e: Exception) {
                         logger.error("Failed to fetch beacons for region '${region.name}'.", e)
                     }
-                }
+                },
             )
     }
 
@@ -1299,14 +1299,14 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 override fun onFailure(e: Exception) {
                     // no-op
                 }
-            }
+            },
         )
     }
 
     private fun startBeaconSession(beacon: ActitoBeacon) {
         val region = localStorage.monitoredRegions[beacon.id] ?: run {
             logger.warning(
-                "Cannot start the session for beacon '${beacon.name}' since the corresponding region is not being monitored."
+                "Cannot start the session for beacon '${beacon.name}' since the corresponding region is not being monitored.",
             )
             return
         }
@@ -1318,7 +1318,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 start = Date(),
                 end = null,
                 beacons = mutableListOf(),
-            )
+            ),
         )
     }
 
@@ -1329,7 +1329,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
     private fun stopBeaconSession(beacon: ActitoBeacon) {
         val region = localStorage.monitoredRegions[beacon.id] ?: run {
             logger.warning(
-                "Cannot start the session for beacon '${beacon.name}' since the corresponding region is not being monitored."
+                "Cannot start the session for beacon '${beacon.name}' since the corresponding region is not being monitored.",
             )
             return
         }
@@ -1353,7 +1353,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                 override fun onFailure(e: Exception) {
                     // no-op
                 }
-            }
+            },
         )
     }
 
@@ -1416,7 +1416,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
                         override fun onError(errorMessage: String?) {
                             continuation.resumeWithException(Exception(errorMessage))
                         }
-                    }
+                    },
                 )
             }
         }

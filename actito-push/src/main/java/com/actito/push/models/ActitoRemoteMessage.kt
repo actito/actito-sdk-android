@@ -1,9 +1,9 @@
 package com.actito.push.models
 
 import android.os.Parcelable
-import java.util.Date
-import kotlinx.parcelize.Parcelize
 import com.actito.models.ActitoNotification
+import kotlinx.parcelize.Parcelize
+import java.util.Date
 
 public interface ActitoRemoteMessage {
     public val messageId: String?

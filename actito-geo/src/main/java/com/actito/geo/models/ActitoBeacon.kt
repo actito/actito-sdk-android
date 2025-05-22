@@ -49,6 +49,6 @@ public data class ActitoBeacon(
         NEAR,
 
         @Json(name = "far")
-        FAR;
+        FAR,
     }
 }

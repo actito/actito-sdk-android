@@ -23,7 +23,7 @@ class InboxAdapter(
 ) : ListAdapter<ActitoUserInboxItem, RecyclerView.ViewHolder>(InboxDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ItemViewHolder(
-            RowInboxItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            RowInboxItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         )
     }
 
@@ -33,7 +33,7 @@ class InboxAdapter(
     }
 
     private inner class ItemViewHolder(
-        private val binding: RowInboxItemBinding
+        private val binding: RowInboxItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ActitoUserInboxItem) {
@@ -51,7 +51,7 @@ class InboxAdapter(
             binding.timeAgo.text = DateUtils.getRelativeTimeSpanString(
                 item.time.time,
                 Calendar.getInstance().timeInMillis,
-                DateUtils.MINUTE_IN_MILLIS
+                DateUtils.MINUTE_IN_MILLIS,
             )
 
             binding.readStatus.isInvisible = item.opened

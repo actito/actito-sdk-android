@@ -24,13 +24,13 @@ public class ActitoInAppMessageTest {
             primaryAction = ActitoInAppMessage.Action(
                 label = "testAction",
                 destructive = true,
-                url = "testUrl"
+                url = "testUrl",
             ),
             secondaryAction = ActitoInAppMessage.Action(
                 label = "testAction",
                 destructive = true,
-                url = "testUrl"
-            )
+                url = "testUrl",
+            ),
         )
 
         val convertedInAppMessage = ActitoInAppMessage.fromJson(inAppMessage.toJson())
@@ -51,7 +51,7 @@ public class ActitoInAppMessageTest {
             landscapeImage = null,
             delaySeconds = 10,
             primaryAction = null,
-            secondaryAction = null
+            secondaryAction = null,
         )
 
         val convertedInAppMessage = ActitoInAppMessage.fromJson(inAppMessage.toJson())
@@ -64,7 +64,7 @@ public class ActitoInAppMessageTest {
         val action = ActitoInAppMessage.Action(
             label = "testLabel",
             destructive = false,
-            url = "testUrl"
+            url = "testUrl",
         )
 
         val convertedAction = ActitoInAppMessage.Action.fromJson(action.toJson())
@@ -77,7 +77,7 @@ public class ActitoInAppMessageTest {
         val action = ActitoInAppMessage.Action(
             label = null,
             destructive = false,
-            url = null
+            url = null,
         )
 
         val convertedAction = ActitoInAppMessage.Action.fromJson(action.toJson())

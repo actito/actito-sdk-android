@@ -14,13 +14,13 @@ import androidx.fragment.app.commit
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.scannables.internal.logger
-import com.actito.utilities.parcel.getEnum
-import com.actito.utilities.parcel.getEnumExtra
-import com.actito.utilities.parcel.putEnum
-import com.actito.scannables.ui.QrCodeScannerFragment
 import com.actito.scannables.ktx.scannables
 import com.actito.scannables.ktx.scannablesImplementation
 import com.actito.scannables.models.ActitoScannable
+import com.actito.scannables.ui.QrCodeScannerFragment
+import com.actito.utilities.parcel.getEnum
+import com.actito.utilities.parcel.getEnumExtra
+import com.actito.utilities.parcel.putEnum
 
 public class ScannableActivity : AppCompatActivity() {
 
@@ -133,14 +133,14 @@ public class ScannableActivity : AppCompatActivity() {
                     this,
                     0,
                     intent,
-                    Intent.FILL_IN_DATA or PendingIntent.FLAG_MUTABLE
+                    Intent.FILL_IN_DATA or PendingIntent.FLAG_MUTABLE,
                 )
             } else {
                 PendingIntent.getActivity(
                     this,
                     0,
                     intent,
-                    Intent.FILL_IN_DATA
+                    Intent.FILL_IN_DATA,
                 )
             }
 
@@ -178,7 +178,7 @@ public class ScannableActivity : AppCompatActivity() {
                     Actito.scannablesImplementation().notifyListeners(e)
                     finish()
                 }
-            }
+            },
         )
     }
 
@@ -188,6 +188,6 @@ public class ScannableActivity : AppCompatActivity() {
 
     internal enum class ScanMode {
         NFC,
-        QR_CODE
+        QR_CODE,
     }
 }

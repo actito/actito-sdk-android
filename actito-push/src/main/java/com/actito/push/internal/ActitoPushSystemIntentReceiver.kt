@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.app.RemoteInput
-import kotlinx.coroutines.launch
 import com.actito.Actito
-import com.actito.utilities.parcel.parcelable
 import com.actito.ktx.events
 import com.actito.models.ActitoNotification
 import com.actito.push.ktx.INTENT_ACTION_QUICK_RESPONSE
@@ -15,6 +13,8 @@ import com.actito.push.ktx.INTENT_EXTRA_REMOTE_MESSAGE
 import com.actito.push.ktx.INTENT_EXTRA_TEXT_RESPONSE
 import com.actito.push.models.ActitoNotificationRemoteMessage
 import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.parcel.parcelable
+import kotlinx.coroutines.launch
 
 internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
 
@@ -22,15 +22,15 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
         when (intent.action) {
             Actito.INTENT_ACTION_QUICK_RESPONSE -> {
                 val message: ActitoNotificationRemoteMessage = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_REMOTE_MESSAGE)
+                    intent.parcelable(Actito.INTENT_EXTRA_REMOTE_MESSAGE),
                 )
 
                 val notification: ActitoNotification = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION),
                 )
 
                 val action: ActitoNotification.Action = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_ACTION)
+                    intent.parcelable(Actito.INTENT_EXTRA_ACTION),
                 )
 
                 val responseText = RemoteInput.getResultsFromIntent(intent)
@@ -46,7 +46,7 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
         message: ActitoNotificationRemoteMessage,
         notification: ActitoNotification,
         action: ActitoNotification.Action,
-        responseText: String?
+        responseText: String?,
     ) {
         actitoCoroutineScope.launch {
             // Log the notification open event.
@@ -78,7 +78,7 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
     private fun sendQuickResponse(
         notification: ActitoNotification,
         action: ActitoNotification.Action,
-        responseText: String?
+        responseText: String?,
     ) {
         val targetUri = action.target?.let { Uri.parse(it) }
         if (targetUri == null || targetUri.scheme == null || targetUri.host == null) {
@@ -106,7 +106,7 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
     private fun sendQuickResponseAction(
         notification: ActitoNotification,
         action: ActitoNotification.Action,
-        responseText: String?
+        responseText: String?,
     ) {
         actitoCoroutineScope.launch {
             try {

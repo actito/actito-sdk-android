@@ -9,7 +9,6 @@ import android.view.animation.AnimationUtils
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.iam.internal.caching.ActitoImageCache
 import com.actito.iam.internal.logger
@@ -18,9 +17,10 @@ import com.actito.iam.ktx.inAppMessagingImplementation
 import com.actito.iam.ktx.logInAppMessageActionClicked
 import com.actito.iam.ktx.logInAppMessageViewed
 import com.actito.iam.models.ActitoInAppMessage
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.parcel.parcelable
 import com.actito.ktx.events
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.launch
 
 public abstract class InAppMessagingBaseFragment : Fragment() {
     protected lateinit var message: ActitoInAppMessage
@@ -88,7 +88,7 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
                 onAnimationFinished = {
                     activity?.finish()
                     ActitoImageCache.clear()
-                }
+                },
             )
 
             return
@@ -162,6 +162,6 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
 
     protected enum class Transition {
         ENTER,
-        EXIT;
+        EXIT,
     }
 }

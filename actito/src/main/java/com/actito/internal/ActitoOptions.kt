@@ -13,7 +13,7 @@ public class ActitoOptions internal constructor(context: Context) {
     @InternalActitoApi
     public val info: ApplicationInfo = context.packageManager.applicationInfo(
         context.packageName,
-        PackageManager.GET_META_DATA
+        PackageManager.GET_META_DATA,
     )
 
     @InternalActitoApi

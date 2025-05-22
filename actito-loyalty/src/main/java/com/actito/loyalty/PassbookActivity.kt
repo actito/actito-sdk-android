@@ -14,11 +14,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.loyalty.internal.logger
-import com.actito.utilities.parcel.parcelable
 import com.actito.loyalty.ktx.INTENT_EXTRA_PASSBOOK
 import com.actito.loyalty.ktx.loyalty
 import com.actito.loyalty.models.ActitoPass
 import com.actito.utilities.content.applicationName
+import com.actito.utilities.parcel.parcelable
 
 public open class PassbookActivity : AppCompatActivity() {
 
@@ -107,7 +107,7 @@ public open class PassbookActivity : AppCompatActivity() {
                 override fun onFailure(e: Exception) {
                     handlePassLoadingError(e)
                 }
-            }
+            },
         )
     }
 

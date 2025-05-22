@@ -1,13 +1,13 @@
 package com.actito.iam.ktx
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoEventsModule
 import com.actito.iam.models.ActitoInAppMessage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal suspend fun ActitoEventsModule.logInAppMessageViewed(
-    message: ActitoInAppMessage
+    message: ActitoInAppMessage,
 ): Unit = withContext(Dispatchers.IO) {
     Actito.eventsInternal().log(
         event = "re.notifica.event.inappmessage.View",

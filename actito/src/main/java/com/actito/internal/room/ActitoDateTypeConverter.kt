@@ -1,8 +1,8 @@
 package com.actito.internal.room
 
 import androidx.room.TypeConverter
-import java.util.Date
 import com.actito.InternalActitoApi
+import java.util.Date
 
 @InternalActitoApi
 public class ActitoDateTypeConverter {

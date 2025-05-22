@@ -1,17 +1,17 @@
 package com.actito.models
 
 import android.os.Parcelable
+import com.actito.Actito
+import com.actito.internal.moshi
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
-import com.actito.Actito
-import com.actito.internal.moshi
 
 @Parcelize
 @JsonClass(generateAdapter = true)
 public data class ActitoDoNotDisturb(
     val start: ActitoTime,
-    val end: ActitoTime
+    val end: ActitoTime,
 ) : Parcelable {
 
     public fun toJson(): JSONObject {

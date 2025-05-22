@@ -10,17 +10,6 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import java.util.Date
-import java.util.SortedSet
-import java.util.concurrent.TimeUnit
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoApplicationUnavailableException
 import com.actito.ActitoCallback
@@ -34,14 +23,25 @@ import com.actito.inbox.internal.network.push.InboxResponse
 import com.actito.inbox.internal.workers.ExpireItemWorker
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.internal.ActitoModule
-import com.actito.utilities.coroutines.actitoCoroutineScope
-import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.internal.network.NetworkException
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.ktx.events
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
+import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.coroutines.toCallbackFunction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Date
+import java.util.SortedSet
+import java.util.concurrent.TimeUnit
 
 @Keep
 internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
@@ -116,7 +116,7 @@ internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
                 .map { it.toInboxItem() }
                 .toSortedSet(
                     compareByDescending<ActitoInboxItem> { it.time }
-                        .thenBy { it.opened }
+                        .thenBy { it.opened },
                 )
         }
 
@@ -419,12 +419,12 @@ internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
             .setConstraints(
                 Constraints.Builder()
                     .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
+                    .build(),
             )
             .setInputData(
                 workDataOf(
                     ExpireItemWorker.PARAM_ITEM_ID to earliestExpirationItem.id,
-                )
+                ),
             )
             .build()
 

@@ -9,11 +9,9 @@ import androidx.annotation.Keep
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.os.bundleOf
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.internal.ActitoModule
-import com.actito.utilities.threading.onMainThread
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.ActitoInternalPushUI
 import com.actito.push.ui.ActitoPushUI
@@ -44,6 +42,8 @@ import com.actito.push.ui.notifications.fragments.ActitoWebPassFragment
 import com.actito.push.ui.notifications.fragments.ActitoWebViewFragment
 import com.actito.push.ui.utils.removeQueryParameter
 import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 @Keep
@@ -89,7 +89,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
         when (type) {
             ActitoNotification.NotificationType.NONE -> {
                 logger.debug(
-                    "Attempting to present a notification of type 'none'. These should be handled by the application instead."
+                    "Attempting to present a notification of type 'none'. These should be handled by the application instead.",
                 )
             }
             ActitoNotification.NotificationType.URL_SCHEME -> {
@@ -129,7 +129,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
     override fun presentAction(
         activity: Activity,
         notification: ActitoNotification,
-        action: ActitoNotification.Action
+        action: ActitoNotification.Action,
     ) {
         logger.debug("Presenting notification action '${action.type}' for notification '${notification.id}'.")
 
@@ -192,14 +192,14 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
         return when (type) {
             ActitoNotification.NotificationType.NONE -> {
                 logger.debug(
-                    "Attempting to create a fragment for a notification of type 'none'. This type contains to visual interface."
+                    "Attempting to create a fragment for a notification of type 'none'. This type contains to visual interface.",
                 )
                 return null
             }
             ActitoNotification.NotificationType.ALERT -> ActitoAlertFragment::class.java.canonicalName
             ActitoNotification.NotificationType.IN_APP_BROWSER -> {
                 logger.debug(
-                    "Attempting to create a fragment for a notification of type 'InAppBrowser'. This type contains no visual interface."
+                    "Attempting to create a fragment for a notification of type 'InAppBrowser'. This type contains no visual interface.",
                 )
                 return null
             }
@@ -208,7 +208,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
             ActitoNotification.NotificationType.URL_RESOLVER -> ActitoUrlFragment::class.java.canonicalName
             ActitoNotification.NotificationType.URL_SCHEME -> {
                 logger.debug(
-                    "Attempting to create a fragment for a notification of type 'UrlScheme'. This type contains no visual interface."
+                    "Attempting to create a fragment for a notification of type 'UrlScheme'. This type contains no visual interface.",
                 )
                 return null
             }
@@ -263,7 +263,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
             addFlags(
                 Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                    Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+                    Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS,
             )
             setPackage(activity.applicationContext.packageName)
         }
@@ -354,7 +354,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
                         lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
                     }
                 }
-            }
+            },
         )
     }
 
@@ -420,7 +420,8 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
             ActitoNotification.Action.TYPE_TELEPHONE -> NotificationTelephoneAction(activity, notification, action)
             @Suppress("DEPRECATION", "ktlint:standard:annotation")
             ActitoNotification.Action.TYPE_WEB_VIEW,
-            ActitoNotification.Action.TYPE_IN_APP_BROWSER ->
+            ActitoNotification.Action.TYPE_IN_APP_BROWSER,
+            ->
                 NotificationInAppBrowserAction(activity, notification, action)
             else -> {
                 logger.warning("Unhandled action type '${action.type}'.")

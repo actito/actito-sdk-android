@@ -2,11 +2,11 @@ package com.actito.push.models
 
 import android.net.Uri
 import android.os.Parcelable
+import com.actito.Actito
+import com.actito.internal.moshi
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
-import com.actito.Actito
-import com.actito.internal.moshi
 
 @Parcelize
 @JsonClass(generateAdapter = true)

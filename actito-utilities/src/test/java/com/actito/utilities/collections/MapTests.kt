@@ -14,14 +14,14 @@ public class MapTests {
     public fun testSuccessfulMapCast() {
         val map = mapOf<Any, Any>(
             "key1" to 1,
-            "key2" to 2
+            "key2" to 2,
         )
 
         val result: Map<String, Int> = map.cast()
 
         val expectedMap = mapOf(
             "key1" to 1,
-            "key2" to 2
+            "key2" to 2,
         )
 
         assertEquals(expectedMap, result)
@@ -32,14 +32,14 @@ public class MapTests {
         val map = mapOf<Any, Any>(
             "key1" to 1,
             2 to "value2",
-            "key3" to 3
+            "key3" to 3,
         )
 
         val result: Map<String, Int> = map.cast()
 
         val expectedMap = mapOf(
             "key1" to 1,
-            "key3" to 3
+            "key3" to 3,
         )
 
         assertEquals(expectedMap, result)
@@ -49,7 +49,7 @@ public class MapTests {
     public fun testCompleteUnsuccessfulMapCast() {
         val map = mapOf<Any, Any>(
             1 to 2,
-            3.14 to "value"
+            3.14 to "value",
         )
 
         val result: Map<String, Int> = map.cast()

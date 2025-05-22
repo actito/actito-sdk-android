@@ -1,8 +1,8 @@
 package com.actito.internal.moshi
 
+import com.actito.models.ActitoTime
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
-import com.actito.models.ActitoTime
 
 internal class ActitoTimeAdapter {
 

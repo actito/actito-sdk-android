@@ -5,8 +5,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.Keep
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoApplicationUnavailableException
 import com.actito.ActitoCallback
@@ -14,7 +12,6 @@ import com.actito.ActitoDeviceUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
 import com.actito.internal.ActitoModule
-import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.internal.modules.integrations.ActitoLoyaltyIntegration
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
@@ -27,6 +24,9 @@ import com.actito.loyalty.ktx.INTENT_EXTRA_PASSBOOK
 import com.actito.loyalty.models.ActitoPass
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
+import com.actito.utilities.coroutines.toCallbackFunction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Keep
 internal object ActitoLoyaltyImpl : ActitoModule(), ActitoLoyalty, ActitoLoyaltyIntegration {
@@ -100,7 +100,7 @@ internal object ActitoLoyaltyImpl : ActitoModule(), ActitoLoyalty, ActitoLoyalty
                     logger.error("Failed to fetch the pass with serial '$serial'.", e)
                     callback.onFailure(e)
                 }
-            }
+            },
         )
     }
 
@@ -194,7 +194,7 @@ internal object ActitoLoyaltyImpl : ActitoModule(), ActitoLoyalty, ActitoLoyalty
             1 -> {
                 activity.startActivity(
                     Intent(activity, passbookActivity)
-                        .putExtra(Actito.INTENT_EXTRA_PASSBOOK, pass)
+                        .putExtra(Actito.INTENT_EXTRA_PASSBOOK, pass),
                 )
 
                 callback?.onSuccess(Unit)

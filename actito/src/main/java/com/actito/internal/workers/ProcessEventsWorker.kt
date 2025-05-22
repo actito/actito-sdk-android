@@ -3,15 +3,15 @@ package com.actito.internal.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import java.util.Calendar
-import java.util.Date
-import java.util.GregorianCalendar
 import com.actito.Actito
 import com.actito.internal.logger
-import com.actito.utilities.networking.isRecoverable
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.entities.ActitoEventEntity
 import com.actito.internal.storage.database.ktx.toModel
+import com.actito.utilities.networking.isRecoverable
+import java.util.Calendar
+import java.util.Date
+import java.util.GregorianCalendar
 
 private const val MAX_RETRIES = 5
 

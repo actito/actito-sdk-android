@@ -29,7 +29,7 @@ internal class LocalStorage(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences(
         PREFERENCES_FILE_NAME,
-        Context.MODE_PRIVATE
+        Context.MODE_PRIVATE,
     )
 
     var locationServicesEnabled: Boolean
@@ -142,7 +142,7 @@ internal class LocalStorage(context: Context) {
 
                 val sessions = adapter.fromJson(jsonStr) ?: emptyList()
 
-                return sessions.map { it.regionId to it }.toMap()
+                return sessions.associateBy { it.regionId }
             } catch (e: Exception) {
                 logger.warning("Failed to decode the region sessions.", e)
 
@@ -204,7 +204,7 @@ internal class LocalStorage(context: Context) {
 
                 val sessions = adapter.fromJson(jsonStr) ?: emptyList()
 
-                return sessions.map { it.regionId to it }.toMap()
+                return sessions.associateBy { it.regionId }
             } catch (e: Exception) {
                 logger.warning("Failed to decode the beacon sessions.", e)
 
@@ -250,7 +250,7 @@ internal class LocalStorage(context: Context) {
             .mapKeys { entry ->
                 val region = monitoredRegions.values.firstOrNull { it.major == entry.key } ?: run {
                     logger.warning(
-                        "Cannot update the beacon session for region with major '${entry.key}' since the corresponding region is not being monitored."
+                        "Cannot update the beacon session for region with major '${entry.key}' since the corresponding region is not being monitored.",
                     )
                     return@mapKeys null
                 }
@@ -267,7 +267,7 @@ internal class LocalStorage(context: Context) {
                 val region = entry.key
                 val session = beaconSessions[region.id] ?: run {
                     logger.warning(
-                        "Cannot update the beacon session for region with major '${entry.key}' since there's no ongoing session."
+                        "Cannot update the beacon session for region with major '${entry.key}' since there's no ongoing session.",
                     )
                     return@map null
                 }
@@ -288,7 +288,7 @@ internal class LocalStorage(context: Context) {
                                 )
                             },
                             timestamp = Date(),
-                        )
+                        ),
                     )
                 }
 

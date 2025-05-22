@@ -13,10 +13,10 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import com.google.android.material.chip.Chip
 import com.actito.sample.R
 import com.actito.sample.core.BaseFragment
 import com.actito.sample.databinding.FragmentTagsBinding
+import com.google.android.material.chip.Chip
 
 class TagsFragment : BaseFragment() {
     private lateinit var binding: FragmentTagsBinding
@@ -60,7 +60,7 @@ class TagsFragment : BaseFragment() {
                 }
             },
             viewLifecycleOwner,
-            Lifecycle.State.RESUMED
+            Lifecycle.State.RESUMED,
         )
     }
 

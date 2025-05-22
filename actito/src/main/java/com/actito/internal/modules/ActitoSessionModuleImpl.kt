@@ -6,17 +6,19 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Keep
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.internal.ActitoModule
 import com.actito.internal.logger
-import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.ktx.device
 import com.actito.ktx.eventsImplementation
+import com.actito.utilities.coroutines.actitoCoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 
 @Keep
 internal object ActitoSessionModuleImpl : ActitoModule() {

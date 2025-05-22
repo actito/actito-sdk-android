@@ -25,6 +25,6 @@ internal fun ActitoEventEntity.toModel(): ActitoEvent {
         sessionId = this.sessionId,
         notificationId = this.notificationId,
         userId = this.userId,
-        data = this.data?.let { ActitoEvent.dataAdapter.fromJson(it) }
+        data = this.data?.let { ActitoEvent.dataAdapter.fromJson(it) },
     )
 }

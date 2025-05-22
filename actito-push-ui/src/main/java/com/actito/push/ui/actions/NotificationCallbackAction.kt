@@ -4,15 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import androidx.core.content.FileProvider
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.actions.base.NotificationAction
@@ -21,11 +13,19 @@ import com.actito.push.ui.ktx.pushUIImplementation
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.models.ActitoPendingResult
 import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 internal class NotificationCallbackAction(
     context: Context,
     notification: ActitoNotification,
-    action: ActitoNotification.Action
+    action: ActitoNotification.Action,
 ) : NotificationAction(context, notification, action) {
 
     override suspend fun execute(): ActitoPendingResult? = withContext(Dispatchers.IO) {
@@ -78,7 +78,7 @@ internal class NotificationCallbackAction(
             return FileProvider.getUriForFile(
                 Actito.requireContext(),
                 Actito.pushUIImplementation().contentFileProviderAuthority,
-                file
+                file,
             )
         } catch (e: Exception) {
             logger.warning("Failed to create image file.", e)
@@ -118,7 +118,7 @@ internal class NotificationCallbackAction(
             action: ActitoNotification.Action,
             message: String?,
             mediaUrl: String?,
-            mimeType: String?
+            mimeType: String?,
         ): Unit = withContext(Dispatchers.IO) {
             val targetUri = action.target?.let { Uri.parse(it) }
             if (targetUri == null || targetUri.scheme == null || targetUri.host == null) {
@@ -127,14 +127,14 @@ internal class NotificationCallbackAction(
                     action = action,
                     message = message,
                     media = mediaUrl,
-                    mimeType = mimeType
+                    mimeType = mimeType,
                 )
 
                 onMainThread {
                     Actito.pushUIInternal().lifecycleListeners.forEach {
                         it.get()?.onActionExecuted(
                             notification,
-                            action
+                            action,
                         )
                     }
                 }
@@ -157,7 +157,7 @@ internal class NotificationCallbackAction(
                         Actito.pushUIInternal().lifecycleListeners.forEach {
                             it.get()?.onActionExecuted(
                                 notification,
-                                action
+                                action,
                             )
                         }
                     }
@@ -167,7 +167,7 @@ internal class NotificationCallbackAction(
                             it.get()?.onActionFailedToExecute(
                                 notification,
                                 action,
-                                e
+                                e,
                             )
                         }
                     }
@@ -179,7 +179,7 @@ internal class NotificationCallbackAction(
                 action = action,
                 message = message,
                 media = mediaUrl,
-                mimeType = mimeType
+                mimeType = mimeType,
             )
         }
     }

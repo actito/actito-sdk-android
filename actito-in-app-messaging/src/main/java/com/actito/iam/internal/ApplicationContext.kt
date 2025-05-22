@@ -4,7 +4,8 @@ import com.actito.iam.models.ActitoInAppMessage
 
 internal enum class ApplicationContext {
     LAUNCH,
-    FOREGROUND;
+    FOREGROUND,
+    ;
 
     val rawValue: String
         get() = when (this) {

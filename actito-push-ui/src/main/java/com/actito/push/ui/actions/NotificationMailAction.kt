@@ -4,20 +4,20 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.actions.base.NotificationAction
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.models.ActitoPendingResult
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal class NotificationMailAction(
     context: Context,
     notification: ActitoNotification,
-    action: ActitoNotification.Action
+    action: ActitoNotification.Action,
 ) : NotificationAction(context, notification, action) {
 
     override suspend fun execute(): ActitoPendingResult? = withContext(Dispatchers.IO) {
@@ -36,8 +36,8 @@ internal class NotificationMailAction(
                 context.startActivity(
                     Intent.createChooser(
                         intent,
-                        context.resources.getText(R.string.actito_action_title_intent_email)
-                    )
+                        context.resources.getText(R.string.actito_action_title_intent_email),
+                    ),
                 )
             } catch (e: ActivityNotFoundException) {
                 throw Exception(context.getString(R.string.actito_action_error_no_email_clients))

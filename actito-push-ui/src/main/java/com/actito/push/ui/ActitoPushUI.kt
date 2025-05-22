@@ -86,7 +86,7 @@ public interface ActitoPushUI {
         @MainThread
         public fun onNotificationWillPresent(notification: ActitoNotification) {
             logger.debug(
-                "Notification will present, please override onNotificationWillPresent if you want to receive these events."
+                "Notification will present, please override onNotificationWillPresent if you want to receive these events.",
             )
         }
 
@@ -101,7 +101,7 @@ public interface ActitoPushUI {
         @MainThread
         public fun onNotificationPresented(notification: ActitoNotification) {
             logger.debug(
-                "Notification presented, please override onNotificationPresented if you want to receive these events."
+                "Notification presented, please override onNotificationPresented if you want to receive these events.",
             )
         }
 
@@ -116,7 +116,7 @@ public interface ActitoPushUI {
         @MainThread
         public fun onNotificationFinishedPresenting(notification: ActitoNotification) {
             logger.debug(
-                "Notification finished presenting, please override onNotificationFinishedPresenting if you want to receive these events."
+                "Notification finished presenting, please override onNotificationFinishedPresenting if you want to receive these events.",
             )
         }
 
@@ -130,7 +130,7 @@ public interface ActitoPushUI {
         @MainThread
         public fun onNotificationFailedToPresent(notification: ActitoNotification) {
             logger.debug(
-                "Notification failed to present, please override onNotificationFailedToPresent if you want to receive these events."
+                "Notification failed to present, please override onNotificationFailedToPresent if you want to receive these events.",
             )
         }
 
@@ -146,7 +146,7 @@ public interface ActitoPushUI {
         @MainThread
         public fun onNotificationUrlClicked(notification: ActitoNotification, uri: Uri) {
             logger.debug(
-                "Notification url clicked, please override onNotificationUrlClicked if you want to receive these events."
+                "Notification url clicked, please override onNotificationUrlClicked if you want to receive these events.",
             )
         }
 
@@ -162,7 +162,7 @@ public interface ActitoPushUI {
         @MainThread
         public fun onActionWillExecute(notification: ActitoNotification, action: ActitoNotification.Action) {
             logger.debug(
-                "Action will execute, please override onActionWillExecute if you want to receive these events."
+                "Action will execute, please override onActionWillExecute if you want to receive these events.",
             )
         }
 
@@ -178,7 +178,7 @@ public interface ActitoPushUI {
         @MainThread
         public fun onActionExecuted(notification: ActitoNotification, action: ActitoNotification.Action) {
             logger.debug(
-                "Action executed, please override onActionExecuted if you want to receive these events."
+                "Action executed, please override onActionExecuted if you want to receive these events.",
             )
         }
 
@@ -204,7 +204,7 @@ public interface ActitoPushUI {
         ) {
             logger.debug(
                 "Action failed to execute, please override onActionFailedToExecute if you want to receive these events.",
-                error
+                error,
             )
         }
 
@@ -225,7 +225,7 @@ public interface ActitoPushUI {
             uri: Uri,
         ) {
             logger.warning(
-                "Action received, please override onCustomActionReceived if you want to receive these events."
+                "Action received, please override onCustomActionReceived if you want to receive these events.",
             )
         }
     }

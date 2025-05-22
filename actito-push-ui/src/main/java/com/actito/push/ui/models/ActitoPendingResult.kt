@@ -2,8 +2,8 @@ package com.actito.push.ui.models
 
 import android.net.Uri
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import com.actito.models.ActitoNotification
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 public data class ActitoPendingResult(

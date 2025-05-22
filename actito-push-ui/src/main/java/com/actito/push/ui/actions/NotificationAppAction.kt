@@ -5,16 +5,16 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.actions.base.NotificationAction
 import com.actito.push.ui.internal.logger
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.models.ActitoPendingResult
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal class NotificationAppAction(
     context: Context,
@@ -45,7 +45,7 @@ internal class NotificationAppAction(
                 Actito.pushUIInternal().lifecycleListeners.forEach {
                     it.get()?.onActionExecuted(
                         notification,
-                        action
+                        action,
                     )
                 }
             }

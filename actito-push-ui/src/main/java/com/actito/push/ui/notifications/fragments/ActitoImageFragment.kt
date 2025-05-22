@@ -8,13 +8,13 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.databinding.ActitoNotificationImageFragmentBinding
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.utilities.image.loadImage
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
 
 public class ActitoImageFragment : NotificationFragment() {
 
@@ -49,7 +49,7 @@ public class ActitoImageFragment : NotificationFragment() {
 
     public class ImageAdapter(
         private val notification: ActitoNotification,
-        fragment: Fragment
+        fragment: Fragment,
     ) : FragmentStateAdapter(fragment) {
 
         override fun createFragment(position: Int): Fragment {

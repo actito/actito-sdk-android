@@ -18,14 +18,14 @@ public class ActitoAssetTest {
             url = "testUrl",
             button = ActitoAsset.Button(
                 label = "testLabel",
-                action = "testAction"
+                action = "testAction",
             ),
             metaData = ActitoAsset.MetaData(
                 originalFileName = "testOriginalFileName",
                 contentType = "testContentType",
-                contentLength = 1
+                contentLength = 1,
             ),
-            extra = mapOf("testKey" to "testValue")
+            extra = mapOf("testKey" to "testValue"),
         )
 
         val convertedAsset = ActitoAsset.fromJson(asset.toJson())
@@ -41,7 +41,7 @@ public class ActitoAssetTest {
             key = null,
             url = null,
             button = null,
-            metaData = null
+            metaData = null,
         )
 
         val convertedAsset = ActitoAsset.fromJson(asset.toJson())
@@ -53,7 +53,7 @@ public class ActitoAssetTest {
     public fun testButtonSerialization() {
         val button = ActitoAsset.Button(
             label = "testLabel",
-            action = "testAction"
+            action = "testAction",
         )
 
         val convertedButton = ActitoAsset.Button.fromJson(button.toJson())
@@ -65,7 +65,7 @@ public class ActitoAssetTest {
     public fun testButtonSerializationWithNullProps() {
         val button = ActitoAsset.Button(
             label = null,
-            action = null
+            action = null,
         )
 
         val convertedButton = ActitoAsset.Button.fromJson(button.toJson())
@@ -78,7 +78,7 @@ public class ActitoAssetTest {
         val metaData = ActitoAsset.MetaData(
             originalFileName = "testOriginalFileName",
             contentType = "testContentType",
-            contentLength = 0
+            contentLength = 0,
         )
 
         val convertedMetaData = ActitoAsset.MetaData.fromJson(metaData.toJson())

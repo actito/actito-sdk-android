@@ -25,13 +25,13 @@ public class ActitoUserInboxResponseTest {
                         time = Date(),
                         title = "testTitle",
                         subtitle = "testSubtitle",
-                        message = "testMessage"
+                        message = "testMessage",
                     ),
                     time = Date(),
                     opened = true,
-                    expires = Date()
-                )
-            )
+                    expires = Date(),
+                ),
+            ),
         )
 
         val convertedResponse = ActitoUserInboxResponse.fromJson(response.toJson())

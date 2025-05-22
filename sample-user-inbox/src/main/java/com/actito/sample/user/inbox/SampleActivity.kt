@@ -116,7 +116,7 @@ class SampleActivity :
     override fun onActionFailedToExecute(
         notification: ActitoNotification,
         action: ActitoNotification.Action,
-        error: Exception?
+        error: Exception?,
     ) {
         Timber.i("---> action failed to execute '${action.label}'")
         Toast.makeText(this, "Action failed to execute", Toast.LENGTH_SHORT).show()
@@ -125,7 +125,7 @@ class SampleActivity :
     override fun onCustomActionReceived(
         notification: ActitoNotification,
         action: ActitoNotification.Action,
-        uri: Uri
+        uri: Uri,
     ) {
         Timber.i("---> custom action received '$uri'")
         Toast.makeText(this, "Custom action received", Toast.LENGTH_SHORT).show()

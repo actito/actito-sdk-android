@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.actito.Actito
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
+import com.actito.utilities.parcel.parcelable
 
 public open class NotificationFragment : Fragment() {
 

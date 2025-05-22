@@ -2,7 +2,6 @@ package com.actito.push
 
 import android.content.Intent
 import androidx.lifecycle.LiveData
-import com.google.firebase.messaging.RemoteMessage
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.push.ktx.INTENT_ACTION_ACTION_OPENED
@@ -22,6 +21,7 @@ import com.actito.push.models.ActitoNotificationActionOpenedIntentResult
 import com.actito.push.models.ActitoNotificationOpenedIntentResult
 import com.actito.push.models.ActitoPushSubscription
 import com.actito.push.models.ActitoTransport
+import com.google.firebase.messaging.RemoteMessage
 
 public object ActitoPushCompat {
 

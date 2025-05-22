@@ -10,7 +10,7 @@ class SamplePushIntentReceiver : ActitoPushIntentReceiver() {
     override fun onNotificationReceived(
         context: Context,
         notification: ActitoNotification,
-        deliveryMechanism: ActitoNotificationDeliveryMechanism
+        deliveryMechanism: ActitoNotificationDeliveryMechanism,
     ) {
         super.onNotificationReceived(context, notification, deliveryMechanism)
 

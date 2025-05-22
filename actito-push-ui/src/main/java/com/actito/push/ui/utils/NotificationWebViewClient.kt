@@ -92,7 +92,7 @@ internal open class NotificationWebViewClient(
     private fun handleOpenActions(uri: Uri?): Boolean {
         if (uri != null && uri.isHierarchical) {
             val openActionsWindowParameter = uri.getQueryParameter(
-                checkNotNull(Actito.options).openActionsQueryParameter
+                checkNotNull(Actito.options).openActionsQueryParameter,
             )
 
             if (
@@ -110,7 +110,7 @@ internal open class NotificationWebViewClient(
     private fun handleOpenAction(uri: Uri?): Boolean {
         if (uri != null && uri.isHierarchical) {
             val openActionWindowParameter = uri.getQueryParameter(
-                checkNotNull(Actito.options).openActionQueryParameter
+                checkNotNull(Actito.options).openActionQueryParameter,
             )
 
             if (openActionWindowParameter != null) {

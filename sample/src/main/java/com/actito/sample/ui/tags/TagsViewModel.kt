@@ -3,9 +3,9 @@ package com.actito.sample.ui.tags
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.ktx.device
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class TagsViewModel : com.actito.sample.core.BaseViewModel() {

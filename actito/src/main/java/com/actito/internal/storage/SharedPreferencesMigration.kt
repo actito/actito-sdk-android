@@ -2,13 +2,13 @@ package com.actito.internal.storage
 
 import android.content.Context
 import androidx.core.content.edit
-import org.json.JSONObject
 import com.actito.internal.ActitoModule
 import com.actito.internal.logger
 import com.actito.internal.storage.preferences.ActitoSharedPreferences
 import com.actito.internal.storage.preferences.entities.StoredDevice
 import com.actito.utilities.device.deviceLanguage
 import com.actito.utilities.device.deviceRegion
+import org.json.JSONObject
 
 internal class SharedPreferencesMigration(
     private val context: Context,

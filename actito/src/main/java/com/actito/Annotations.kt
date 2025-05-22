@@ -11,6 +11,6 @@ package com.actito
     level = RequiresOptIn.Level.ERROR,
     message = "This is an internal Actito API that should not be used from outside of the com.actito " +
         "library group. No compatibility guarantees are provided. It is recommended to report your use-case of an " +
-        "internal API to the Actito issue tracker, so a stable API could be provided instead."
+        "internal API to the Actito issue tracker, so a stable API could be provided instead.",
 )
 public annotation class InternalActitoApi

@@ -8,6 +8,6 @@ internal fun Request.Builder.unsafeHeader(name: String, value: String): Request.
             .headers
             .newBuilder()
             .addUnsafeNonAscii(name, value)
-            .build()
+            .build(),
     )
 }

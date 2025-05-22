@@ -6,7 +6,7 @@ public sealed class NetworkException(message: String?, cause: Throwable?) : Exce
 
     public class ParsingException(
         message: String = "Unable to parse JSON.",
-        cause: Throwable? = null
+        cause: Throwable? = null,
     ) : NetworkException(message, cause)
 
     public class ValidationException(

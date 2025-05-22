@@ -1,8 +1,8 @@
 package com.actito.internal.storage.preferences.entities
 
-import com.squareup.moshi.JsonClass
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoUserData
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class StoredDevice(

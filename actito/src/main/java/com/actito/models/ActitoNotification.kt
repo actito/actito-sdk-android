@@ -2,15 +2,15 @@ package com.actito.models
 
 import android.content.Context
 import android.os.Parcelable
-import com.squareup.moshi.JsonClass
-import java.util.Date
-import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.WriteWith
-import org.json.JSONObject
 import com.actito.Actito
 import com.actito.internal.moshi
 import com.actito.internal.parcelize.ActitoExtraParceler
 import com.actito.utilities.parcelize.NotificationContentDataParceler
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.WriteWith
+import org.json.JSONObject
+import java.util.Date
 
 @Parcelize
 @JsonClass(generateAdapter = true)
@@ -201,7 +201,8 @@ public data class ActitoNotification(
         MAP,
         RATE,
         PASSBOOK,
-        STORE;
+        STORE,
+        ;
 
         public companion object {
             public fun from(type: String): NotificationType? {

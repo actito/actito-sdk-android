@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.actito.Actito
 import com.actito.geo.ActitoGeo
 import com.actito.geo.ktx.geo
@@ -17,6 +16,7 @@ import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoLocation
 import com.actito.geo.models.ActitoRegion
 import com.actito.sample.databinding.FragmentBeaconsBinding
+import com.google.android.material.snackbar.Snackbar
 
 class BeaconsFragment : Fragment(), ActitoGeo.Listener {
     private lateinit var binding: FragmentBeaconsBinding

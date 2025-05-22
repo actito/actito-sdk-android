@@ -5,20 +5,20 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.actions.base.NotificationAction
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.models.ActitoPendingResult
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal class NotificationTelephoneAction(
     context: Context,
     notification: ActitoNotification,
-    action: ActitoNotification.Action
+    action: ActitoNotification.Action,
 ) : NotificationAction(context, notification, action) {
 
     override suspend fun execute(): ActitoPendingResult? = withContext(Dispatchers.IO) {
@@ -35,8 +35,8 @@ internal class NotificationTelephoneAction(
                 context.startActivity(
                     Intent.createChooser(
                         intent,
-                        context.resources.getText(R.string.actito_action_title_intent_telephone)
-                    )
+                        context.resources.getText(R.string.actito_action_title_intent_telephone),
+                    ),
                 )
             } catch (e: ActivityNotFoundException) {
                 throw Exception(context.getString(R.string.actito_action_error_no_dialer))

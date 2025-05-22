@@ -67,7 +67,7 @@ public val ActitoOptions.customTabsToolbarColor: Int?
             } catch (e: NotFoundException) {
                 logger.warning(
                     "Invalid color resource provided for 'com.actito.push.ui.custom_tabs_toolbar_color'.",
-                    e
+                    e,
                 )
             }
         }
@@ -86,7 +86,7 @@ public val ActitoOptions.customTabsNavigationBarColor: Int?
             } catch (e: NotFoundException) {
                 logger.warning(
                     "Invalid color resource provided for 'com.actito.push.ui.custom_tabs_navigation_bar_color'.",
-                    e
+                    e,
                 )
             }
         }
@@ -105,7 +105,7 @@ public val ActitoOptions.customTabsNavigationBarDividerColor: Int?
             } catch (e: NotFoundException) {
                 logger.warning(
                     "Invalid color resource provided for 'com.actito.push.ui.custom_tabs_navigation_bar_divider_color'.",
-                    e
+                    e,
                 )
             }
         }

@@ -1,13 +1,13 @@
 package com.actito.inbox.models
 
 import android.os.Parcelable
-import com.squareup.moshi.JsonClass
-import java.util.Date
-import kotlinx.parcelize.Parcelize
-import org.json.JSONObject
 import com.actito.Actito
 import com.actito.internal.moshi
 import com.actito.models.ActitoNotification
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
+import org.json.JSONObject
+import java.util.Date
 
 @Parcelize
 @JsonClass(generateAdapter = true)

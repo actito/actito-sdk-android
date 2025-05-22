@@ -3,9 +3,9 @@ package com.actito.internal.parcelize
 import android.os.Parcel
 import com.actito.Actito
 import com.actito.InternalActitoApi
+import com.actito.internal.moshi
 import com.squareup.moshi.Types
 import kotlinx.parcelize.Parceler
-import com.actito.internal.moshi
 
 @InternalActitoApi
 public object ActitoExtraParceler : Parceler<Map<String, Any>> {

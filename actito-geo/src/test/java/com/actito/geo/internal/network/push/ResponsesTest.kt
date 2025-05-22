@@ -23,7 +23,7 @@ public class ResponsesTest {
                 coordinate = ActitoRegion.Coordinate(
                     latitude = 1.5,
                     longitude = 1.5,
-                )
+                ),
             ),
             advancedGeometry = ActitoRegion.AdvancedGeometry(
                 type = "testType",
@@ -31,13 +31,13 @@ public class ResponsesTest {
                     ActitoRegion.Coordinate(
                         latitude = 1.5,
                         longitude = 1.5,
-                    )
-                )
+                    ),
+                ),
             ),
             major = 1,
             distance = 1.5,
             timeZone = "testTimeZone",
-            timeZoneOffset = 1.5
+            timeZoneOffset = 1.5,
         )
 
         val region = FetchRegionsResponse.Region(
@@ -47,16 +47,16 @@ public class ResponsesTest {
             referenceKey = "testReferenceKey",
             geometry = FetchRegionsResponse.Region.Geometry(
                 type = "testType",
-                coordinates = listOf(1.5, 1.5)
+                coordinates = listOf(1.5, 1.5),
             ),
             advancedGeometry = FetchRegionsResponse.Region.AdvancedGeometry(
                 type = "testType",
-                coordinates = listOf(listOf(listOf(1.5, 1.5)))
+                coordinates = listOf(listOf(listOf(1.5, 1.5))),
             ),
             major = 1,
             distance = 1.5,
             timezone = "testTimeZone",
-            timeZoneOffset = 1.5
+            timeZoneOffset = 1.5,
         ).toModel()
 
         assertEquals(expectedRegion, region)
@@ -69,7 +69,7 @@ public class ResponsesTest {
             name = "testName",
             major = 1,
             minor = 1,
-            triggers = true
+            triggers = true,
         )
 
         val beacon = FetchBeaconsResponse.Beacon(
@@ -77,7 +77,7 @@ public class ResponsesTest {
             name = "testName",
             major = 1,
             minor = 1,
-            triggers = true
+            triggers = true,
         ).toModel()
 
         assertEquals(expectedBeacon, beacon)

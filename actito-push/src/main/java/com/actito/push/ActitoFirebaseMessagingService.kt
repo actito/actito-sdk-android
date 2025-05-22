@@ -1,7 +1,5 @@
 package com.actito.push
 
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
 import com.actito.Actito
 import com.actito.push.internal.ActitoNotificationRemoteMessage
 import com.actito.push.internal.ActitoSystemRemoteMessage
@@ -10,6 +8,8 @@ import com.actito.push.internal.logger
 import com.actito.push.ktx.push
 import com.actito.push.ktx.pushInternal
 import com.actito.push.models.ActitoTransport
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 
 public open class ActitoFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -37,16 +37,16 @@ public open class ActitoFirebaseMessagingService : FirebaseMessagingService() {
 
             if (isSystemNotification) {
                 Actito.pushInternal().handleRemoteMessage(
-                    ActitoSystemRemoteMessage(message)
+                    ActitoSystemRemoteMessage(message),
                 )
             } else {
                 Actito.pushInternal().handleRemoteMessage(
-                    ActitoNotificationRemoteMessage(message)
+                    ActitoNotificationRemoteMessage(message),
                 )
             }
         } else {
             Actito.pushInternal().handleRemoteMessage(
-                ActitoUnknownRemoteMessage(message)
+                ActitoUnknownRemoteMessage(message),
             )
         }
     }

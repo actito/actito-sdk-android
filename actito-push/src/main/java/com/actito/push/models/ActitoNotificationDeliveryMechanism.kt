@@ -12,7 +12,9 @@ public enum class ActitoNotificationDeliveryMechanism : Parcelable {
     STANDARD,
 
     @Json(name = "silent")
-    SILENT;
+    SILENT,
+
+    ;
 
     public val rawValue: String
         get() = when (this) {

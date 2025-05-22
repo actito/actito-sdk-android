@@ -1,13 +1,13 @@
 package com.actito.scannables.internal.network.push
 
+import com.actito.internal.network.push.NotificationResponse
+import com.actito.models.ActitoNotification
+import com.actito.scannables.models.ActitoScannable
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.internal.network.push.NotificationResponse
-import com.actito.models.ActitoNotification
-import com.actito.scannables.models.ActitoScannable
 import java.util.Date
 
 @RunWith(RobolectricTestRunner::class)
@@ -27,8 +27,8 @@ public class ResponsesTest {
                 time = Date(1),
                 title = "testTitle",
                 subtitle = "testSubtitle",
-                message = "testMessage"
-            )
+                message = "testMessage",
+            ),
         )
 
         val scannable = FetchScannableResponse.Scannable(
@@ -44,9 +44,9 @@ public class ResponsesTest {
                     time = Date(1),
                     title = "testTitle",
                     subtitle = "testSubtitle",
-                    message = "testMessage"
-                )
-            )
+                    message = "testMessage",
+                ),
+            ),
         ).toModel()
 
         assertEquals(expectedScannable, scannable)
@@ -59,7 +59,7 @@ public class ResponsesTest {
             name = "testName",
             type = "testType",
             tag = "testTag",
-            notification = null
+            notification = null,
         )
 
         val scannable = FetchScannableResponse.Scannable(
@@ -67,7 +67,7 @@ public class ResponsesTest {
             name = "testName",
             type = "testType",
             tag = "testTag",
-            data = null
+            data = null,
         ).toModel()
 
         assertEquals(expectedScannable, scannable)
