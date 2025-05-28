@@ -22,6 +22,7 @@ public abstract class ActitoModule {
     public open suspend fun unlaunch() {}
 
     @InternalActitoApi
+    @Suppress("ktlint:standard:trailing-comma-on-declaration-site")
     public enum class Module(private val fqn: String) {
         // Default modules
         DEVICE(fqn = "com.actito.internal.modules.ActitoDeviceModuleImpl"),
@@ -38,8 +39,7 @@ public abstract class ActitoModule {
         GEO(fqn = "com.actito.geo.internal.ActitoGeoImpl"),
         LOYALTY(fqn = "com.actito.loyalty.internal.ActitoLoyaltyImpl"),
         IN_APP_MESSAGING(fqn = "com.actito.iam.internal.ActitoInAppMessagingImpl"),
-        USER_INBOX(fqn = "com.actito.inbox.user.internal.ActitoUserInboxImpl"),
-        ;
+        USER_INBOX(fqn = "com.actito.inbox.user.internal.ActitoUserInboxImpl");
 
         @InternalActitoApi
         public val isAvailable: Boolean

@@ -7,14 +7,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = false)
+@Suppress("ktlint:standard:trailing-comma-on-declaration-site")
 public enum class ActitoNotificationDeliveryMechanism : Parcelable {
     @Json(name = "standard")
     STANDARD,
 
     @Json(name = "silent")
-    SILENT,
-
-    ;
+    SILENT;
 
     public val rawValue: String
         get() = when (this) {

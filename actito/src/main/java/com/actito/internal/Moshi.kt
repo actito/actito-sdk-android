@@ -14,7 +14,7 @@ import java.util.Date
 public val Actito.moshi: Moshi by lazy {
     val builder = Moshi.Builder()
         .add(EncodeNullsFactory())
-        .add(com.actito.utilities.moshi.UseDefaultsWhenNullFactory())
+        .add(UseDefaultsWhenNullFactory())
         .add(Date::class.java, Rfc3339DateJsonAdapter())
         .add(ActitoTimeAdapter())
         .add(UriAdapter())

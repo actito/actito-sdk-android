@@ -188,6 +188,7 @@ public data class ActitoNotification(
         }
     }
 
+    @Suppress("ktlint:standard:trailing-comma-on-declaration-site")
     public enum class NotificationType {
         NONE,
         ALERT,
@@ -201,8 +202,7 @@ public data class ActitoNotification(
         MAP,
         RATE,
         PASSBOOK,
-        STORE,
-        ;
+        STORE;
 
         public companion object {
             public fun from(type: String): NotificationType? {

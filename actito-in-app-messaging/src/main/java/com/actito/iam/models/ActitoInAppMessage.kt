@@ -67,10 +67,10 @@ public data class ActitoInAppMessage(
         }
     }
 
+    @Suppress("ktlint:standard:trailing-comma-on-declaration-site")
     public enum class ActionType {
         PRIMARY,
-        SECONDARY,
-        ;
+        SECONDARY;
 
         public val rawValue: String
             get() = when (this) {
