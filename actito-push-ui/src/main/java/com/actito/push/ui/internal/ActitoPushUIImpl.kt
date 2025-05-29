@@ -418,11 +418,10 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
             ActitoNotification.Action.TYPE_MAIL -> NotificationMailAction(activity, notification, action)
             ActitoNotification.Action.TYPE_SMS -> NotificationSmsAction(activity, notification, action)
             ActitoNotification.Action.TYPE_TELEPHONE -> NotificationTelephoneAction(activity, notification, action)
-            @Suppress("DEPRECATION", "ktlint:standard:annotation")
+            @Suppress("DEPRECATION", "ktlint:standard:annotation", "ktlint:standard:indent")
             ActitoNotification.Action.TYPE_WEB_VIEW,
             ActitoNotification.Action.TYPE_IN_APP_BROWSER,
-            ->
-                NotificationInAppBrowserAction(activity, notification, action)
+                -> NotificationInAppBrowserAction(activity, notification, action)
             else -> {
                 logger.warning("Unhandled action type '${action.type}'.")
                 null
