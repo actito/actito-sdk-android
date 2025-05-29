@@ -6,6 +6,7 @@ import com.actito.internal.moshi.ActitoTimeAdapter
 import com.actito.internal.moshi.JSONObjectAdapter
 import com.actito.internal.moshi.UriAdapter
 import com.actito.utilities.moshi.EncodeNullsFactory
+import com.actito.utilities.moshi.UseDefaultsWhenNullFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import java.util.Date
