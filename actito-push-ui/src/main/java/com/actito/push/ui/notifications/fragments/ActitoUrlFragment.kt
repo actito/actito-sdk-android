@@ -1,12 +1,12 @@
 package com.actito.push.ui.notifications.fragments
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
+import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.push.ui.databinding.ActitoNotificationUrlFragmentBinding
 import com.actito.push.ui.ktx.pushUIInternal
@@ -50,7 +50,7 @@ public class ActitoUrlFragment : NotificationFragment() {
             return
         }
 
-        val url = Uri.parse(urlStr)
+        val url = urlStr.toUri()
             .buildUpon()
             .removeQueryParameter("notificareWebView")
             .build()

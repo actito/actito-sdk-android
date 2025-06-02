@@ -10,6 +10,7 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.closeWindowQueryParameter
@@ -34,7 +35,7 @@ internal open class NotificationWebViewClient(
     }
 
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        val uri = Uri.parse(url)
+        val uri = url.toUri()
         return handleOpenActions(uri) || handleOpenAction(uri) || handleUri(view, uri)
     }
 

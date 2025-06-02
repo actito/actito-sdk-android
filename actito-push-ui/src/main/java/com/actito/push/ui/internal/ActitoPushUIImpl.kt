@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.annotation.Keep
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import com.actito.Actito
 import com.actito.ActitoCallback
@@ -240,7 +241,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
             return
         }
 
-        val url = Uri.parse(content.data as String)
+        val url = (content.data as String).toUri()
         if (url.host?.endsWith(servicesInfo.hosts.shortLinks) != true) {
             presentDeepLink(activity, notification, url)
             return
@@ -249,7 +250,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
         actitoCoroutineScope.launch {
             try {
                 val link = Actito.fetchDynamicLink(url)
-                presentDeepLink(activity, notification, Uri.parse(link.target))
+                presentDeepLink(activity, notification, link.target.toUri())
             } catch (e: Exception) {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
@@ -368,7 +369,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
             return
         }
 
-        val url = Uri.parse(urlStr)
+        val url = urlStr.toUri()
             .buildUpon()
             .removeQueryParameter("notificareWebView")
             .build()

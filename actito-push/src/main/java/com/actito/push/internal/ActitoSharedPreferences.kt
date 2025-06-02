@@ -33,9 +33,9 @@ internal class ActitoSharedPreferences(context: Context) {
             )
         }
         set(value) {
-            sharedPreferences.edit()
-                .putBoolean(PREFERENCE_REMOTE_NOTIFICATIONS_ENABLED, value)
-                .apply()
+            sharedPreferences.edit {
+                putBoolean(PREFERENCE_REMOTE_NOTIFICATIONS_ENABLED, value)
+            }
         }
 
     var transport: ActitoTransport?
@@ -96,9 +96,9 @@ internal class ActitoSharedPreferences(context: Context) {
             )
         }
         set(value) {
-            sharedPreferences.edit()
-                .putBoolean(PREFERENCE_ALLOWED_UI, value)
-                .apply()
+            sharedPreferences.edit {
+                putBoolean(PREFERENCE_ALLOWED_UI, value)
+            }
         }
 
     var firstRegistration: Boolean

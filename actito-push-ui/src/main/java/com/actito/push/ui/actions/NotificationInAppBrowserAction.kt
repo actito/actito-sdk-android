@@ -1,7 +1,7 @@
 package com.actito.push.ui.actions
 
 import android.content.Context
-import android.net.Uri
+import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
@@ -20,7 +20,7 @@ internal class NotificationInAppBrowserAction(
 ) : NotificationAction(context, notification, action) {
 
     override suspend fun execute(): ActitoPendingResult? = withContext(Dispatchers.IO) {
-        val uri = action.target?.let { Uri.parse(it) }
+        val uri = action.target?.toUri()
 
         if (uri != null) {
             Actito.pushUIImplementation().createInAppBrowser().launchUrl(context, uri)

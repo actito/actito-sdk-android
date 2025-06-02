@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.actito.Actito
 import com.actito.models.ActitoNotification
@@ -29,7 +29,7 @@ class SampleActivity :
             // Access the nested NavController.
             // Using findNavController will yield a reference to the parent's NavController.
             val fragmentContainer = binding.root.findViewById<View>(R.id.nav_host_fragment)
-            return Navigation.findNavController(fragmentContainer)
+            return fragmentContainer.findNavController()
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {

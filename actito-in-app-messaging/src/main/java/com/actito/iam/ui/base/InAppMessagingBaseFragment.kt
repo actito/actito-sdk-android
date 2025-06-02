@@ -1,12 +1,12 @@
 package com.actito.iam.ui.base
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.annotation.CallSuper
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.actito.Actito
@@ -125,7 +125,7 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
                 logger.error("Failed to log in-app message action.", e)
             }
 
-            val uri = action.url.let { Uri.parse(it) }
+            val uri = action.url.toUri()
 
             val intent = Intent(Intent.ACTION_VIEW, uri).apply {
                 setPackage(requireContext().packageName)

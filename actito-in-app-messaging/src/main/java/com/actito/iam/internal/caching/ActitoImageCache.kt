@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.core.net.toUri
 import com.actito.iam.models.ActitoInAppMessage
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
@@ -34,11 +35,11 @@ internal object ActitoImageCache {
             isLoading = true
 
             if (!message.image.isNullOrBlank()) {
-                portraitImage = loadImage(context, Uri.parse(message.image))
+                portraitImage = loadImage(context, message.image.toUri())
             }
 
             if (!message.landscapeImage.isNullOrBlank()) {
-                landscapeImage = loadImage(context, Uri.parse(message.landscapeImage))
+                landscapeImage = loadImage(context, message.landscapeImage.toUri())
             }
         } finally {
             isLoading = false

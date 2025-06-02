@@ -3,8 +3,8 @@ package com.actito.push.internal
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.core.app.RemoteInput
+import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.ktx.events
 import com.actito.models.ActitoNotification
@@ -80,7 +80,7 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
         action: ActitoNotification.Action,
         responseText: String?,
     ) {
-        val targetUri = action.target?.let { Uri.parse(it) }
+        val targetUri = action.target?.let { it.toUri() }
         if (targetUri == null || targetUri.scheme == null || targetUri.host == null) {
             sendQuickResponseAction(notification, action, responseText)
 

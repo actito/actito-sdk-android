@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
@@ -120,7 +121,7 @@ internal class NotificationCallbackAction(
             mediaUrl: String?,
             mimeType: String?,
         ): Unit = withContext(Dispatchers.IO) {
-            val targetUri = action.target?.let { Uri.parse(it) }
+            val targetUri = action.target?.toUri()
             if (targetUri == null || targetUri.scheme == null || targetUri.host == null) {
                 Actito.createNotificationReply(
                     notification = notification,

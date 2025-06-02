@@ -3,7 +3,6 @@ package com.actito.loyalty
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebChromeClient
@@ -11,6 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.loyalty.internal.logger
@@ -144,7 +144,7 @@ public open class PassbookActivity : AppCompatActivity() {
     private fun showGooglePayView(url: String) {
         try {
             val intent = Intent().setAction(Intent.ACTION_VIEW)
-                .setData(Uri.parse(url))
+                .setData(url.toUri())
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
             startActivity(intent)

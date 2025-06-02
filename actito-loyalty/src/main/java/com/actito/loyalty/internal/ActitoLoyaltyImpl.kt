@@ -3,8 +3,8 @@ package com.actito.loyalty.internal
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import androidx.annotation.Keep
+import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.ActitoApplicationUnavailableException
 import com.actito.ActitoCallback
@@ -211,7 +211,7 @@ internal object ActitoLoyaltyImpl : ActitoModule(), ActitoLoyalty, ActitoLoyalty
 
                 try {
                     val intent = Intent().setAction(Intent.ACTION_VIEW)
-                        .setData(Uri.parse(url))
+                        .setData(url.toUri())
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
                     activity.startActivity(intent)

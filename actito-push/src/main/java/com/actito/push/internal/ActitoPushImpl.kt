@@ -20,6 +20,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -912,7 +914,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
 
                 if (identifier != 0) {
                     builder.setSound(
-                        Uri.parse("android.resource://${Actito.requireContext().packageName}/$identifier"),
+                        "android.resource://${Actito.requireContext().packageName}/$identifier".toUri(),
                     )
                 }
             }
@@ -921,7 +923,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         val lightsColor = message.lightsColor ?: checkNotNull(Actito.options).notificationLightsColor
         if (lightsColor != null) {
             try {
-                val color = Color.parseColor(lightsColor)
+                val color = lightsColor.toColorInt()
                 val onMs = message.lightsOn ?: checkNotNull(Actito.options).notificationLightsOn
                 val offMs = message.lightsOff ?: checkNotNull(Actito.options).notificationLightsOff
 
