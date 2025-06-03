@@ -1156,7 +1156,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             return
         }
 
-        localStorage.enteredRegions = localStorage.enteredRegions + region.id
+        localStorage.enteredRegions += region.id
 
         val payload = RegionTriggerPayload(
             deviceID = device.id,
@@ -1182,7 +1182,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             return
         }
 
-        localStorage.enteredRegions = localStorage.enteredRegions - region.id
+        localStorage.enteredRegions -= region.id
 
         val payload = RegionTriggerPayload(
             deviceID = device.id,
@@ -1208,7 +1208,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             return
         }
 
-        localStorage.enteredBeacons = localStorage.enteredBeacons + beacon.id
+        localStorage.enteredBeacons += beacon.id
 
         val payload = BeaconTriggerPayload(
             deviceID = device.id,
@@ -1388,8 +1388,8 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         beaconServiceManager?.clearMonitoring()
     }
 
-    private suspend fun getCountryCode(location: Location): String? {
-        return try {
+    private suspend fun getCountryCode(location: Location): String? =
+        try {
             getLocationAddresses(location)
                 .firstOrNull()
                 ?.countryCode
@@ -1397,7 +1397,6 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             logger.warning("Unable to reverse geocode the location.", e)
             null
         }
-    }
 
     private suspend fun getLocationAddresses(location: Location): List<Address> = withContext(Dispatchers.IO) {
         val geocoder = geocoder ?: return@withContext listOf()

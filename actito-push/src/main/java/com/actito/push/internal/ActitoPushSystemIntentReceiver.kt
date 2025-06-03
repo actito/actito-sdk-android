@@ -80,7 +80,7 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
         action: ActitoNotification.Action,
         responseText: String?,
     ) {
-        val targetUri = action.target?.let { it.toUri() }
+        val targetUri = action.target?.toUri()
         if (targetUri == null || targetUri.scheme == null || targetUri.host == null) {
             sendQuickResponseAction(notification, action, responseText)
 

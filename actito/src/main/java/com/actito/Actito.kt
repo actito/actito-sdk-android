@@ -265,9 +265,8 @@ public object Actito {
      * @return The [Context] used by Actito.
      */
     @JvmStatic
-    public fun requireContext(): Context {
-        return context?.get() ?: throw IllegalStateException("Cannot find context for Actito.")
-    }
+    public fun requireContext(): Context =
+        context?.get() ?: throw IllegalStateException("Cannot find context for Actito.")
 
     /**
      * Launches the Actito SDK, and all the additional available modules, preparing them for use.

@@ -15,8 +15,7 @@ import java.util.GregorianCalendar
 
 private const val MAX_RETRIES = 5
 
-internal class ProcessEventsWorker(context: Context, params: WorkerParameters) :
-    CoroutineWorker(context, params) {
+internal class ProcessEventsWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         return try {

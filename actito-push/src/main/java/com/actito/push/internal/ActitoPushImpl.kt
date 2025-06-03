@@ -588,15 +588,17 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
             logger.info("Processing system notification: ${message.type}")
             when (message.type) {
                 "re.notifica.notification.system.Application" -> {
-                    Actito.fetchApplication(object : ActitoCallback<ActitoApplication> {
-                        override fun onSuccess(result: ActitoApplication) {
-                            logger.debug("Updated cached application info.")
-                        }
+                    Actito.fetchApplication(
+                        object : ActitoCallback<ActitoApplication> {
+                            override fun onSuccess(result: ActitoApplication) {
+                                logger.debug("Updated cached application info.")
+                            }
 
-                        override fun onFailure(e: Exception) {
-                            logger.error("Failed to update cached application info.", e)
-                        }
-                    })
+                            override fun onFailure(e: Exception) {
+                                logger.error("Failed to update cached application info.", e)
+                            }
+                        },
+                    )
                 }
 
                 "re.notifica.notification.system.Inbox" -> InboxIntegration.reloadInbox()
@@ -811,7 +813,8 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
             val category = application.actionCategories.firstOrNull { it.name == message.actionCategory }
             category?.actions?.forEach { action ->
                 val useQuickResponse = action.type == ActitoNotification.Action.TYPE_CALLBACK &&
-                    !action.camera && (!action.keyboard || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    !action.camera &&
+                    (!action.keyboard || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
 
                 val useRemoteInput = useQuickResponse && action.keyboard && !action.camera
 

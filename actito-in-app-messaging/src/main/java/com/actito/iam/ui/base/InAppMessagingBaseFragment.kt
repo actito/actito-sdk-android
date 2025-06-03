@@ -63,19 +63,21 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
             Transition.EXIT -> AnimationUtils.loadAnimation(requireContext(), exitAnimation)
         }
 
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {
-                // no-op
-            }
+        animation.setAnimationListener(
+            object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {
+                    // no-op
+                }
 
-            override fun onAnimationEnd(animation: Animation?) {
-                onAnimationFinished()
-            }
+                override fun onAnimationEnd(animation: Animation?) {
+                    onAnimationFinished()
+                }
 
-            override fun onAnimationRepeat(animation: Animation?) {
-                // no-op
-            }
-        })
+                override fun onAnimationRepeat(animation: Animation?) {
+                    // no-op
+                }
+            },
+        )
 
         animatedView.clearAnimation()
         animatedView.animation = animation

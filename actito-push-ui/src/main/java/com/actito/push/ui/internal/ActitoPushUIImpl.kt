@@ -411,6 +411,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
         notification: ActitoNotification,
         action: ActitoNotification.Action,
     ): NotificationAction? {
+        @Suppress("ktlint:standard:annotation", "ktlint:standard:indent")
         return when (action.type) {
             ActitoNotification.Action.TYPE_APP -> NotificationAppAction(activity, notification, action)
             ActitoNotification.Action.TYPE_BROWSER -> NotificationBrowserAction(activity, notification, action)
@@ -419,7 +420,7 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
             ActitoNotification.Action.TYPE_MAIL -> NotificationMailAction(activity, notification, action)
             ActitoNotification.Action.TYPE_SMS -> NotificationSmsAction(activity, notification, action)
             ActitoNotification.Action.TYPE_TELEPHONE -> NotificationTelephoneAction(activity, notification, action)
-            @Suppress("DEPRECATION", "ktlint:standard:annotation", "ktlint:standard:indent")
+            @Suppress("DEPRECATION")
             ActitoNotification.Action.TYPE_WEB_VIEW,
             ActitoNotification.Action.TYPE_IN_APP_BROWSER,
                 -> NotificationInAppBrowserAction(activity, notification, action)

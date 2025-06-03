@@ -94,7 +94,9 @@ public data class ActitoNotificationRemoteMessage(
     val lightsColor: String?,
     val lightsOn: Int?,
     val lightsOff: Int?,
-) : ActitoRemoteMessage, Parcelable {
+) : ActitoRemoteMessage,
+    Parcelable
+{
 
     public fun toNotification(): ActitoNotification =
         ActitoNotification(

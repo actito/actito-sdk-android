@@ -78,9 +78,5 @@ internal fun ActitoBeaconSession.canInsertBeacon(beacon: ActitoBeacon): Boolean 
     }
 
     val fifteenMinutesAgo = Calendar.getInstance().apply { add(Calendar.MINUTE, -15) }.time
-    if (lastEntry.timestamp < fifteenMinutesAgo) {
-        return true
-    }
-
-    return false
+    return lastEntry.timestamp < fifteenMinutesAgo
 }
