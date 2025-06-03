@@ -17,9 +17,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 
 @Keep
-public class ActitoMapFragment :
-    SupportMapFragment(),
-    OnMapReadyCallback {
+public class ActitoMapFragment : SupportMapFragment(), OnMapReadyCallback {
 
     private lateinit var notification: ActitoNotification
     // private lateinit var callback: NotificationFragment.Callback

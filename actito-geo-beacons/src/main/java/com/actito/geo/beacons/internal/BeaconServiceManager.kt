@@ -40,9 +40,7 @@ private const val BEACON_LAYOUT_APPLE = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-
 @InternalActitoApi
 public class BeaconServiceManager(
     proximityUUID: String,
-) : BeaconServiceManager(proximityUUID),
-    MonitorNotifier,
-    RangeNotifier {
+) : BeaconServiceManager(proximityUUID), MonitorNotifier, RangeNotifier {
 
     private val beaconManager: BeaconManager
     private val notificationSequence = AtomicInteger()
