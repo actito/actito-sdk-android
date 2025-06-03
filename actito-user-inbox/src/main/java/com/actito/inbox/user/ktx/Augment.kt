@@ -5,6 +5,4 @@ import com.actito.inbox.user.ActitoUserInbox
 import com.actito.inbox.user.internal.ActitoUserInboxImpl
 
 @Suppress("unused")
-public fun Actito.userInbox(): ActitoUserInbox {
-    return ActitoUserInboxImpl
-}
+public fun Actito.userInbox(): ActitoUserInbox = ActitoUserInboxImpl

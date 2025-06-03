@@ -966,10 +966,8 @@ public object Actito {
         return uri
     }
 
-    private fun parseDeferredLink(referrer: String): Uri? {
-        return parseDeferredLinkFromEncodedQueryUrl(referrer)
-            ?: parseDeferredLinkFromUrl(referrer)
-    }
+    private fun parseDeferredLink(referrer: String): Uri? =
+        parseDeferredLinkFromEncodedQueryUrl(referrer) ?: parseDeferredLinkFromUrl(referrer)
 
     private fun parseDeferredLinkFromEncodedQueryUrl(referrer: String): Uri? {
         val uri = Uri.Builder().encodedQuery(referrer).build()

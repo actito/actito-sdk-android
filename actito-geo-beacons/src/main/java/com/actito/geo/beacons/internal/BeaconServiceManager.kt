@@ -164,9 +164,7 @@ public class BeaconServiceManager(
         beaconManager.enableForegroundServiceScanning(notification, 456)
     }
 
-    private fun createUniqueNotificationId(): Int {
-        return notificationSequence.incrementAndGet()
-    }
+    private fun createUniqueNotificationId(): Int = notificationSequence.incrementAndGet()
 
     // region MonitorNotifier
 

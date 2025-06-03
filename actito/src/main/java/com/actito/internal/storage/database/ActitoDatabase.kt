@@ -20,12 +20,11 @@ internal abstract class ActitoDatabase : RoomDatabase() {
     companion object {
         private const val DB_NAME = "notificare.db"
 
-        internal fun create(context: Context): ActitoDatabase {
-            return Room.databaseBuilder(
+        internal fun create(context: Context): ActitoDatabase =
+            Room.databaseBuilder(
                 context,
                 ActitoDatabase::class.java,
                 DB_NAME,
             ).fallbackToDestructiveMigration().build()
-        }
     }
 }

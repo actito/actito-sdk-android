@@ -48,9 +48,7 @@ internal object ActitoUserInboxImpl : ActitoModule(), ActitoUserInbox {
         return requireNotNull(adapter.nonNull().fromJson(json))
     }
 
-    override fun parseResponse(json: JSONObject): ActitoUserInboxResponse {
-        return parseResponse(json.toString())
-    }
+    override fun parseResponse(json: JSONObject): ActitoUserInboxResponse = parseResponse(json.toString())
 
     override suspend fun open(item: ActitoUserInboxItem): ActitoNotification = withContext(Dispatchers.IO) {
         checkPrerequisites()

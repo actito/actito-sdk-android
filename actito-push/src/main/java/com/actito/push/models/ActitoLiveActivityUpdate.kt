@@ -24,9 +24,7 @@ public data class ActitoLiveActivityUpdate(
     val timestamp: Date,
 ) : Parcelable {
 
-    public inline fun <reified T> content(klass: Class<T> = T::class.java): T? {
-        return content(klass, Actito.moshi)
-    }
+    public inline fun <reified T> content(klass: Class<T> = T::class.java): T? = content(klass, Actito.moshi)
 
     public inline fun <reified T> content(klass: Class<T> = T::class.java, moshi: Moshi): T? {
         val content = content ?: return null

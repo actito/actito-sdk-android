@@ -17,13 +17,12 @@ internal object ActitoImageCache {
     internal var isLoading: Boolean = false
         private set
 
-    internal fun getOrientationConstrainedImage(context: Context): Bitmap? {
-        return if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+    internal fun getOrientationConstrainedImage(context: Context): Bitmap? =
+        if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.landscapeImage ?: this.portraitImage
         } else {
             this.portraitImage ?: this.landscapeImage
         }
-    }
 
     internal suspend fun preloadImages(
         context: Context,

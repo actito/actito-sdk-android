@@ -133,13 +133,12 @@ public open class InAppMessagingActivity : AppCompatActivity() {
             }
         }
 
-        private fun getFragmentClass(message: ActitoInAppMessage): Class<out Fragment>? {
-            return when (message.type) {
+        private fun getFragmentClass(message: ActitoInAppMessage): Class<out Fragment>? =
+            when (message.type) {
                 ActitoInAppMessage.TYPE_BANNER -> InAppMessagingBannerFragment::class.java
                 ActitoInAppMessage.TYPE_CARD -> InAppMessagingCardFragment::class.java
                 ActitoInAppMessage.TYPE_FULLSCREEN -> InAppMessagingFullscreenFragment::class.java
                 else -> null
             }
-        }
     }
 }

@@ -5,6 +5,5 @@ import android.os.Build
 import com.actito.utilities.content.applicationName
 import com.actito.utilities.content.applicationVersion
 
-public fun Context.userAgent(sdkVersion: String): String {
-    return "$applicationName/$applicationVersion Actito/$sdkVersion Android/${Build.VERSION.RELEASE}"
-}
+public fun Context.userAgent(sdkVersion: String): String =
+    "$applicationName/$applicationVersion Actito/$sdkVersion Android/${Build.VERSION.RELEASE}"

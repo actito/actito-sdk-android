@@ -27,12 +27,11 @@ internal abstract class InboxDatabase : RoomDatabase() {
     companion object {
         private const val DB_NAME = "notificare_inbox.db"
 
-        internal fun create(context: Context): InboxDatabase {
-            return Room.databaseBuilder(
+        internal fun create(context: Context): InboxDatabase =
+            Room.databaseBuilder(
                 context,
                 InboxDatabase::class.java,
                 DB_NAME,
             ).fallbackToDestructiveMigration().build()
-        }
     }
 }

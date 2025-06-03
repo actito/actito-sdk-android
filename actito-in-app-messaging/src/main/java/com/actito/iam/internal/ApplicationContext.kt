@@ -13,7 +13,5 @@ internal enum class ApplicationContext {
             FOREGROUND -> ActitoInAppMessage.CONTEXT_FOREGROUND
         }
 
-    override fun toString(): String {
-        return rawValue
-    }
+    override fun toString(): String = rawValue
 }

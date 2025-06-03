@@ -9,17 +9,11 @@ import com.actito.push.ui.internal.ActitoPushUIImpl
 import com.actito.push.ui.internal.logger
 
 @Suppress("unused")
-public fun Actito.pushUI(): ActitoPushUI {
-    return ActitoPushUIImpl
-}
+public fun Actito.pushUI(): ActitoPushUI = ActitoPushUIImpl
 
-internal fun Actito.pushUIInternal(): ActitoInternalPushUI {
-    return pushUI() as ActitoInternalPushUI
-}
+internal fun Actito.pushUIInternal(): ActitoInternalPushUI = pushUI() as ActitoInternalPushUI
 
-internal fun Actito.pushUIImplementation(): ActitoPushUIImpl {
-    return pushUI() as ActitoPushUIImpl
-}
+internal fun Actito.pushUIImplementation(): ActitoPushUIImpl = pushUI() as ActitoPushUIImpl
 
 internal fun Actito.loyaltyIntegration(): ActitoLoyaltyIntegration? {
     if (!ActitoModule.Module.LOYALTY.isAvailable) {

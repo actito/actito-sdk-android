@@ -7,17 +7,12 @@ import com.actito.iam.internal.ActitoInAppMessagingImpl
 import com.actito.ktx.events
 
 @Suppress("unused")
-public fun Actito.inAppMessaging(): ActitoInAppMessaging {
-    return ActitoInAppMessagingImpl
-}
+public fun Actito.inAppMessaging(): ActitoInAppMessaging = ActitoInAppMessagingImpl
 
-internal fun Actito.inAppMessagingImplementation(): ActitoInAppMessagingImpl {
-    return inAppMessaging() as ActitoInAppMessagingImpl
-}
+internal fun Actito.inAppMessagingImplementation(): ActitoInAppMessagingImpl =
+    inAppMessaging() as ActitoInAppMessagingImpl
 
-internal fun Actito.eventsInternal(): ActitoInternalEventsModule {
-    return events() as ActitoInternalEventsModule
-}
+internal fun Actito.eventsInternal(): ActitoInternalEventsModule = events() as ActitoInternalEventsModule
 
 // region Intent extras
 

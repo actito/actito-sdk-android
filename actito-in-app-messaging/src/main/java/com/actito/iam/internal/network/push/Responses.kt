@@ -33,8 +33,8 @@ internal data class InAppMessageResponse(
             val url: String?,
         )
 
-        fun toModel(): ActitoInAppMessage {
-            return ActitoInAppMessage(
+        fun toModel(): ActitoInAppMessage =
+            ActitoInAppMessage(
                 id = _id,
                 name = name,
                 type = type,
@@ -59,6 +59,5 @@ internal data class InAppMessageResponse(
                     )
                 },
             )
-        }
     }
 }

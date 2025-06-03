@@ -19,9 +19,8 @@ import com.actito.utilities.threading.onMainThread
 @Keep
 public class ActitoStoreFragment : NotificationFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FrameLayout(requireContext())
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FrameLayout(requireContext())
 
     @Suppress("detekt:NestedBlockDepth")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -131,45 +130,41 @@ public class ActitoStoreFragment : NotificationFragment() {
         }
     }
 
-    private fun getDetailsIntentUri(id: String, referrer: String): Uri {
-        return Uri.Builder()
+    private fun getDetailsIntentUri(id: String, referrer: String): Uri =
+        Uri.Builder()
             .scheme("market")
             .authority("details")
             .appendQueryParameter("id", id)
             .appendQueryParameter("referrer", referrer)
             .build()
-    }
 
-    private fun getDeveloperIntentUri(id: String, referrer: String): Uri {
-        return Uri.Builder()
+    private fun getDeveloperIntentUri(id: String, referrer: String): Uri =
+        Uri.Builder()
             .scheme("market")
             .authority("dev")
             .appendQueryParameter("id", id)
             .appendQueryParameter("referrer", referrer)
             .build()
-    }
 
-    private fun getSearchIntentUri(query: String, referrer: String): Uri {
-        return Uri.Builder()
+    private fun getSearchIntentUri(query: String, referrer: String): Uri =
+        Uri.Builder()
             .scheme("market")
             .authority("search")
             .appendQueryParameter("q", query)
             .appendQueryParameter("referrer", referrer)
             .build()
-    }
 
-    private fun getCollectionIntentUri(name: String, referrer: String): Uri {
-        return Uri.Builder()
+    private fun getCollectionIntentUri(name: String, referrer: String): Uri =
+        Uri.Builder()
             .scheme("market")
             .authority("apps")
             .appendPath("collection")
             .appendPath(name)
             .appendQueryParameter("referrer", referrer)
             .build()
-    }
 
-    private fun getDetailsIntentAltUri(id: String, referrer: String): Uri {
-        return Uri.Builder()
+    private fun getDetailsIntentAltUri(id: String, referrer: String): Uri =
+        Uri.Builder()
             .scheme("https")
             .authority("play.google.com")
             .appendPath("store")
@@ -178,10 +173,9 @@ public class ActitoStoreFragment : NotificationFragment() {
             .appendQueryParameter("id", id)
             .appendQueryParameter("referrer", referrer)
             .build()
-    }
 
-    private fun getDeveloperIntentAltUri(id: String, referrer: String): Uri {
-        return Uri.Builder()
+    private fun getDeveloperIntentAltUri(id: String, referrer: String): Uri =
+        Uri.Builder()
             .scheme("https")
             .authority("play.google.com")
             .appendPath("store")
@@ -190,10 +184,9 @@ public class ActitoStoreFragment : NotificationFragment() {
             .appendQueryParameter("id", id)
             .appendQueryParameter("referrer", referrer)
             .build()
-    }
 
-    private fun getSearchIntentAltUri(query: String, referrer: String): Uri {
-        return Uri.Builder()
+    private fun getSearchIntentAltUri(query: String, referrer: String): Uri =
+        Uri.Builder()
             .scheme("https")
             .authority("play.google.com")
             .appendPath("store")
@@ -201,10 +194,9 @@ public class ActitoStoreFragment : NotificationFragment() {
             .appendQueryParameter("q", query)
             .appendQueryParameter("referrer", referrer)
             .build()
-    }
 
-    private fun getCollectionIntentAltUri(name: String, referrer: String): Uri {
-        return Uri.Builder()
+    private fun getCollectionIntentAltUri(name: String, referrer: String): Uri =
+        Uri.Builder()
             .scheme("https")
             .authority("play.google.com")
             .appendPath("store")
@@ -213,5 +205,4 @@ public class ActitoStoreFragment : NotificationFragment() {
             .appendPath(name)
             .appendQueryParameter("referrer", referrer)
             .build()
-    }
 }

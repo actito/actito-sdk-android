@@ -267,30 +267,23 @@ public class ActitoRequest private constructor(
             )
         }
 
-        public suspend fun response(): Response {
-            return build().response(true)
-        }
+        public suspend fun response(): Response = build().response(true)
 
         public fun response(callback: ActitoCallback<Response>): Unit =
             toCallbackFunction(::response)(callback::onSuccess, callback::onFailure)
 
-        public suspend fun responseString(): String {
-            return build().responseString()
-        }
+        public suspend fun responseString(): String = build().responseString()
 
         public fun responseString(callback: ActitoCallback<String>): Unit =
             toCallbackFunction(::responseString)(callback::onSuccess, callback::onFailure)
 
-        public suspend fun <T : Any> responseDecodable(klass: KClass<T>): T {
-            return build().responseDecodable(klass)
-        }
+        public suspend fun <T : Any> responseDecodable(klass: KClass<T>): T = build().responseDecodable(klass)
 
         public fun <T : Any> responseDecodable(klass: KClass<T>, callback: ActitoCallback<T>): Unit =
             toCallbackFunction(suspend { responseDecodable(klass) })(callback::onSuccess, callback::onFailure)
 
-        public suspend fun <T : Any> responseDecodable(decodableFor: DecodableForFn<T>): T? {
-            return build().responseDecodable(decodableFor)
-        }
+        public suspend fun <T : Any> responseDecodable(decodableFor: DecodableForFn<T>): T? =
+            build().responseDecodable(decodableFor)
 
         @Throws(IllegalArgumentException::class)
         private fun computeCompleteUrl(): HttpUrl {
@@ -345,9 +338,7 @@ public class ActitoRequest private constructor(
             val password: String,
         ) : Authentication() {
 
-            override fun encode(): String {
-                return Credentials.basic(username, password)
-            }
+            override fun encode(): String = Credentials.basic(username, password)
         }
     }
 }

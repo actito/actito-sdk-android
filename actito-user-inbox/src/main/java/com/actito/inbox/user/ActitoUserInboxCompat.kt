@@ -21,9 +21,7 @@ public object ActitoUserInboxCompat {
      * @see [ActitoUserInboxResponse]
      */
     @JvmStatic
-    public fun parseResponse(json: String): ActitoUserInboxResponse {
-        return Actito.userInbox().parseResponse(json)
-    }
+    public fun parseResponse(json: String): ActitoUserInboxResponse = Actito.userInbox().parseResponse(json)
 
     /**
      * Parses a [JSONObject] to produce a [ActitoUserInboxResponse].
@@ -36,9 +34,7 @@ public object ActitoUserInboxCompat {
      * @see [ActitoUserInboxResponse]
      */
     @JvmStatic
-    public fun parseResponse(json: JSONObject): ActitoUserInboxResponse {
-        return Actito.userInbox().parseResponse(json)
-    }
+    public fun parseResponse(json: JSONObject): ActitoUserInboxResponse = Actito.userInbox().parseResponse(json)
 
     /**
      * Opens an inbox item and retrieves its associated notification with a callback.

@@ -87,8 +87,8 @@ public class ActitoVideoFragment : NotificationFragment() {
         binding.webView.destroy()
     }
 
-    private fun getYouTubeVideoHtml(videoId: String): String {
-        return """
+    private fun getYouTubeVideoHtml(videoId: String): String =
+        """
             <!DOCTYPE html>
             <html>
             <head>
@@ -137,10 +137,9 @@ public class ActitoVideoFragment : NotificationFragment() {
             </body>
             </html>
         """.trimIndent()
-    }
 
-    private fun getVimeoVideoHtml(videoId: String): String {
-        return """
+    private fun getVimeoVideoHtml(videoId: String): String =
+        """
             <!DOCTYPE html>
             <html>
             <head>
@@ -167,10 +166,9 @@ public class ActitoVideoFragment : NotificationFragment() {
             </body>
             </html>
         """.trimIndent()
-    }
 
-    private fun getHtml5VideoHtml(videoId: String): String {
-        return """
+    private fun getHtml5VideoHtml(videoId: String): String =
+        """
             <!DOCTYPE html>
             <html>
             <head>
@@ -193,7 +191,6 @@ public class ActitoVideoFragment : NotificationFragment() {
             </body>
             </html>
         """.trimIndent()
-    }
 
     public inner class VideoChromeClient : WebChromeClient() {
         override fun onShowCustomView(view: View, callback: CustomViewCallback) {

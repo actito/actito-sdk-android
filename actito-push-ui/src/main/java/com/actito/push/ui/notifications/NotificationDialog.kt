@@ -106,11 +106,10 @@ public class NotificationDialog : DialogFragment() {
     public companion object {
         private const val SAVED_STATE_NOTIFICATION = "com.actito.ui.Notification"
 
-        public fun newInstance(notification: ActitoNotification): NotificationDialog {
-            return NotificationDialog().apply {
+        public fun newInstance(notification: ActitoNotification): NotificationDialog =
+            NotificationDialog().apply {
                 this.notification = notification
             }
-        }
     }
 
     public interface Callback {

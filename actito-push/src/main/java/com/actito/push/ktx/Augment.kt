@@ -8,17 +8,11 @@ import com.actito.push.ActitoPush
 import com.actito.push.internal.ActitoPushImpl
 
 @Suppress("unused")
-public fun Actito.push(): ActitoPush {
-    return ActitoPushImpl
-}
+public fun Actito.push(): ActitoPush = ActitoPushImpl
 
-internal fun Actito.pushInternal(): ActitoInternalPush {
-    return push() as ActitoInternalPush
-}
+internal fun Actito.pushInternal(): ActitoInternalPush = push() as ActitoInternalPush
 
-internal fun Actito.eventsInternal(): ActitoInternalEventsModule {
-    return events() as ActitoInternalEventsModule
-}
+internal fun Actito.eventsInternal(): ActitoInternalEventsModule = events() as ActitoInternalEventsModule
 
 // region Intent actions
 

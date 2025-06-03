@@ -29,8 +29,8 @@ internal data class RawUserInboxResponse(
         val expires: Date? = null,
     ) {
 
-        internal fun toModel(): ActitoUserInboxItem {
-            return ActitoUserInboxItem(
+        internal fun toModel(): ActitoUserInboxItem =
+            ActitoUserInboxItem(
                 id = _id,
                 notification = ActitoNotification(
                     partial = true,
@@ -47,6 +47,5 @@ internal data class RawUserInboxResponse(
                 opened = opened,
                 expires = expires,
             )
-        }
     }
 }

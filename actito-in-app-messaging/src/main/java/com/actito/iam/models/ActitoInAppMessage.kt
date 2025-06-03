@@ -78,8 +78,6 @@ public data class ActitoInAppMessage(
                 SECONDARY -> "secondary"
             }
 
-        override fun toString(): String {
-            return rawValue
-        }
+        override fun toString(): String = rawValue
     }
 }

@@ -205,8 +205,8 @@ public data class ActitoNotification(
         STORE;
 
         public companion object {
-            public fun from(type: String): NotificationType? {
-                return when (type) {
+            public fun from(type: String): NotificationType? =
+                when (type) {
                     TYPE_NONE -> NONE
                     TYPE_ALERT -> ALERT
                     TYPE_IN_APP_BROWSER -> IN_APP_BROWSER
@@ -222,7 +222,6 @@ public data class ActitoNotification(
                     TYPE_STORE -> STORE
                     else -> null
                 }
-            }
         }
     }
 }

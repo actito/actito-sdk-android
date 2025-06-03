@@ -21,19 +21,18 @@ internal data class InboxItemEntity(
     @ColumnInfo(name = "visible") val visible: Boolean,
 ) {
 
-    fun toInboxItem(): ActitoInboxItem {
-        return ActitoInboxItem(
+    fun toInboxItem(): ActitoInboxItem =
+        ActitoInboxItem(
             id = id,
             notification = notification,
             time = time,
             opened = opened,
             expires = expires,
         )
-    }
 
     companion object Factory {
-        fun from(item: ActitoInboxItem, visible: Boolean): InboxItemEntity {
-            return InboxItemEntity(
+        fun from(item: ActitoInboxItem, visible: Boolean): InboxItemEntity =
+            InboxItemEntity(
                 id = item.id,
                 notificationId = item.notification.id,
                 notification = item.notification,
@@ -42,10 +41,9 @@ internal data class InboxItemEntity(
                 expires = item.expires,
                 visible = visible,
             )
-        }
 
-        fun from(item: InboxResponse.InboxItem): InboxItemEntity {
-            return InboxItemEntity(
+        fun from(item: InboxResponse.InboxItem): InboxItemEntity =
+            InboxItemEntity(
                 id = item.id,
                 notificationId = item.notificationId,
                 notification = ActitoNotification(
@@ -64,6 +62,5 @@ internal data class InboxItemEntity(
                 visible = item.visible,
                 expires = item.expires,
             )
-        }
     }
 }

@@ -5,10 +5,6 @@ import com.actito.scannables.ActitoScannables
 import com.actito.scannables.internal.ActitoScannablesImpl
 
 @Suppress("unused")
-public fun Actito.scannables(): ActitoScannables {
-    return ActitoScannablesImpl
-}
+public fun Actito.scannables(): ActitoScannables = ActitoScannablesImpl
 
-internal fun Actito.scannablesImplementation(): ActitoScannablesImpl {
-    return scannables() as ActitoScannablesImpl
-}
+internal fun Actito.scannablesImplementation(): ActitoScannablesImpl = scannables() as ActitoScannablesImpl

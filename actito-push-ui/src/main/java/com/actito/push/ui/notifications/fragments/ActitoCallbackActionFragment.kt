@@ -168,13 +168,12 @@ public class ActitoCallbackActionFragment : Fragment() {
         private const val EXTRA_PENDING_RESULT = "com.actito.extra.PendingResult"
         private const val SAMPLE_SIZE_MAX_PIXELS = 307200 // 640 x 480
 
-        public fun newInstance(pendingResult: ActitoPendingResult): ActitoCallbackActionFragment {
-            return ActitoCallbackActionFragment().apply {
+        public fun newInstance(pendingResult: ActitoPendingResult): ActitoCallbackActionFragment =
+            ActitoCallbackActionFragment().apply {
                 arguments = bundleOf(
                     EXTRA_PENDING_RESULT to pendingResult,
                 )
             }
-        }
 
         /**
          * Calculate sample size for images so generated bitmap will be smaller than SAMPLE_SIZE_MAX_PIXELS pixels
@@ -201,8 +200,8 @@ public class ActitoCallbackActionFragment : Fragment() {
          * @param imagePath the path of the image
          * @return the orientation of the image in degrees
          */
-        private fun getImageOrientation(imagePath: String): Int {
-            return try {
+        private fun getImageOrientation(imagePath: String): Int =
+            try {
                 val exif = ExifInterface(imagePath)
 
                 val orientation = exif.getAttributeInt(
@@ -220,6 +219,5 @@ public class ActitoCallbackActionFragment : Fragment() {
                 logger.error("Couldn't read image file.", e)
                 0
             }
-        }
     }
 }

@@ -30,9 +30,8 @@ internal open class NotificationWebViewClient(
     private var loadingError: WebResourceError? = null
 
     @TargetApi(Build.VERSION_CODES.N)
-    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-        return handleOpenActions(request.url) || handleOpenAction(request.url) || handleUri(view, request.url)
-    }
+    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean =
+        handleOpenActions(request.url) || handleOpenAction(request.url) || handleUri(view, request.url)
 
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         val uri = url.toUri()

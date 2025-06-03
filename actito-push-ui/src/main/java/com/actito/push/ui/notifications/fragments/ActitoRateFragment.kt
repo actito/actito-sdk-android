@@ -16,8 +16,8 @@ import com.actito.utilities.threading.onMainThread
 @Keep
 public class ActitoRateFragment : NotificationFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState).also {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        super.onCreateView(inflater, container, savedInstanceState).also {
             try {
                 val uri = "market://details?id=${inflater.context.packageName}".toUri()
                 val rateIntent = Intent(Intent.ACTION_VIEW, uri)
@@ -48,5 +48,4 @@ public class ActitoRateFragment : NotificationFragment() {
                 }
             }
         }
-    }
 }

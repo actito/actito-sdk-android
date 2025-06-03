@@ -33,13 +33,12 @@ public data class ActitoBeaconSession(
     }
 
     public companion object {
-        public operator fun invoke(region: ActitoRegion): ActitoBeaconSession {
-            return ActitoBeaconSession(
+        public operator fun invoke(region: ActitoRegion): ActitoBeaconSession =
+            ActitoBeaconSession(
                 regionId = region.id,
                 start = Date(),
                 end = null,
                 beacons = mutableListOf(),
             )
-        }
     }
 }

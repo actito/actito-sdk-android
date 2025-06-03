@@ -329,9 +329,8 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         callback: ActitoCallback<Unit>,
     ): Unit = toCallbackFunction(::disableRemoteNotifications)(callback::onSuccess, callback::onFailure)
 
-    override fun isActitoNotification(remoteMessage: RemoteMessage): Boolean {
-        return remoteMessage.data["x-sender"] == "notificare"
-    }
+    override fun isActitoNotification(remoteMessage: RemoteMessage): Boolean =
+        remoteMessage.data["x-sender"] == "notificare"
 
     override fun handleTrampolineIntent(intent: Intent): Boolean {
         if (intent.action != Actito.INTENT_ACTION_REMOTE_MESSAGE_OPENED) {
@@ -582,9 +581,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         notificationManager.createNotificationChannel(defaultChannel)
     }
 
-    private fun createUniqueNotificationId(): Int {
-        return notificationSequence.incrementAndGet()
-    }
+    private fun createUniqueNotificationId(): Int = notificationSequence.incrementAndGet()
 
     private fun handleSystemNotification(message: ActitoSystemRemoteMessage) {
         if (message.type.startsWith("re.notifica.")) {
@@ -1048,9 +1045,8 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         }
     }
 
-    private fun hasNotificationPermission(context: Context): Boolean {
-        return NotificationManagerCompat.from(context).areNotificationsEnabled()
-    }
+    private fun hasNotificationPermission(context: Context): Boolean =
+        NotificationManagerCompat.from(context).areNotificationsEnabled()
 
     private fun hasIntentFilter(context: Context, intentAction: String): Boolean {
         val intent = Intent()

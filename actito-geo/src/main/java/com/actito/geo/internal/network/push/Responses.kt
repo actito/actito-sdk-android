@@ -89,14 +89,13 @@ internal data class FetchBeaconsResponse(
         val triggers: Boolean,
     ) {
 
-        internal fun toModel(): ActitoBeacon {
-            return ActitoBeacon(
+        internal fun toModel(): ActitoBeacon =
+            ActitoBeacon(
                 id = _id,
                 name = name,
                 major = major,
                 minor = minor,
                 triggers = triggers,
             )
-        }
     }
 }

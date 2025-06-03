@@ -34,8 +34,8 @@ internal data class ApplicationResponse(
             val actions: List<NotificationResponse.Notification.Action>,
         )
 
-        fun toModel(): ActitoApplication {
-            return ActitoApplication(
+        fun toModel(): ActitoApplication =
+            ActitoApplication(
                 id,
                 name,
                 category,
@@ -52,7 +52,6 @@ internal data class ApplicationResponse(
                     )
                 },
             )
-        }
     }
 }
 
@@ -129,8 +128,8 @@ public data class NotificationResponse(
             }
         }
 
-        public fun toModel(): ActitoNotification {
-            return ActitoNotification(
+        public fun toModel(): ActitoNotification =
+            ActitoNotification(
                 id,
                 partial,
                 type,
@@ -143,7 +142,6 @@ public data class NotificationResponse(
                 attachments,
                 extra,
             )
-        }
     }
 }
 

@@ -52,17 +52,15 @@ public class ActitoImageFragment : NotificationFragment() {
         fragment: Fragment,
     ) : FragmentStateAdapter(fragment) {
 
-        override fun createFragment(position: Int): Fragment {
-            return ImageChildFragment().apply {
+        override fun createFragment(position: Int): Fragment =
+            ImageChildFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(SAVED_STATE_CONTENT, notification.content[position])
                 }
             }
-        }
 
-        override fun getItemCount(): Int {
-            return notification.content.size
-        }
+        override fun getItemCount(): Int =
+            notification.content.size
     }
 
     public class ImageChildFragment : Fragment() {
@@ -76,9 +74,8 @@ public class ActitoImageFragment : NotificationFragment() {
                 ?: throw IllegalArgumentException("Missing required notification content parameter.")
         }
 
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-            return ImageView(inflater.context)
-        }
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+            ImageView(inflater.context)
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)

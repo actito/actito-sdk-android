@@ -8,12 +8,8 @@ import java.util.Date
 public class ActitoDateTypeConverter {
 
     @TypeConverter
-    public fun fromTimestamp(timestamp: Long?): Date? {
-        return timestamp?.let { Date(it) }
-    }
+    public fun fromTimestamp(timestamp: Long?): Date? = timestamp?.let { Date(it) }
 
     @TypeConverter
-    public fun toTimestamp(date: Date?): Long? {
-        return date?.time
-    }
+    public fun toTimestamp(date: Date?): Long? = date?.time
 }

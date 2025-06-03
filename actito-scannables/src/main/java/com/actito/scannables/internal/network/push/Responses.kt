@@ -23,14 +23,13 @@ internal data class FetchScannableResponse(
             val notification: NotificationResponse.Notification?,
         )
 
-        internal fun toModel(): ActitoScannable {
-            return ActitoScannable(
+        internal fun toModel(): ActitoScannable =
+            ActitoScannable(
                 id = _id,
                 name = name,
                 type = type,
                 tag = tag,
                 notification = data?.notification?.toModel(),
             )
-        }
     }
 }
