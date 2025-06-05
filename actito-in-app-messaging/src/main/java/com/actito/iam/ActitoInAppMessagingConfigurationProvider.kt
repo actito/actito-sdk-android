@@ -32,7 +32,7 @@ internal class ActitoInAppMessagingConfigurationProvider : ContentProvider() {
         p1: Array<out String>?,
         p2: String?,
         p3: Array<out String>?,
-        p4: String?
+        p4: String?,
     ): Cursor? = null
 
     override fun getType(uri: Uri): String? = null

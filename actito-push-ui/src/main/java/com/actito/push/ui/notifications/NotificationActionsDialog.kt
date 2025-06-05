@@ -4,10 +4,10 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.internal.logger
+import com.actito.utilities.parcel.parcelable
 
 public class NotificationActionsDialog : DialogFragment() {
 
@@ -67,11 +67,10 @@ public class NotificationActionsDialog : DialogFragment() {
     public companion object {
         private const val SAVED_STATE_NOTIFICATION = "com.actito.ui.Notification"
 
-        public fun newInstance(notification: ActitoNotification): NotificationActionsDialog {
-            return NotificationActionsDialog().apply {
+        public fun newInstance(notification: ActitoNotification): NotificationActionsDialog =
+            NotificationActionsDialog().apply {
                 this.notification = notification
             }
-        }
     }
 
     public interface Callback {

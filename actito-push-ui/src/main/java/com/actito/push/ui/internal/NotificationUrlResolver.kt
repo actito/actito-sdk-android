@@ -1,6 +1,6 @@
 package com.actito.push.ui.internal
 
-import android.net.Uri
+import androidx.core.net.toUri
 import com.actito.ActitoServicesInfo
 import com.actito.models.ActitoNotification
 
@@ -16,7 +16,7 @@ internal object NotificationUrlResolver {
         val urlStr = content.data as? String
         if (urlStr.isNullOrBlank()) return UrlResolverResult.NONE
 
-        val url = Uri.parse(urlStr)
+        val url = urlStr.toUri()
         val isHttpUrl = url.scheme == "http" || url.scheme == "https"
         val isDynamicLink = url.host?.endsWith(servicesInfo.hosts.shortLinks) == true
 

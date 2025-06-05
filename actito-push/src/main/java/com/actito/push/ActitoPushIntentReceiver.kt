@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.actito.Actito
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.push.internal.logger
 import com.actito.push.ktx.INTENT_ACTION_ACTION_OPENED
@@ -24,6 +23,7 @@ import com.actito.push.models.ActitoNotificationDeliveryMechanism
 import com.actito.push.models.ActitoPushSubscription
 import com.actito.push.models.ActitoSystemNotification
 import com.actito.push.models.ActitoUnknownNotification
+import com.actito.utilities.parcel.parcelable
 
 /**
  * A broadcast receiver for handling push-related events from the Actito SDK.
@@ -41,7 +41,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
             }
             Actito.INTENT_ACTION_TOKEN_CHANGED -> {
                 val token: String = requireNotNull(
-                    intent.getStringExtra(Actito.INTENT_EXTRA_TOKEN)
+                    intent.getStringExtra(Actito.INTENT_EXTRA_TOKEN),
                 )
 
                 @Suppress("DEPRECATION")
@@ -50,11 +50,11 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_NOTIFICATION_RECEIVED -> {
                 val notification: ActitoNotification = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION),
                 )
 
                 val deliveryMechanism: ActitoNotificationDeliveryMechanism = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_DELIVERY_MECHANISM)
+                    intent.parcelable(Actito.INTENT_EXTRA_DELIVERY_MECHANISM),
                 )
 
                 onNotificationReceived(context, notification, deliveryMechanism)
@@ -62,7 +62,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_SYSTEM_NOTIFICATION_RECEIVED -> {
                 val notification: ActitoSystemNotification = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION),
                 )
 
                 onSystemNotificationReceived(context, notification)
@@ -70,7 +70,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED -> {
                 val notification: ActitoUnknownNotification = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION),
                 )
 
                 onUnknownNotificationReceived(context, notification)
@@ -78,7 +78,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_NOTIFICATION_OPENED -> {
                 val notification: ActitoNotification = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION),
                 )
 
                 onNotificationOpened(context, notification)
@@ -86,11 +86,11 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_ACTION_OPENED -> {
                 val notification: ActitoNotification = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION),
                 )
 
                 val action: ActitoNotification.Action = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_ACTION)
+                    intent.parcelable(Actito.INTENT_EXTRA_ACTION),
                 )
 
                 onActionOpened(context, notification, action)
@@ -98,7 +98,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_LIVE_ACTIVITY_UPDATE -> {
                 val update: ActitoLiveActivityUpdate = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_LIVE_ACTIVITY_UPDATE)
+                    intent.parcelable(Actito.INTENT_EXTRA_LIVE_ACTIVITY_UPDATE),
                 )
 
                 onLiveActivityUpdate(context, update)
@@ -117,7 +117,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onSubscriptionChanged(context: Context, subscription: ActitoPushSubscription?) {
         logger.debug(
-            "The subscription changed, please override onSubscriptionChanged if you want to receive these intents."
+            "The subscription changed, please override onSubscriptionChanged if you want to receive these intents.",
         )
     }
 
@@ -131,11 +131,11 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
      */
     @Deprecated(
         message = "Use onSubscriptionChanged() instead.",
-        replaceWith = ReplaceWith("onSubscriptionChanged(context, subscription)")
+        replaceWith = ReplaceWith("onSubscriptionChanged(context, subscription)"),
     )
     protected open fun onTokenChanged(context: Context, token: String) {
         logger.debug(
-            "The push token changed, please override onTokenChanged if you want to receive these intents."
+            "The push token changed, please override onTokenChanged if you want to receive these intents.",
         )
     }
 
@@ -155,7 +155,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
         deliveryMechanism: ActitoNotificationDeliveryMechanism,
     ) {
         logger.info(
-            "Received a notification, please override onNotificationReceived if you want to receive these intents."
+            "Received a notification, please override onNotificationReceived if you want to receive these intents.",
         )
     }
 
@@ -170,7 +170,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onSystemNotificationReceived(context: Context, notification: ActitoSystemNotification) {
         logger.info(
-            "Received a system notification, please override onSystemNotificationReceived if you want to receive these intents."
+            "Received a system notification, please override onSystemNotificationReceived if you want to receive these intents.",
         )
     }
 
@@ -185,7 +185,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onUnknownNotificationReceived(context: Context, notification: ActitoUnknownNotification) {
         logger.info(
-            "Received an unknown notification, please override onUnknownNotificationReceived if you want to receive these intents."
+            "Received an unknown notification, please override onUnknownNotificationReceived if you want to receive these intents.",
         )
     }
 
@@ -200,7 +200,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onNotificationOpened(context: Context, notification: ActitoNotification) {
         logger.debug(
-            "Opened a notification, please override onNotificationOpened if you want to receive these intents."
+            "Opened a notification, please override onNotificationOpened if you want to receive these intents.",
         )
     }
 
@@ -216,10 +216,10 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
     protected open fun onActionOpened(
         context: Context,
         notification: ActitoNotification,
-        action: ActitoNotification.Action
+        action: ActitoNotification.Action,
     ) {
         logger.debug(
-            "Opened a notification action, please override onActionOpened if you want to receive these intents."
+            "Opened a notification action, please override onActionOpened if you want to receive these intents.",
         )
     }
 
@@ -233,7 +233,7 @@ public open class ActitoPushIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onLiveActivityUpdate(context: Context, update: ActitoLiveActivityUpdate) {
         logger.debug(
-            "Received a live activity update, please override onLiveActivityUpdate if you want to receive these intents."
+            "Received a live activity update, please override onLiveActivityUpdate if you want to receive these intents.",
         )
     }
 }

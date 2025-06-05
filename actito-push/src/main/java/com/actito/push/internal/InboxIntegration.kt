@@ -28,7 +28,7 @@ internal object InboxIntegration {
         } catch (e: Exception) {
             if (e is ClassNotFoundException) {
                 logger.debug(
-                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities."
+                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
                 )
                 return
             }
@@ -40,7 +40,7 @@ internal object InboxIntegration {
     fun addItemToInbox(message: ActitoNotificationRemoteMessage, notification: ActitoNotification) {
         if (message.inboxItemId == null) {
             logger.debug(
-                "Received a remote message without an inbox item id. Inbox functionality is disabled."
+                "Received a remote message without an inbox item id. Inbox functionality is disabled.",
             )
             return
         }
@@ -57,8 +57,8 @@ internal object InboxIntegration {
                         "inboxItemId" to message.inboxItemId,
                         "inboxItemTime" to message.sentTime,
                         "inboxItemVisible" to message.inboxItemVisible,
-                        "inboxItemExpires" to message.inboxItemExpires
-                    )
+                        "inboxItemExpires" to message.inboxItemExpires,
+                    ),
                 )
             }
 
@@ -66,7 +66,7 @@ internal object InboxIntegration {
         } catch (e: Exception) {
             if (e is ClassNotFoundException) {
                 logger.debug(
-                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities."
+                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
                 )
                 return
             }
@@ -78,7 +78,7 @@ internal object InboxIntegration {
     fun markItemAsRead(message: ActitoNotificationRemoteMessage) {
         if (message.inboxItemId == null) {
             logger.debug(
-                "Received a remote message without an inbox item id. Inbox functionality is disabled."
+                "Received a remote message without an inbox item id. Inbox functionality is disabled.",
             )
             return
         }
@@ -95,7 +95,7 @@ internal object InboxIntegration {
         } catch (e: Exception) {
             if (e is ClassNotFoundException) {
                 logger.debug(
-                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities."
+                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
                 )
                 return
             }

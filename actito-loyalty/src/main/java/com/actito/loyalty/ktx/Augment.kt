@@ -5,9 +5,7 @@ import com.actito.loyalty.ActitoLoyalty
 import com.actito.loyalty.internal.ActitoLoyaltyImpl
 
 @Suppress("unused")
-public fun Actito.loyalty(): ActitoLoyalty {
-    return ActitoLoyaltyImpl
-}
+public fun Actito.loyalty(): ActitoLoyalty = ActitoLoyaltyImpl
 
 // region Intent actions
 

@@ -9,12 +9,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.databinding.ActitoNotificationActivityBinding
 import com.actito.push.ui.ktx.pushUIImplementation
 import com.actito.push.ui.notifications.NotificationContainerFragment
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
 
 public open class NotificationActivity : AppCompatActivity(), NotificationContainerFragment.Callback {
 
@@ -43,14 +43,14 @@ public open class NotificationActivity : AppCompatActivity(), NotificationContai
             val customInsets = insets.getInsets(
                 WindowInsetsCompat.Type.systemBars()
                     or WindowInsetsCompat.Type.displayCutout()
-                    or WindowInsetsCompat.Type.ime()
+                    or WindowInsetsCompat.Type.ime(),
             )
 
             view.setPadding(
                 customInsets.left,
                 customInsets.top,
                 customInsets.right,
-                customInsets.bottom
+                customInsets.bottom,
             )
 
             insets

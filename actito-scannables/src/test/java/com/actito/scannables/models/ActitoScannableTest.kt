@@ -1,11 +1,11 @@
 package com.actito.scannables.models
 
+import com.actito.models.ActitoNotification
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.models.ActitoNotification
 import java.util.Date
 
 @RunWith(RobolectricTestRunner::class)
@@ -29,11 +29,11 @@ public class ActitoScannableTest {
                 attachments = listOf(
                     ActitoNotification.Attachment(
                         mimeType = "testMimeType",
-                        uri = "testUri"
-                    )
+                        uri = "testUri",
+                    ),
                 ),
-                extra = mapOf("testKey" to "testValue")
-            )
+                extra = mapOf("testKey" to "testValue"),
+            ),
         )
 
         val convertedScannable = ActitoScannable.fromJson(scannable.toJson())
@@ -48,7 +48,7 @@ public class ActitoScannableTest {
             name = "testName",
             tag = "testTag",
             type = "testType",
-            notification = null
+            notification = null,
         )
 
         val convertedScannable = ActitoScannable.fromJson(scannable.toJson())

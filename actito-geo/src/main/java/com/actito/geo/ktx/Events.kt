@@ -12,7 +12,7 @@ import java.util.Date
 
 @Suppress("unused")
 internal suspend fun ActitoEventsModule.logRegionSession(
-    session: ActitoRegionSession
+    session: ActitoRegionSession,
 ): Unit = withContext(Dispatchers.IO) {
     val sessionEnd = session.end ?: Date()
     val sessionLength = (sessionEnd.time - session.start.time) / 1000.0
@@ -35,7 +35,7 @@ internal suspend fun ActitoEventsModule.logRegionSession(
                     "verticalAccuracy" to location.verticalAccuracy,
                     "timestamp" to location.timestamp,
                 )
-            }
+            },
         ),
     )
 }
@@ -47,7 +47,7 @@ internal fun ActitoEventsModule.logRegionSession(
 
 @Suppress("unused")
 internal suspend fun ActitoEventsModule.logBeaconSession(
-    session: ActitoBeaconSession
+    session: ActitoBeaconSession,
 ): Unit = withContext(Dispatchers.IO) {
     val sessionEnd = session.end ?: Date()
     val sessionLength = (sessionEnd.time - session.start.time) / 1000.0
@@ -72,8 +72,8 @@ internal suspend fun ActitoEventsModule.logBeaconSession(
                     },
                     "timestamp" to beacon.timestamp,
                 )
-            }
-        )
+            },
+        ),
     )
 }
 

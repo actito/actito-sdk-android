@@ -1,12 +1,12 @@
 package com.actito.inbox
 
 import androidx.lifecycle.LiveData
-import java.util.SortedSet
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.inbox.ktx.inbox
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.models.ActitoNotification
+import java.util.SortedSet
 
 public object ActitoInboxCompat {
 

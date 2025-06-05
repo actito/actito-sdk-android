@@ -1,8 +1,6 @@
 package com.actito.assets.internal
 
 import androidx.annotation.Keep
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoApplicationUnavailableException
 import com.actito.ActitoCallback
@@ -12,10 +10,12 @@ import com.actito.assets.ActitoAssets
 import com.actito.assets.internal.network.push.FetchAssetsResponse
 import com.actito.assets.models.ActitoAsset
 import com.actito.internal.ActitoModule
-import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.models.ActitoApplication
+import com.actito.utilities.coroutines.toCallbackFunction
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Keep
 internal object ActitoAssetsImpl : ActitoModule(), ActitoAssets {

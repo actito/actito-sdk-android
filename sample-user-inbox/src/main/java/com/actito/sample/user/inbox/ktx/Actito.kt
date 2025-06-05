@@ -17,7 +17,7 @@ val ActitoPush.hasNotificationsPermission: Boolean
         val permission = Manifest.permission.POST_NOTIFICATIONS
         val granted = ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
 
         return granted

@@ -48,9 +48,7 @@ internal object ActitoUserInboxImpl : ActitoModule(), ActitoUserInbox {
         return requireNotNull(adapter.nonNull().fromJson(json))
     }
 
-    override fun parseResponse(json: JSONObject): ActitoUserInboxResponse {
-        return parseResponse(json.toString())
-    }
+    override fun parseResponse(json: JSONObject): ActitoUserInboxResponse = parseResponse(json.toString())
 
     override suspend fun open(item: ActitoUserInboxItem): ActitoNotification = withContext(Dispatchers.IO) {
         checkPrerequisites()
@@ -66,7 +64,7 @@ internal object ActitoUserInboxImpl : ActitoModule(), ActitoUserInbox {
 
     override fun open(
         item: ActitoUserInboxItem,
-        callback: ActitoCallback<ActitoNotification>
+        callback: ActitoCallback<ActitoNotification>,
     ): Unit = toCallbackFunction(::open)(item, callback::onSuccess, callback::onFailure)
 
     override suspend fun markAsRead(item: ActitoUserInboxItem): Unit = withContext(Dispatchers.IO) {
@@ -79,7 +77,7 @@ internal object ActitoUserInboxImpl : ActitoModule(), ActitoUserInbox {
 
     override fun markAsRead(
         item: ActitoUserInboxItem,
-        callback: ActitoCallback<Unit>
+        callback: ActitoCallback<Unit>,
     ): Unit = toCallbackFunction(::markAsRead)(item, callback::onSuccess, callback::onFailure)
 
     override suspend fun remove(item: ActitoUserInboxItem): Unit = withContext(Dispatchers.IO) {
@@ -92,7 +90,7 @@ internal object ActitoUserInboxImpl : ActitoModule(), ActitoUserInbox {
 
     override fun remove(
         item: ActitoUserInboxItem,
-        callback: ActitoCallback<Unit>
+        callback: ActitoCallback<Unit>,
     ): Unit = toCallbackFunction(::remove)(item, callback::onSuccess, callback::onFailure)
 
     // endregion
@@ -126,7 +124,7 @@ internal object ActitoUserInboxImpl : ActitoModule(), ActitoUserInbox {
     }
 
     private suspend fun fetchUserInboxNotification(
-        item: ActitoUserInboxItem
+        item: ActitoUserInboxItem,
     ): ActitoNotification = withContext(Dispatchers.IO) {
         if (!Actito.isConfigured) throw ActitoNotConfiguredException()
 

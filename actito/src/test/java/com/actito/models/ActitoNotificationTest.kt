@@ -23,8 +23,8 @@ public class ActitoNotificationTest {
             content = listOf(
                 ActitoNotification.Content(
                     type = ActitoNotification.Content.TYPE_HTML,
-                    data = "testData"
-                )
+                    data = "testData",
+                ),
             ),
             actions = listOf(
                 ActitoNotification.Action(
@@ -37,17 +37,17 @@ public class ActitoNotificationTest {
                     icon = ActitoNotification.Action.Icon(
                         android = "testAndroid",
                         ios = "testIos",
-                        web = "testWeb"
-                    )
-                )
+                        web = "testWeb",
+                    ),
+                ),
             ),
             attachments = listOf(
                 ActitoNotification.Attachment(
                     mimeType = "testMimeType",
-                    uri = "testUri"
-                )
+                    uri = "testUri",
+                ),
             ),
-            extra = mapOf("testKey" to "testValue")
+            extra = mapOf("testKey" to "testValue"),
         )
 
         val convertedNotification = ActitoNotification.fromJson(notification.toJson())
@@ -76,7 +76,7 @@ public class ActitoNotificationTest {
     public fun testContentSerialization() {
         val content = ActitoNotification.Content(
             type = ActitoNotification.Content.TYPE_HTML,
-            data = "testData"
+            data = "testData",
         )
 
         val convertedContent = ActitoNotification.Content.fromJson(content.toJson())
@@ -96,8 +96,8 @@ public class ActitoNotificationTest {
             icon = ActitoNotification.Action.Icon(
                 android = "testAndroid",
                 ios = "testIos",
-                web = "testWeb"
-            )
+                web = "testWeb",
+            ),
         )
 
         val convertedAction = ActitoNotification.Action.fromJson(action.toJson())
@@ -114,7 +114,7 @@ public class ActitoNotificationTest {
             camera = true,
             keyboard = true,
             destructive = null,
-            icon = null
+            icon = null,
         )
 
         val convertedAction = ActitoNotification.Action.fromJson(action.toJson())
@@ -127,7 +127,7 @@ public class ActitoNotificationTest {
         val icon = ActitoNotification.Action.Icon(
             android = "testAndroid",
             ios = "testIos",
-            web = "testWeb"
+            web = "testWeb",
         )
 
         val convertedIcon = ActitoNotification.Action.Icon.fromJson(icon.toJson())
@@ -140,7 +140,7 @@ public class ActitoNotificationTest {
         val icon = ActitoNotification.Action.Icon(
             android = null,
             ios = null,
-            web = null
+            web = null,
         )
 
         val convertedIcon = ActitoNotification.Action.Icon.fromJson(icon.toJson())
@@ -152,7 +152,7 @@ public class ActitoNotificationTest {
     public fun testAttachmentSerialization() {
         val attachment = ActitoNotification.Attachment(
             mimeType = "testMimeType",
-            uri = "testUri"
+            uri = "testUri",
         )
 
         val convertedAttachment = ActitoNotification.Attachment.fromJson(attachment.toJson())

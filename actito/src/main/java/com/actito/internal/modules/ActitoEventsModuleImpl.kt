@@ -6,8 +6,6 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.ActitoDeviceUnavailableException
@@ -16,8 +14,6 @@ import com.actito.ActitoInternalEventsModule
 import com.actito.ActitoNotReadyException
 import com.actito.internal.ActitoModule
 import com.actito.internal.logger
-import com.actito.utilities.networking.isRecoverable
-import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.ktx.toEntity
 import com.actito.internal.workers.ProcessEventsWorker
@@ -27,8 +23,12 @@ import com.actito.models.ActitoDevice
 import com.actito.models.ActitoEvent
 import com.actito.models.ActitoEventData
 import com.actito.utilities.content.applicationVersion
+import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.utilities.device.deviceString
 import com.actito.utilities.device.osVersion
+import com.actito.utilities.networking.isRecoverable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
@@ -77,7 +77,7 @@ internal object ActitoEventsModuleImpl :
         log(
             event = EVENT_NOTIFICATION_OPEN,
             data = null,
-            notificationId = id
+            notificationId = id,
         )
     }
 
@@ -109,8 +109,8 @@ internal object ActitoEventsModuleImpl :
                 sessionId = sessionId ?: Actito.session().sessionId,
                 notificationId = notificationId,
                 userId = device.userId,
-                data = data
-            )
+                data = data,
+            ),
         )
     }
 
@@ -131,7 +131,7 @@ internal object ActitoEventsModuleImpl :
     internal suspend fun logApplicationOpen(sessionId: String) {
         log(
             event = EVENT_APPLICATION_OPEN,
-            sessionId = sessionId
+            sessionId = sessionId,
         )
     }
 
@@ -183,9 +183,9 @@ internal object ActitoEventsModuleImpl :
                     .setConstraints(
                         Constraints.Builder()
                             .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .build()
+                            .build(),
                     )
-                    .build()
+                    .build(),
             )
     }
 
@@ -209,7 +209,7 @@ internal object ActitoEventsModuleImpl :
                 "name" to throwable.message,
                 "reason" to throwable.cause?.toString(),
                 "stackSymbols" to throwable.stackTraceToString(),
-            )
+            ),
         )
     }
 }

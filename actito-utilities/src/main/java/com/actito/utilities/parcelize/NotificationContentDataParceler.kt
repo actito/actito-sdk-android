@@ -1,8 +1,8 @@
 package com.actito.utilities.parcelize
 
 import android.os.Parcel
-import kotlinx.parcelize.Parceler
 import com.actito.utilities.parcel.map
+import kotlinx.parcelize.Parceler
 
 public object NotificationContentDataParceler : Parceler<Any> {
     override fun create(parcel: Parcel): Any {

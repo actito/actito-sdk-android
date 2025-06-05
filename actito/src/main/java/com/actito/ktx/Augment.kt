@@ -9,29 +9,17 @@ import com.actito.internal.modules.ActitoEventsModuleImpl
 import com.actito.internal.modules.ActitoSessionModuleImpl
 
 @Suppress("unused")
-public fun Actito.device(): ActitoDeviceModule {
-    return ActitoDeviceModuleImpl
-}
+public fun Actito.device(): ActitoDeviceModule = ActitoDeviceModuleImpl
 
 @Suppress("unused")
-public fun Actito.events(): ActitoEventsModule {
-    return ActitoEventsModuleImpl
-}
+public fun Actito.events(): ActitoEventsModule = ActitoEventsModuleImpl
 
-internal fun Actito.deviceImplementation(): ActitoDeviceModuleImpl {
-    return device() as ActitoDeviceModuleImpl
-}
+internal fun Actito.deviceImplementation(): ActitoDeviceModuleImpl = device() as ActitoDeviceModuleImpl
 
-internal fun Actito.eventsImplementation(): ActitoEventsModuleImpl {
-    return events() as ActitoEventsModuleImpl
-}
+internal fun Actito.eventsImplementation(): ActitoEventsModuleImpl = events() as ActitoEventsModuleImpl
 
 @Suppress("unused")
-internal fun Actito.session(): ActitoSessionModuleImpl {
-    return ActitoSessionModuleImpl
-}
+internal fun Actito.session(): ActitoSessionModuleImpl = ActitoSessionModuleImpl
 
 @Suppress("unused")
-internal fun Actito.crashReporter(): ActitoCrashReporterModuleImpl {
-    return ActitoCrashReporterModuleImpl
-}
+internal fun Actito.crashReporter(): ActitoCrashReporterModuleImpl = ActitoCrashReporterModuleImpl

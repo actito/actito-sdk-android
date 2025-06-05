@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.SharedFlow
 internal object NotificationEvent {
     private val _inboxShouldUpdateFlow = MutableSharedFlow<Unit>(
         extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
     val inboxShouldUpdateFlow: SharedFlow<Unit> = _inboxShouldUpdateFlow

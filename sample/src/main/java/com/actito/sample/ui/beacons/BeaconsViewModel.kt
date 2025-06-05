@@ -10,6 +10,6 @@ class BeaconsViewModel : ViewModel() {
 
     data class BeaconsData(
         val region: ActitoRegion,
-        val beacons: List<ActitoBeacon>
+        val beacons: List<ActitoBeacon>,
     )
 }

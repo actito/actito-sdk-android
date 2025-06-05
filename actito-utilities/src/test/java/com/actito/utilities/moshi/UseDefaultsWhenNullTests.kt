@@ -1,8 +1,8 @@
 package com.actito.utilities.moshi
 
-import com.squareup.moshi.Moshi
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonClass
+import com.squareup.moshi.Moshi
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

@@ -29,7 +29,7 @@ internal fun ActitoRegion.contains(location: Location): Boolean {
     val regionRadLon = Math.toRadians(this.geometry.coordinate.longitude)
 
     val distance: Double = acos(
-        sin(regionRadLat) * sin(radLat) + cos(regionRadLat) * cos(radLat) * cos(regionRadLon - radLon)
+        sin(regionRadLat) * sin(radLat) + cos(regionRadLat) * cos(radLat) * cos(regionRadLon - radLon),
     ) * EARTH_RADIUS
 
     return distance < this.distance
@@ -78,9 +78,5 @@ internal fun ActitoBeaconSession.canInsertBeacon(beacon: ActitoBeacon): Boolean 
     }
 
     val fifteenMinutesAgo = Calendar.getInstance().apply { add(Calendar.MINUTE, -15) }.time
-    if (lastEntry.timestamp < fifteenMinutesAgo) {
-        return true
-    }
-
-    return false
+    return lastEntry.timestamp < fifteenMinutesAgo
 }

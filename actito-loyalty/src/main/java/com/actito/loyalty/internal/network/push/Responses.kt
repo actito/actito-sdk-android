@@ -1,9 +1,9 @@
 package com.actito.loyalty.internal.network.push
 
+import com.actito.loyalty.models.ActitoPass
+import com.actito.utilities.moshi.UseDefaultsWhenNull
 import com.squareup.moshi.JsonClass
 import java.util.Date
-import com.actito.utilities.moshi.UseDefaultsWhenNull
-import com.actito.loyalty.models.ActitoPass
 
 @JsonClass(generateAdapter = true)
 internal data class FetchPassResponse(

@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class FetchRegionsResponse(
-    val regions: List<Region>
+    val regions: List<Region>,
 ) {
 
     @JsonClass(generateAdapter = true)
@@ -77,7 +77,7 @@ internal data class FetchRegionsResponse(
 
 @JsonClass(generateAdapter = true)
 internal data class FetchBeaconsResponse(
-    val beacons: List<Beacon>
+    val beacons: List<Beacon>,
 ) {
 
     @JsonClass(generateAdapter = true)
@@ -89,14 +89,13 @@ internal data class FetchBeaconsResponse(
         val triggers: Boolean,
     ) {
 
-        internal fun toModel(): ActitoBeacon {
-            return ActitoBeacon(
+        internal fun toModel(): ActitoBeacon =
+            ActitoBeacon(
                 id = _id,
                 name = name,
                 major = major,
                 minor = minor,
                 triggers = triggers,
             )
-        }
     }
 }

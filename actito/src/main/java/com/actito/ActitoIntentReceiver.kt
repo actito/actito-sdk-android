@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.actito.internal.logger
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDevice
+import com.actito.utilities.parcel.parcelable
 
 /**
  * A broadcast receiver for handling Actito-specific intents related to the SDK lifecycle and device events.
@@ -20,7 +20,7 @@ public open class ActitoIntentReceiver : BroadcastReceiver() {
         when (intent.action) {
             Actito.INTENT_ACTION_READY -> {
                 val application: ActitoApplication = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_APPLICATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_APPLICATION),
                 )
 
                 onReady(context, application)
@@ -28,7 +28,7 @@ public open class ActitoIntentReceiver : BroadcastReceiver() {
             Actito.INTENT_ACTION_UNLAUNCHED -> onUnlaunched(context)
             Actito.INTENT_ACTION_DEVICE_REGISTERED -> {
                 val device: ActitoDevice = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_DEVICE)
+                    intent.parcelable(Actito.INTENT_EXTRA_DEVICE),
                 )
 
                 onDeviceRegistered(context, device)
@@ -59,7 +59,7 @@ public open class ActitoIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onUnlaunched(context: Context) {
         logger.info(
-            "Actito has finished un-launching, please override onUnlaunched if you want to receive these intents."
+            "Actito has finished un-launching, please override onUnlaunched if you want to receive these intents.",
         )
     }
 
@@ -77,7 +77,7 @@ public open class ActitoIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onDeviceRegistered(context: Context, device: ActitoDevice) {
         logger.info(
-            "Device registered to Actito, please override onDeviceRegistered if you want to receive these intents."
+            "Device registered to Actito, please override onDeviceRegistered if you want to receive these intents.",
         )
     }
 }

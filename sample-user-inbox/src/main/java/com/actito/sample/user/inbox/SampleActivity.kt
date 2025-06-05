@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.actito.Actito
 import com.actito.models.ActitoNotification
@@ -29,7 +29,7 @@ class SampleActivity :
             // Access the nested NavController.
             // Using findNavController will yield a reference to the parent's NavController.
             val fragmentContainer = binding.root.findViewById<View>(R.id.nav_host_fragment)
-            return Navigation.findNavController(fragmentContainer)
+            return fragmentContainer.findNavController()
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,7 +116,7 @@ class SampleActivity :
     override fun onActionFailedToExecute(
         notification: ActitoNotification,
         action: ActitoNotification.Action,
-        error: Exception?
+        error: Exception?,
     ) {
         Timber.i("---> action failed to execute '${action.label}'")
         Toast.makeText(this, "Action failed to execute", Toast.LENGTH_SHORT).show()
@@ -125,7 +125,7 @@ class SampleActivity :
     override fun onCustomActionReceived(
         notification: ActitoNotification,
         action: ActitoNotification.Action,
-        uri: Uri
+        uri: Uri,
     ) {
         Timber.i("---> custom action received '$uri'")
         Toast.makeText(this, "Custom action received", Toast.LENGTH_SHORT).show()

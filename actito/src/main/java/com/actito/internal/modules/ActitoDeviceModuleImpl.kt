@@ -616,7 +616,7 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
         Actito.requireContext().sendBroadcast(
             Intent(Actito.requireContext(), Actito.intentReceiver)
                 .setAction(Actito.INTENT_ACTION_DEVICE_REGISTERED)
-                .putExtra(Actito.INTENT_EXTRA_DEVICE, device)
+                .putExtra(Actito.INTENT_EXTRA_DEVICE, device),
         )
     }
 }

@@ -22,6 +22,7 @@ public abstract class ActitoModule {
     public open suspend fun unlaunch() {}
 
     @InternalActitoApi
+    @Suppress("ktlint:standard:trailing-comma-on-declaration-site")
     public enum class Module(private val fqn: String) {
         // Default modules
         DEVICE(fqn = "com.actito.internal.modules.ActitoDeviceModuleImpl"),

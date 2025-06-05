@@ -3,9 +3,9 @@ package com.actito.inbox.internal.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import kotlinx.coroutines.coroutineScope
 import com.actito.Actito
 import com.actito.inbox.ktx.inboxImplementation
+import kotlinx.coroutines.coroutineScope
 
 internal class ExpireItemWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result = coroutineScope {

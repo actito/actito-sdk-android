@@ -33,7 +33,7 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
         when (intent.action) {
             Actito.INTENT_ACTION_LOCATION_UPDATED -> {
                 val location: ActitoLocation = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_LOCATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_LOCATION),
                 )
 
                 onLocationUpdated(context, location)
@@ -41,7 +41,7 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_REGION_ENTERED -> {
                 val region: ActitoRegion = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_REGION)
+                    intent.parcelable(Actito.INTENT_EXTRA_REGION),
                 )
 
                 onRegionEntered(context, region)
@@ -49,7 +49,7 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_REGION_EXITED -> {
                 val region: ActitoRegion = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_REGION)
+                    intent.parcelable(Actito.INTENT_EXTRA_REGION),
                 )
 
                 onRegionExited(context, region)
@@ -57,7 +57,7 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_BEACON_ENTERED -> {
                 val beacon: ActitoBeacon = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_BEACON)
+                    intent.parcelable(Actito.INTENT_EXTRA_BEACON),
                 )
 
                 onBeaconEntered(context, beacon)
@@ -65,7 +65,7 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_BEACON_EXITED -> {
                 val beacon: ActitoBeacon = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_BEACON)
+                    intent.parcelable(Actito.INTENT_EXTRA_BEACON),
                 )
 
                 onBeaconExited(context, beacon)
@@ -73,11 +73,11 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
 
             Actito.INTENT_ACTION_BEACONS_RANGED -> {
                 val region: ActitoRegion = requireNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_REGION)
+                    intent.parcelable(Actito.INTENT_EXTRA_REGION),
                 )
 
                 val beacons: List<ActitoBeacon> = requireNotNull(
-                    intent.parcelableArrayList(Actito.INTENT_EXTRA_RANGED_BEACONS)
+                    intent.parcelableArrayList(Actito.INTENT_EXTRA_RANGED_BEACONS),
                 )
 
                 onBeaconsRanged(context, region, beacons)
@@ -96,7 +96,7 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onLocationUpdated(context: Context, location: ActitoLocation) {
         logger.debug(
-            "Location updated, please override onLocationUpdated if you want to receive these intents."
+            "Location updated, please override onLocationUpdated if you want to receive these intents.",
         )
     }
 
@@ -111,7 +111,7 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onRegionEntered(context: Context, region: ActitoRegion) {
         logger.debug(
-            "Entered a region, please override onRegionEntered if you want to receive these intents."
+            "Entered a region, please override onRegionEntered if you want to receive these intents.",
         )
     }
 
@@ -140,7 +140,7 @@ public open class ActitoGeoIntentReceiver : BroadcastReceiver() {
      */
     protected open fun onBeaconEntered(context: Context, beacon: ActitoBeacon) {
         logger.debug(
-            "Entered a beacon, please override onBeaconEntered if you want to receive these intents."
+            "Entered a beacon, please override onBeaconEntered if you want to receive these intents.",
         )
     }
 

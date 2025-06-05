@@ -49,9 +49,9 @@ public class ActitoUnknownNotificationTest {
                 notificationCount = 1,
                 eventTime = 1,
                 lightSettings = listOf(1),
-                vibrateSettings = listOf(1)
+                vibrateSettings = listOf(1),
             ),
-            data = mapOf("testKey" to "testValue")
+            data = mapOf("testKey" to "testValue"),
         )
 
         val convertedNotification = ActitoUnknownNotification.fromJson(notification.toJson())
@@ -73,7 +73,7 @@ public class ActitoUnknownNotificationTest {
             priority = 1,
             originalPriority = 1,
             notification = null,
-            data = mapOf("testKey" to "testValue")
+            data = mapOf("testKey" to "testValue"),
         )
 
         val convertedNotification = ActitoUnknownNotification.fromJson(notification.toJson())
@@ -109,7 +109,7 @@ public class ActitoUnknownNotificationTest {
             notificationCount = 1,
             eventTime = 1,
             lightSettings = listOf(1),
-            vibrateSettings = listOf(1)
+            vibrateSettings = listOf(1),
         )
 
         val convertedNotification = ActitoUnknownNotification.Notification.fromJson(notification.toJson())
@@ -145,7 +145,7 @@ public class ActitoUnknownNotificationTest {
             notificationCount = null,
             eventTime = null,
             lightSettings = null,
-            vibrateSettings = null
+            vibrateSettings = null,
         )
 
         val convertedNotification = ActitoUnknownNotification.Notification.fromJson(notification.toJson())

@@ -1,9 +1,9 @@
 package com.actito.push.models
 
 import android.os.Parcelable
-import java.util.Date
-import kotlinx.parcelize.Parcelize
 import com.actito.models.ActitoNotification
+import kotlinx.parcelize.Parcelize
+import java.util.Date
 
 public interface ActitoRemoteMessage {
     public val messageId: String?
@@ -28,8 +28,8 @@ public data class ActitoUnknownRemoteMessage(
     val data: Map<String, String?>,
 ) : ActitoRemoteMessage {
 
-    public fun toNotification(): ActitoUnknownNotification {
-        return ActitoUnknownNotification(
+    public fun toNotification(): ActitoUnknownNotification =
+        ActitoUnknownNotification(
             messageId = messageId,
             messageType = messageType,
             senderId = senderId,
@@ -43,7 +43,6 @@ public data class ActitoUnknownRemoteMessage(
             notification = notification,
             data = data,
         )
-    }
 }
 
 public data class ActitoSystemRemoteMessage(
@@ -97,8 +96,8 @@ public data class ActitoNotificationRemoteMessage(
     val lightsOff: Int?,
 ) : ActitoRemoteMessage, Parcelable {
 
-    public fun toNotification(): ActitoNotification {
-        return ActitoNotification(
+    public fun toNotification(): ActitoNotification =
+        ActitoNotification(
             id = notificationId,
             partial = true,
             type = notificationType,
@@ -111,5 +110,4 @@ public data class ActitoNotificationRemoteMessage(
             attachments = attachment?.let { listOf(it) } ?: emptyList(),
             extra = extra,
         )
-    }
 }

@@ -1,6 +1,5 @@
 package com.actito.push.internal
 
-import com.google.firebase.messaging.RemoteMessage
 import com.actito.Actito
 import com.actito.internal.moshi
 import com.actito.models.ActitoNotification
@@ -8,9 +7,10 @@ import com.actito.push.models.ActitoNotificationRemoteMessage
 import com.actito.push.models.ActitoSystemRemoteMessage
 import com.actito.push.models.ActitoUnknownNotification
 import com.actito.push.models.ActitoUnknownRemoteMessage
+import com.google.firebase.messaging.RemoteMessage
 
-internal fun ActitoUnknownRemoteMessage(message: RemoteMessage): ActitoUnknownRemoteMessage {
-    return ActitoUnknownRemoteMessage(
+internal fun ActitoUnknownRemoteMessage(message: RemoteMessage): ActitoUnknownRemoteMessage =
+    ActitoUnknownRemoteMessage(
         messageId = message.messageId,
         sentTime = message.sentTime,
         collapseKey = message.collapseKey,
@@ -53,7 +53,6 @@ internal fun ActitoUnknownRemoteMessage(message: RemoteMessage): ActitoUnknownRe
         },
         data = message.data,
     )
-}
 
 internal fun ActitoSystemRemoteMessage(message: RemoteMessage): ActitoSystemRemoteMessage {
     val ignoreKeys = listOf(

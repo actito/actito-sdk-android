@@ -22,20 +22,20 @@ internal class ActitoSharedPreferences(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences(
         PREFERENCES_FILE_NAME,
-        Context.MODE_PRIVATE
+        Context.MODE_PRIVATE,
     )
 
     var remoteNotificationsEnabled: Boolean
         get() {
             return sharedPreferences.getBoolean(
                 PREFERENCE_REMOTE_NOTIFICATIONS_ENABLED,
-                false
+                false,
             )
         }
         set(value) {
-            sharedPreferences.edit()
-                .putBoolean(PREFERENCE_REMOTE_NOTIFICATIONS_ENABLED, value)
-                .apply()
+            sharedPreferences.edit {
+                putBoolean(PREFERENCE_REMOTE_NOTIFICATIONS_ENABLED, value)
+            }
         }
 
     var transport: ActitoTransport?
@@ -58,7 +58,7 @@ internal class ActitoSharedPreferences(context: Context) {
                 if (value == null) remove(PREFERENCE_TRANSPORT)
                 else putString(
                     PREFERENCE_TRANSPORT,
-                    Actito.moshi.adapter(ActitoTransport::class.java).toJson(value)
+                    Actito.moshi.adapter(ActitoTransport::class.java).toJson(value),
                 )
             }
         }
@@ -83,7 +83,7 @@ internal class ActitoSharedPreferences(context: Context) {
                 if (value == null) remove(PREFERENCE_SUBSCRIPTION)
                 else putString(
                     PREFERENCE_SUBSCRIPTION,
-                    Actito.moshi.adapter(ActitoPushSubscription::class.java).toJson(value)
+                    Actito.moshi.adapter(ActitoPushSubscription::class.java).toJson(value),
                 )
             }
         }
@@ -92,13 +92,13 @@ internal class ActitoSharedPreferences(context: Context) {
         get() {
             return sharedPreferences.getBoolean(
                 PREFERENCE_ALLOWED_UI,
-                false
+                false,
             )
         }
         set(value) {
-            sharedPreferences.edit()
-                .putBoolean(PREFERENCE_ALLOWED_UI, value)
-                .apply()
+            sharedPreferences.edit {
+                putBoolean(PREFERENCE_ALLOWED_UI, value)
+            }
         }
 
     var firstRegistration: Boolean

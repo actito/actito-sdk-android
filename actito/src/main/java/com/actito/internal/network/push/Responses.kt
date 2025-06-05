@@ -1,17 +1,17 @@
 package com.actito.internal.network.push
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import java.util.Date
 import com.actito.InternalActitoApi
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import java.util.Date
 
 @JsonClass(generateAdapter = true)
 internal data class ApplicationResponse(
-    val application: Application
+    val application: Application,
 ) {
 
     @JsonClass(generateAdapter = true)
@@ -23,7 +23,7 @@ internal data class ApplicationResponse(
         val inboxConfig: ActitoApplication.InboxConfig?,
         val regionConfig: ActitoApplication.RegionConfig?,
         val userDataFields: List<ActitoApplication.UserDataField>,
-        val actionCategories: List<ActionCategory>
+        val actionCategories: List<ActionCategory>,
     ) {
 
         @JsonClass(generateAdapter = true)
@@ -34,8 +34,8 @@ internal data class ApplicationResponse(
             val actions: List<NotificationResponse.Notification.Action>,
         )
 
-        fun toModel(): ActitoApplication {
-            return ActitoApplication(
+        fun toModel(): ActitoApplication =
+            ActitoApplication(
                 id,
                 name,
                 category,
@@ -48,11 +48,10 @@ internal data class ApplicationResponse(
                         category.type,
                         category.name,
                         category.description,
-                        category.actions.mapNotNull { it.toModel() }
+                        category.actions.mapNotNull { it.toModel() },
                     )
-                }
+                },
             )
-        }
     }
 }
 
@@ -74,7 +73,7 @@ internal data class DeviceDoNotDisturbResponse(
 
 @JsonClass(generateAdapter = true)
 internal data class DeviceTagsResponse(
-    val tags: List<String>
+    val tags: List<String>,
 )
 
 @JsonClass(generateAdapter = true)
@@ -124,13 +123,13 @@ public data class NotificationResponse(
                     camera ?: false,
                     keyboard ?: false,
                     destructive,
-                    icon
+                    icon,
                 )
             }
         }
 
-        public fun toModel(): ActitoNotification {
-            return ActitoNotification(
+        public fun toModel(): ActitoNotification =
+            ActitoNotification(
                 id,
                 partial,
                 type,
@@ -141,9 +140,8 @@ public data class NotificationResponse(
                 content,
                 actions.mapNotNull { it.toModel() },
                 attachments,
-                extra
+                extra,
             )
-        }
     }
 }
 

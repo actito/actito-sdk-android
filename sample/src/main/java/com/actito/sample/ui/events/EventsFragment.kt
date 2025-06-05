@@ -8,9 +8,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.actito.sample.R
+import com.actito.sample.core.BaseFragment
 import com.actito.sample.databinding.FragmentEventsBinding
 import com.actito.sample.databinding.RowEventFieldBinding
-import com.actito.sample.core.BaseFragment
 
 class EventsFragment : BaseFragment() {
     private lateinit var binding: FragmentEventsBinding

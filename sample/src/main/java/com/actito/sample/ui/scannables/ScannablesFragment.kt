@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
 import com.actito.Actito
 import com.actito.push.ui.ktx.pushUI
 import com.actito.sample.R
@@ -14,6 +13,7 @@ import com.actito.scannables.ActitoScannables
 import com.actito.scannables.ActitoUserCancelledScannableSessionException
 import com.actito.scannables.ktx.scannables
 import com.actito.scannables.models.ActitoScannable
+import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 
 class ScannablesFragment : Fragment(), ActitoScannables.ScannableSessionListener {

@@ -1,10 +1,10 @@
 package com.actito.inbox.internal.network.push
 
+import com.actito.models.ActitoNotification
+import com.actito.utilities.moshi.UseDefaultsWhenNull
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
-import com.actito.utilities.moshi.UseDefaultsWhenNull
-import com.actito.models.ActitoNotification
 
 @JsonClass(generateAdapter = true)
 internal data class InboxResponse(

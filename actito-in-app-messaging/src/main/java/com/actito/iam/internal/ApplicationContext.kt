@@ -2,6 +2,7 @@ package com.actito.iam.internal
 
 import com.actito.iam.models.ActitoInAppMessage
 
+@Suppress("ktlint:standard:trailing-comma-on-declaration-site")
 internal enum class ApplicationContext {
     LAUNCH,
     FOREGROUND;
@@ -12,7 +13,5 @@ internal enum class ApplicationContext {
             FOREGROUND -> ActitoInAppMessage.CONTEXT_FOREGROUND
         }
 
-    override fun toString(): String {
-        return rawValue
-    }
+    override fun toString(): String = rawValue
 }

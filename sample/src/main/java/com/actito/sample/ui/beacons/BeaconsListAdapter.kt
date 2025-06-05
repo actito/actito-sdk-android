@@ -12,7 +12,7 @@ import com.actito.sample.databinding.BeaconRowBinding
 class BeaconsListAdapter : ListAdapter<ActitoBeacon, RecyclerView.ViewHolder>(BeaconsDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ItemViewHolder(
-            BeaconRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            BeaconRowBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         )
     }
 
@@ -22,7 +22,7 @@ class BeaconsListAdapter : ListAdapter<ActitoBeacon, RecyclerView.ViewHolder>(Be
     }
 
     private inner class ItemViewHolder(
-        private val binding: BeaconRowBinding
+        private val binding: BeaconRowBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ActitoBeacon) {

@@ -5,13 +5,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import kotlinx.coroutines.flow.Flow
 import com.actito.inbox.internal.database.entities.InboxItemEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface InboxDao {
 
-    @Query("SELECT * FROM inbox WHERE (visible IS NULL OR visible == 1) AND (expires IS NULL OR expires > strftime('%s', 'now') || substr(strftime('%f', 'now'), 4))")
+    @Query(
+        "SELECT * FROM inbox WHERE (visible IS NULL OR visible == 1) AND (expires IS NULL OR expires > strftime('%s', 'now') || substr(strftime('%f', 'now'), 4))",
+    )
     fun getItemsStream(): Flow<List<InboxItemEntity>>
 
     @Query("SELECT * FROM inbox WHERE id = :id LIMIT 1")

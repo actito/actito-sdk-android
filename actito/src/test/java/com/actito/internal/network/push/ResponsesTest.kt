@@ -1,14 +1,14 @@
 package com.actito.internal.network.push
 
+import com.actito.models.ActitoApplication
+import com.actito.models.ActitoNotification
+import com.actito.models.ActitoNotification.Action.Companion.TYPE_APP
+import com.actito.models.ActitoNotification.Companion.TYPE_NONE
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.models.ActitoApplication
-import com.actito.models.ActitoNotification
-import com.actito.models.ActitoNotification.Action.Companion.TYPE_APP
-import com.actito.models.ActitoNotification.Companion.TYPE_NONE
 import java.util.Date
 
 @RunWith(RobolectricTestRunner::class)
@@ -24,17 +24,17 @@ public class ResponsesTest {
             inboxConfig = ActitoApplication.InboxConfig(
                 useInbox = true,
                 useUserInbox = true,
-                autoBadge = true
+                autoBadge = true,
             ),
             regionConfig = ActitoApplication.RegionConfig(
-                proximityUUID = "testProximityUUID"
+                proximityUUID = "testProximityUUID",
             ),
             userDataFields = listOf(
                 ActitoApplication.UserDataField(
                     type = "testType",
                     key = "testKey",
-                    label = "testLabel"
-                )
+                    label = "testLabel",
+                ),
             ),
             actionCategories = listOf(
                 ActitoApplication.ActionCategory(
@@ -52,12 +52,12 @@ public class ResponsesTest {
                             icon = ActitoNotification.Action.Icon(
                                 android = "testAndroid",
                                 ios = "testIos",
-                                web = "testWeb"
-                            )
-                        )
-                    )
-                )
-            )
+                                web = "testWeb",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         )
 
         val application = ApplicationResponse.Application(
@@ -68,17 +68,17 @@ public class ResponsesTest {
             inboxConfig = ActitoApplication.InboxConfig(
                 useInbox = true,
                 useUserInbox = true,
-                autoBadge = true
+                autoBadge = true,
             ),
             regionConfig = ActitoApplication.RegionConfig(
-                proximityUUID = "testProximityUUID"
+                proximityUUID = "testProximityUUID",
             ),
             userDataFields = listOf(
                 ActitoApplication.UserDataField(
                     type = "testType",
                     key = "testKey",
-                    label = "testLabel"
-                )
+                    label = "testLabel",
+                ),
             ),
             actionCategories = listOf(
                 ApplicationResponse.Application.ActionCategory(
@@ -96,12 +96,12 @@ public class ResponsesTest {
                             icon = ActitoNotification.Action.Icon(
                                 android = "testAndroid",
                                 ios = "testIos",
-                                web = "testWeb"
-                            )
-                        )
-                    )
-                )
-            )
+                                web = "testWeb",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ).toModel()
 
         assertEquals(expectedApplication, application)
@@ -116,7 +116,7 @@ public class ResponsesTest {
             time = Date(1),
             title = "testTitle",
             subtitle = "testSubtitle",
-            message = "testMessage"
+            message = "testMessage",
         )
 
         val notification = NotificationResponse.Notification(
@@ -126,7 +126,7 @@ public class ResponsesTest {
             time = Date(1),
             title = "testTitle",
             subtitle = "testSubtitle",
-            message = "testMessage"
+            message = "testMessage",
         ).toModel()
 
         assertEquals(expectedNotification, notification)
@@ -144,8 +144,8 @@ public class ResponsesTest {
             icon = ActitoNotification.Action.Icon(
                 android = "testAndroid",
                 ios = "testIos",
-                web = "testWeb"
-            )
+                web = "testWeb",
+            ),
         )
 
         val action = NotificationResponse.Notification.Action(
@@ -158,8 +158,8 @@ public class ResponsesTest {
             icon = ActitoNotification.Action.Icon(
                 android = "testAndroid",
                 ios = "testIos",
-                web = "testWeb"
-            )
+                web = "testWeb",
+            ),
         ).toModel()
 
         assertEquals(expectedAction, action)

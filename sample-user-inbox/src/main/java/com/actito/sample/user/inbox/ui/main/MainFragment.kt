@@ -42,7 +42,7 @@ internal class MainFragment : BaseFragment(), Actito.Listener {
     // Permission Launcher
 
     private val notificationsPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
+        ActivityResultContracts.RequestPermission(),
     ) { granted ->
         if (granted) {
             viewModel.updateRemoteNotificationsStatus(true)
@@ -58,7 +58,7 @@ internal class MainFragment : BaseFragment(), Actito.Listener {
     }
 
     private val openNotificationsSettingsLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult(),
     ) {
         if (binding.notificationsCard.notificationsSwitch.isChecked) {
             if (NotificationManagerCompat.from(requireContext().applicationContext).areNotificationsEnabled()) {
@@ -81,7 +81,7 @@ internal class MainFragment : BaseFragment(), Actito.Listener {
         viewModel.setUserInboxURLs(
             base = requireContext().getString(R.string.user_inbox_base_url),
             registerDevice = requireContext().getString(R.string.user_inbox_register_device_url),
-            fetchInbox = requireContext().getString(R.string.user_inbox_fetch_inbox_url)
+            fetchInbox = requireContext().getString(R.string.user_inbox_fetch_inbox_url),
         )
 
         Actito.addListener(this)
@@ -185,7 +185,7 @@ internal class MainFragment : BaseFragment(), Actito.Listener {
                     ActitoDoNotDisturb(
                         start = ActitoTime(timePicker.hour, timePicker.minute),
                         end = dnd.end,
-                    )
+                    ),
                 )
             }
 
@@ -206,7 +206,7 @@ internal class MainFragment : BaseFragment(), Actito.Listener {
                     ActitoDoNotDisturb(
                         start = dnd.start,
                         end = ActitoTime(timePicker.hour, timePicker.minute),
-                    )
+                    ),
                 )
             }
 
@@ -301,7 +301,7 @@ internal class MainFragment : BaseFragment(), Actito.Listener {
         val permission = Manifest.permission.POST_NOTIFICATIONS
         val granted = ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
 
         if (granted) return true
@@ -376,7 +376,7 @@ internal class MainFragment : BaseFragment(), Actito.Listener {
                         openNotificationsSettingsLauncher.launch(
                             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                                 data = Uri.fromParts("package", requireContext().packageName, null)
-                            }
+                            },
                         )
                     }
                 }
@@ -391,6 +391,6 @@ internal class MainFragment : BaseFragment(), Actito.Listener {
     }
 
     enum class PermissionType {
-        NOTIFICATIONS
+        NOTIFICATIONS,
     }
 }

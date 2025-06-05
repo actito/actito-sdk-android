@@ -2,10 +2,10 @@ package com.actito.sample.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.actito.sample.ktx.Event
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import com.actito.sample.ktx.Event
 
 abstract class BaseViewModel : ViewModel() {
     private val eventChannel = Channel<Event>(Channel.BUFFERED)

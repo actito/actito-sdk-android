@@ -1,11 +1,13 @@
 package com.actito.internal.network.request
 
-import java.io.IOException
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
-import kotlin.reflect.KClass
+import com.actito.Actito
+import com.actito.ActitoCallback
+import com.actito.InternalActitoApi
+import com.actito.internal.logger
+import com.actito.internal.moshi
+import com.actito.internal.network.ActitoHeadersInterceptor
+import com.actito.internal.network.NetworkException
+import com.actito.utilities.coroutines.toCallbackFunction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.Call
@@ -22,14 +24,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.internal.EMPTY_REQUEST
 import okhttp3.logging.HttpLoggingInterceptor
-import com.actito.InternalActitoApi
-import com.actito.Actito
-import com.actito.ActitoCallback
-import com.actito.internal.logger
-import com.actito.internal.moshi
-import com.actito.internal.network.NetworkException
-import com.actito.internal.network.ActitoHeadersInterceptor
-import com.actito.utilities.coroutines.toCallbackFunction
+import java.io.IOException
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
+import kotlin.reflect.KClass
 
 @InternalActitoApi
 public typealias DecodableForFn<T> = (responseCode: Int) -> KClass<T>?
@@ -55,7 +55,7 @@ public class ActitoRequest private constructor(
                     } else {
                         HttpLoggingInterceptor.Level.NONE
                     }
-                }
+                },
             )
             .build()
     }
@@ -70,7 +70,7 @@ public class ActitoRequest private constructor(
                 handleResponse(
                     response = response,
                     closeResponse = closeResponse,
-                    continuation = continuation
+                    continuation = continuation,
                 )
             }
         })
@@ -98,7 +98,7 @@ public class ActitoRequest private constructor(
 
         val body = response.body
             ?: throw IllegalArgumentException(
-                "The response contains an empty body. Cannot parse into '${klass.simpleName}'."
+                "The response contains an empty body. Cannot parse into '${klass.simpleName}'.",
             )
 
         return withContext(Dispatchers.IO) {
@@ -124,7 +124,7 @@ public class ActitoRequest private constructor(
 
             val body = response.body
                 ?: throw IllegalArgumentException(
-                    "The response contains an empty body. Cannot parse into '${klass.simpleName}'."
+                    "The response contains an empty body. Cannot parse into '${klass.simpleName}'.",
                 )
 
             try {
@@ -148,7 +148,7 @@ public class ActitoRequest private constructor(
                     NetworkException.ValidationException(
                         response = response,
                         validStatusCodes = validStatusCodes,
-                    )
+                    ),
                 )
 
                 return
@@ -267,30 +267,23 @@ public class ActitoRequest private constructor(
             )
         }
 
-        public suspend fun response(): Response {
-            return build().response(true)
-        }
+        public suspend fun response(): Response = build().response(true)
 
         public fun response(callback: ActitoCallback<Response>): Unit =
             toCallbackFunction(::response)(callback::onSuccess, callback::onFailure)
 
-        public suspend fun responseString(): String {
-            return build().responseString()
-        }
+        public suspend fun responseString(): String = build().responseString()
 
         public fun responseString(callback: ActitoCallback<String>): Unit =
             toCallbackFunction(::responseString)(callback::onSuccess, callback::onFailure)
 
-        public suspend fun <T : Any> responseDecodable(klass: KClass<T>): T {
-            return build().responseDecodable(klass)
-        }
+        public suspend fun <T : Any> responseDecodable(klass: KClass<T>): T = build().responseDecodable(klass)
 
         public fun <T : Any> responseDecodable(klass: KClass<T>, callback: ActitoCallback<T>): Unit =
             toCallbackFunction(suspend { responseDecodable(klass) })(callback::onSuccess, callback::onFailure)
 
-        public suspend fun <T : Any> responseDecodable(decodableFor: DecodableForFn<T>): T? {
-            return build().responseDecodable(decodableFor)
-        }
+        public suspend fun <T : Any> responseDecodable(decodableFor: DecodableForFn<T>): T? =
+            build().responseDecodable(decodableFor)
 
         @Throws(IllegalArgumentException::class)
         private fun computeCompleteUrl(): HttpUrl {
@@ -345,9 +338,7 @@ public class ActitoRequest private constructor(
             val password: String,
         ) : Authentication() {
 
-            override fun encode(): String {
-                return Credentials.basic(username, password)
-            }
+            override fun encode(): String = Credentials.basic(username, password)
         }
     }
 }

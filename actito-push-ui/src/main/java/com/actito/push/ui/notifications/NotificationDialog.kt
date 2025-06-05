@@ -8,14 +8,14 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.databinding.ActitoAlertDialogBinding
 import com.actito.push.ui.internal.logger
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.utilities.content.applicationName
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
 
 public class NotificationDialog : DialogFragment() {
 
@@ -59,12 +59,12 @@ public class NotificationDialog : DialogFragment() {
                 android.R.layout.simple_list_item_1,
                 notification.actions.map {
                     it.getLocalizedLabel(requireContext())
-                }
+                },
             )
 
             binding.list.setOnItemClickListener { _, _, position, _ ->
                 callback?.onNotificationDialogActionClick(
-                    position
+                    position,
                 )
             }
 
@@ -106,11 +106,10 @@ public class NotificationDialog : DialogFragment() {
     public companion object {
         private const val SAVED_STATE_NOTIFICATION = "com.actito.ui.Notification"
 
-        public fun newInstance(notification: ActitoNotification): NotificationDialog {
-            return NotificationDialog().apply {
+        public fun newInstance(notification: ActitoNotification): NotificationDialog =
+            NotificationDialog().apply {
                 this.notification = notification
             }
-        }
     }
 
     public interface Callback {

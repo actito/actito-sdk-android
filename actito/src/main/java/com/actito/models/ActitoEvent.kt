@@ -1,12 +1,12 @@
 package com.actito.models
 
+import com.actito.Actito
+import com.actito.internal.moshi
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Types
 import org.json.JSONObject
-import com.actito.Actito
-import com.actito.internal.moshi
 
 public typealias ActitoEventData = Map<String, Any?>
 
@@ -18,7 +18,7 @@ public data class ActitoEvent(
     @Json(name = "sessionID") val sessionId: String?,
     @Json(name = "notification") val notificationId: String?,
     @Json(name = "userID") val userId: String?,
-    val data: ActitoEventData?
+    val data: ActitoEventData?,
 ) {
 
     public companion object {
@@ -27,8 +27,8 @@ public data class ActitoEvent(
                 Types.newParameterizedType(
                     Map::class.java,
                     String::class.java,
-                    Any::class.java
-                )
+                    Any::class.java,
+                ),
             )
         }
 

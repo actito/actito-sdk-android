@@ -1,11 +1,11 @@
 package com.actito.iam.internal.network.push
 
+import com.actito.iam.models.ActitoInAppMessage
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.iam.models.ActitoInAppMessage
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE)
@@ -25,13 +25,13 @@ public class ResponsesTest {
             primaryAction = ActitoInAppMessage.Action(
                 label = "testLabel",
                 destructive = true,
-                url = "testUrl"
+                url = "testUrl",
             ),
             secondaryAction = ActitoInAppMessage.Action(
                 label = "testLabel",
                 destructive = true,
-                url = "testUrl"
-            )
+                url = "testUrl",
+            ),
         )
 
         val message = InAppMessageResponse.Message(
@@ -47,13 +47,13 @@ public class ResponsesTest {
             primaryAction = InAppMessageResponse.Message.Action(
                 label = "testLabel",
                 destructive = true,
-                url = "testUrl"
+                url = "testUrl",
             ),
             secondaryAction = InAppMessageResponse.Message.Action(
                 label = "testLabel",
                 destructive = true,
-                url = "testUrl"
-            )
+                url = "testUrl",
+            ),
         ).toModel()
 
         assertEquals(expectedMessage, message)
@@ -72,7 +72,7 @@ public class ResponsesTest {
             landscapeImage = null,
             delaySeconds = 1,
             primaryAction = null,
-            secondaryAction = null
+            secondaryAction = null,
         )
 
         val message = InAppMessageResponse.Message(
@@ -86,7 +86,7 @@ public class ResponsesTest {
             landscapeImage = null,
             delaySeconds = 1,
             primaryAction = null,
-            secondaryAction = null
+            secondaryAction = null,
         ).toModel()
 
         assertEquals(expectedMessage, message)

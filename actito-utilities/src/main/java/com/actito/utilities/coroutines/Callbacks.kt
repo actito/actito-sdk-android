@@ -20,7 +20,7 @@ public fun <T> toCallbackFunction(fn: suspend () -> T): (
 public fun <A, T> toCallbackFunction(fn: suspend (A) -> T): (
     a: A,
     callbackSuccess: (T) -> Unit,
-    callbackFailure: (Exception) -> Unit
+    callbackFailure: (Exception) -> Unit,
 ) -> Unit = { a, callbackSuccess, callbackFailure ->
     awaitSuspend(suspend { fn(a) }, callbackSuccess, callbackFailure)
 }
@@ -39,7 +39,7 @@ public fun <A, B, C, T> toCallbackFunction(fn: suspend (A, B, C) -> T): (
     b: B,
     c: C,
     callbackSuccess: (T) -> Unit,
-    callbackFailure: (Exception) -> Unit
+    callbackFailure: (Exception) -> Unit,
 ) -> Unit = { a, b, c, callbackSuccess, callbackFailure ->
     awaitSuspend(suspend { fn(a, b, c) }, callbackSuccess, callbackFailure)
 }

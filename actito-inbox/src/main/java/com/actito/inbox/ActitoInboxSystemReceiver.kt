@@ -4,15 +4,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import java.util.Date
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.inbox.internal.logger
 import com.actito.inbox.ktx.inboxImplementation
 import com.actito.inbox.models.ActitoInboxItem
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.parcel.parcelable
+import kotlinx.coroutines.launch
+import java.util.Date
 
 internal class ActitoInboxSystemReceiver : BroadcastReceiver() {
 
@@ -23,18 +23,18 @@ internal class ActitoInboxSystemReceiver : BroadcastReceiver() {
             }
             INTENT_ACTION_INBOX_NOTIFICATION_RECEIVED -> {
                 val notification: ActitoNotification = checkNotNull(
-                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+                    intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION),
                 )
 
                 val inboxBundle: Bundle = checkNotNull(
-                    intent.getBundleExtra(INTENT_EXTRA_INBOX_NOTIFICATION_RECEIVED_BUNDLE)
+                    intent.getBundleExtra(INTENT_EXTRA_INBOX_NOTIFICATION_RECEIVED_BUNDLE),
                 )
 
                 onNotificationReceived(notification, inboxBundle)
             }
             INTENT_ACTION_INBOX_MARK_ITEM_AS_READ -> {
                 val inboxItemId = checkNotNull(
-                    intent.getStringExtra(INTENT_EXTRA_INBOX_ITEM_ID)
+                    intent.getStringExtra(INTENT_EXTRA_INBOX_ITEM_ID),
                 )
 
                 onMarkItemAsRead(inboxItemId)

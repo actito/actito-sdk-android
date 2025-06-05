@@ -30,7 +30,7 @@ public val ActitoOptions.beaconSampleExpiration: Long
     get() {
         return metadata.getLong(
             "com.actito.geo.beacons.sample_expiration",
-            DEFAULT_SAMPLE_EXPIRATION
+            DEFAULT_SAMPLE_EXPIRATION,
         )
     }
 

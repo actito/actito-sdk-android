@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.geo.ktx.geo
 import com.actito.iam.ktx.inAppMessaging
@@ -26,6 +24,8 @@ import com.actito.sample.live_activities.LiveActivitiesController
 import com.actito.sample.live_activities.models.CoffeeBrewerContentState
 import com.actito.sample.live_activities.models.CoffeeBrewingState
 import com.actito.sample.models.ApplicationInfo
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleObserver, Actito.Listener {

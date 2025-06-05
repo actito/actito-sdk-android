@@ -14,7 +14,7 @@ public object ActitoPushUICompat {
      * The class must extend [NotificationActivity].
      */
     @JvmStatic
-    public var notificationActivity: Class<out com.actito.push.ui.NotificationActivity>
+    public var notificationActivity: Class<out NotificationActivity>
         get() = Actito.pushUI().notificationActivity
         set(value) {
             Actito.pushUI().notificationActivity = value

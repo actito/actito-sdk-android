@@ -18,11 +18,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.content.packageInfo
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.databinding.ActitoNotificationContainerFragmentBinding
@@ -33,9 +29,16 @@ import com.actito.push.ui.models.ActitoPendingResult
 import com.actito.push.ui.notifications.fragments.ActitoCallbackActionFragment
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.utilities.content.applicationName
+import com.actito.utilities.content.packageInfo
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.launch
 
-public class NotificationContainerFragment
-: Fragment(), NotificationFragment.Callback, NotificationDialog.Callback, NotificationActionsDialog.Callback {
+public class NotificationContainerFragment :
+    Fragment(),
+    NotificationFragment.Callback,
+    NotificationDialog.Callback,
+    NotificationActionsDialog.Callback {
 
     private lateinit var binding: ActitoNotificationContainerFragmentBinding
     private lateinit var notification: ActitoNotification
@@ -51,12 +54,12 @@ public class NotificationContainerFragment
     private var showActionsMenuItem = true
 
     private val cameraPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
+        ActivityResultContracts.RequestPermission(),
     ) { granted ->
         if (!granted) {
             callback.onNotificationFragmentActionFailed(
                 notification,
-                resources.getString(R.string.actito_action_camera_failed)
+                resources.getString(R.string.actito_action_camera_failed),
             )
 
             callback.onNotificationFragmentFinished()
@@ -70,7 +73,7 @@ public class NotificationContainerFragment
     }
 
     private val takePictureLauncher = registerForActivityResult(
-        ActivityResultContracts.TakePicture()
+        ActivityResultContracts.TakePicture(),
     ) { isSuccess ->
         notificationDialog?.dismissAllowingStateLoss()
         actionsDialog?.dismissAllowingStateLoss()
@@ -131,7 +134,7 @@ public class NotificationContainerFragment
             } catch (e: Exception) {
                 logger.error(
                     "Failed to dynamically create the concrete notification fragment.",
-                    e
+                    e,
                 )
 
                 null
@@ -257,7 +260,7 @@ public class NotificationContainerFragment
                     } else {
                         callback.onNotificationFragmentActionFailed(
                             notification,
-                            requireContext().getString(R.string.actito_action_camera_failed)
+                            requireContext().getString(R.string.actito_action_camera_failed),
                         )
 
                         onMainThread {
@@ -266,7 +269,7 @@ public class NotificationContainerFragment
                                 it.get()?.onActionFailedToExecute(
                                     notification,
                                     action,
-                                    error
+                                    error,
                                 )
                             }
                         }
@@ -323,7 +326,7 @@ public class NotificationContainerFragment
 
             return ActivityCompat.checkSelfPermission(
                 context,
-                Manifest.permission.CAMERA
+                Manifest.permission.CAMERA,
             ) == PackageManager.PERMISSION_GRANTED
         }
 
@@ -449,7 +452,7 @@ public class NotificationContainerFragment
 
         public fun newInstance(
             notification: ActitoNotification,
-            action: ActitoNotification.Action?
+            action: ActitoNotification.Action?,
         ): NotificationContainerFragment {
             return NotificationContainerFragment().apply {
                 arguments = Bundle().apply {

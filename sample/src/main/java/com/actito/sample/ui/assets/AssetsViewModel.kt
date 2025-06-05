@@ -3,10 +3,10 @@ package com.actito.sample.ui.assets
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.assets.ktx.assets
 import com.actito.assets.models.ActitoAsset
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class AssetsViewModel : com.actito.sample.core.BaseViewModel() {

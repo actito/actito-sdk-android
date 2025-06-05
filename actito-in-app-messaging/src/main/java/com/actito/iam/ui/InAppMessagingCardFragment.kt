@@ -41,7 +41,8 @@ public open class InAppMessagingCardFragment : InAppMessagingBaseFragment() {
         binding.messageView.text = message.message
 
         binding.actionsContainer.isVisible =
-            !message.primaryAction?.label.isNullOrBlank() || !message.secondaryAction?.label.isNullOrBlank()
+            !message.primaryAction?.label.isNullOrBlank() ||
+            !message.secondaryAction?.label.isNullOrBlank()
 
         binding.primaryActionButton.isVisible = canShowAction(message.primaryAction)
         binding.primaryActionButton.text = message.primaryAction?.label

@@ -15,14 +15,14 @@ import androidx.core.os.bundleOf
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import com.actito.Actito
-import com.actito.utilities.parcel.parcelable
 import com.actito.push.ui.R
 import com.actito.push.ui.actions.NotificationCallbackAction
 import com.actito.push.ui.internal.logger
 import com.actito.push.ui.models.ActitoPendingResult
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
+import com.actito.utilities.parcel.parcelable
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -139,7 +139,7 @@ public class ActitoCallbackActionFragment : Fragment() {
                 val mediaUrl = imageBytes?.let {
                     Actito.uploadNotificationReplyAsset(
                         payload = it,
-                        contentType = requireNotNull(mimeType)
+                        contentType = requireNotNull(mimeType),
                     )
                 }
 
@@ -168,13 +168,12 @@ public class ActitoCallbackActionFragment : Fragment() {
         private const val EXTRA_PENDING_RESULT = "com.actito.extra.PendingResult"
         private const val SAMPLE_SIZE_MAX_PIXELS = 307200 // 640 x 480
 
-        public fun newInstance(pendingResult: ActitoPendingResult): ActitoCallbackActionFragment {
-            return ActitoCallbackActionFragment().apply {
+        public fun newInstance(pendingResult: ActitoPendingResult): ActitoCallbackActionFragment =
+            ActitoCallbackActionFragment().apply {
                 arguments = bundleOf(
-                    EXTRA_PENDING_RESULT to pendingResult
+                    EXTRA_PENDING_RESULT to pendingResult,
                 )
             }
-        }
 
         /**
          * Calculate sample size for images so generated bitmap will be smaller than SAMPLE_SIZE_MAX_PIXELS pixels
@@ -189,7 +188,7 @@ public class ActitoCallbackActionFragment : Fragment() {
             }
 
             logger.debug(
-                "Reading bitmap image of ${options.outWidth}x${options.outHeight} pixels with sampleSize $sampleSize"
+                "Reading bitmap image of ${options.outWidth}x${options.outHeight} pixels with sampleSize $sampleSize",
             )
 
             return sampleSize
@@ -201,13 +200,13 @@ public class ActitoCallbackActionFragment : Fragment() {
          * @param imagePath the path of the image
          * @return the orientation of the image in degrees
          */
-        private fun getImageOrientation(imagePath: String): Int {
-            return try {
+        private fun getImageOrientation(imagePath: String): Int =
+            try {
                 val exif = ExifInterface(imagePath)
 
                 val orientation = exif.getAttributeInt(
                     ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL
+                    ExifInterface.ORIENTATION_NORMAL,
                 )
 
                 when (orientation) {
@@ -220,6 +219,5 @@ public class ActitoCallbackActionFragment : Fragment() {
                 logger.error("Couldn't read image file.", e)
                 0
             }
-        }
     }
 }

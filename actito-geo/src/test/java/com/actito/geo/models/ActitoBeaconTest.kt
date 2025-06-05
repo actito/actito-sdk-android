@@ -17,7 +17,7 @@ public class ActitoBeaconTest {
             major = 1,
             minor = 1,
             triggers = true,
-            proximity = ActitoBeacon.Proximity.NEAR
+            proximity = ActitoBeacon.Proximity.NEAR,
         )
 
         val convertedBeacon = ActitoBeacon.fromJson(beacon.toJson())
@@ -33,7 +33,7 @@ public class ActitoBeaconTest {
             major = 1,
             minor = null,
             triggers = true,
-            proximity = ActitoBeacon.Proximity.NEAR
+            proximity = ActitoBeacon.Proximity.NEAR,
         )
 
         val convertedBeacon = ActitoBeacon.fromJson(beacon.toJson())

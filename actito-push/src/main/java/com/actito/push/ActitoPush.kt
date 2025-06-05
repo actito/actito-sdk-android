@@ -2,15 +2,15 @@ package com.actito.push
 
 import android.content.Intent
 import androidx.lifecycle.LiveData
-import com.google.firebase.messaging.RemoteMessage
-import kotlinx.coroutines.flow.StateFlow
-import com.actito.InternalActitoApi
 import com.actito.ActitoCallback
+import com.actito.InternalActitoApi
 import com.actito.push.models.ActitoNotificationActionOpenedIntentResult
 import com.actito.push.models.ActitoNotificationOpenedIntentResult
 import com.actito.push.models.ActitoPushSubscription
-import com.actito.push.models.ActitoTransport
 import com.actito.push.models.ActitoRemoteMessage
+import com.actito.push.models.ActitoTransport
+import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.flow.StateFlow
 
 public interface ActitoPush {
 

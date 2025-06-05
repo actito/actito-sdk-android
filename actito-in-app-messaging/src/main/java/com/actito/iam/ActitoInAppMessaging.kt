@@ -61,7 +61,7 @@ public interface ActitoInAppMessaging {
         @MainThread
         public fun onMessagePresented(message: ActitoInAppMessage) {
             logger.debug(
-                "Message presented, please override onMessagePresented if you want to receive these events."
+                "Message presented, please override onMessagePresented if you want to receive these events.",
             )
         }
 
@@ -75,7 +75,7 @@ public interface ActitoInAppMessaging {
         @MainThread
         public fun onMessageFinishedPresenting(message: ActitoInAppMessage) {
             logger.debug(
-                "Message finished presenting, please override onMessageFinishedPresenting if you want to receive these events."
+                "Message finished presenting, please override onMessageFinishedPresenting if you want to receive these events.",
             )
         }
 
@@ -87,7 +87,7 @@ public interface ActitoInAppMessaging {
         @MainThread
         public fun onMessageFailedToPresent(message: ActitoInAppMessage) {
             logger.debug(
-                "Message failed to present, please override onMessageFailedToPresent if you want to receive these events."
+                "Message failed to present, please override onMessageFailedToPresent if you want to receive these events.",
             )
         }
 
@@ -100,7 +100,7 @@ public interface ActitoInAppMessaging {
         @MainThread
         public fun onActionExecuted(message: ActitoInAppMessage, action: ActitoInAppMessage.Action) {
             logger.debug(
-                "Action executed, please override onActionExecuted if you want to receive these events."
+                "Action executed, please override onActionExecuted if you want to receive these events.",
             )
         }
 
@@ -120,7 +120,7 @@ public interface ActitoInAppMessaging {
             error: Exception?,
         ) {
             logger.debug(
-                "Action failed to execute, please override onActionFailedToExecute if you want to receive these events."
+                "Action failed to execute, please override onActionFailedToExecute if you want to receive these events.",
             )
         }
     }

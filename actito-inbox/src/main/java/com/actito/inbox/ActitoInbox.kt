@@ -1,11 +1,11 @@
 package com.actito.inbox
 
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.flow.StateFlow
-import java.util.SortedSet
 import com.actito.ActitoCallback
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.models.ActitoNotification
+import kotlinx.coroutines.flow.StateFlow
+import java.util.SortedSet
 
 public interface ActitoInbox {
 

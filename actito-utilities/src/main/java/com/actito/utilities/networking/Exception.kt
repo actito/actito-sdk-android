@@ -6,13 +6,15 @@ import java.util.concurrent.CancellationException
 import java.util.concurrent.TimeoutException
 import javax.net.ssl.SSLException
 
+@Suppress("ktlint:standard:indent")
 public val Exception.isRecoverable: Boolean
     get() {
         return when (this) {
             // Network failures
             is UnknownHostException,
             is SocketException,
-            is TimeoutException -> true
+            is TimeoutException,
+                -> true
             is SSLException -> {
                 this.toString().lowercase().contains("connection reset by peer")
             }

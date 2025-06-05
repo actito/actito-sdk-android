@@ -4,10 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import com.actito.push.ActitoPushIntentReceiver
 import com.actito.push.models.ActitoLiveActivityUpdate
 import com.actito.push.models.ActitoPushSubscription
@@ -15,6 +11,10 @@ import com.actito.sample.live_activities.LiveActivitiesController
 import com.actito.sample.live_activities.LiveActivity
 import com.actito.sample.live_activities.models.CoffeeBrewerContentState
 import com.actito.sample.workers.CoffeeBrewerDismissalWorker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 

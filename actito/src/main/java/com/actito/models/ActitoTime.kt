@@ -2,14 +2,14 @@ package com.actito.models
 
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
-import java.util.Locale
 import kotlinx.parcelize.Parcelize
+import java.util.Locale
 
 @Parcelize
 @JsonClass(generateAdapter = true)
 public data class ActitoTime(
     val hours: Int,
-    val minutes: Int
+    val minutes: Int,
 ) : Parcelable {
 
     init {

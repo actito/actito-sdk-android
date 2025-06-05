@@ -1,15 +1,14 @@
 package com.actito.iam.ui.base
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.annotation.CallSuper
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.iam.internal.caching.ActitoImageCache
 import com.actito.iam.internal.logger
@@ -18,9 +17,10 @@ import com.actito.iam.ktx.inAppMessagingImplementation
 import com.actito.iam.ktx.logInAppMessageActionClicked
 import com.actito.iam.ktx.logInAppMessageViewed
 import com.actito.iam.models.ActitoInAppMessage
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.parcel.parcelable
 import com.actito.ktx.events
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.launch
 
 public abstract class InAppMessagingBaseFragment : Fragment() {
     protected lateinit var message: ActitoInAppMessage
@@ -63,19 +63,21 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
             Transition.EXIT -> AnimationUtils.loadAnimation(requireContext(), exitAnimation)
         }
 
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {
-                // no-op
-            }
+        animation.setAnimationListener(
+            object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {
+                    // no-op
+                }
 
-            override fun onAnimationEnd(animation: Animation?) {
-                onAnimationFinished()
-            }
+                override fun onAnimationEnd(animation: Animation?) {
+                    onAnimationFinished()
+                }
 
-            override fun onAnimationRepeat(animation: Animation?) {
-                // no-op
-            }
-        })
+                override fun onAnimationRepeat(animation: Animation?) {
+                    // no-op
+                }
+            },
+        )
 
         animatedView.clearAnimation()
         animatedView.animation = animation
@@ -88,7 +90,7 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
                 onAnimationFinished = {
                     activity?.finish()
                     ActitoImageCache.clear()
-                }
+                },
             )
 
             return
@@ -125,7 +127,7 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
                 logger.error("Failed to log in-app message action.", e)
             }
 
-            val uri = action.url.let { Uri.parse(it) }
+            val uri = action.url.toUri()
 
             val intent = Intent(Intent.ACTION_VIEW, uri).apply {
                 setPackage(requireContext().packageName)
@@ -162,6 +164,6 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
 
     protected enum class Transition {
         ENTER,
-        EXIT;
+        EXIT,
     }
 }

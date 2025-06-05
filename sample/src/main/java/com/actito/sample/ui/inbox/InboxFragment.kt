@@ -37,7 +37,7 @@ class InboxFragment : BaseFragment() {
             if (badge != Actito.inbox().badge) {
                 AlertDialog.Builder(requireContext())
                     .setMessage(
-                        "Badge mismatch.\nLiveData = $badge\nActitoInbox.badge = ${Actito.inbox().badge}"
+                        "Badge mismatch.\nLiveData = $badge\nActitoInbox.badge = ${Actito.inbox().badge}",
                     )
                     .show()
             }
@@ -76,7 +76,7 @@ class InboxFragment : BaseFragment() {
                 }
             },
             viewLifecycleOwner,
-            Lifecycle.State.RESUMED
+            Lifecycle.State.RESUMED,
         )
     }
 
@@ -100,7 +100,7 @@ class InboxFragment : BaseFragment() {
         InboxItemActionsBottomSheet(
             onOpenClicked = { onInboxItemClicked(item) },
             onMarkAsReadClicked = { onMarkItemAsReadClicked(item) },
-            onRemoveClicked = { onRemoveItemClicked(item) }
+            onRemoveClicked = { onRemoveItemClicked(item) },
         ).show(childFragmentManager, "options-bottom-sheet")
     }
 

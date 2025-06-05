@@ -6,17 +6,19 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Keep
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.actito.Actito
 import com.actito.internal.ActitoModule
 import com.actito.internal.logger
-import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.ktx.device
 import com.actito.ktx.eventsImplementation
+import com.actito.utilities.coroutines.actitoCoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 
 @Keep
 internal object ActitoSessionModuleImpl : ActitoModule() {
@@ -83,67 +85,69 @@ internal object ActitoSessionModuleImpl : ActitoModule() {
     }
 
     internal fun setupLifecycleListeners(application: Application) {
-        application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                // no-op
-            }
-
-            override fun onActivityStarted(activity: Activity) {
-                if (activityCounter == 0) {
-                    logger.debug("Resuming previous session.")
+        application.registerActivityLifecycleCallbacks(
+            object : Application.ActivityLifecycleCallbacks {
+                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                    // no-op
                 }
 
-                activityCounter++
+                override fun onActivityStarted(activity: Activity) {
+                    if (activityCounter == 0) {
+                        logger.debug("Resuming previous session.")
+                    }
 
-                // Cancel any session timeout.
-                handler.removeCallbacks(runnable)
+                    activityCounter++
 
-                // Prevent multiple session starts.
-                if (sessionId != null) return
+                    // Cancel any session timeout.
+                    handler.removeCallbacks(runnable)
 
-                if (!Actito.isReady) {
-                    logger.debug("Postponing session start until Actito is launched.")
-                    return
-                }
+                    // Prevent multiple session starts.
+                    if (sessionId != null) return
 
-                actitoCoroutineScope.launch {
-                    try {
-                        startSession()
-                    } catch (e: Exception) {
-                        // Silent.
+                    if (!Actito.isReady) {
+                        logger.debug("Postponing session start until Actito is launched.")
+                        return
+                    }
+
+                    actitoCoroutineScope.launch {
+                        try {
+                            startSession()
+                        } catch (e: Exception) {
+                            // Silent.
+                        }
                     }
                 }
-            }
 
-            override fun onActivityResumed(activity: Activity) {
-                // no-op
-            }
+                override fun onActivityResumed(activity: Activity) {
+                    // no-op
+                }
 
-            override fun onActivityPaused(activity: Activity) {
-                // no-op
-            }
+                override fun onActivityPaused(activity: Activity) {
+                    // no-op
+                }
 
-            override fun onActivityStopped(activity: Activity) {
-                activityCounter--
+                override fun onActivityStopped(activity: Activity) {
+                    activityCounter--
 
-                // Skip when not going into the background.
-                if (activityCounter > 0) return
+                    // Skip when not going into the background.
+                    if (activityCounter > 0) return
 
-                sessionEnd = Date()
+                    sessionEnd = Date()
 
-                // Wait a few seconds before sending a close event.
-                // This prevents quick app swaps, navigation pulls, etc.
-                handler.postDelayed(runnable, 10000)
-            }
+                    // Wait a few seconds before sending a close event.
+                    // This prevents quick app swaps, navigation pulls, etc.
+                    handler.postDelayed(runnable, 10000)
+                }
 
-            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-                // no-op
-            }
+                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+                    // no-op
+                }
 
-            override fun onActivityDestroyed(activity: Activity) {
-                // no-op
-            }
-        })
+                override fun onActivityDestroyed(activity: Activity) {
+                    // no-op
+                }
+            },
+        )
     }
 
     // region Actito Module

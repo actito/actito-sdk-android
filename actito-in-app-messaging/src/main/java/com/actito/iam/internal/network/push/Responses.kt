@@ -1,8 +1,8 @@
 package com.actito.iam.internal.network.push
 
-import com.squareup.moshi.JsonClass
 import com.actito.iam.models.ActitoInAppMessage
 import com.actito.utilities.moshi.UseDefaultsWhenNull
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class InAppMessageResponse(
@@ -33,8 +33,8 @@ internal data class InAppMessageResponse(
             val url: String?,
         )
 
-        fun toModel(): ActitoInAppMessage {
-            return ActitoInAppMessage(
+        fun toModel(): ActitoInAppMessage =
+            ActitoInAppMessage(
                 id = _id,
                 name = name,
                 type = type,
@@ -59,6 +59,5 @@ internal data class InAppMessageResponse(
                     )
                 },
             )
-        }
     }
 }

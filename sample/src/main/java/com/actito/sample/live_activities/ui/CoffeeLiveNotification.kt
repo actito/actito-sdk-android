@@ -26,7 +26,7 @@ class CoffeeLiveNotification(
                 else -> context.resources.getQuantityString(
                     R.plurals.coffee_headline_pick_up_title,
                     contentState.remaining,
-                    contentState.remaining
+                    contentState.remaining,
                 )
             }
         }
@@ -38,7 +38,7 @@ class CoffeeLiveNotification(
                     CoffeeBrewingState.GRINDING -> R.string.coffee_headline_grinding_subtitle
                     CoffeeBrewingState.BREWING -> R.string.coffee_headline_brewing_subtitle
                     CoffeeBrewingState.SERVED -> R.string.coffee_headline_served_subtitle
-                }
+                },
             )
         }
 
@@ -49,7 +49,7 @@ class CoffeeLiveNotification(
             Intent(context, SamplePushIntentReceiver::class.java).apply {
                 action = SamplePushIntentReceiver.INTENT_ACTION_COFFEE_BREWER_DISMISS
             },
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE,
         )
 
         return NotificationCompat.Builder(context, LiveActivitiesController.CHANNEL_LIVE_ACTIVITIES)
@@ -80,50 +80,50 @@ class CoffeeLiveNotification(
 
         view.setBackgroundResource(
             R.id.notification_grinding_image,
-            getBackgroundCircleResource(CoffeeBrewingState.GRINDING)
+            getBackgroundCircleResource(CoffeeBrewingState.GRINDING),
         )
 
         view.setColorFilter(
             R.id.notification_grinding_image,
-            getForegroundColor(CoffeeBrewingState.GRINDING)
+            getForegroundColor(CoffeeBrewingState.GRINDING),
         )
 
         // endregion
 
         view.setColorFilter(
             R.id.notification_brewing_progress_image,
-            getBackgroundColor(CoffeeBrewingState.BREWING)
+            getBackgroundColor(CoffeeBrewingState.BREWING),
         )
 
         // region Brewing circle
 
         view.setBackgroundResource(
             R.id.notification_brewing_image,
-            getBackgroundCircleResource(CoffeeBrewingState.BREWING)
+            getBackgroundCircleResource(CoffeeBrewingState.BREWING),
         )
 
         view.setColorFilter(
             R.id.notification_brewing_image,
-            getForegroundColor(CoffeeBrewingState.BREWING)
+            getForegroundColor(CoffeeBrewingState.BREWING),
         )
 
         // endregion
 
         view.setColorFilter(
             R.id.notification_serving_progress_image,
-            getBackgroundColor(CoffeeBrewingState.SERVED)
+            getBackgroundColor(CoffeeBrewingState.SERVED),
         )
 
         // region Served circle
 
         view.setBackgroundResource(
             R.id.notification_serving_image,
-            getBackgroundCircleResource(CoffeeBrewingState.SERVED)
+            getBackgroundCircleResource(CoffeeBrewingState.SERVED),
         )
 
         view.setColorFilter(
             R.id.notification_serving_image,
-            getForegroundColor(CoffeeBrewingState.SERVED)
+            getForegroundColor(CoffeeBrewingState.SERVED),
         )
 
         // endregion
@@ -141,7 +141,7 @@ class CoffeeLiveNotification(
 
         return context.getColor(
             if (isHighlighted) R.color.white
-            else R.color.black
+            else R.color.black,
         )
     }
 
@@ -150,7 +150,7 @@ class CoffeeLiveNotification(
 
         return context.getColor(
             if (isHighlighted) R.color.coffee
-            else R.color.disabled_grey
+            else R.color.disabled_grey,
         )
     }
 

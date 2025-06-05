@@ -1,11 +1,11 @@
 package com.actito.inbox.models
 
+import com.actito.models.ActitoNotification
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import com.actito.models.ActitoNotification
 import java.util.Date
 
 @RunWith(RobolectricTestRunner::class)
@@ -21,11 +21,11 @@ public class ActitoInboxItemTest {
                 time = Date(),
                 title = "testTitle",
                 subtitle = "testSubtitle",
-                message = "testMessage"
+                message = "testMessage",
             ),
             time = Date(),
             opened = false,
-            expires = Date()
+            expires = Date(),
         )
 
         val convertedInboxItem = ActitoInboxItem.fromJson(inboxItem.toJson())
@@ -43,11 +43,11 @@ public class ActitoInboxItemTest {
                 time = Date(),
                 title = "testTitle",
                 subtitle = "testSubtitle",
-                message = "testMessage"
+                message = "testMessage",
             ),
             time = Date(),
             opened = false,
-            expires = null
+            expires = null,
         )
 
         val convertedInboxItem = ActitoInboxItem.fromJson(inboxItem.toJson())

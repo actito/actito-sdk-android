@@ -2,7 +2,6 @@ package com.actito.push
 
 import android.content.Intent
 import androidx.lifecycle.LiveData
-import com.google.firebase.messaging.RemoteMessage
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.push.ktx.INTENT_ACTION_ACTION_OPENED
@@ -22,6 +21,7 @@ import com.actito.push.models.ActitoNotificationActionOpenedIntentResult
 import com.actito.push.models.ActitoNotificationOpenedIntentResult
 import com.actito.push.models.ActitoPushSubscription
 import com.actito.push.models.ActitoTransport
+import com.google.firebase.messaging.RemoteMessage
 
 public object ActitoPushCompat {
 
@@ -185,9 +185,8 @@ public object ActitoPushCompat {
      * @return `true` if the message is a Actito notification, `false` otherwise.
      */
     @JvmStatic
-    public fun isActitoNotification(remoteMessage: RemoteMessage): Boolean {
-        return Actito.push().isActitoNotification(remoteMessage)
-    }
+    public fun isActitoNotification(remoteMessage: RemoteMessage): Boolean =
+        Actito.push().isActitoNotification(remoteMessage)
 
     /**
      * Handles a trampoline intent.
@@ -199,9 +198,7 @@ public object ActitoPushCompat {
      * @return `true` if the intent was handled, `false` otherwise.
      */
     @JvmStatic
-    public fun handleTrampolineIntent(intent: Intent): Boolean {
-        return Actito.push().handleTrampolineIntent(intent)
-    }
+    public fun handleTrampolineIntent(intent: Intent): Boolean = Actito.push().handleTrampolineIntent(intent)
 
     /**
      * Parses an intent to retrieve information about an opened notification.
@@ -212,9 +209,8 @@ public object ActitoPushCompat {
      * @return A [ActitoNotificationOpenedIntentResult] containing the details, or `null` if parsing failed.
      */
     @JvmStatic
-    public fun parseNotificationOpenedIntent(intent: Intent): ActitoNotificationOpenedIntentResult? {
-        return Actito.push().parseNotificationOpenedIntent(intent)
-    }
+    public fun parseNotificationOpenedIntent(intent: Intent): ActitoNotificationOpenedIntentResult? =
+        Actito.push().parseNotificationOpenedIntent(intent)
 
     /**
      * Parses an intent to retrieve information about an opened notification action.
@@ -225,9 +221,8 @@ public object ActitoPushCompat {
      * @return A [ActitoNotificationActionOpenedIntentResult] containing the details, or `null` if parsing failed.
      */
     @JvmStatic
-    public fun parseNotificationActionOpenedIntent(intent: Intent): ActitoNotificationActionOpenedIntentResult? {
-        return Actito.push().parseNotificationActionOpenedIntent(intent)
-    }
+    public fun parseNotificationActionOpenedIntent(intent: Intent): ActitoNotificationActionOpenedIntentResult? =
+        Actito.push().parseNotificationActionOpenedIntent(intent)
 
     /**
      * Registers a live activity with optional topics and a callback.

@@ -8,6 +8,4 @@ public inline fun <reified K, reified V> Parcel.map(
     classLoader: ClassLoader? = V::class.java.classLoader,
     klassKey: Class<K> = K::class.java,
     klassValue: Class<V> = V::class.java,
-) {
-    return ParcelCompat.readMap(this, outVal, classLoader, klassKey, klassValue)
-}
+): Unit = ParcelCompat.readMap(this, outVal, classLoader, klassKey, klassValue)

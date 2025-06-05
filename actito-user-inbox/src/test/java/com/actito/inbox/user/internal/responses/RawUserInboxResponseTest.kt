@@ -27,14 +27,14 @@ public class RawUserInboxResponseTest {
                 attachments = listOf(
                     ActitoNotification.Attachment(
                         mimeType = "testMimeType",
-                        uri = "testUri"
-                    )
+                        uri = "testUri",
+                    ),
                 ),
-                extra = mapOf("testKey" to "testValue")
+                extra = mapOf("testKey" to "testValue"),
             ),
             time = Date(1),
             opened = true,
-            expires = Date(1)
+            expires = Date(1),
         )
 
         val item = RawUserInboxResponse.RawUserInboxItem(
@@ -47,11 +47,11 @@ public class RawUserInboxResponseTest {
             message = "testMessage",
             attachment = ActitoNotification.Attachment(
                 mimeType = "testMimeType",
-                uri = "testUri"
+                uri = "testUri",
             ),
             extra = mapOf("testKey" to "testValue"),
             opened = true,
-            expires = Date(1)
+            expires = Date(1),
         ).toModel()
 
         assertEquals(expectedItem, item)
@@ -70,11 +70,11 @@ public class RawUserInboxResponseTest {
                 subtitle = null,
                 message = "testMessage",
                 attachments = listOf(),
-                extra = mapOf("testKey" to "testValue")
+                extra = mapOf("testKey" to "testValue"),
             ),
             time = Date(1),
             opened = false,
-            expires = null
+            expires = null,
         )
 
         val item = RawUserInboxResponse.RawUserInboxItem(
@@ -88,7 +88,7 @@ public class RawUserInboxResponseTest {
             attachment = null,
             extra = mapOf("testKey" to "testValue"),
             opened = false,
-            expires = null
+            expires = null,
         ).toModel()
 
         assertEquals(expectedItem, item)

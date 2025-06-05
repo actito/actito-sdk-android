@@ -27,9 +27,7 @@ public class UseDefaultsWhenNullFactory : JsonAdapter.Factory {
                 return delegate.fromJsonValue(noNulls)
             }
 
-            override fun toJson(writer: JsonWriter, value: Any?) {
-                return delegate.toJson(writer, value)
-            }
+            override fun toJson(writer: JsonWriter, value: Any?) = delegate.toJson(writer, value)
         }
     }
 }

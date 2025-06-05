@@ -45,7 +45,7 @@ public object ActitoEventsCompat {
     public fun logCustom(event: String, callback: ActitoCallback<Unit>) {
         Actito.events().logCustom(
             event = event,
-            callback = callback
+            callback = callback,
         )
     }
 

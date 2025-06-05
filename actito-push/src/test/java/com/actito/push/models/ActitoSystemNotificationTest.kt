@@ -14,7 +14,7 @@ public class ActitoSystemNotificationTest {
         val notification = ActitoSystemNotification(
             id = "testId",
             type = "testType",
-            extra = mapOf("testKey" to "testValue")
+            extra = mapOf("testKey" to "testValue"),
         )
 
         val convertedNotification = ActitoSystemNotification.fromJson(notification.toJson())

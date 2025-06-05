@@ -15,7 +15,7 @@ public class AttributesTests {
     public fun testDeviceString() {
         assertEquals(
             "${Build.MANUFACTURER} ${Build.MODEL}",
-            deviceString
+            deviceString,
         )
     }
 

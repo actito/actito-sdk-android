@@ -1,11 +1,11 @@
 package com.actito.models
 
 import android.os.Parcelable
+import com.actito.Actito
+import com.actito.internal.moshi
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
-import com.actito.Actito
-import com.actito.internal.moshi
 
 @Parcelize
 @JsonClass(generateAdapter = true)
@@ -17,7 +17,7 @@ public data class ActitoApplication(
     val inboxConfig: InboxConfig?,
     val regionConfig: RegionConfig?,
     val userDataFields: List<UserDataField>,
-    val actionCategories: List<ActionCategory>
+    val actionCategories: List<ActionCategory>,
 ) : Parcelable {
 
     public fun toJson(): JSONObject {
@@ -60,7 +60,7 @@ public data class ActitoApplication(
     @Parcelize
     @JsonClass(generateAdapter = true)
     public data class RegionConfig(
-        val proximityUUID: String?
+        val proximityUUID: String?,
     ) : Parcelable {
 
         public fun toJson(): JSONObject {
@@ -83,7 +83,7 @@ public data class ActitoApplication(
     public data class UserDataField(
         val type: String,
         val key: String,
-        val label: String
+        val label: String,
     ) : Parcelable {
 
         public fun toJson(): JSONObject {

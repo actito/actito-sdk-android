@@ -27,7 +27,7 @@ internal class ActitoConfigurationProvider : ContentProvider() {
             logger.info("Actito configured automatically.")
         } else {
             logger.info(
-                "Automatic configuration is disabled. Ensure you call configure() when the application starts."
+                "Automatic configuration is disabled. Ensure you call configure() when the application starts.",
             )
         }
 
@@ -39,7 +39,7 @@ internal class ActitoConfigurationProvider : ContentProvider() {
         p1: Array<out String>?,
         p2: String?,
         p3: Array<out String>?,
-        p4: String?
+        p4: String?,
     ): Cursor? = null
 
     override fun getType(uri: Uri): String? = null
@@ -53,7 +53,7 @@ internal class ActitoConfigurationProvider : ContentProvider() {
     private fun hasAutoConfigurationEnabled(context: Context): Boolean {
         val info = context.packageManager.applicationInfo(
             context.packageName,
-            PackageManager.GET_META_DATA
+            PackageManager.GET_META_DATA,
         )
 
         val metadata = info.metaData ?: bundleOf()

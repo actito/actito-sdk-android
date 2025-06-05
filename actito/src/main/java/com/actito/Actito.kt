@@ -10,27 +10,17 @@ import android.os.Build
 import android.os.RemoteException
 import androidx.annotation.MainThread
 import androidx.core.app.NotificationManagerCompat
-import com.android.installreferrer.api.InstallReferrerClient
-import com.android.installreferrer.api.InstallReferrerStateListener
-import com.android.installreferrer.api.ReferrerDetails
-import java.lang.ref.WeakReference
-import java.net.URLEncoder
-import java.util.regex.Pattern
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import androidx.core.net.toUri
 import com.actito.internal.ACTITO_VERSION
 import com.actito.internal.ActitoLaunchState
 import com.actito.internal.ActitoModule
 import com.actito.internal.ActitoOptions
 import com.actito.internal.ActitoUtils
 import com.actito.internal.logger
-import com.actito.utilities.threading.onMainThread
+import com.actito.internal.network.push.ActitoUploadResponse
 import com.actito.internal.network.push.ApplicationResponse
 import com.actito.internal.network.push.CreateNotificationReplyPayload
 import com.actito.internal.network.push.DynamicLinkResponse
-import com.actito.internal.network.push.ActitoUploadResponse
 import com.actito.internal.network.push.NotificationResponse
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.SharedPreferencesMigration
@@ -42,6 +32,17 @@ import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
 import com.actito.utilities.coroutines.toCallbackFunction
+import com.actito.utilities.threading.onMainThread
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
+import com.android.installreferrer.api.ReferrerDetails
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.ref.WeakReference
+import java.net.URLEncoder
+import java.util.regex.Pattern
 
 public object Actito {
 
@@ -203,9 +204,7 @@ public object Actito {
         try {
             servicesInfo.validate()
         } catch (e: Exception) {
-            logger.error(
-                "Could not validate the provided services configuration. Please check the contents are valid."
-            )
+            logger.error("Could not validate the provided services configuration. Please check the contents are valid.")
 
             throw e
         }
@@ -266,9 +265,8 @@ public object Actito {
      * @return The [Context] used by Actito.
      */
     @JvmStatic
-    public fun requireContext(): Context {
-        return context?.get() ?: throw IllegalStateException("Cannot find context for Actito.")
-    }
+    public fun requireContext(): Context =
+        context?.get() ?: throw IllegalStateException("Cannot find context for Actito.")
 
     /**
      * Launches the Actito SDK, and all the additional available modules, preparing them for use.
@@ -332,7 +330,7 @@ public object Actito {
             requireContext().sendBroadcast(
                 Intent(requireContext(), intentReceiver)
                     .setAction(INTENT_ACTION_READY)
-                    .putExtra(INTENT_EXTRA_APPLICATION, application)
+                    .putExtra(INTENT_EXTRA_APPLICATION, application),
             )
 
             onMainThread {
@@ -406,7 +404,7 @@ public object Actito {
         // We're done un-launching. Send a broadcast.
         requireContext().sendBroadcast(
             Intent(requireContext(), intentReceiver)
-                .setAction(INTENT_ACTION_UNLAUNCHED)
+                .setAction(INTENT_ACTION_UNLAUNCHED),
         )
 
         onMainThread {
@@ -578,7 +576,7 @@ public object Actito {
                         media = media,
                         mimeType = mimeType,
                     ),
-                )
+                ),
             )
             .response()
     }
@@ -593,7 +591,7 @@ public object Actito {
      */
     public suspend fun callNotificationReplyWebhook(
         uri: Uri,
-        data: Map<String, String>
+        data: Map<String, String>,
     ): Unit = withContext(Dispatchers.IO) {
         val params = mutableMapOf<String, String?>()
 
@@ -625,7 +623,7 @@ public object Actito {
      */
     public suspend fun uploadNotificationReplyAsset(
         payload: ByteArray,
-        contentType: String
+        contentType: String,
     ): String = withContext(Dispatchers.IO) {
         if (!isConfigured) throw ActitoNotConfiguredException()
 
@@ -724,7 +722,7 @@ public object Actito {
                 override fun onFailure(e: Exception) {
                     logger.error("Failed to register the device for testing.", e)
                 }
-            }
+            },
         )
 
         return true
@@ -751,14 +749,14 @@ public object Actito {
                     activity.startActivity(
                         Intent()
                             .setAction(Intent.ACTION_VIEW)
-                            .setData(Uri.parse(result.target))
+                            .setData(result.target.toUri()),
                     )
                 }
 
                 override fun onFailure(e: Exception) {
                     logger.warning("Failed to fetch the dynamic link.", e)
                 }
-            }
+            },
         )
 
         return true
@@ -825,11 +823,11 @@ public object Actito {
 
             val dynamicLink = fetchDynamicLink(deferredLink)
 
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(dynamicLink.target))
+            val intent = Intent(Intent.ACTION_VIEW, dynamicLink.target.toUri())
                 .addFlags(
                     Intent.FLAG_ACTIVITY_NEW_TASK or
                         Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                        Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+                        Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS,
                 )
                 .setPackage(context.packageName)
 
@@ -967,23 +965,21 @@ public object Actito {
         return uri
     }
 
-    private fun parseDeferredLink(referrer: String): Uri? {
-        return parseDeferredLinkFromEncodedQueryUrl(referrer)
-            ?: parseDeferredLinkFromUrl(referrer)
-    }
+    private fun parseDeferredLink(referrer: String): Uri? =
+        parseDeferredLinkFromEncodedQueryUrl(referrer) ?: parseDeferredLinkFromUrl(referrer)
 
     private fun parseDeferredLinkFromEncodedQueryUrl(referrer: String): Uri? {
         val uri = Uri.Builder().encodedQuery(referrer).build()
         val link = uri.getQueryParameter("ntc_link")
 
-        return link?.let { Uri.parse(it) }
+        return link?.toUri()
     }
 
     private fun parseDeferredLinkFromUrl(referrer: String): Uri? {
-        val uri = Uri.parse(referrer)
+        val uri = referrer.toUri()
         val link = uri.getQueryParameter("ntc_link")
 
-        return link?.let { Uri.parse(it) }
+        return link?.toUri()
     }
 
     private suspend fun fetchApplication(saveToSharedPreferences: Boolean): ActitoApplication =
@@ -1002,7 +998,7 @@ public object Actito {
         }
 
     private suspend fun getInstallReferrerDetails(
-        context: Context
+        context: Context,
     ): ReferrerDetails? = withContext(Dispatchers.IO) {
         val referrerDetails = installReferrerDetails
         if (referrerDetails != null) return@withContext referrerDetails
@@ -1010,33 +1006,35 @@ public object Actito {
         val deferredReferrerDetails = CompletableDeferred<ReferrerDetails?>()
 
         val client = InstallReferrerClient.newBuilder(context.applicationContext).build()
-        client.startConnection(object : InstallReferrerStateListener {
-            override fun onInstallReferrerSetupFinished(responseCode: Int) {
-                if (responseCode == InstallReferrerClient.InstallReferrerResponse.OK) {
-                    try {
-                        val referrer = client.installReferrer
-                        deferredReferrerDetails.complete(referrer)
-                    } catch (e: RemoteException) {
-                        logger.error("Failed to acquire the install referrer.", e)
+        client.startConnection(
+            object : InstallReferrerStateListener {
+                override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                    if (responseCode == InstallReferrerClient.InstallReferrerResponse.OK) {
+                        try {
+                            val referrer = client.installReferrer
+                            deferredReferrerDetails.complete(referrer)
+                        } catch (e: RemoteException) {
+                            logger.error("Failed to acquire the install referrer.", e)
+                            deferredReferrerDetails.complete(null)
+                        }
+                    } else {
+                        logger.error(
+                            "Unable to acquire the install referrer. Play Store responded with code '$responseCode'.",
+                        )
                         deferredReferrerDetails.complete(null)
                     }
-                } else {
-                    logger.error(
-                        "Unable to acquire the install referrer. Play Store responded with code '$responseCode'."
-                    )
-                    deferredReferrerDetails.complete(null)
+
+                    client.endConnection()
                 }
 
-                client.endConnection()
-            }
-
-            override fun onInstallReferrerServiceDisconnected() {
-                if (!deferredReferrerDetails.isCompleted) {
-                    logger.warning("Lost connection to the Play Store before acquiring the install referrer.")
-                    deferredReferrerDetails.complete(null)
+                override fun onInstallReferrerServiceDisconnected() {
+                    if (!deferredReferrerDetails.isCompleted) {
+                        logger.warning("Lost connection to the Play Store before acquiring the install referrer.")
+                        deferredReferrerDetails.complete(null)
+                    }
                 }
-            }
-        })
+            },
+        )
 
         return@withContext deferredReferrerDetails.await().also {
             installReferrerDetails = it

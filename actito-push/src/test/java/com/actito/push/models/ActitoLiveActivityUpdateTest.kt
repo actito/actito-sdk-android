@@ -21,7 +21,7 @@ public class ActitoLiveActivityUpdateTest {
             content = JSONObject("""{"testJson":"testValue"}"""),
             final = true,
             dismissalDate = Date(),
-            timestamp = Date()
+            timestamp = Date(),
         )
 
         val convertedLiveActivityUpdate = ActitoLiveActivityUpdate.fromJson(liveActivityUpdate.toJson())
@@ -46,7 +46,7 @@ public class ActitoLiveActivityUpdateTest {
             content = null,
             final = true,
             dismissalDate = null,
-            timestamp = Date()
+            timestamp = Date(),
         )
 
         val convertedLiveActivityUpdate = ActitoLiveActivityUpdate.fromJson(liveActivityUpdate.toJson())

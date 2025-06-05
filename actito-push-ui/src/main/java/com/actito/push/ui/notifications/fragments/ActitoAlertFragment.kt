@@ -9,7 +9,6 @@ import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 
 public class ActitoAlertFragment : NotificationFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FrameLayout(inflater.context)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        FrameLayout(inflater.context)
 }

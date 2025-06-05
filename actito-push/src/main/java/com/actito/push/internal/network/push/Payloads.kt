@@ -1,7 +1,7 @@
 package com.actito.push.internal.network.push
 
-import com.squareup.moshi.JsonClass
 import com.actito.push.models.ActitoTransport
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class UpdateDeviceSubscriptionPayload(

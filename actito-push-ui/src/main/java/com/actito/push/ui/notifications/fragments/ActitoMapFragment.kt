@@ -2,6 +2,12 @@ package com.actito.push.ui.notifications.fragments
 
 import android.os.Bundle
 import androidx.annotation.Keep
+import com.actito.Actito
+import com.actito.models.ActitoNotification
+import com.actito.push.ui.ktx.pushUIInternal
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
+import com.actito.utilities.view.waitForLayout
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -9,12 +15,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
-import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.view.waitForLayout
-import com.actito.utilities.parcel.parcelable
-import com.actito.models.ActitoNotification
-import com.actito.push.ui.ktx.pushUIInternal
 
 @Keep
 public class ActitoMapFragment : SupportMapFragment(), OnMapReadyCallback {
@@ -73,7 +73,7 @@ public class ActitoMapFragment : SupportMapFragment(), OnMapReadyCallback {
         onMainThread {
             Actito.pushUIInternal().lifecycleListeners.forEach {
                 it.get()?.onNotificationPresented(
-                    notification
+                    notification,
                 )
             }
         }
@@ -89,7 +89,7 @@ public class ActitoMapFragment : SupportMapFragment(), OnMapReadyCallback {
                 MarkerOptions()
                     .position(coordinates)
                     .title(marker.title)
-                    .snippet(marker.description)
+                    .snippet(marker.description),
             )
         }
     }

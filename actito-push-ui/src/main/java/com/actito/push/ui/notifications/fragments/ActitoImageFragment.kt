@@ -8,13 +8,13 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
-import com.actito.utilities.parcel.parcelable
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.databinding.ActitoNotificationImageFragmentBinding
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.utilities.image.loadImage
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
 
 public class ActitoImageFragment : NotificationFragment() {
 
@@ -49,20 +49,18 @@ public class ActitoImageFragment : NotificationFragment() {
 
     public class ImageAdapter(
         private val notification: ActitoNotification,
-        fragment: Fragment
+        fragment: Fragment,
     ) : FragmentStateAdapter(fragment) {
 
-        override fun createFragment(position: Int): Fragment {
-            return ImageChildFragment().apply {
+        override fun createFragment(position: Int): Fragment =
+            ImageChildFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(SAVED_STATE_CONTENT, notification.content[position])
                 }
             }
-        }
 
-        override fun getItemCount(): Int {
-            return notification.content.size
-        }
+        override fun getItemCount(): Int =
+            notification.content.size
     }
 
     public class ImageChildFragment : Fragment() {
@@ -76,9 +74,8 @@ public class ActitoImageFragment : NotificationFragment() {
                 ?: throw IllegalArgumentException("Missing required notification content parameter.")
         }
 
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-            return ImageView(inflater.context)
-        }
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+            ImageView(inflater.context)
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)

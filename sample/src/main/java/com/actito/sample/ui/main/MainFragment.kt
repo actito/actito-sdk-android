@@ -18,9 +18,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
-import kotlinx.coroutines.launch
 import com.actito.Actito
 import com.actito.geo.ktx.geo
 import com.actito.inbox.ktx.inbox
@@ -29,11 +26,14 @@ import com.actito.models.ActitoTime
 import com.actito.push.ktx.push
 import com.actito.sample.BuildConfig
 import com.actito.sample.R
+import com.actito.sample.core.BaseFragment
 import com.actito.sample.databinding.FragmentMainBinding
 import com.actito.sample.ktx.LocationPermission
 import com.actito.sample.ktx.showBasicAlert
-import com.actito.sample.core.BaseFragment
 import com.actito.sample.live_activities.models.CoffeeBrewingState
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MainFragment : BaseFragment() {
@@ -45,7 +45,7 @@ class MainFragment : BaseFragment() {
     // Permission Launcher
 
     private val notificationsPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
+        ActivityResultContracts.RequestPermission(),
     ) { granted ->
         if (granted) {
             viewModel.updateRemoteNotificationsStatus(true)
@@ -61,7 +61,7 @@ class MainFragment : BaseFragment() {
     }
 
     private val foregroundLocationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
+        ActivityResultContracts.RequestMultiplePermissions(),
     ) { permissions ->
         val granted = permissions.all { it.value }
 
@@ -79,7 +79,7 @@ class MainFragment : BaseFragment() {
     }
 
     private val backgroundLocationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
+        ActivityResultContracts.RequestPermission(),
     ) { granted ->
         if (granted) {
             enableLocationUpdates()
@@ -91,7 +91,7 @@ class MainFragment : BaseFragment() {
     }
 
     private val bluetoothScanPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
+        ActivityResultContracts.RequestPermission(),
     ) { granted ->
         if (granted) {
             enableLocationUpdates()
@@ -103,7 +103,7 @@ class MainFragment : BaseFragment() {
     }
 
     private val openNotificationsSettingsLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult(),
     ) {
         if (binding.notificationsCard.notificationsSwitch.isChecked) {
             if (NotificationManagerCompat.from(requireContext().applicationContext).areNotificationsEnabled()) {
@@ -117,12 +117,12 @@ class MainFragment : BaseFragment() {
     }
 
     private val openLocationSettingsLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult(),
     ) {
         if (binding.locationCard.locationSwitch.isChecked) {
             val granted = ContextCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) == PackageManager.PERMISSION_GRANTED
 
             if (granted) {
@@ -217,7 +217,7 @@ class MainFragment : BaseFragment() {
                     ActitoDoNotDisturb(
                         start = ActitoTime(timePicker.hour, timePicker.minute),
                         end = dnd.end,
-                    )
+                    ),
                 )
             }
 
@@ -238,7 +238,7 @@ class MainFragment : BaseFragment() {
                     ActitoDoNotDisturb(
                         start = dnd.start,
                         end = ActitoTime(timePicker.hour, timePicker.minute),
-                    )
+                    ),
                 )
             }
 
@@ -502,7 +502,7 @@ class MainFragment : BaseFragment() {
         val permission = Manifest.permission.POST_NOTIFICATIONS
         val granted = ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
 
         if (granted) return true
@@ -536,7 +536,7 @@ class MainFragment : BaseFragment() {
         val permission = Manifest.permission.ACCESS_FINE_LOCATION
         val granted = ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
 
         if (granted) return true
@@ -552,8 +552,8 @@ class MainFragment : BaseFragment() {
                     foregroundLocationPermissionLauncher.launch(
                         arrayOf(
                             Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        )
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                        ),
                     )
                 }
                 .setNegativeButton(R.string.dialog_cancel_button) { _, _ ->
@@ -569,8 +569,8 @@ class MainFragment : BaseFragment() {
         foregroundLocationPermissionLauncher.launch(
             arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            ),
         )
 
         return false
@@ -584,7 +584,7 @@ class MainFragment : BaseFragment() {
 
         val granted = ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
 
         if (granted) return true
@@ -621,7 +621,7 @@ class MainFragment : BaseFragment() {
         val permission = Manifest.permission.BLUETOOTH_SCAN
         val granted = ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
 
         if (granted) return true
@@ -699,7 +699,7 @@ class MainFragment : BaseFragment() {
                         openNotificationsSettingsLauncher.launch(
                             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                                 data = Uri.fromParts("package", requireContext().packageName, null)
-                            }
+                            },
                         )
                     }
 
@@ -707,7 +707,7 @@ class MainFragment : BaseFragment() {
                         openLocationSettingsLauncher.launch(
                             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                                 data = Uri.fromParts("package", requireContext().packageName, null)
-                            }
+                            },
                         )
                     }
                 }
@@ -726,6 +726,6 @@ class MainFragment : BaseFragment() {
 
     enum class PermissionType {
         NOTIFICATIONS,
-        LOCATION
+        LOCATION,
     }
 }

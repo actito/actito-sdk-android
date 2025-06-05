@@ -10,6 +10,7 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.closeWindowQueryParameter
@@ -29,12 +30,11 @@ internal open class NotificationWebViewClient(
     private var loadingError: WebResourceError? = null
 
     @TargetApi(Build.VERSION_CODES.N)
-    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-        return handleOpenActions(request.url) || handleOpenAction(request.url) || handleUri(view, request.url)
-    }
+    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean =
+        handleOpenActions(request.url) || handleOpenAction(request.url) || handleUri(view, request.url)
 
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        val uri = Uri.parse(url)
+        val uri = url.toUri()
         return handleOpenActions(uri) || handleOpenAction(uri) || handleUri(view, uri)
     }
 
@@ -92,7 +92,7 @@ internal open class NotificationWebViewClient(
     private fun handleOpenActions(uri: Uri?): Boolean {
         if (uri != null && uri.isHierarchical) {
             val openActionsWindowParameter = uri.getQueryParameter(
-                checkNotNull(Actito.options).openActionsQueryParameter
+                checkNotNull(Actito.options).openActionsQueryParameter,
             )
 
             if (
@@ -110,7 +110,7 @@ internal open class NotificationWebViewClient(
     private fun handleOpenAction(uri: Uri?): Boolean {
         if (uri != null && uri.isHierarchical) {
             val openActionWindowParameter = uri.getQueryParameter(
-                checkNotNull(Actito.options).openActionQueryParameter
+                checkNotNull(Actito.options).openActionQueryParameter,
             )
 
             if (openActionWindowParameter != null) {

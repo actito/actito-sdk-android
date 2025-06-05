@@ -3,10 +3,10 @@ package com.actito
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import kotlinx.coroutines.launch
 import com.actito.internal.logger
 import com.actito.ktx.deviceImplementation
 import com.actito.utilities.coroutines.actitoCoroutineScope
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 internal class ActitoSystemIntentReceiver : BroadcastReceiver() {
@@ -20,7 +20,7 @@ internal class ActitoSystemIntentReceiver : BroadcastReceiver() {
 
     private fun onTimeZoneChanged() {
         logger.info(
-            "Received a time zone change: ${Locale.getDefault().language}-${Locale.getDefault().country}"
+            "Received a time zone change: ${Locale.getDefault().language}-${Locale.getDefault().country}",
         )
 
         actitoCoroutineScope.launch {
@@ -35,7 +35,7 @@ internal class ActitoSystemIntentReceiver : BroadcastReceiver() {
 
     private fun onLocaleChanged() {
         logger.info(
-            "Received a locale change: ${Locale.getDefault().language}-${Locale.getDefault().country}"
+            "Received a locale change: ${Locale.getDefault().language}-${Locale.getDefault().country}",
         )
 
         actitoCoroutineScope.launch {

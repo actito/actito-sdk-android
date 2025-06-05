@@ -1,11 +1,11 @@
 package com.actito.iam.models
 
 import android.os.Parcelable
+import com.actito.Actito
+import com.actito.internal.moshi
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
-import com.actito.Actito
-import com.actito.internal.moshi
 
 @Parcelize
 @JsonClass(generateAdapter = true)
@@ -67,6 +67,7 @@ public data class ActitoInAppMessage(
         }
     }
 
+    @Suppress("ktlint:standard:trailing-comma-on-declaration-site")
     public enum class ActionType {
         PRIMARY,
         SECONDARY;
@@ -77,8 +78,6 @@ public data class ActitoInAppMessage(
                 SECONDARY -> "secondary"
             }
 
-        override fun toString(): String {
-            return rawValue
-        }
+        override fun toString(): String = rawValue
     }
 }

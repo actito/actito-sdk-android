@@ -11,8 +11,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Parcelable
 import androidx.annotation.Keep
@@ -20,6 +18,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -308,7 +308,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
     }
 
     override fun enableRemoteNotifications(
-        callback: ActitoCallback<Unit>
+        callback: ActitoCallback<Unit>,
     ): Unit = toCallbackFunction(::enableRemoteNotifications)(callback::onSuccess, callback::onFailure)
 
     override suspend fun disableRemoteNotifications(): Unit = withContext(Dispatchers.IO) {
@@ -317,19 +317,18 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
 
         updateDeviceSubscription(
             transport = ActitoTransport.NOTIFICARE,
-            token = null
+            token = null,
         )
 
         logger.info("Unregistered from push provider.")
     }
 
     override fun disableRemoteNotifications(
-        callback: ActitoCallback<Unit>
+        callback: ActitoCallback<Unit>,
     ): Unit = toCallbackFunction(::disableRemoteNotifications)(callback::onSuccess, callback::onFailure)
 
-    override fun isActitoNotification(remoteMessage: RemoteMessage): Boolean {
-        return remoteMessage.data["x-sender"] == "notificare"
-    }
+    override fun isActitoNotification(remoteMessage: RemoteMessage): Boolean =
+        remoteMessage.data["x-sender"] == "notificare"
 
     override fun handleTrampolineIntent(intent: Intent): Boolean {
         if (intent.action != Actito.INTENT_ACTION_REMOTE_MESSAGE_OPENED) {
@@ -339,7 +338,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         handleTrampolineMessage(
             message = requireNotNull(intent.parcelable(Actito.INTENT_EXTRA_REMOTE_MESSAGE)),
             notification = requireNotNull(intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)),
-            action = intent.parcelable(Actito.INTENT_EXTRA_ACTION)
+            action = intent.parcelable(Actito.INTENT_EXTRA_ACTION),
         )
 
         return true
@@ -368,7 +367,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
 
     override suspend fun registerLiveActivity(
         activityId: String,
-        topics: List<String>
+        topics: List<String>,
     ): Unit = withContext(Dispatchers.IO) {
         val device = Actito.device().currentDevice
             ?: throw ActitoDeviceUnavailableException()
@@ -413,7 +412,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
 
     override fun endLiveActivity(
         activityId: String,
-        callback: ActitoCallback<Unit>
+        callback: ActitoCallback<Unit>,
     ): Unit = toCallbackFunction(::endLiveActivity)(activityId, callback::onSuccess, callback::onFailure)
 
     // endregion
@@ -445,7 +444,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
     override fun handleRemoteMessage(message: ActitoRemoteMessage) {
         if (!Actito.isConfigured) {
             logger.warning(
-                "Cannot process remote messages before Actito is configured. Invoke Actito.configure() when the application starts."
+                "Cannot process remote messages before Actito is configured. Invoke Actito.configure() when the application starts.",
             )
             return
         }
@@ -459,7 +458,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                 Actito.requireContext().sendBroadcast(
                     Intent(Actito.requireContext(), intentReceiver)
                         .setAction(Actito.INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED)
-                        .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification)
+                        .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification),
                 )
             }
         }
@@ -470,7 +469,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
     private fun handleTrampolineMessage(
         message: ActitoNotificationRemoteMessage,
         notification: ActitoNotification,
-        action: ActitoNotification.Action?
+        action: ActitoNotification.Action?,
     ) {
         actitoCoroutineScope.launch {
             // Log the notification open event.
@@ -497,14 +496,14 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                 Actito.requireContext().sendBroadcast(
                     Intent(Actito.requireContext(), intentReceiver)
                         .setAction(Actito.INTENT_ACTION_NOTIFICATION_OPENED)
-                        .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification)
+                        .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification),
                 )
             } else {
                 Actito.requireContext().sendBroadcast(
                     Intent(Actito.requireContext(), intentReceiver)
                         .setAction(Actito.INTENT_ACTION_ACTION_OPENED)
                         .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification)
-                        .putExtra(Actito.INTENT_EXTRA_ACTION, action)
+                        .putExtra(Actito.INTENT_EXTRA_ACTION, action),
                 )
             }
 
@@ -512,7 +511,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
             val notificationIntent = Intent()
                 .setAction(
                     if (action == null) Actito.INTENT_ACTION_NOTIFICATION_OPENED
-                    else Actito.INTENT_ACTION_ACTION_OPENED
+                    else Actito.INTENT_ACTION_ACTION_OPENED,
                 )
                 .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification)
                 .putExtra(Actito.INTENT_EXTRA_ACTION, action)
@@ -533,7 +532,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
 
         if (ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
-                Manifest.permission.INTERNET
+                Manifest.permission.INTERNET,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             granted = false
@@ -542,7 +541,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
 
         if (ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
-                Manifest.permission.ACCESS_NETWORK_STATE
+                Manifest.permission.ACCESS_NETWORK_STATE,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             granted = false
@@ -551,7 +550,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
 
         if (ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
-                "com.google.android.c2dm.permission.RECEIVE"
+                "com.google.android.c2dm.permission.RECEIVE",
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             granted = false
@@ -571,7 +570,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         val defaultChannel = NotificationChannel(
             DEFAULT_NOTIFICATION_CHANNEL_ID,
             Actito.requireContext().getString(R.string.actito_default_channel_name),
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_DEFAULT,
         )
 
         defaultChannel.description =
@@ -580,31 +579,31 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         notificationManager.createNotificationChannel(defaultChannel)
     }
 
-    private fun createUniqueNotificationId(): Int {
-        return notificationSequence.incrementAndGet()
-    }
+    private fun createUniqueNotificationId(): Int = notificationSequence.incrementAndGet()
 
     private fun handleSystemNotification(message: ActitoSystemRemoteMessage) {
         if (message.type.startsWith("re.notifica.")) {
             logger.info("Processing system notification: ${message.type}")
             when (message.type) {
                 "re.notifica.notification.system.Application" -> {
-                    Actito.fetchApplication(object : ActitoCallback<ActitoApplication> {
-                        override fun onSuccess(result: ActitoApplication) {
-                            logger.debug("Updated cached application info.")
-                        }
+                    Actito.fetchApplication(
+                        object : ActitoCallback<ActitoApplication> {
+                            override fun onSuccess(result: ActitoApplication) {
+                                logger.debug("Updated cached application info.")
+                            }
 
-                        override fun onFailure(e: Exception) {
-                            logger.error("Failed to update cached application info.", e)
-                        }
-                    })
+                            override fun onFailure(e: Exception) {
+                                logger.error("Failed to update cached application info.", e)
+                            }
+                        },
+                    )
                 }
 
                 "re.notifica.notification.system.Inbox" -> InboxIntegration.reloadInbox()
                 "re.notifica.notification.system.LiveActivity" -> {
                     val activity = message.extra["activity"] ?: run {
                         logger.warning(
-                            "Cannot parse a live activity system notification without the 'activity' property."
+                            "Cannot parse a live activity system notification without the 'activity' property.",
                         )
                         return
                     }
@@ -637,7 +636,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                     Actito.requireContext().sendBroadcast(
                         Intent(Actito.requireContext(), intentReceiver)
                             .setAction(Actito.INTENT_ACTION_LIVE_ACTIVITY_UPDATE)
-                            .putExtra(Actito.INTENT_EXTRA_LIVE_ACTIVITY_UPDATE, update)
+                            .putExtra(Actito.INTENT_EXTRA_LIVE_ACTIVITY_UPDATE, update),
                     )
                 }
 
@@ -654,7 +653,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
             Actito.requireContext().sendBroadcast(
                 Intent(Actito.requireContext(), intentReceiver)
                     .setAction(Actito.INTENT_ACTION_SYSTEM_NOTIFICATION_RECEIVED)
-                    .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification)
+                    .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification),
             )
         }
     }
@@ -690,7 +689,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                     Intent(Actito.requireContext(), intentReceiver)
                         .setAction(Actito.INTENT_ACTION_NOTIFICATION_RECEIVED)
                         .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification)
-                        .putExtra(Actito.INTENT_EXTRA_DELIVERY_MECHANISM, deliveryMechanism as Parcelable)
+                        .putExtra(Actito.INTENT_EXTRA_DELIVERY_MECHANISM, deliveryMechanism as Parcelable),
                 )
             } catch (e: Exception) {
                 logger.error("Unable to process remote notification.", e)
@@ -701,7 +700,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
     @SuppressLint("MissingPermission")
     private fun generateNotification(
         message: ActitoNotificationRemoteMessage,
-        notification: ActitoNotification
+        notification: ActitoNotification,
     ) {
         val extras = bundleOf(
             Actito.INTENT_EXTRA_REMOTE_MESSAGE to message,
@@ -716,7 +715,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                 setPackage(Actito.requireContext().packageName)
                 putExtras(extras)
             },
-            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
         val notificationManager = NotificationManagerCompat.from(Actito.requireContext())
@@ -752,7 +751,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                         .setAutoCancel(checkNotNull(Actito.options).notificationAutoCancel)
                         .setSmallIcon(smallIcon)
                         .setContentText(
-                            Actito.requireContext().getString(R.string.actito_notification_group_summary)
+                            Actito.requireContext().getString(R.string.actito_notification_group_summary),
                         )
                         .setWhen(message.sentTime)
                         .setGroup(message.notificationGroup)
@@ -789,13 +788,13 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                 NotificationCompat.BigPictureStyle()
                     .setSummaryText(message.alert)
                     .bigPicture(attachmentImage)
-                    .bigLargeIcon(null as Bitmap?)
+                    .bigLargeIcon(null as Bitmap?),
             )
         } else {
             builder.setStyle(
                 NotificationCompat.BigTextStyle()
                     .bigText(message.alert)
-                    .setSummaryText(message.alertSubtitle)
+                    .setSummaryText(message.alertSubtitle),
             )
         }
 
@@ -812,7 +811,8 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
             val category = application.actionCategories.firstOrNull { it.name == message.actionCategory }
             category?.actions?.forEach { action ->
                 val useQuickResponse = action.type == ActitoNotification.Action.TYPE_CALLBACK &&
-                    !action.camera && (!action.keyboard || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    !action.camera &&
+                    (!action.keyboard || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
 
                 val useRemoteInput = useQuickResponse && action.keyboard && !action.camera
 
@@ -851,25 +851,25 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                                     }
                                 } else {
                                     PendingIntent.FLAG_CANCEL_CURRENT
-                                }
+                                },
                             )
                         } else {
                             PendingIntent.getActivity(
                                 Actito.requireContext(),
                                 createUniqueNotificationId(),
                                 actionIntent,
-                                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                             )
-                        }
+                        },
                     ).apply {
                         if (useRemoteInput) {
                             addRemoteInput(
                                 RemoteInput.Builder(Actito.INTENT_EXTRA_TEXT_RESPONSE)
                                     .setLabel(action.getLocalizedLabel(Actito.requireContext()))
-                                    .build()
+                                    .build(),
                             )
                         }
-                    }.build()
+                    }.build(),
                 )
 
                 wearableExtender.addAction(
@@ -880,9 +880,9 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                             Actito.requireContext(),
                             createUniqueNotificationId(),
                             actionIntent,
-                            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                        )
-                    ).build()
+                            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                        ),
+                    ).build(),
                 )
             }
 
@@ -907,12 +907,12 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
                 val identifier = Actito.requireContext().resources.getIdentifier(
                     message.sound,
                     "raw",
-                    Actito.requireContext().packageName
+                    Actito.requireContext().packageName,
                 )
 
                 if (identifier != 0) {
                     builder.setSound(
-                        Uri.parse("android.resource://${Actito.requireContext().packageName}/$identifier")
+                        "android.resource://${Actito.requireContext().packageName}/$identifier".toUri(),
                     )
                 }
             }
@@ -921,7 +921,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         val lightsColor = message.lightsColor ?: checkNotNull(Actito.options).notificationLightsColor
         if (lightsColor != null) {
             try {
-                val color = Color.parseColor(lightsColor)
+                val color = lightsColor.toColorInt()
                 val onMs = message.lightsOn ?: checkNotNull(Actito.options).notificationLightsOn
                 val offMs = message.lightsOff ?: checkNotNull(Actito.options).notificationLightsOff
 
@@ -992,14 +992,14 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         Actito.requireContext().sendBroadcast(
             Intent(Actito.requireContext(), intentReceiver)
                 .setAction(Actito.INTENT_ACTION_SUBSCRIPTION_CHANGED)
-                .putExtra(Actito.INTENT_EXTRA_SUBSCRIPTION, subscription)
+                .putExtra(Actito.INTENT_EXTRA_SUBSCRIPTION, subscription),
         )
 
         if (token != null && previousSubscription?.token != token) {
             Actito.requireContext().sendBroadcast(
                 Intent(Actito.requireContext(), intentReceiver)
                     .setAction(Actito.INTENT_ACTION_TOKEN_CHANGED)
-                    .putExtra(Actito.INTENT_EXTRA_TOKEN, token)
+                    .putExtra(Actito.INTENT_EXTRA_TOKEN, token),
             )
         }
 
@@ -1046,9 +1046,8 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         }
     }
 
-    private fun hasNotificationPermission(context: Context): Boolean {
-        return NotificationManagerCompat.from(context).areNotificationsEnabled()
-    }
+    private fun hasNotificationPermission(context: Context): Boolean =
+        NotificationManagerCompat.from(context).areNotificationsEnabled()
 
     private fun hasIntentFilter(context: Context, intentAction: String): Boolean {
         val intent = Intent()

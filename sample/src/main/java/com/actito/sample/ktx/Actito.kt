@@ -15,7 +15,7 @@ val ActitoGeo.hasForegroundTrackingCapabilities: Boolean
 
         return ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -28,7 +28,7 @@ val ActitoGeo.hasBackgroundTrackingCapabilities: Boolean
 
         return ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -39,7 +39,7 @@ val ActitoGeo.hasBluetoothCapabilities: Boolean
         val permission = Manifest.permission.BLUETOOTH_SCAN
         val granted = ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
 
         return granted
@@ -54,7 +54,7 @@ val ActitoPush.hasNotificationsPermission: Boolean
         val permission = Manifest.permission.POST_NOTIFICATIONS
         val granted = ContextCompat.checkSelfPermission(
             requireContext(),
-            permission
+            permission,
         ) == PackageManager.PERMISSION_GRANTED
 
         return granted
@@ -63,5 +63,5 @@ val ActitoPush.hasNotificationsPermission: Boolean
 enum class LocationPermission {
     FOREGROUND,
     BACKGROUND,
-    NONE
+    NONE,
 }

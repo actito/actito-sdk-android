@@ -14,7 +14,7 @@ public class IntentTests {
     public enum class TestEnum {
         FIRST,
         SECOND,
-        THIRD
+        THIRD,
     }
 
     @Test

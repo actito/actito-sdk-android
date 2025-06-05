@@ -9,11 +9,11 @@ import android.webkit.WebChromeClient
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.push.ui.databinding.ActitoNotificationVideoFragmentBinding
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.utils.NotificationWebViewClient
+import com.actito.utilities.threading.onMainThread
 
 public class ActitoVideoFragment : NotificationFragment() {
 
@@ -47,7 +47,7 @@ public class ActitoVideoFragment : NotificationFragment() {
                 onMainThread {
                     Actito.pushUIInternal().lifecycleListeners.forEach {
                         it.get()?.onNotificationFailedToPresent(
-                            notification
+                            notification,
                         )
                     }
                 }
@@ -87,8 +87,8 @@ public class ActitoVideoFragment : NotificationFragment() {
         binding.webView.destroy()
     }
 
-    private fun getYouTubeVideoHtml(videoId: String): String {
-        return """
+    private fun getYouTubeVideoHtml(videoId: String): String =
+        """
             <!DOCTYPE html>
             <html>
             <head>
@@ -137,10 +137,9 @@ public class ActitoVideoFragment : NotificationFragment() {
             </body>
             </html>
         """.trimIndent()
-    }
 
-    private fun getVimeoVideoHtml(videoId: String): String {
-        return """
+    private fun getVimeoVideoHtml(videoId: String): String =
+        """
             <!DOCTYPE html>
             <html>
             <head>
@@ -167,10 +166,9 @@ public class ActitoVideoFragment : NotificationFragment() {
             </body>
             </html>
         """.trimIndent()
-    }
 
-    private fun getHtml5VideoHtml(videoId: String): String {
-        return """
+    private fun getHtml5VideoHtml(videoId: String): String =
+        """
             <!DOCTYPE html>
             <html>
             <head>
@@ -193,7 +191,6 @@ public class ActitoVideoFragment : NotificationFragment() {
             </body>
             </html>
         """.trimIndent()
-    }
 
     public inner class VideoChromeClient : WebChromeClient() {
         override fun onShowCustomView(view: View, callback: CustomViewCallback) {
@@ -207,7 +204,7 @@ public class ActitoVideoFragment : NotificationFragment() {
 
             view.layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
+                FrameLayout.LayoutParams.MATCH_PARENT,
             )
 
             customView = view

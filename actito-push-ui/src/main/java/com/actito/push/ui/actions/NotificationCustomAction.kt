@@ -1,25 +1,25 @@
 package com.actito.push.ui.actions
 
 import android.content.Context
-import android.net.Uri
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import androidx.core.net.toUri
 import com.actito.Actito
-import com.actito.utilities.threading.onMainThread
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.R
 import com.actito.push.ui.actions.base.NotificationAction
 import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.models.ActitoPendingResult
+import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal class NotificationCustomAction(
     context: Context,
     notification: ActitoNotification,
-    action: ActitoNotification.Action
+    action: ActitoNotification.Action,
 ) : NotificationAction(context, notification, action) {
 
     override suspend fun execute(): ActitoPendingResult? = withContext(Dispatchers.IO) {
-        val uri = action.target?.let { Uri.parse(it) }
+        val uri = action.target?.toUri()
 
         if (uri != null && uri.scheme != null && uri.host != null) {
             onMainThread {

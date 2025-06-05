@@ -15,13 +15,12 @@ public data class ActitoRegionSession(
 ) : Parcelable {
 
     public companion object {
-        public operator fun invoke(region: ActitoRegion): ActitoRegionSession {
-            return ActitoRegionSession(
+        public operator fun invoke(region: ActitoRegion): ActitoRegionSession =
+            ActitoRegionSession(
                 regionId = region.id,
                 start = Date(),
                 end = null,
                 locations = mutableListOf(),
             )
-        }
     }
 }

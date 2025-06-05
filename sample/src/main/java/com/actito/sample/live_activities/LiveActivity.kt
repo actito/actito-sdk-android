@@ -1,5 +1,6 @@
 package com.actito.sample.live_activities
 
+@Suppress("ktlint:standard:trailing-comma-on-declaration-site")
 enum class LiveActivity {
     COFFEE_BREWER;
 

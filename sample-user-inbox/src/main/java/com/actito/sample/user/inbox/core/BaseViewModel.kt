@@ -35,7 +35,7 @@ internal abstract class BaseViewModel : ViewModel() {
     internal fun setUserInboxURLs(
         base: String,
         registerDevice: String,
-        fetchInbox: String
+        fetchInbox: String,
     ) {
         baseUrl = base
         registerDeviceUrl = registerDevice

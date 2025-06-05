@@ -1,9 +1,9 @@
 package com.actito.assets.internal.network.push
 
-import com.squareup.moshi.JsonClass
 import com.actito.Actito
 import com.actito.assets.models.ActitoAsset
 import com.actito.utilities.moshi.UseDefaultsWhenNull
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class FetchAssetsResponse(

@@ -20,7 +20,7 @@ public class ActitoLocationTest {
             speed = 1.5,
             horizontalAccuracy = 1.5,
             verticalAccuracy = 1.5,
-            timestamp = Date()
+            timestamp = Date(),
         )
 
         val convertedLocation = ActitoLocation.fromJson(location.toJson())
