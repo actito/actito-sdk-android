@@ -21,9 +21,5 @@ public val Actito.moshi: Moshi by lazy {
         .add(UriAdapter())
         .add(JSONObjectAdapter())
 
-    ActitoModule.Module.entries.forEach { module ->
-        module.instance?.moshi(builder)
-    }
-
     return@lazy builder.build()
 }
