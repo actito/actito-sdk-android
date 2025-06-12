@@ -13,7 +13,6 @@ import com.actito.iam.internal.caching.ActitoImageCache
 import com.actito.iam.internal.network.push.InAppMessageResponse
 import com.actito.iam.models.ActitoInAppMessage
 import com.actito.iam.ui.InAppMessagingActivity
-import com.actito.internal.ActitoModule
 import com.actito.internal.network.NetworkException
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
@@ -29,7 +28,7 @@ import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 @Keep
-internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging {
+internal object ActitoInAppMessagingImpl : ActitoInAppMessaging {
     private const val MANIFEST_SUPPRESS_MESSAGES_ACTIVITY_KEY = "com.actito.iam.ui.suppress_messages"
     private const val DEFAULT_BACKGROUND_GRACE_PERIOD_MILLIS = 5 * 60 * 1000L
 
@@ -41,18 +40,6 @@ internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging 
     private var backgroundTimestamp: Long? = null
 
     internal val lifecycleListeners = mutableListOf<WeakReference<ActitoInAppMessaging.MessageLifecycleListener>>()
-
-    // region Actito Module
-
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-    }
-
-    override suspend fun launch() {
-        evaluateContext(ApplicationContext.LAUNCH)
-    }
-
-    // endregion
 
     // region Actito In App Messaging
 
@@ -208,7 +195,7 @@ internal object ActitoInAppMessagingImpl : ActitoModule(), ActitoInAppMessaging 
         evaluateContext(ApplicationContext.FOREGROUND)
     }
 
-    private fun evaluateContext(context: ApplicationContext) {
+    internal fun evaluateContext(context: ApplicationContext) {
         logger.debug("Checking in-app message for context '${context.rawValue}'.")
 
         actitoCoroutineScope.launch {
