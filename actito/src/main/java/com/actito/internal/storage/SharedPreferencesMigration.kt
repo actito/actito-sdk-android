@@ -2,7 +2,7 @@ package com.actito.internal.storage
 
 import android.content.Context
 import androidx.core.content.edit
-import com.actito.internal.ActitoModule
+import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.logger
 import com.actito.internal.storage.preferences.ActitoSharedPreferences
 import com.actito.internal.storage.preferences.entities.StoredDevice
@@ -91,7 +91,7 @@ internal class SharedPreferencesMigration(
         }
 
         // Signal each available module to migrate whatever data it needs.
-        ActitoModule.Module.entries.forEach {
+        ActitoLaunchComponent.Module.entries.forEach {
             it.instance?.migrate(
                 savedState = v2SavedState,
                 settings = v2Settings,

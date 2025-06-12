@@ -2,16 +2,15 @@ package com.actito.internal.modules
 
 import androidx.annotation.Keep
 import com.actito.Actito
-import com.actito.internal.ActitoModule
 import com.actito.internal.logger
 import com.actito.ktx.device
 import com.actito.ktx.eventsImplementation
 
 @Keep
-internal object ActitoCrashReporterModuleImpl : ActitoModule() {
+internal object ActitoCrashReporterModuleImpl {
 
-    private var defaultUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
-    private val uncaughtExceptionHandler = Thread.UncaughtExceptionHandler { thread: Thread, throwable: Throwable ->
+    internal var defaultUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
+    internal val uncaughtExceptionHandler = Thread.UncaughtExceptionHandler { thread: Thread, throwable: Throwable ->
         val device = Actito.device().currentDevice ?: run {
             logger.warning("Cannot process a crash report before the device becomes available.")
             defaultUncaughtExceptionHandler?.uncaughtException(thread, throwable)
@@ -32,32 +31,4 @@ internal object ActitoCrashReporterModuleImpl : ActitoModule() {
 
         defaultUncaughtExceptionHandler.uncaughtException(thread, throwable)
     }
-
-    // region Actito Module
-
-    override fun configure() {
-        if (checkNotNull(Actito.options).crashReportsEnabled) {
-            defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-            Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler)
-        }
-    }
-
-    override suspend fun launch() {
-        val crashReport = Actito.sharedPreferences.crashReport ?: run {
-            logger.debug("No crash report to process.")
-            return
-        }
-
-        try {
-            Actito.eventsImplementation().log(crashReport)
-            logger.info("Crash report processed.")
-
-            // Clean up the stored crash report
-            Actito.sharedPreferences.crashReport = null
-        } catch (e: Exception) {
-            logger.error("Failed to process a crash report.", e)
-        }
-    }
-
-    // endregion
 }

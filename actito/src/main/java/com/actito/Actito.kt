@@ -12,8 +12,8 @@ import androidx.annotation.MainThread
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
 import com.actito.internal.ACTITO_VERSION
+import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.ActitoLaunchState
-import com.actito.internal.ActitoModule
 import com.actito.internal.ActitoOptions
 import com.actito.internal.ActitoUtils
 import com.actito.internal.logger
@@ -219,7 +219,7 @@ public object Actito {
         this.database = ActitoDatabase.create(context.applicationContext)
         this.sharedPreferences = ActitoSharedPreferences(context.applicationContext)
 
-        ActitoModule.Module.entries.forEach { module ->
+        ActitoLaunchComponent.Module.entries.forEach { module ->
             module.instance?.run {
                 logger.debug("Configuring module: ${module.name.lowercase()}")
                 this.configure()
@@ -292,7 +292,7 @@ public object Actito {
             if (storedApplication != null && storedApplication.id != application.id) {
                 logger.warning("Incorrect application keys detected. Resetting Actito to a clean state.")
 
-                ActitoModule.Module.entries.forEach { module ->
+                ActitoLaunchComponent.Module.entries.forEach { module ->
                     module.instance?.run {
                         logger.debug("Resetting module: ${module.name.lowercase()}")
                         try {
@@ -311,7 +311,7 @@ public object Actito {
             sharedPreferences.application = application
 
             // Loop all possible modules and launch the available ones.
-            ActitoModule.Module.entries.forEach { module ->
+            ActitoLaunchComponent.Module.entries.forEach { module ->
                 module.instance?.run {
                     logger.debug("Launching module: ${module.name.lowercase()}")
                     try {
@@ -344,7 +344,7 @@ public object Actito {
 
         launch {
             // Loop all possible modules and post-launch the available ones.
-            ActitoModule.Module.entries.forEach { module ->
+            ActitoLaunchComponent.Module.entries.forEach { module ->
                 module.instance?.run {
                     logger.debug("Post-launching module: ${module.name.lowercase()}")
                     try {
@@ -382,7 +382,7 @@ public object Actito {
         logger.info("Un-launching Actito.")
 
         // Loop all possible modules and un-launch the available ones.
-        ActitoModule.Module.entries.reversed().forEach { module ->
+        ActitoLaunchComponent.Module.entries.reversed().forEach { module ->
             module.instance?.run {
                 logger.debug("Un-launching module: ${module.name.lowercase()}.")
 

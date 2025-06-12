@@ -12,7 +12,6 @@ import com.actito.ActitoDeviceUnavailableException
 import com.actito.ActitoEventsModule
 import com.actito.ActitoInternalEventsModule
 import com.actito.ActitoNotReadyException
-import com.actito.internal.ActitoModule
 import com.actito.internal.logger
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.ktx.toEntity
@@ -40,25 +39,9 @@ private const val EVENT_NOTIFICATION_OPEN = "re.notifica.event.notification.Open
 private const val TASK_UPLOAD_EVENTS = "re.notifica.tasks.events.Upload"
 
 @Keep
-internal object ActitoEventsModuleImpl :
-    ActitoModule(),
-    ActitoEventsModule,
-    ActitoInternalEventsModule {
+internal object ActitoEventsModuleImpl : ActitoEventsModule, ActitoInternalEventsModule {
 
     private val discardableEvents = listOf<String>()
-
-    // region Actito Module
-
-//    override fun configure() {
-//        // TODO listen to connectivity changes
-//        // TODO listen to lifecycle changes (app open)
-//    }
-
-    override suspend fun launch() {
-        scheduleUploadWorker()
-    }
-
-    // endregion
 
     // region Actito Events Module
 
@@ -171,7 +154,7 @@ internal object ActitoEventsModuleImpl :
         }
     }
 
-    private fun scheduleUploadWorker() {
+    internal fun scheduleUploadWorker() {
         logger.debug("Scheduling a worker to process stored events when there's connectivity.")
 
         WorkManager
