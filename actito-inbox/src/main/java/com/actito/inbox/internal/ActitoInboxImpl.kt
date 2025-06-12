@@ -22,7 +22,6 @@ import com.actito.inbox.internal.database.entities.InboxItemEntity
 import com.actito.inbox.internal.network.push.InboxResponse
 import com.actito.inbox.internal.workers.ExpireItemWorker
 import com.actito.inbox.models.ActitoInboxItem
-import com.actito.internal.ActitoModule
 import com.actito.internal.network.NetworkException
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
@@ -44,7 +43,7 @@ import java.util.SortedSet
 import java.util.concurrent.TimeUnit
 
 @Keep
-internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
+internal object ActitoInboxImpl : ActitoInbox {
     internal lateinit var database: InboxDatabase
 
     private var itemsCollectJob: Job? = null
@@ -71,32 +70,6 @@ internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
 
     private val _itemsStream = MutableStateFlow<SortedSet<ActitoInboxItem>>(sortedSetOf())
     private val _badgeStream = MutableStateFlow(0)
-
-    // region Actito Module
-
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-
-        database = InboxDatabase.create(Actito.requireContext())
-
-        reloadLiveItems()
-    }
-
-    override suspend fun clearStorage() {
-        database.inbox().clear()
-    }
-
-    override suspend fun launch() {
-        sync()
-    }
-
-    override suspend fun unlaunch() {
-        clearLocalInbox()
-        clearNotificationCenter()
-        clearRemoteInbox()
-    }
-
-    // endregion
 
     // region Actito Inbox
 
@@ -314,7 +287,7 @@ internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
         reloadLiveItems()
     }
 
-    private fun reloadLiveItems() {
+    internal fun reloadLiveItems() {
         itemsCollectJob?.cancel()
 
         database.inbox().getItemsStream().also { itemsStream ->
@@ -332,7 +305,7 @@ internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
         database.inbox().insert(entity)
     }
 
-    private suspend fun sync(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun sync(): Unit = withContext(Dispatchers.IO) {
         val device = Actito.device().currentDevice ?: run {
             logger.warning("No device registered yet. Skipping...")
             return@withContext
@@ -368,7 +341,7 @@ internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
         requestRemoteInboxItems()
     }
 
-    private suspend fun clearLocalInbox(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun clearLocalInbox(): Unit = withContext(Dispatchers.IO) {
         try {
             database.inbox().clear()
         } catch (e: Exception) {
@@ -432,13 +405,13 @@ internal object ActitoInboxImpl : ActitoModule(), ActitoInbox {
             .enqueueUniqueWork("com.actito.task.inbox.Expire", ExistingWorkPolicy.REPLACE, task)
     }
 
-    private fun clearNotificationCenter() {
+    internal fun clearNotificationCenter() {
         logger.debug("Removing all messages from the notification center.")
         NotificationManagerCompat.from(Actito.requireContext())
             .cancelAll()
     }
 
-    private suspend fun clearRemoteInbox() = withContext(Dispatchers.IO) {
+    internal suspend fun clearRemoteInbox() = withContext(Dispatchers.IO) {
         val device = Actito.device().currentDevice
             ?: throw ActitoDeviceUnavailableException()
 
