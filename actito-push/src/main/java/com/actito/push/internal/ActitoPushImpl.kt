@@ -8,7 +8,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
@@ -21,10 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.asLiveData
 import com.actito.Actito
 import com.actito.ActitoApplicationUnavailableException
@@ -33,7 +29,6 @@ import com.actito.ActitoDeviceUnavailableException
 import com.actito.ActitoGoogleServicesUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
-import com.actito.internal.ActitoModule
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.ktx.events
@@ -44,7 +39,6 @@ import com.actito.push.ActitoPush
 import com.actito.push.ActitoPushIntentReceiver
 import com.actito.push.ActitoSubscriptionUnavailable
 import com.actito.push.R
-import com.actito.push.automaticDefaultChannelEnabled
 import com.actito.push.defaultChannelId
 import com.actito.push.internal.network.push.CreateLiveActivityPayload
 import com.actito.push.internal.network.push.UpdateDeviceNotificationSettingsPayload
@@ -107,102 +101,19 @@ import java.util.Date
 import java.util.concurrent.atomic.AtomicInteger
 
 @Keep
-internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush {
+internal object ActitoPushImpl : ActitoPush, ActitoInternalPush {
 
     internal const val DEFAULT_NOTIFICATION_CHANNEL_ID: String = "actito_channel_default"
 
     private val notificationSequence = AtomicInteger()
-    private val _subscriptionStream = MutableStateFlow<ActitoPushSubscription?>(null)
-    private val _allowedUIStream = MutableStateFlow(false)
+    internal val _subscriptionStream = MutableStateFlow<ActitoPushSubscription?>(null)
+    internal val _allowedUIStream = MutableStateFlow(false)
 
     private val isGoogleServicesAvailable: Boolean
         get() = GoogleApiAvailability.getInstance()
             .isGooglePlayServicesAvailable(Actito.requireContext()) == ConnectionResult.SUCCESS
 
     internal lateinit var sharedPreferences: ActitoSharedPreferences
-        private set
-
-    // region Actito Module
-
-    override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
-        val preferences = ActitoSharedPreferences(Actito.requireContext())
-
-        if (savedState.contains("registeredDevice")) {
-            val jsonStr = savedState.getString("registeredDevice", null)
-            if (jsonStr != null) {
-                try {
-                    val json = JSONObject(jsonStr)
-
-                    preferences.allowedUI = if (!json.isNull("allowedUI")) json.getBoolean("allowedUI") else false
-                } catch (e: Exception) {
-                    logger.error("Failed to migrate the 'allowedUI' property.", e)
-                }
-            }
-        }
-
-        if (settings.contains("notifications")) {
-            val enabled = settings.getBoolean("notifications", false)
-            sharedPreferences.remoteNotificationsEnabled = enabled
-
-            if (enabled) {
-                // Prevent the lib from sending the push registration event for existing devices.
-                sharedPreferences.firstRegistration = false
-            }
-        }
-    }
-
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-
-        sharedPreferences = ActitoSharedPreferences(Actito.requireContext())
-
-        checkPushPermissions()
-
-        if (checkNotNull(Actito.options).automaticDefaultChannelEnabled) {
-            logger.debug("Creating the default notifications channel.")
-            createDefaultChannel()
-        }
-
-        if (!hasIntentFilter(Actito.requireContext(), Actito.INTENT_ACTION_REMOTE_MESSAGE_OPENED)) {
-            @Suppress("detekt:MaxLineLength", "ktlint:standard:argument-list-wrapping")
-            logger.warning("Could not find an activity with the '${Actito.INTENT_ACTION_REMOTE_MESSAGE_OPENED}' action. Notification opens won't work without handling the trampoline intent.")
-        }
-
-        // NOTE: The subscription and allowedUI are only gettable after the storage has been configured.
-        _subscriptionStream.value = subscription
-        _allowedUIStream.value = allowedUI
-
-        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onStart(owner: LifecycleOwner) {
-                onApplicationForeground()
-            }
-        })
-    }
-
-    override suspend fun clearStorage() {
-        sharedPreferences.clear()
-
-        _subscriptionStream.value = subscription
-        _allowedUIStream.value = allowedUI
-    }
-
-    override suspend fun postLaunch() {
-        if (sharedPreferences.remoteNotificationsEnabled) {
-            logger.debug("Enabling remote notifications automatically.")
-            updateDeviceSubscription()
-        }
-    }
-
-    override suspend fun unlaunch() {
-        sharedPreferences.remoteNotificationsEnabled = false
-        sharedPreferences.firstRegistration = true
-
-        transport = null
-        subscription = null
-        allowedUI = false
-    }
-
-    // endregion
 
     // region Actito Push
 
@@ -264,7 +175,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
             logger.warning("Calling this method requires Actito to have been configured.")
             return false
         }
-        private set(value) {
+        internal set(value) {
             if (::sharedPreferences.isInitialized) {
                 sharedPreferences.allowedUI = value
                 _allowedUIStream.value = value
@@ -527,7 +438,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         }
     }
 
-    private fun checkPushPermissions(): Boolean {
+    internal fun checkPushPermissions(): Boolean {
         var granted = true
 
         if (ContextCompat.checkSelfPermission(
@@ -560,7 +471,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         return granted
     }
 
-    private fun createDefaultChannel() {
+    internal fun createDefaultChannel() {
         if (Build.VERSION.SDK_INT < 26) return
 
         val notificationManager =
@@ -934,7 +845,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         notificationManager.notify(message.notificationId, 0, builder.build())
     }
 
-    private fun onApplicationForeground() {
+    internal fun onApplicationForeground() {
         if (!Actito.isReady) return
 
         actitoCoroutineScope.launch {
@@ -946,7 +857,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
         }
     }
 
-    private suspend fun updateDeviceSubscription(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun updateDeviceSubscription(): Unit = withContext(Dispatchers.IO) {
         val transport = ActitoTransport.GCM
         val token = Firebase.messaging.token.await()
 
@@ -1049,7 +960,7 @@ internal object ActitoPushImpl : ActitoModule(), ActitoPush, ActitoInternalPush 
     private fun hasNotificationPermission(context: Context): Boolean =
         NotificationManagerCompat.from(context).areNotificationsEnabled()
 
-    private fun hasIntentFilter(context: Context, intentAction: String): Boolean {
+    internal fun hasIntentFilter(context: Context, intentAction: String): Boolean {
         val intent = Intent()
             .setAction(intentAction)
             .setPackage(context.packageName)
