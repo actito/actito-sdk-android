@@ -11,7 +11,6 @@ import com.actito.ActitoCallback
 import com.actito.ActitoDeviceUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
-import com.actito.internal.ActitoModule
 import com.actito.internal.modules.integrations.ActitoLoyaltyIntegration
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
@@ -29,11 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Keep
-internal object ActitoLoyaltyImpl : ActitoModule(), ActitoLoyalty, ActitoLoyaltyIntegration {
-
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-    }
+internal object ActitoLoyaltyImpl : ActitoLoyalty, ActitoLoyaltyIntegration {
 
     // region Actito Loyalty
 
