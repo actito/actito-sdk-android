@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -59,7 +58,6 @@ import com.actito.geo.models.ActitoLocation
 import com.actito.geo.models.ActitoRegion
 import com.actito.geo.models.ActitoRegionSession
 import com.actito.geo.monitoredRegionsLimit
-import com.actito.internal.ActitoModule
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.ktx.events
@@ -90,7 +88,7 @@ import kotlin.coroutines.suspendCoroutine
 
 @Keep
 @Suppress("detekt:LargeClass")
-internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
+internal object ActitoGeoImpl : ActitoGeo, ActitoInternalGeo {
 
     private const val DEFAULT_MONITORED_REGIONS_LIMIT: Int = 10
     private const val MAX_MONITORED_REGIONS_LIMIT: Int = 100
@@ -98,10 +96,10 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
     private const val SMALLEST_DISPLACEMENT_METERS: Int = 100
     private const val MAX_REGION_SESSION_LOCATIONS: Int = 100
 
-    private lateinit var localStorage: LocalStorage
-    private var geocoder: Geocoder? = null
-    private var beaconServiceManager: BeaconServiceManager? = null
-    private var lastKnownLocation: Location? = null
+    internal lateinit var localStorage: LocalStorage
+    internal var geocoder: Geocoder? = null
+    internal var beaconServiceManager: BeaconServiceManager? = null
+    internal var lastKnownLocation: Location? = null
     private val listeners = mutableListOf<WeakReference<ActitoGeo.Listener>>()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -256,55 +254,6 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
 
             return limit
         }
-
-    // region Actito Module
-
-    override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
-        val localStorage = LocalStorage(Actito.requireContext())
-        localStorage.locationServicesEnabled = settings.getBoolean("locationUpdates", false)
-    }
-
-    override suspend fun clearStorage() {
-        disableLocationUpdatesInternal()
-        beaconServiceManager?.clearMonitoring()
-
-        localStorage.clear()
-    }
-
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-
-        val context = Actito.requireContext()
-
-        localStorage = LocalStorage(context)
-        geocoder = if (Geocoder.isPresent()) Geocoder(context) else null
-        setupLocationService(context)
-    }
-
-    override suspend fun launch() {
-        beaconServiceManager = BeaconServiceManager.create()
-    }
-
-    override suspend fun postLaunch() {
-        if (hasLocationServicesEnabled) {
-            logger.debug("Enabling locations updates automatically.")
-            enableLocationUpdatesInternal()
-        }
-    }
-
-    override suspend fun unlaunch() {
-        localStorage.locationServicesEnabled = false
-
-        clearRegions()
-        clearBeacons()
-
-        lastKnownLocation = null
-        disableLocationUpdatesInternal()
-
-        clearLocation()
-    }
-
-    // endregion
 
     // region Actito Geo
 
@@ -761,7 +710,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         }
     }
 
-    private fun setupLocationService(context: Context) {
+    internal fun setupLocationService(context: Context) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         geofencingClient = LocationServices.getGeofencingClient(context)
 
@@ -813,7 +762,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
     }
 
     @SuppressLint("MissingPermission")
-    private fun enableLocationUpdatesInternal() {
+    internal fun enableLocationUpdatesInternal() {
         // Ensure we keep the bluetooth state updated in the API.
         updateBluetoothState(beaconSupport.isEnabled)
 
@@ -899,7 +848,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         }
     }
 
-    private fun disableLocationUpdatesInternal() {
+    internal fun disableLocationUpdatesInternal() {
         // Remove all geofences.
         geofencingClient.removeGeofences(geofencingPendingIntent)
             .addOnSuccessListener { logger.debug("Removed all geofences.") }
@@ -950,7 +899,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
             .response()
     }
 
-    private suspend fun clearLocation(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun clearLocation(): Unit = withContext(Dispatchers.IO) {
         val device = Actito.device().currentDevice ?: run {
             throw IllegalStateException("Cannot update location authorization state without a device.")
         }
@@ -1357,7 +1306,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         )
     }
 
-    private fun clearRegions() {
+    internal fun clearRegions() {
         actitoCoroutineScope.launch {
             try {
                 // Stop monitoring all regions.
@@ -1378,7 +1327,7 @@ internal object ActitoGeoImpl : ActitoModule(), ActitoGeo, ActitoInternalGeo {
         }
     }
 
-    private fun clearBeacons() {
+    internal fun clearBeacons() {
         // Remove the cached beacons.
         localStorage.monitoredBeacons = emptyList()
         localStorage.enteredBeacons = emptySet()
