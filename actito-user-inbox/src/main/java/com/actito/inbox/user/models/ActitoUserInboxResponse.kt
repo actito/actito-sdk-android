@@ -1,8 +1,7 @@
 package com.actito.inbox.user.models
 
 import android.os.Parcelable
-import com.actito.Actito
-import com.actito.internal.moshi
+import com.actito.inbox.user.internal.ActitoUserInboxImpl.userInboxMoshi
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
@@ -16,7 +15,7 @@ public data class ActitoUserInboxResponse(
 ) : Parcelable {
     public companion object {
         private val adapter by lazy {
-            Actito.moshi.adapter(ActitoUserInboxResponse::class.java)
+            userInboxMoshi.adapter(ActitoUserInboxResponse::class.java)
         }
 
         public fun fromJson(json: JSONObject): ActitoUserInboxResponse {

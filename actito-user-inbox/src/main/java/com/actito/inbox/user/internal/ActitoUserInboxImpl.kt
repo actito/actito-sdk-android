@@ -12,7 +12,6 @@ import com.actito.inbox.user.ActitoUserInbox
 import com.actito.inbox.user.internal.moshi.UserInboxResponseAdapter
 import com.actito.inbox.user.models.ActitoUserInboxItem
 import com.actito.inbox.user.models.ActitoUserInboxResponse
-import com.actito.internal.ActitoModule
 import com.actito.internal.moshi
 import com.actito.internal.network.push.NotificationResponse
 import com.actito.internal.network.request.ActitoRequest
@@ -27,24 +26,17 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 @Keep
-internal object ActitoUserInboxImpl : ActitoModule(), ActitoUserInbox {
-
-    // region Actito Module
-
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
+internal object ActitoUserInboxImpl : ActitoUserInbox {
+    internal val userInboxMoshi: Moshi by lazy {
+        Actito.moshi.newBuilder()
+            .add(UserInboxResponseAdapter())
+            .build()
     }
-
-    override fun moshi(builder: Moshi.Builder) {
-        builder.add(UserInboxResponseAdapter())
-    }
-
-    // endregion
 
     // region Actito User Inbox
 
     override fun parseResponse(json: String): ActitoUserInboxResponse {
-        val adapter = Actito.moshi.adapter(ActitoUserInboxResponse::class.java)
+        val adapter = userInboxMoshi.adapter(ActitoUserInboxResponse::class.java)
         return requireNotNull(adapter.nonNull().fromJson(json))
     }
 
