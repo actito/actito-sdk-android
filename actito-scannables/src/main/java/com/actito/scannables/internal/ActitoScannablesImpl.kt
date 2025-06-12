@@ -8,7 +8,6 @@ import android.nfc.NfcManager
 import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.ActitoCallback
-import com.actito.internal.ActitoModule
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.scannables.ActitoScannables
@@ -23,12 +22,8 @@ import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
 @Keep
-internal object ActitoScannablesImpl : ActitoModule(), ActitoScannables {
+internal object ActitoScannablesImpl : ActitoScannables {
     private val listeners = mutableListOf<WeakReference<ActitoScannables.ScannableSessionListener>>()
-
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-    }
 
     // region Actito Scannables Module
 
