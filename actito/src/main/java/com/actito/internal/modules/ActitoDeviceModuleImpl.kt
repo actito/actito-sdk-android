@@ -8,9 +8,8 @@ import com.actito.ActitoDeviceModule
 import com.actito.ActitoDeviceUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.internal.ACTITO_VERSION
-import com.actito.internal.ActitoModule
+import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.logger
-import com.actito.internal.network.NetworkException
 import com.actito.internal.network.push.CreateDevicePayload
 import com.actito.internal.network.push.CreateDeviceResponse
 import com.actito.internal.network.push.DeviceDoNotDisturbResponse
@@ -28,8 +27,6 @@ import com.actito.internal.network.push.UpgradeToLongLivedDevicePayload
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.preferences.entities.StoredDevice
 import com.actito.internal.storage.preferences.ktx.asPublic
-import com.actito.ktx.eventsImplementation
-import com.actito.ktx.session
 import com.actito.models.ActitoDevice
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoUserData
@@ -48,78 +45,18 @@ import kotlinx.coroutines.withContext
 import java.util.Locale
 
 @Keep
-internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
+internal object ActitoDeviceModuleImpl : ActitoDeviceModule {
 
-    private var storedDevice: StoredDevice?
+    internal var storedDevice: StoredDevice?
         get() = Actito.sharedPreferences.device
         set(value) {
             Actito.sharedPreferences.device = value
         }
 
-    private var hasPendingDeviceRegistrationEvent: Boolean? = null
+    internal var hasPendingDeviceRegistrationEvent: Boolean? = null
 
-    // region Actito Module
-
-    override suspend fun launch() {
-        upgradeToLongLivedDeviceWhenNeeded()
-
-        val storedDevice = storedDevice
-
-        if (storedDevice == null) {
-            logger.debug("New install detected")
-
-            createDevice()
-            hasPendingDeviceRegistrationEvent = true
-
-            // Ensure a session exists for the current device.
-            Actito.session().launch()
-
-            // We will log the Install & Registration events here since this will execute only one time at the start.
-            Actito.eventsImplementation().logApplicationInstall()
-            Actito.eventsImplementation().logApplicationRegistration()
-        } else {
-            val isApplicationUpgrade = storedDevice.appVersion != Actito.requireContext().applicationVersion
-
-            try {
-                updateDevice()
-            } catch (e: NetworkException.ValidationException) {
-                if (e.response.code == 404) {
-                    logger.warning("The device was removed from Actito. Recovering...")
-
-                    logger.debug("Resetting local storage.")
-                    resetLocalStorage()
-
-                    logger.debug("Creating a new device.")
-                    createDevice()
-                    hasPendingDeviceRegistrationEvent = true
-
-                    // Ensure a session exists for the current device.
-                    Actito.session().launch()
-
-                    // We will log the Install & Registration events here since this will execute
-                    // only one time at the start.
-                    Actito.eventsImplementation().logApplicationInstall()
-                    Actito.eventsImplementation().logApplicationRegistration()
-
-                    return
-                }
-
-                throw e
-            }
-
-            // Ensure a session exists for the current device.
-            Actito.session().launch()
-
-            if (isApplicationUpgrade) {
-                // It's not the same version, let's log it as an upgrade.
-                logger.debug("New version detected")
-                Actito.eventsImplementation().logApplicationUpgrade()
-            }
-        }
-    }
-
-    private suspend fun resetLocalStorage() {
-        ActitoModule.Module.entries.forEach { module ->
+    internal suspend fun resetLocalStorage() {
+        ActitoLaunchComponent.Module.entries.forEach { module ->
             module.instance?.run {
                 logger.debug("Resetting module: ${module.name.lowercase()}")
                 try {
@@ -138,15 +75,6 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
         Actito.sharedPreferences.preferredLanguage = null
         Actito.sharedPreferences.preferredRegion = null
     }
-
-    override suspend fun postLaunch() {
-        val device = storedDevice
-        if (device != null && hasPendingDeviceRegistrationEvent == true) {
-            notifyDeviceRegistered(device.asPublic())
-        }
-    }
-
-    // endregion
 
     // region Actito Device Module
 
@@ -225,8 +153,8 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
             Actito.sharedPreferences.preferredLanguage = language
             Actito.sharedPreferences.preferredRegion = region
         } else {
-            val language = com.actito.utilities.device.deviceLanguage
-            val region = com.actito.utilities.device.deviceRegion
+            val language = deviceLanguage
+            val region = deviceRegion
             updateLanguage(language, region)
 
             Actito.sharedPreferences.preferredLanguage = null
@@ -424,7 +352,7 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
         }
     }
 
-    private suspend fun createDevice(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun createDevice(): Unit = withContext(Dispatchers.IO) {
         val payload = CreateDevicePayload(
             language = getDeviceLanguage(),
             region = getDeviceRegion(),
@@ -457,7 +385,7 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
         )
     }
 
-    private suspend fun updateDevice(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun updateDevice(): Unit = withContext(Dispatchers.IO) {
         val storedDevice = checkNotNull(storedDevice)
 
         val payload = UpdateDevicePayload(
@@ -488,7 +416,7 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
         )
     }
 
-    private suspend fun upgradeToLongLivedDeviceWhenNeeded(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun upgradeToLongLivedDeviceWhenNeeded(): Unit = withContext(Dispatchers.IO) {
         val currentDevice = Actito.sharedPreferences.device
             ?: return@withContext
 
@@ -544,13 +472,9 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
         )
     }
 
-    internal fun getDeviceLanguage(): String {
-        return Actito.sharedPreferences.preferredLanguage ?: deviceLanguage
-    }
+    internal fun getDeviceLanguage(): String = Actito.sharedPreferences.preferredLanguage ?: deviceLanguage
 
-    internal fun getDeviceRegion(): String {
-        return Actito.sharedPreferences.preferredRegion ?: deviceRegion
-    }
+    internal fun getDeviceRegion(): String = Actito.sharedPreferences.preferredRegion ?: deviceRegion
 
     internal fun registerTestDevice(nonce: String, callback: ActitoCallback<Unit>) {
         actitoCoroutineScope.launch {
@@ -606,13 +530,13 @@ internal object ActitoDeviceModuleImpl : ActitoModule(), ActitoDeviceModule {
                 body = DeviceUpdateTimeZonePayload(
                     language = getDeviceLanguage(),
                     region = getDeviceRegion(),
-                    timeZoneOffset = com.actito.utilities.device.timeZoneOffset,
+                    timeZoneOffset = timeZoneOffset,
                 ),
             )
             .response()
     }
 
-    private fun notifyDeviceRegistered(device: ActitoDevice) {
+    internal fun notifyDeviceRegistered(device: ActitoDevice) {
         Actito.requireContext().sendBroadcast(
             Intent(Actito.requireContext(), Actito.intentReceiver)
                 .setAction(Actito.INTENT_ACTION_DEVICE_REGISTERED)

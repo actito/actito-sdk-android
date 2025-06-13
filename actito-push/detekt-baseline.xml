@@ -9,8 +9,10 @@
     <ID>MaxLineLength:ActitoPushIntentReceiver.kt$ActitoPushIntentReceiver$"Received an unknown notification, please override onUnknownNotificationReceived if you want to receive these intents."</ID>
     <ID>MaxLineLength:InboxIntegration.kt$InboxIntegration$"The inbox module is not available. Please include it if you want to leverage the inbox capabilities."</ID>
     <ID>NestedBlockDepth:ActitoPushImpl.kt$ActitoPushImpl$@SuppressLint("MissingPermission") private fun generateNotification( message: ActitoNotificationRemoteMessage, notification: ActitoNotification, )</ID>
-    <ID>NestedBlockDepth:ActitoPushImpl.kt$ActitoPushImpl$override fun migrate(savedState: SharedPreferences, settings: SharedPreferences)</ID>
     <ID>NestedBlockDepth:ActitoPushImpl.kt$ActitoPushImpl$private fun handleSystemNotification(message: ActitoSystemRemoteMessage)</ID>
+    <ID>NestedBlockDepth:LaunchComponent.kt$LaunchComponent$override fun migrate(savedState: SharedPreferences, settings: SharedPreferences)</ID>
+    <ID>ObjectPropertyNaming:ActitoPushImpl.kt$ActitoPushImpl$internal val _allowedUIStream = MutableStateFlow(false)</ID>
+    <ID>ObjectPropertyNaming:ActitoPushImpl.kt$ActitoPushImpl$internal val _subscriptionStream = MutableStateFlow&lt;ActitoPushSubscription?&gt;(null)</ID>
     <ID>SwallowedException:ActitoPushImpl.kt$ActitoPushImpl$e: IllegalArgumentException</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -9,7 +9,6 @@ import com.actito.ActitoServiceUnavailableException
 import com.actito.assets.ActitoAssets
 import com.actito.assets.internal.network.push.FetchAssetsResponse
 import com.actito.assets.models.ActitoAsset
-import com.actito.internal.ActitoModule
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.models.ActitoApplication
@@ -18,10 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Keep
-internal object ActitoAssetsImpl : ActitoModule(), ActitoAssets {
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-    }
+internal object ActitoAssetsImpl : ActitoAssets {
 
     // region Actito Assets
 

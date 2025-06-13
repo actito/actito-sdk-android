@@ -4,7 +4,7 @@
   <CurrentIssues>
     <ID>MaxLineLength:ActitoNotification.kt$ActitoNotification.Action.Companion$message = "The WebView action type becomes a backwards compatible alias. Use the InAppBrowser action type instead."</ID>
     <ID>NestedBlockDepth:Actito.kt$Actito$@JvmStatic public fun cancelNotification(id: String)</ID>
-    <ID>SwallowedException:ActitoModule.kt$ActitoModule.Module$e: Exception</ID>
+    <ID>SwallowedException:ActitoLaunchComponent.kt$ActitoLaunchComponent.Module$e: Exception</ID>
     <ID>SwallowedException:ActitoSessionModuleImpl.kt$ActitoSessionModuleImpl$e: Exception</ID>
     <ID>SwallowedException:ActitoSessionModuleImpl.kt$ActitoSessionModuleImpl.&lt;no name provided&gt;$e: Exception</ID>
   </CurrentIssues>

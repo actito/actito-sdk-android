@@ -12,7 +12,7 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import com.actito.Actito
 import com.actito.ActitoCallback
-import com.actito.internal.ActitoModule
+import com.actito.internal.ActitoLaunchComponent
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.ActitoInternalPushUI
 import com.actito.push.ui.ActitoPushUI
@@ -31,7 +31,6 @@ import com.actito.push.ui.customTabsNavigationBarColor
 import com.actito.push.ui.customTabsNavigationBarDividerColor
 import com.actito.push.ui.customTabsShowTitle
 import com.actito.push.ui.customTabsToolbarColor
-import com.actito.push.ui.ktx.loyaltyIntegration
 import com.actito.push.ui.notifications.fragments.ActitoAlertFragment
 import com.actito.push.ui.notifications.fragments.ActitoImageFragment
 import com.actito.push.ui.notifications.fragments.ActitoMapFragment
@@ -44,11 +43,13 @@ import com.actito.push.ui.notifications.fragments.ActitoWebViewFragment
 import com.actito.push.ui.utils.removeQueryParameter
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.utilities.threading.onMainThread
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 @Keep
-internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalPushUI {
+internal object ActitoPushUIImpl : ActitoPushUI, ActitoInternalPushUI {
 
     private const val CONTENT_FILE_PROVIDER_AUTHORITY_SUFFIX = ".actito.fileprovider"
 
@@ -56,10 +57,6 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
         get() = "${Actito.requireContext().packageName}$CONTENT_FILE_PROVIDER_AUTHORITY_SUFFIX"
 
     private val _lifecycleListeners = mutableListOf<WeakReference<ActitoPushUI.NotificationLifecycleListener>>()
-
-    override fun configure() {
-        logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-    }
 
     // region Actito Push UI
 
@@ -335,15 +332,15 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
     }
 
     private fun handlePassbook(activity: Activity, notification: ActitoNotification) {
-        val integration = Actito.loyaltyIntegration() ?: run {
+        val module = ActitoLaunchComponent.Module.LOYALTY.instance ?: run {
             openNotificationActivity(activity, notification)
             return
         }
 
-        integration.handlePassPresentation(
-            activity,
-            notification,
-            object : ActitoCallback<Unit> {
+        val data = mapOf(
+            "activity" to activity,
+            "notification" to notification,
+            "callback" to object : ActitoCallback<Unit> {
                 override fun onSuccess(result: Unit) {
                     onMainThread {
                         lifecycleListeners.forEach { it.get()?.onNotificationPresented(notification) }
@@ -357,6 +354,15 @@ internal object ActitoPushUIImpl : ActitoModule(), ActitoPushUI, ActitoInternalP
                 }
             },
         )
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                module.executeCommand("handlePassPresentation", data)
+            } catch (e: Exception) {
+                logger.error("Failed to execute pass presentation command", e)
+                openNotificationActivity(activity, notification)
+            }
+        }
     }
 
     private fun handleInAppBrowser(activity: Activity, notification: ActitoNotification) {

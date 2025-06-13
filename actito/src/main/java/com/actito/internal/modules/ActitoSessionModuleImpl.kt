@@ -7,9 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Keep
 import com.actito.Actito
-import com.actito.internal.ActitoModule
 import com.actito.internal.logger
-import com.actito.ktx.device
 import com.actito.ktx.eventsImplementation
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +19,7 @@ import java.util.Locale
 import java.util.UUID
 
 @Keep
-internal object ActitoSessionModuleImpl : ActitoModule() {
+internal object ActitoSessionModuleImpl {
 
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = Runnable {
@@ -36,12 +34,12 @@ internal object ActitoSessionModuleImpl : ActitoModule() {
 
     private var activityCounter = 0
     private var sessionStart: Date? = null
-    private var sessionEnd: Date? = null
+    internal var sessionEnd: Date? = null
 
     var sessionId: String? = null
         private set
 
-    private suspend fun startSession() = withContext(Dispatchers.IO) {
+    internal suspend fun startSession() = withContext(Dispatchers.IO) {
         val sessionId = UUID.randomUUID().toString()
         val sessionStart = Date()
 
@@ -61,7 +59,7 @@ internal object ActitoSessionModuleImpl : ActitoModule() {
         }
     }
 
-    private suspend fun stopSession() = withContext(Dispatchers.IO) {
+    internal suspend fun stopSession() = withContext(Dispatchers.IO) {
         // Skip when no session has started. Should never happen.
         val sessionId = sessionId ?: return@withContext
         val sessionStart = sessionStart ?: return@withContext
@@ -149,21 +147,4 @@ internal object ActitoSessionModuleImpl : ActitoModule() {
             },
         )
     }
-
-    // region Actito Module
-
-    override suspend fun launch() {
-        if (sessionId == null && Actito.device().currentDevice != null) {
-            // Launch is taking place after the first activity has been created.
-            // Start the application session.
-            startSession()
-        }
-    }
-
-    override suspend fun unlaunch() {
-        sessionEnd = Date()
-        stopSession()
-    }
-
-    // endregion
 }
