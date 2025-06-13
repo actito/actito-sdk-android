@@ -3,10 +3,6 @@ package com.actito.internal.modules
 import android.content.SharedPreferences
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
-import com.actito.internal.modules.ActitoSessionModuleImpl.sessionEnd
-import com.actito.internal.modules.ActitoSessionModuleImpl.sessionId
-import com.actito.internal.modules.ActitoSessionModuleImpl.startSession
-import com.actito.internal.modules.ActitoSessionModuleImpl.stopSession
 import com.actito.ktx.device
 import java.util.Date
 
@@ -24,10 +20,10 @@ public class SessionLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        if (sessionId == null && Actito.device().currentDevice != null) {
+        if (ActitoSessionModuleImpl.sessionId == null && Actito.device().currentDevice != null) {
             // Launch is taking place after the first activity has been created.
             // Start the application session.
-            startSession()
+            ActitoSessionModuleImpl.startSession()
         }
     }
 
@@ -36,8 +32,8 @@ public class SessionLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun unlaunch() {
-        sessionEnd = Date()
-        stopSession()
+        ActitoSessionModuleImpl.sessionEnd = Date()
+        ActitoSessionModuleImpl.stopSession()
     }
 
     override suspend fun executeCommand(command: String, data: Any?) {

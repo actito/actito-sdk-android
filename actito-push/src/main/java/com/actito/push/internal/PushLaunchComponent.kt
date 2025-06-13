@@ -7,17 +7,6 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.push.automaticDefaultChannelEnabled
-import com.actito.push.internal.ActitoPushImpl._allowedUIStream
-import com.actito.push.internal.ActitoPushImpl._subscriptionStream
-import com.actito.push.internal.ActitoPushImpl.allowedUI
-import com.actito.push.internal.ActitoPushImpl.checkPushPermissions
-import com.actito.push.internal.ActitoPushImpl.createDefaultChannel
-import com.actito.push.internal.ActitoPushImpl.hasIntentFilter
-import com.actito.push.internal.ActitoPushImpl.onApplicationForeground
-import com.actito.push.internal.ActitoPushImpl.sharedPreferences
-import com.actito.push.internal.ActitoPushImpl.subscription
-import com.actito.push.internal.ActitoPushImpl.transport
-import com.actito.push.internal.ActitoPushImpl.updateDeviceSubscription
 import com.actito.push.ktx.INTENT_ACTION_REMOTE_MESSAGE_OPENED
 import org.json.JSONObject
 
@@ -40,11 +29,11 @@ public class PushLaunchComponent : ActitoLaunchComponent {
 
         if (settings.contains("notifications")) {
             val enabled = settings.getBoolean("notifications", false)
-            sharedPreferences.remoteNotificationsEnabled = enabled
+            ActitoPushImpl.sharedPreferences.remoteNotificationsEnabled = enabled
 
             if (enabled) {
                 // Prevent the lib from sending the push registration event for existing devices.
-                sharedPreferences.firstRegistration = false
+                ActitoPushImpl.sharedPreferences.firstRegistration = false
             }
         }
     }
@@ -52,36 +41,36 @@ public class PushLaunchComponent : ActitoLaunchComponent {
     override fun configure() {
         logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
 
-        sharedPreferences = ActitoSharedPreferences(Actito.requireContext())
+        ActitoPushImpl.sharedPreferences = ActitoSharedPreferences(Actito.requireContext())
 
-        checkPushPermissions()
+        ActitoPushImpl.checkPushPermissions()
 
         if (checkNotNull(Actito.options).automaticDefaultChannelEnabled) {
             logger.debug("Creating the default notifications channel.")
-            createDefaultChannel()
+            ActitoPushImpl.createDefaultChannel()
         }
 
-        if (!hasIntentFilter(Actito.requireContext(), Actito.INTENT_ACTION_REMOTE_MESSAGE_OPENED)) {
+        if (!ActitoPushImpl.hasIntentFilter(Actito.requireContext(), Actito.INTENT_ACTION_REMOTE_MESSAGE_OPENED)) {
             @Suppress("detekt:MaxLineLength", "ktlint:standard:argument-list-wrapping")
             logger.warning("Could not find an activity with the '${Actito.INTENT_ACTION_REMOTE_MESSAGE_OPENED}' action. Notification opens won't work without handling the trampoline intent.")
         }
 
         // NOTE: The subscription and allowedUI are only gettable after the storage has been configured.
-        _subscriptionStream.value = subscription
-        _allowedUIStream.value = allowedUI
+        ActitoPushImpl._subscriptionStream.value = ActitoPushImpl.subscription
+        ActitoPushImpl._allowedUIStream.value = ActitoPushImpl.allowedUI
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
-                onApplicationForeground()
+                ActitoPushImpl.onApplicationForeground()
             }
         })
     }
 
     override suspend fun clearStorage() {
-        sharedPreferences.clear()
+        ActitoPushImpl.sharedPreferences.clear()
 
-        _subscriptionStream.value = subscription
-        _allowedUIStream.value = allowedUI
+        ActitoPushImpl._subscriptionStream.value = ActitoPushImpl.subscription
+        ActitoPushImpl._allowedUIStream.value = ActitoPushImpl.allowedUI
     }
 
     override suspend fun launch() {
@@ -89,19 +78,19 @@ public class PushLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun postLaunch() {
-        if (sharedPreferences.remoteNotificationsEnabled) {
+        if (ActitoPushImpl.sharedPreferences.remoteNotificationsEnabled) {
             logger.debug("Enabling remote notifications automatically.")
-            updateDeviceSubscription()
+            ActitoPushImpl.updateDeviceSubscription()
         }
     }
 
     override suspend fun unlaunch() {
-        sharedPreferences.remoteNotificationsEnabled = false
-        sharedPreferences.firstRegistration = true
+        ActitoPushImpl.sharedPreferences.remoteNotificationsEnabled = false
+        ActitoPushImpl.sharedPreferences.firstRegistration = true
 
-        transport = null
-        subscription = null
-        allowedUI = false
+        ActitoPushImpl.transport = null
+        ActitoPushImpl.subscription = null
+        ActitoPushImpl.allowedUI = false
     }
 
     override suspend fun executeCommand(command: String, data: Any?) {

@@ -2,7 +2,6 @@ package com.actito.internal.modules
 
 import android.content.SharedPreferences
 import com.actito.internal.ActitoLaunchComponent
-import com.actito.internal.modules.ActitoEventsModuleImpl.scheduleUploadWorker
 
 public class EventsLaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
@@ -19,7 +18,7 @@ public class EventsLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        scheduleUploadWorker()
+        ActitoEventsModuleImpl.scheduleUploadWorker()
     }
 
     override suspend fun postLaunch() {

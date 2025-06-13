@@ -4,13 +4,6 @@ import android.content.SharedPreferences
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.logger
-import com.actito.internal.modules.ActitoDeviceModuleImpl.createDevice
-import com.actito.internal.modules.ActitoDeviceModuleImpl.hasPendingDeviceRegistrationEvent
-import com.actito.internal.modules.ActitoDeviceModuleImpl.notifyDeviceRegistered
-import com.actito.internal.modules.ActitoDeviceModuleImpl.resetLocalStorage
-import com.actito.internal.modules.ActitoDeviceModuleImpl.storedDevice
-import com.actito.internal.modules.ActitoDeviceModuleImpl.updateDevice
-import com.actito.internal.modules.ActitoDeviceModuleImpl.upgradeToLongLivedDeviceWhenNeeded
 import com.actito.internal.network.NetworkException
 import com.actito.internal.storage.preferences.ktx.asPublic
 import com.actito.ktx.eventsImplementation
@@ -30,15 +23,15 @@ public class DeviceLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        upgradeToLongLivedDeviceWhenNeeded()
+        ActitoDeviceModuleImpl.upgradeToLongLivedDeviceWhenNeeded()
 
-        val storedDevice = storedDevice
+        val storedDevice = ActitoDeviceModuleImpl.storedDevice
 
         if (storedDevice == null) {
             logger.debug("New install detected")
 
-            createDevice()
-            hasPendingDeviceRegistrationEvent = true
+            ActitoDeviceModuleImpl.createDevice()
+            ActitoDeviceModuleImpl.hasPendingDeviceRegistrationEvent = true
 
             // Ensure a session exists for the current device.
             ActitoLaunchComponent.Module.SESSION.instance?.launch()
@@ -50,17 +43,17 @@ public class DeviceLaunchComponent : ActitoLaunchComponent {
             val isApplicationUpgrade = storedDevice.appVersion != Actito.requireContext().applicationVersion
 
             try {
-                updateDevice()
+                ActitoDeviceModuleImpl.updateDevice()
             } catch (e: NetworkException.ValidationException) {
                 if (e.response.code == 404) {
                     logger.warning("The device was removed from Actito. Recovering...")
 
                     logger.debug("Resetting local storage.")
-                    resetLocalStorage()
+                    ActitoDeviceModuleImpl.resetLocalStorage()
 
                     logger.debug("Creating a new device.")
-                    createDevice()
-                    hasPendingDeviceRegistrationEvent = true
+                    ActitoDeviceModuleImpl.createDevice()
+                    ActitoDeviceModuleImpl.hasPendingDeviceRegistrationEvent = true
 
                     // Ensure a session exists for the current device.
                     ActitoLaunchComponent.Module.SESSION.instance?.launch()
@@ -88,9 +81,9 @@ public class DeviceLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun postLaunch() {
-        val device = storedDevice
-        if (device != null && hasPendingDeviceRegistrationEvent == true) {
-            notifyDeviceRegistered(device.asPublic())
+        val device = ActitoDeviceModuleImpl.storedDevice
+        if (device != null && ActitoDeviceModuleImpl.hasPendingDeviceRegistrationEvent == true) {
+            ActitoDeviceModuleImpl.notifyDeviceRegistered(device.asPublic())
         }
     }
 

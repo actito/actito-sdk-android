@@ -4,8 +4,6 @@ import android.content.SharedPreferences
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.logger
-import com.actito.internal.modules.ActitoCrashReporterModuleImpl.defaultUncaughtExceptionHandler
-import com.actito.internal.modules.ActitoCrashReporterModuleImpl.uncaughtExceptionHandler
 import com.actito.ktx.eventsImplementation
 
 public class CrashReporterLaunchComponent : ActitoLaunchComponent {
@@ -15,8 +13,8 @@ public class CrashReporterLaunchComponent : ActitoLaunchComponent {
 
     override fun configure() {
         if (checkNotNull(Actito.options).crashReportsEnabled) {
-            defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-            Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler)
+            ActitoCrashReporterModuleImpl.defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+            Thread.setDefaultUncaughtExceptionHandler(ActitoCrashReporterModuleImpl.uncaughtExceptionHandler)
         }
     }
 

@@ -3,17 +3,6 @@ package com.actito.geo.internal
 import android.content.SharedPreferences
 import android.location.Geocoder
 import com.actito.Actito
-import com.actito.geo.internal.ActitoGeoImpl.beaconServiceManager
-import com.actito.geo.internal.ActitoGeoImpl.clearBeacons
-import com.actito.geo.internal.ActitoGeoImpl.clearLocation
-import com.actito.geo.internal.ActitoGeoImpl.clearRegions
-import com.actito.geo.internal.ActitoGeoImpl.disableLocationUpdatesInternal
-import com.actito.geo.internal.ActitoGeoImpl.enableLocationUpdatesInternal
-import com.actito.geo.internal.ActitoGeoImpl.geocoder
-import com.actito.geo.internal.ActitoGeoImpl.hasLocationServicesEnabled
-import com.actito.geo.internal.ActitoGeoImpl.lastKnownLocation
-import com.actito.geo.internal.ActitoGeoImpl.localStorage
-import com.actito.geo.internal.ActitoGeoImpl.setupLocationService
 import com.actito.geo.internal.storage.LocalStorage
 import com.actito.internal.ActitoLaunchComponent
 
@@ -28,39 +17,39 @@ public class GeoLaunchComponent : ActitoLaunchComponent {
 
         val context = Actito.requireContext()
 
-        localStorage = LocalStorage(context)
-        geocoder = if (Geocoder.isPresent()) Geocoder(context) else null
-        setupLocationService(context)
+        ActitoGeoImpl.localStorage = LocalStorage(context)
+        ActitoGeoImpl.geocoder = if (Geocoder.isPresent()) Geocoder(context) else null
+        ActitoGeoImpl.setupLocationService(context)
     }
 
     override suspend fun clearStorage() {
-        disableLocationUpdatesInternal()
-        beaconServiceManager?.clearMonitoring()
+        ActitoGeoImpl.disableLocationUpdatesInternal()
+        ActitoGeoImpl.beaconServiceManager?.clearMonitoring()
 
-        localStorage.clear()
+        ActitoGeoImpl.localStorage.clear()
     }
 
     override suspend fun launch() {
-        beaconServiceManager = BeaconServiceManager.create()
+        ActitoGeoImpl.beaconServiceManager = BeaconServiceManager.create()
     }
 
     override suspend fun postLaunch() {
-        if (hasLocationServicesEnabled) {
+        if (ActitoGeoImpl.hasLocationServicesEnabled) {
             logger.debug("Enabling locations updates automatically.")
-            enableLocationUpdatesInternal()
+            ActitoGeoImpl.enableLocationUpdatesInternal()
         }
     }
 
     override suspend fun unlaunch() {
-        localStorage.locationServicesEnabled = false
+        ActitoGeoImpl.localStorage.locationServicesEnabled = false
 
-        clearRegions()
-        clearBeacons()
+        ActitoGeoImpl.clearRegions()
+        ActitoGeoImpl.clearBeacons()
 
-        lastKnownLocation = null
-        disableLocationUpdatesInternal()
+        ActitoGeoImpl.lastKnownLocation = null
+        ActitoGeoImpl.disableLocationUpdatesInternal()
 
-        clearLocation()
+        ActitoGeoImpl.clearLocation()
     }
 
     override suspend fun executeCommand(command: String, data: Any?) {
