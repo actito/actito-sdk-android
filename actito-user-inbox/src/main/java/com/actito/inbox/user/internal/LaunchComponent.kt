@@ -1,11 +1,10 @@
-package com.actito.iam.internal
+package com.actito.inbox.user.internal
 
 import android.content.SharedPreferences
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
 
-public class InAppMessagingLaunchComponent : ActitoLaunchComponent {
-
+public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op
     }
@@ -19,7 +18,7 @@ public class InAppMessagingLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        ActitoInAppMessagingImpl.evaluateContext(ApplicationContext.LAUNCH)
+        // no-op
     }
 
     override suspend fun postLaunch() {

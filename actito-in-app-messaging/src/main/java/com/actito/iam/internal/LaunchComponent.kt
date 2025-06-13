@@ -1,10 +1,11 @@
-package com.actito.scannables.internal
+package com.actito.iam.internal
 
 import android.content.SharedPreferences
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
 
-public class ScannablesLaunchComponent : ActitoLaunchComponent {
+public class LaunchComponent : ActitoLaunchComponent {
+
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op
     }
@@ -18,7 +19,7 @@ public class ScannablesLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        // no-op
+        ActitoInAppMessagingImpl.evaluateContext(ApplicationContext.LAUNCH)
     }
 
     override suspend fun postLaunch() {

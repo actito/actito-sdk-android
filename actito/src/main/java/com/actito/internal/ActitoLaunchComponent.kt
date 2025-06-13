@@ -28,15 +28,15 @@ public interface ActitoLaunchComponent {
         CRASH_REPORTER(fqn = "com.actito.internal.modules.CrashReporterLaunchComponent"),
 
         // Peer modules
-        PUSH(fqn = "com.actito.push.internal.PushLaunchComponent"),
-        PUSH_UI(fqn = "com.actito.push.ui.internal.PushUILaunchComponent"),
-        INBOX(fqn = "com.actito.inbox.internal.InboxLaunchComponent"),
-        ASSETS(fqn = "com.actito.assets.internal.AssetsLaunchComponent"),
-        SCANNABLES(fqn = "com.actito.scannables.internal.ScannablesLaunchComponent"),
-        GEO(fqn = "com.actito.geo.internal.GeoLaunchComponent"),
-        LOYALTY(fqn = "com.actito.loyalty.internal.LoyaltyLaunchComponent"),
-        IN_APP_MESSAGING(fqn = "com.actito.iam.internal.InAppMessagingLaunchComponent"),
-        USER_INBOX(fqn = "com.actito.inbox.user.internal.UserInboxLaunchComponent");
+        PUSH(fqn = "com.actito.push.internal.LaunchComponent"),
+        PUSH_UI(fqn = "com.actito.push.ui.internal.LaunchComponent"),
+        INBOX(fqn = "com.actito.inbox.internal.LaunchComponent"),
+        ASSETS(fqn = "com.actito.assets.internal.LaunchComponent"),
+        SCANNABLES(fqn = "com.actito.scannables.internal.LaunchComponent"),
+        GEO(fqn = "com.actito.geo.internal.LaunchComponent"),
+        LOYALTY(fqn = "com.actito.loyalty.internal.LaunchComponent"),
+        IN_APP_MESSAGING(fqn = "com.actito.iam.internal.LaunchComponent"),
+        USER_INBOX(fqn = "com.actito.inbox.user.internal.LaunchComponent");
 
         @InternalActitoApi
         public val isAvailable: Boolean

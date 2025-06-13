@@ -1,29 +1,24 @@
-package com.actito.inbox.internal
+package com.actito.assets.internal
 
 import android.content.SharedPreferences
 import com.actito.Actito
-import com.actito.inbox.internal.database.InboxDatabase
 import com.actito.internal.ActitoLaunchComponent
 
-public class InboxLaunchComponent : ActitoLaunchComponent {
+public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op
     }
 
     override fun configure() {
         logger.hasDebugLoggingEnabled = checkNotNull(Actito.options).debugLoggingEnabled
-
-        ActitoInboxImpl.database = InboxDatabase.create(Actito.requireContext())
-
-        ActitoInboxImpl.reloadLiveItems()
     }
 
     override suspend fun clearStorage() {
-        ActitoInboxImpl.database.inbox().clear()
+        // no-op
     }
 
     override suspend fun launch() {
-        ActitoInboxImpl.sync()
+        // no-op
     }
 
     override suspend fun postLaunch() {
@@ -31,9 +26,7 @@ public class InboxLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun unlaunch() {
-        ActitoInboxImpl.clearLocalInbox()
-        ActitoInboxImpl.clearNotificationCenter()
-        ActitoInboxImpl.clearRemoteInbox()
+        // no-op
     }
 
     override suspend fun executeCommand(command: String, data: Any?) {

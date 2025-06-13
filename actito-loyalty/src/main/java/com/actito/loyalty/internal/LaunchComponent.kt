@@ -7,7 +7,7 @@ import com.actito.ActitoCallback
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.models.ActitoNotification
 
-public class LoyaltyLaunchComponent : ActitoLaunchComponent {
+public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op
     }

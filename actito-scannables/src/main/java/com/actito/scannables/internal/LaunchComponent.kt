@@ -1,10 +1,10 @@
-package com.actito.push.ui.internal
+package com.actito.scannables.internal
 
 import android.content.SharedPreferences
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
 
-public class PushUILaunchComponent : ActitoLaunchComponent {
+public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op
     }

@@ -1,10 +1,10 @@
-package com.actito.assets.internal
+package com.actito.push.ui.internal
 
 import android.content.SharedPreferences
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
 
-public class AssetsLaunchComponent : ActitoLaunchComponent {
+public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op
     }

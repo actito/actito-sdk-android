@@ -10,7 +10,7 @@ import com.actito.push.automaticDefaultChannelEnabled
 import com.actito.push.ktx.INTENT_ACTION_REMOTE_MESSAGE_OPENED
 import org.json.JSONObject
 
-public class PushLaunchComponent : ActitoLaunchComponent {
+public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         val preferences = ActitoSharedPreferences(Actito.requireContext())
 
