@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import com.actito.Actito
+import com.actito.geo.ActitoGeo
 import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION
 import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_LOCATION_UPDATED
-import com.actito.geo.ktx.geoInternal
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 import com.google.android.gms.location.LocationResult
@@ -43,16 +43,16 @@ internal class LocationReceiver : BroadcastReceiver() {
 
     private fun onLocationUpdated(location: Location) {
         logger.debug("Location updated = (${location.latitude}, ${location.longitude})")
-        Actito.geoInternal().handleLocationUpdate(location)
+        ActitoGeo.handleLocationUpdate(location)
     }
 
     private fun onRegionEnter(geofences: List<Geofence>) {
         logger.debug("Received a region enter event for ${geofences.size} geofences.")
-        Actito.geoInternal().handleRegionEnter(geofences.map { it.requestId })
+        ActitoGeo.handleRegionEnter(geofences.map { it.requestId })
     }
 
     private fun onRegionExit(geofences: List<Geofence>) {
         logger.debug("Received a region exit event for ${geofences.size} geofences.")
-        Actito.geoInternal().handleRegionExit(geofences.map { it.requestId })
+        ActitoGeo.handleRegionExit(geofences.map { it.requestId })
     }
 }
