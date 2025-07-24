@@ -270,6 +270,7 @@ public object Actito {
     /**
      * Launches the Actito SDK, and all the additional available modules, preparing them for use.
      */
+    @JvmSynthetic
     public suspend fun launch(): Unit = withContext(Dispatchers.IO) {
         if (state == ActitoLaunchState.NONE) {
             logger.warning("Actito.configure() has never been called. Cannot launch.")
@@ -372,6 +373,7 @@ public object Actito {
      * This method shuts down the SDK, removing all data, both locally and remotely in
      * the servers. It destroys all the device's data permanently.
      */
+    @JvmSynthetic
     public suspend fun unlaunch(): Unit = withContext(Dispatchers.IO) {
         if (!isReady) {
             logger.warning("Cannot un-launch Actito before it has been launched.")
@@ -468,6 +470,7 @@ public object Actito {
      *
      * @return The [ActitoApplication] metadata.
      */
+    @JvmSynthetic
     public suspend fun fetchApplication(): ActitoApplication = withContext(Dispatchers.IO) {
         fetchApplication(saveToSharedPreferences = true)
     }
@@ -487,6 +490,7 @@ public object Actito {
      * @param id The ID of the notification to fetch.
      * @return The [ActitoNotification] object associated with the provided ID.
      */
+    @JvmSynthetic
     public suspend fun fetchNotification(id: String): ActitoNotification = withContext(Dispatchers.IO) {
         if (!isConfigured) throw ActitoNotConfiguredException()
 
@@ -513,6 +517,7 @@ public object Actito {
      * @param uri The URI to fetch the dynamic link from.
      * @return The [ActitoDynamicLink] object.
      */
+    @JvmSynthetic
     public suspend fun fetchDynamicLink(uri: Uri): ActitoDynamicLink = withContext(Dispatchers.IO) {
         if (!isConfigured) throw ActitoNotConfiguredException()
 
@@ -549,6 +554,7 @@ public object Actito {
      * @param media An optional media file to attach with the reply.
      * @param mimeType The MIME type of the media.
      */
+    @JvmSynthetic
     public suspend fun createNotificationReply(
         notification: ActitoNotification,
         action: ActitoNotification.Action,
@@ -588,6 +594,7 @@ public object Actito {
      * @param uri The webhook URI.
      * @param data The data to send in the request.
      */
+    @JvmSynthetic
     public suspend fun callNotificationReplyWebhook(
         uri: Uri,
         data: Map<String, String>,
@@ -620,6 +627,7 @@ public object Actito {
      * @param contentType The MIME type of the asset.
      * @return The URL of the uploaded asset.
      */
+    @JvmSynthetic
     public suspend fun uploadNotificationReplyAsset(
         payload: ByteArray,
         contentType: String,
@@ -768,6 +776,7 @@ public object Actito {
      *
      * @return `true` if a deferred link can be evaluated, `false` otherwise.
      */
+    @JvmSynthetic
     public suspend fun canEvaluateDeferredLink(): Boolean = withContext(Dispatchers.IO) {
         if (sharedPreferences.deferredLinkChecked != false) {
             return@withContext false
@@ -798,6 +807,7 @@ public object Actito {
      *
      * @return `true` if the deferred link was successfully evaluated, `false` otherwise.
      */
+    @JvmSynthetic
     public suspend fun evaluateDeferredLink(): Boolean = withContext(Dispatchers.IO) {
         if (sharedPreferences.deferredLinkChecked != false) {
             logger.debug("Deferred link already evaluated.")
