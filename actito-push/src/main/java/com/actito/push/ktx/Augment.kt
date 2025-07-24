@@ -1,14 +1,10 @@
 package com.actito.push.ktx
 
 import com.actito.Actito
-import com.actito.ActitoInternalEventsModule
-import com.actito.ktx.events
 import com.actito.push.ActitoPush
 
 @Suppress("unused")
 public fun Actito.push(): ActitoPush = ActitoPush
-
-internal fun Actito.eventsInternal(): ActitoInternalEventsModule = events() as ActitoInternalEventsModule
 
 // region Intent actions
 

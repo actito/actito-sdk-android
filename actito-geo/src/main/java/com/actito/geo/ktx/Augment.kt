@@ -1,15 +1,11 @@
 package com.actito.geo.ktx
 
 import com.actito.Actito
-import com.actito.ActitoInternalEventsModule
 import com.actito.InternalActitoApi
 import com.actito.geo.ActitoGeo
-import com.actito.ktx.events
 
 @Suppress("unused")
 public fun Actito.geo(): ActitoGeo = ActitoGeo
-
-internal fun Actito.eventsInternal(): ActitoInternalEventsModule = events() as ActitoInternalEventsModule
 
 // region Intent actions
 

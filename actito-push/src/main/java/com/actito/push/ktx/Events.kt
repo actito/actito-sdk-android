@@ -1,6 +1,5 @@
 package com.actito.push.ktx
 
-import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.ActitoEventsModule
 import com.actito.utilities.coroutines.toCallbackFunction
@@ -9,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 @Suppress("unused")
 public suspend fun ActitoEventsModule.logNotificationReceived(id: String): Unit = withContext(Dispatchers.IO) {
-    Actito.eventsInternal().log(
+    log(
         event = "re.notifica.event.notification.Receive",
         data = null,
         notificationId = id,
@@ -21,7 +20,7 @@ public fun ActitoEventsModule.logNotificationReceived(id: String, callback: Acti
 
 @Suppress("unused")
 public suspend fun ActitoEventsModule.logNotificationInfluenced(id: String): Unit = withContext(Dispatchers.IO) {
-    Actito.eventsInternal().log(
+    log(
         event = "re.notifica.event.notification.Influenced",
         data = null,
         notificationId = id,
@@ -33,7 +32,7 @@ public fun ActitoEventsModule.logNotificationInfluenced(id: String, callback: Ac
 
 @Suppress("unused")
 public suspend fun ActitoEventsModule.logPushRegistration(): Unit = withContext(Dispatchers.IO) {
-    Actito.eventsInternal().log(
+    log(
         event = "re.notifica.event.push.Registration",
         data = null,
         notificationId = null,
