@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.actito.internal.logger
-import com.actito.ktx.deviceImplementation
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -25,7 +24,7 @@ internal class ActitoSystemIntentReceiver : BroadcastReceiver() {
 
         actitoCoroutineScope.launch {
             try {
-                Actito.deviceImplementation().updateTimeZone()
+                ActitoDeviceModule.updateTimeZone()
                 logger.debug("Successfully updated device time zone.")
             } catch (e: Exception) {
                 logger.error("Failed to update device time zone.", e)
@@ -40,9 +39,9 @@ internal class ActitoSystemIntentReceiver : BroadcastReceiver() {
 
         actitoCoroutineScope.launch {
             try {
-                Actito.deviceImplementation().updateLanguage(
-                    language = Actito.deviceImplementation().getDeviceLanguage(),
-                    region = Actito.deviceImplementation().getDeviceRegion(),
+                ActitoDeviceModule.updateLanguage(
+                    language = ActitoDeviceModule.getDeviceLanguage(),
+                    region = ActitoDeviceModule.getDeviceRegion(),
                 )
 
                 logger.debug("Successfully updated device locale.")

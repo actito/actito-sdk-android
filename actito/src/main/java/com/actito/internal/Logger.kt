@@ -2,10 +2,10 @@ package com.actito.internal
 
 import com.actito.Actito
 import com.actito.ActitoConfigurationProvider
-import com.actito.internal.modules.ActitoCrashReporterModuleImpl
-import com.actito.internal.modules.ActitoDeviceModuleImpl
-import com.actito.internal.modules.ActitoEventsModuleImpl
-import com.actito.internal.modules.ActitoSessionModuleImpl
+import com.actito.ActitoDeviceModule
+import com.actito.ActitoEventsModule
+import com.actito.internal.modules.ActitoCrashReporterModule
+import com.actito.internal.modules.ActitoSessionModule
 import com.actito.utilities.logging.ActitoLogger
 
 internal val logger = ActitoLogger(
@@ -14,9 +14,9 @@ internal val logger = ActitoLogger(
     labelClassIgnoreList = listOf(
         Actito::class,
         ActitoConfigurationProvider::class,
-        ActitoCrashReporterModuleImpl::class,
-        ActitoDeviceModuleImpl::class,
-        ActitoEventsModuleImpl::class,
-        ActitoSessionModuleImpl::class,
+        ActitoCrashReporterModule::class,
+        ActitoDeviceModule::class,
+        ActitoEventsModule::class,
+        ActitoSessionModule::class,
     )
 }

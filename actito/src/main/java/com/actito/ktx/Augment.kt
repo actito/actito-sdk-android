@@ -3,23 +3,17 @@ package com.actito.ktx
 import com.actito.Actito
 import com.actito.ActitoDeviceModule
 import com.actito.ActitoEventsModule
-import com.actito.internal.modules.ActitoCrashReporterModuleImpl
-import com.actito.internal.modules.ActitoDeviceModuleImpl
-import com.actito.internal.modules.ActitoEventsModuleImpl
-import com.actito.internal.modules.ActitoSessionModuleImpl
+import com.actito.internal.modules.ActitoCrashReporterModule
+import com.actito.internal.modules.ActitoSessionModule
 
 @Suppress("unused")
-public fun Actito.device(): ActitoDeviceModule = ActitoDeviceModuleImpl
+public fun Actito.device(): ActitoDeviceModule = ActitoDeviceModule
 
 @Suppress("unused")
-public fun Actito.events(): ActitoEventsModule = ActitoEventsModuleImpl
-
-internal fun Actito.deviceImplementation(): ActitoDeviceModuleImpl = device() as ActitoDeviceModuleImpl
-
-internal fun Actito.eventsImplementation(): ActitoEventsModuleImpl = events() as ActitoEventsModuleImpl
+public fun Actito.events(): ActitoEventsModule = ActitoEventsModule
 
 @Suppress("unused")
-internal fun Actito.session(): ActitoSessionModuleImpl = ActitoSessionModuleImpl
+internal fun Actito.session(): ActitoSessionModule = ActitoSessionModule
 
 @Suppress("unused")
-internal fun Actito.crashReporter(): ActitoCrashReporterModuleImpl = ActitoCrashReporterModuleImpl
+internal fun Actito.crashReporter(): ActitoCrashReporterModule = ActitoCrashReporterModule

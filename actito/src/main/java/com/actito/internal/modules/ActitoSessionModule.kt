@@ -7,8 +7,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Keep
 import com.actito.Actito
+import com.actito.ActitoEventsModule
 import com.actito.internal.logger
-import com.actito.ktx.eventsImplementation
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ import java.util.Locale
 import java.util.UUID
 
 @Keep
-internal object ActitoSessionModuleImpl {
+internal object ActitoSessionModule {
 
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = Runnable {
@@ -43,15 +43,15 @@ internal object ActitoSessionModuleImpl {
         val sessionId = UUID.randomUUID().toString()
         val sessionStart = Date()
 
-        this@ActitoSessionModuleImpl.sessionId = sessionId
-        this@ActitoSessionModuleImpl.sessionEnd = null
-        this@ActitoSessionModuleImpl.sessionStart = sessionStart
+        this@ActitoSessionModule.sessionId = sessionId
+        this@ActitoSessionModule.sessionEnd = null
+        this@ActitoSessionModule.sessionStart = sessionStart
 
         val format = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         logger.debug("Session '$sessionId' started at ${format.format(sessionStart)}")
 
         try {
-            Actito.eventsImplementation().logApplicationOpen(
+            ActitoEventsModule.logApplicationOpen(
                 sessionId = sessionId,
             )
         } catch (e: Exception) {
@@ -65,15 +65,15 @@ internal object ActitoSessionModuleImpl {
         val sessionStart = sessionStart ?: return@withContext
         val sessionEnd = sessionEnd ?: return@withContext
 
-        this@ActitoSessionModuleImpl.sessionId = null
-        this@ActitoSessionModuleImpl.sessionStart = null
-        this@ActitoSessionModuleImpl.sessionEnd = null
+        this@ActitoSessionModule.sessionId = null
+        this@ActitoSessionModule.sessionStart = null
+        this@ActitoSessionModule.sessionEnd = null
 
         val format = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         logger.debug("Session '$sessionId' stopped at ${format.format(sessionEnd)}")
 
         try {
-            Actito.eventsImplementation().logApplicationClose(
+            ActitoEventsModule.logApplicationClose(
                 sessionId = sessionId,
                 sessionLength = (sessionEnd.time - sessionStart.time) / 1000.toDouble(),
             )

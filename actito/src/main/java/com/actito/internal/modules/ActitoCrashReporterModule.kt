@@ -2,12 +2,12 @@ package com.actito.internal.modules
 
 import androidx.annotation.Keep
 import com.actito.Actito
+import com.actito.ActitoEventsModule
 import com.actito.internal.logger
 import com.actito.ktx.device
-import com.actito.ktx.eventsImplementation
 
 @Keep
-internal object ActitoCrashReporterModuleImpl {
+internal object ActitoCrashReporterModule {
 
     internal var defaultUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
     internal val uncaughtExceptionHandler = Thread.UncaughtExceptionHandler { thread: Thread, throwable: Throwable ->
@@ -19,7 +19,7 @@ internal object ActitoCrashReporterModuleImpl {
         }
 
         // Save the crash report to be processed when the app recovers.
-        val event = Actito.eventsImplementation().createThrowableEvent(throwable, device)
+        val event = ActitoEventsModule.createThrowableEvent(throwable, device)
         Actito.sharedPreferences.crashReport = event
         logger.debug("Saved crash report in storage to upload on next start.")
 
