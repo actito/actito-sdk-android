@@ -2,6 +2,7 @@ package com.actito.iam.internal
 
 import android.content.SharedPreferences
 import com.actito.Actito
+import com.actito.iam.ActitoInAppMessaging
 import com.actito.internal.ActitoLaunchComponent
 
 public class LaunchComponent : ActitoLaunchComponent {
@@ -19,7 +20,7 @@ public class LaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        ActitoInAppMessagingImpl.evaluateContext(ApplicationContext.LAUNCH)
+        ActitoInAppMessaging.evaluateContext(ApplicationContext.LAUNCH)
     }
 
     override suspend fun postLaunch() {

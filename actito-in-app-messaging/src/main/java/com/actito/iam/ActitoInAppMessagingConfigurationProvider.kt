@@ -5,9 +5,7 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
-import com.actito.Actito
 import com.actito.iam.internal.logger
-import com.actito.iam.ktx.inAppMessagingImplementation
 
 /**
  * Auto configuration during application startup.
@@ -22,7 +20,7 @@ internal class ActitoInAppMessagingConfigurationProvider : ContentProvider() {
         val application = context.applicationContext as Application
 
         logger.info("Configuring in-app messaging lifecycle listeners.")
-        Actito.inAppMessagingImplementation().setupLifecycleListeners(application)
+        ActitoInAppMessaging.setupLifecycleListeners(application)
 
         return true
     }

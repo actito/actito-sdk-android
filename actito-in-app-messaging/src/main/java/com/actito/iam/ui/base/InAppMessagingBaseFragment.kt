@@ -10,10 +10,10 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.actito.Actito
+import com.actito.iam.ActitoInAppMessaging
 import com.actito.iam.internal.caching.ActitoImageCache
 import com.actito.iam.internal.logger
 import com.actito.iam.ktx.INTENT_EXTRA_IN_APP_MESSAGE
-import com.actito.iam.ktx.inAppMessagingImplementation
 import com.actito.iam.ktx.logInAppMessageActionClicked
 import com.actito.iam.ktx.logInAppMessageViewed
 import com.actito.iam.models.ActitoInAppMessage
@@ -142,7 +142,7 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
                 logger.info("In-app message action '${actionType.rawValue}' successfully processed.")
 
                 onMainThread {
-                    Actito.inAppMessagingImplementation().lifecycleListeners.forEach {
+                    ActitoInAppMessaging.lifecycleListeners.forEach {
                         it.get()?.onActionExecuted(message, action)
                     }
                 }
@@ -152,7 +152,7 @@ public abstract class InAppMessagingBaseFragment : Fragment() {
                 logger.warning("Could not find an activity capable of opening the URL.", e)
 
                 onMainThread {
-                    Actito.inAppMessagingImplementation().lifecycleListeners.forEach {
+                    ActitoInAppMessaging.lifecycleListeners.forEach {
                         it.get()?.onActionFailedToExecute(message, action, e)
                     }
                 }
