@@ -11,7 +11,6 @@ import androidx.core.view.isVisible
 import com.actito.Actito
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.databinding.ActitoNotificationActivityBinding
-import com.actito.push.ui.ktx.pushUIImplementation
 import com.actito.push.ui.notifications.NotificationContainerFragment
 import com.actito.utilities.parcel.parcelable
 import com.actito.utilities.threading.onMainThread
@@ -82,7 +81,7 @@ public open class NotificationActivity : AppCompatActivity(), NotificationContai
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             onMainThread {
-                Actito.pushUIImplementation().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationFinishedPresenting(notification)
                 }
             }
@@ -98,7 +97,7 @@ public open class NotificationActivity : AppCompatActivity(), NotificationContai
         super.finish()
 
         onMainThread {
-            Actito.pushUIImplementation().lifecycleListeners.forEach {
+            ActitoPushUI.lifecycleListeners.forEach {
                 it.get()?.onNotificationFinishedPresenting(notification)
             }
         }

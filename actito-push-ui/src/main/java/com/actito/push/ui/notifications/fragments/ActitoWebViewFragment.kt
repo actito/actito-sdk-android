@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
-import com.actito.Actito
 import com.actito.models.ActitoNotification
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.databinding.ActitoNotificationWebViewFragmentBinding
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.utils.NotificationWebViewClient
 import com.actito.utilities.threading.onMainThread
@@ -41,7 +40,7 @@ public class ActitoWebViewFragment : NotificationFragment() {
         val content = notification.content.firstOrNull { it.type == ActitoNotification.Content.TYPE_HTML }
         val html = content?.data as? String ?: run {
             onMainThread {
-                Actito.pushUIInternal().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationFailedToPresent(notification)
                 }
             }

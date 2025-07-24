@@ -20,11 +20,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.actito.Actito
 import com.actito.models.ActitoNotification
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.R
 import com.actito.push.ui.databinding.ActitoNotificationContainerFragmentBinding
 import com.actito.push.ui.internal.logger
-import com.actito.push.ui.ktx.pushUIImplementation
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.models.ActitoPendingResult
 import com.actito.push.ui.notifications.fragments.ActitoCallbackActionFragment
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
@@ -125,7 +124,7 @@ public class NotificationContainerFragment :
         if (savedInstanceState != null) return
 
         val type = ActitoNotification.NotificationType.from(notification.type)
-        val fragmentClassName = Actito.pushUIImplementation().getFragmentCanonicalClassName(notification)
+        val fragmentClassName = ActitoPushUI.getFragmentCanonicalClassName(notification)
 
         val fragment = fragmentClassName?.let {
             try {
@@ -227,7 +226,7 @@ public class NotificationContainerFragment :
             return
         }
 
-        val actionHandler = Actito.pushUIImplementation().createActionHandler(
+        val actionHandler = ActitoPushUI.createActionHandler(
             activity = requireActivity(),
             notification = notification,
             action = action,
@@ -241,7 +240,7 @@ public class NotificationContainerFragment :
                 callback.onNotificationFragmentStartProgress(notification)
 
                 onMainThread {
-                    Actito.pushUIInternal().lifecycleListeners.forEach {
+                    ActitoPushUI.lifecycleListeners.forEach {
                         it.get()?.onActionWillExecute(notification, action)
                     }
                 }
@@ -265,7 +264,7 @@ public class NotificationContainerFragment :
 
                         onMainThread {
                             val error = Exception(requireContext().getString(R.string.actito_action_camera_failed))
-                            Actito.pushUIInternal().lifecycleListeners.forEach {
+                            ActitoPushUI.lifecycleListeners.forEach {
                                 it.get()?.onActionFailedToExecute(
                                     notification,
                                     action,
@@ -293,7 +292,7 @@ public class NotificationContainerFragment :
                 callback.onNotificationFragmentActionFailed(notification, e.localizedMessage)
 
                 onMainThread {
-                    Actito.pushUIInternal().lifecycleListeners.forEach {
+                    ActitoPushUI.lifecycleListeners.forEach {
                         it.get()?.onActionFailedToExecute(notification, action, e)
                     }
                 }

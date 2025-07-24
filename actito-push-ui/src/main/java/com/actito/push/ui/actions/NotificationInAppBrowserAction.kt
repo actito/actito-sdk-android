@@ -4,10 +4,9 @@ import android.content.Context
 import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.models.ActitoNotification
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.R
 import com.actito.push.ui.actions.base.NotificationAction
-import com.actito.push.ui.ktx.pushUIImplementation
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.models.ActitoPendingResult
 import com.actito.utilities.threading.onMainThread
 import kotlinx.coroutines.Dispatchers
@@ -23,12 +22,12 @@ internal class NotificationInAppBrowserAction(
         val uri = action.target?.toUri()
 
         if (uri != null) {
-            Actito.pushUIImplementation().createInAppBrowser().launchUrl(context, uri)
+            ActitoPushUI.createInAppBrowser().launchUrl(context, uri)
 
             Actito.createNotificationReply(notification, action)
 
             onMainThread {
-                Actito.pushUIInternal().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onActionExecuted(notification, action)
                 }
             }

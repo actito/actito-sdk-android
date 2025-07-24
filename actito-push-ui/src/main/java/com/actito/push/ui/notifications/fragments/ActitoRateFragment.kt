@@ -8,8 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Keep
 import androidx.core.net.toUri
-import com.actito.Actito
-import com.actito.push.ui.ktx.pushUIInternal
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.utilities.threading.onMainThread
 
@@ -26,7 +25,7 @@ public class ActitoRateFragment : NotificationFragment() {
                 callback.onNotificationFragmentFinished()
 
                 onMainThread {
-                    Actito.pushUIInternal().lifecycleListeners.forEach {
+                    ActitoPushUI.lifecycleListeners.forEach {
                         it.get()?.onNotificationPresented(
                             notification,
                         )
@@ -40,7 +39,7 @@ public class ActitoRateFragment : NotificationFragment() {
                 callback.onNotificationFragmentFinished()
 
                 onMainThread {
-                    Actito.pushUIInternal().lifecycleListeners.forEach {
+                    ActitoPushUI.lifecycleListeners.forEach {
                         it.get()?.onNotificationFailedToPresent(
                             notification,
                         )

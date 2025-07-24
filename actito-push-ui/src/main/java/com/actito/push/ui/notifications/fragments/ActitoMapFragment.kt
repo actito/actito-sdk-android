@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.models.ActitoNotification
-import com.actito.push.ui.ktx.pushUIInternal
+import com.actito.push.ui.ActitoPushUI
 import com.actito.utilities.parcel.parcelable
 import com.actito.utilities.threading.onMainThread
 import com.actito.utilities.view.waitForLayout
@@ -71,7 +71,7 @@ public class ActitoMapFragment : SupportMapFragment(), OnMapReadyCallback {
         configureMapZoom(map)
 
         onMainThread {
-            Actito.pushUIInternal().lifecycleListeners.forEach {
+            ActitoPushUI.lifecycleListeners.forEach {
                 it.get()?.onNotificationPresented(
                     notification,
                 )
