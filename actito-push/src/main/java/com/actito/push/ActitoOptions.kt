@@ -1,13 +1,12 @@
 package com.actito.push
 
 import com.actito.internal.ActitoOptions
-import com.actito.push.internal.ActitoPushImpl
 
 public val ActitoOptions.defaultChannelId: String
     get() {
         return metadata.getString(
             "com.actito.push.default_channel_id",
-            ActitoPushImpl.DEFAULT_NOTIFICATION_CHANNEL_ID,
+            ActitoPush.DEFAULT_NOTIFICATION_CHANNEL_ID,
         )
     }
 
