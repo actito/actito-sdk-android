@@ -143,6 +143,7 @@ public object ActitoPush {
      * This property returns `true` if remote notifications are enabled for the application, and `false` otherwise.
      */
     @JvmStatic
+    @get:JvmName("hasRemoteNotificationsEnabled")
     public val hasRemoteNotificationsEnabled: Boolean
         get() {
             if (::sharedPreferences.isInitialized) {

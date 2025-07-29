@@ -56,6 +56,7 @@ public object ActitoInAppMessaging {
      * When `false`, in-app messages are allowed to be presented.
      */
     @JvmStatic
+    @get:JvmName("hasMessagesSuppressed")
     public var hasMessagesSuppressed: Boolean = false
 
     /**

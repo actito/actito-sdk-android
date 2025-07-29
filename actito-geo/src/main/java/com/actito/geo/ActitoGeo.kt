@@ -295,6 +295,7 @@ public object ActitoGeo {
      * This property returns `true` if the location services are enabled by the application, and `false` otherwise.
      */
     @JvmStatic
+    @get:JvmName("hasLocationServicesEnabled")
     public var hasLocationServicesEnabled: Boolean
         get() {
             if (::localStorage.isInitialized) {
@@ -315,6 +316,7 @@ public object ActitoGeo {
      * otherwise.
      */
     @JvmStatic
+    @get:JvmName("hasBluetoothEnabled")
     public var hasBluetoothEnabled: Boolean
         get() {
             if (::localStorage.isInitialized) {

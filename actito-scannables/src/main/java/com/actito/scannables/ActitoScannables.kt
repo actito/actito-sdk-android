@@ -31,6 +31,7 @@ public object ActitoScannables {
      * Returns `true` if the device supports NFC scanning, otherwise `false`.
      */
     @JvmStatic
+    @get:JvmName("canStartNfcScannableSession")
     public val canStartNfcScannableSession: Boolean
         get() {
             if (!Actito.isConfigured) {
