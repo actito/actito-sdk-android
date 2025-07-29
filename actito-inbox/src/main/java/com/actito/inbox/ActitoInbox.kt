@@ -130,7 +130,6 @@ public object ActitoInbox {
      * A [StateFlow] object for collecting changes to inbox items, suitable for real-time UI updates to reflect inbox
      * state changes.
      */
-    @JvmSynthetic
     public val itemsStream: StateFlow<SortedSet<ActitoInboxItem>> = _itemsStream
 
     /**
@@ -144,7 +143,6 @@ public object ActitoInbox {
      * A [StateFlow] object for collecting changes to the badge count, providing real-time updates when the unread count
      * changes.
      */
-    @JvmSynthetic
     public val badgeStream: StateFlow<Int> = _badgeStream
 
     /**
@@ -177,7 +175,6 @@ public object ActitoInbox {
      * @param item The [ActitoInboxItem] to open.
      * @return The [ActitoNotification] associated with the inbox item.
      */
-    @JvmSynthetic
     public suspend fun open(item: ActitoInboxItem): ActitoNotification = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -222,7 +219,6 @@ public object ActitoInbox {
      *
      * @param item The [ActitoInboxItem] to mark as read.
      */
-    @JvmSynthetic
     public suspend fun markAsRead(item: ActitoInboxItem): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -254,7 +250,6 @@ public object ActitoInbox {
     /**
      * Marks all inbox items as read.
      */
-    @JvmSynthetic
     public suspend fun markAllAsRead(): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -284,7 +279,6 @@ public object ActitoInbox {
      *
      * @param item The [ActitoInboxItem] to remove.
      */
-    @JvmSynthetic
     public suspend fun remove(item: ActitoInboxItem): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -312,7 +306,6 @@ public object ActitoInbox {
     /**
      * Clears all inbox items, permanently deleting them from the inbox.
      */
-    @JvmSynthetic
     public suspend fun clear(): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 

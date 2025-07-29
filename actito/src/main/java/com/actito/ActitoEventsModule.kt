@@ -45,7 +45,6 @@ public object ActitoEventsModule {
      *
      * @param throwable The exception instance to be logged.
      */
-    @JvmSynthetic
     public suspend fun logApplicationException(throwable: Throwable) {
         val device = Actito.device().currentDevice
             ?: throw ActitoDeviceUnavailableException()
@@ -75,7 +74,6 @@ public object ActitoEventsModule {
      *
      * @param id The unique identifier of the opened notification.
      */
-    @JvmSynthetic
     public suspend fun logNotificationOpen(id: String) {
         log(
             event = EVENT_NOTIFICATION_OPEN,
@@ -106,7 +104,6 @@ public object ActitoEventsModule {
      * @param event The name of the custom event to log.
      * @param data Optional structured event data for further details.
      */
-    @JvmSynthetic
     public suspend fun logCustom(event: String, data: ActitoEventData? = null) {
         if (!Actito.isReady) throw ActitoNotReadyException()
 

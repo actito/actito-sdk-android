@@ -248,7 +248,6 @@ public object ActitoPush {
      * This property returns a [StateFlow] that can be collected to track changes to the device's push subscription
      * token. The initial value is `null`, and it emits the token once it becomes available.
      */
-    @JvmSynthetic
     public val subscriptionStream: StateFlow<ActitoPushSubscription?> = _subscriptionStream
 
     /**
@@ -266,7 +265,6 @@ public object ActitoPush {
      * This property returns a [StateFlow] representation of [allowedUI] and can be collected to track any changes
      * to whether the device can receive remote notifications.
      */
-    @JvmSynthetic
     public val allowedUIStream: StateFlow<Boolean> = _allowedUIStream
 
     /**
@@ -278,7 +276,6 @@ public object ActitoPush {
      * **Note**: Starting with Android 13 (API level 33), this function requires the developer to explicitly request
      * the `POST_NOTIFICATIONS` permission from the user.
      */
-    @JvmSynthetic
     public suspend fun enableRemoteNotifications(): Unit = withContext(Dispatchers.IO) {
         if (!Actito.isReady) {
             logger.warning("Actito is not ready yet.")
@@ -328,7 +325,6 @@ public object ActitoPush {
      * This suspending function disables remote notifications for the application, preventing push notifications from
      * being received.
      */
-    @JvmSynthetic
     public suspend fun disableRemoteNotifications(): Unit = withContext(Dispatchers.IO) {
         // Keep track of the status in local storage.
         sharedPreferences.remoteNotificationsEnabled = false
@@ -439,7 +435,6 @@ public object ActitoPush {
      * @param activityId The ID of the live activity to register.
      * @param topics A list of topics to subscribe to (optional).
      */
-    @JvmSynthetic
     public suspend fun registerLiveActivity(
         activityId: String,
         topics: List<String> = listOf(),
@@ -487,7 +482,6 @@ public object ActitoPush {
      *
      * @param activityId The ID of the live activity to end.
      */
-    @JvmSynthetic
     public suspend fun endLiveActivity(activityId: String): Unit = withContext(Dispatchers.IO) {
         val device = Actito.device().currentDevice
             ?: throw ActitoDeviceUnavailableException()

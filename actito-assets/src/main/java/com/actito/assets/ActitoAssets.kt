@@ -27,7 +27,6 @@ public object ActitoAssets {
      *
      * @see [ActitoAsset] for the model class representing an asset.
      */
-    @JvmSynthetic
     public suspend fun fetch(group: String): List<ActitoAsset> = withContext(Dispatchers.IO) {
         checkPrerequisites()
 

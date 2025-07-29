@@ -102,7 +102,6 @@ public object ActitoDeviceModule {
         message = "Use updateUser() instead.",
         replaceWith = ReplaceWith("updateUser(userId, userName)"),
     )
-    @JvmSynthetic
     public suspend fun register(userId: String?, userName: String?): Unit = withContext(Dispatchers.IO) {
         updateUser(
             userId = userId,
@@ -136,7 +135,6 @@ public object ActitoDeviceModule {
      * @param userId Optional user identifier.
      * @param userName Optional user name.
      */
-    @JvmSynthetic
     public suspend fun updateUser(userId: String?, userName: String?): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -176,7 +174,6 @@ public object ActitoDeviceModule {
      *
      * @param preferredLanguage The preferred language code.
      */
-    @JvmSynthetic
     public suspend fun updatePreferredLanguage(preferredLanguage: String?): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -221,7 +218,6 @@ public object ActitoDeviceModule {
      *
      * @return A list of tags currently associated with the device.
      */
-    @JvmSynthetic
     public suspend fun fetchTags(): List<String> = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -247,7 +243,6 @@ public object ActitoDeviceModule {
      *
      * @param tag The tag to add.
      */
-    @JvmSynthetic
     public suspend fun addTag(tag: String): Unit = withContext(Dispatchers.IO) {
         addTags(listOf(tag))
     }
@@ -267,7 +262,6 @@ public object ActitoDeviceModule {
      *
      * @param tags A list of tags to add.
      */
-    @JvmSynthetic
     public suspend fun addTags(tags: List<String>): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -292,7 +286,6 @@ public object ActitoDeviceModule {
      *
      * @param tag The tag to remove.
      */
-    @JvmSynthetic
     public suspend fun removeTag(tag: String): Unit = withContext(Dispatchers.IO) {
         removeTags(listOf(tag))
     }
@@ -312,7 +305,6 @@ public object ActitoDeviceModule {
      *
      * @param tags A list of tags to remove.
      */
-    @JvmSynthetic
     public suspend fun removeTags(tags: List<String>): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -335,7 +327,6 @@ public object ActitoDeviceModule {
     /**
      * Clears all tags from the device.
      */
-    @JvmSynthetic
     public suspend fun clearTags(): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -361,7 +352,6 @@ public object ActitoDeviceModule {
      *
      * @see [ActitoDoNotDisturb]
      */
-    @JvmSynthetic
     public suspend fun fetchDoNotDisturb(): ActitoDoNotDisturb? = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -395,7 +385,6 @@ public object ActitoDeviceModule {
      *
      * @see [ActitoDoNotDisturb]
      */
-    @JvmSynthetic
     public suspend fun updateDoNotDisturb(dnd: ActitoDoNotDisturb): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -428,7 +417,6 @@ public object ActitoDeviceModule {
     /**
      * Clears the "Do Not Disturb" (DND) settings for the device.
      */
-    @JvmSynthetic
     public suspend fun clearDoNotDisturb(): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -460,7 +448,6 @@ public object ActitoDeviceModule {
      *
      * @return The current user data.
      */
-    @JvmSynthetic
     public suspend fun fetchUserData(): ActitoUserData = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -491,7 +478,6 @@ public object ActitoDeviceModule {
      *
      * @param userData The updated user data to associate with the device.
      */
-    @JvmSynthetic
     public suspend fun updateUserData(userData: Map<String, String?>): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 

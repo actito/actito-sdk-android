@@ -73,7 +73,6 @@ public object ActitoUserInbox {
      * @see [ActitoUserInboxItem]
      * @see [ActitoNotification]
      */
-    @JvmSynthetic
     public suspend fun open(item: ActitoUserInboxItem): ActitoNotification = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -113,7 +112,6 @@ public object ActitoUserInbox {
      *
      * @see [ActitoUserInboxItem]
      */
-    @JvmSynthetic
     public suspend fun markAsRead(item: ActitoUserInboxItem): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -145,7 +143,6 @@ public object ActitoUserInbox {
      *
      * @param item The [ActitoUserInboxItem] to be removed.
      */
-    @JvmSynthetic
     public suspend fun remove(item: ActitoUserInboxItem): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 

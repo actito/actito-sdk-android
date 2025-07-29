@@ -58,7 +58,6 @@ public object ActitoLoyalty {
      *
      * @see [ActitoPass]
      */
-    @JvmSynthetic
     public suspend fun fetchPassBySerial(serial: String): ActitoPass = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -90,7 +89,6 @@ public object ActitoLoyalty {
      *
      * @see [ActitoPass]
      */
-    @JvmSynthetic
     public suspend fun fetchPassByBarcode(barcode: String): ActitoPass = withContext(Dispatchers.IO) {
         checkPrerequisites()
 

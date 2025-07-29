@@ -140,7 +140,6 @@ public object ActitoScannables {
      *
      * @see [ActitoScannable]
      */
-    @JvmSynthetic
     public suspend fun fetch(tag: String): ActitoScannable = withContext(Dispatchers.IO) {
         ActitoRequest.Builder()
             .get("/scannable/tag/${Uri.encode(tag)}")
