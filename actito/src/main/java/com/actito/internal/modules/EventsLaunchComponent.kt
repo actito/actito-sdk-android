@@ -1,6 +1,7 @@
 package com.actito.internal.modules
 
 import android.content.SharedPreferences
+import com.actito.ActitoEventsModule
 import com.actito.internal.ActitoLaunchComponent
 
 public class EventsLaunchComponent : ActitoLaunchComponent {
@@ -18,7 +19,7 @@ public class EventsLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        ActitoEventsModuleImpl.scheduleUploadWorker()
+        ActitoEventsModule.scheduleUploadWorker()
     }
 
     override suspend fun postLaunch() {

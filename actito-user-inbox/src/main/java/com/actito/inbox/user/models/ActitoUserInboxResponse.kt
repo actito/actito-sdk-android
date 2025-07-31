@@ -1,7 +1,7 @@
 package com.actito.inbox.user.models
 
 import android.os.Parcelable
-import com.actito.inbox.user.internal.ActitoUserInboxImpl.userInboxMoshi
+import com.actito.inbox.user.ActitoUserInbox.userInboxMoshi
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject

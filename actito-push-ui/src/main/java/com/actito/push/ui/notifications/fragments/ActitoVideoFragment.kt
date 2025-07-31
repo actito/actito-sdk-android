@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
-import com.actito.Actito
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.databinding.ActitoNotificationVideoFragmentBinding
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.utils.NotificationWebViewClient
 import com.actito.utilities.threading.onMainThread
@@ -45,7 +44,7 @@ public class ActitoVideoFragment : NotificationFragment() {
             "re.notifica.content.HTML5Video" -> getHtml5VideoHtml(content.data as String)
             else -> {
                 onMainThread {
-                    Actito.pushUIInternal().lifecycleListeners.forEach {
+                    ActitoPushUI.lifecycleListeners.forEach {
                         it.get()?.onNotificationFailedToPresent(
                             notification,
                         )

@@ -1,66 +1,58 @@
 package com.actito.geo.ktx
 
 import com.actito.Actito
-import com.actito.ActitoInternalEventsModule
 import com.actito.InternalActitoApi
 import com.actito.geo.ActitoGeo
-import com.actito.geo.ActitoInternalGeo
-import com.actito.geo.internal.ActitoGeoImpl
-import com.actito.ktx.events
 
 @Suppress("unused")
-public fun Actito.geo(): ActitoGeo = ActitoGeoImpl
-
-internal fun Actito.eventsInternal(): ActitoInternalEventsModule = events() as ActitoInternalEventsModule
-
-internal fun Actito.geoInternal(): ActitoInternalGeo = geo() as ActitoInternalGeo
+public fun Actito.geo(): ActitoGeo = ActitoGeo
 
 // region Intent actions
 
 @InternalActitoApi
 public val Actito.INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String
-    get() = "com.actito.intent.action.internal.LocationUpdated"
+    get() = Actito.geo().INTENT_ACTION_INTERNAL_LOCATION_UPDATED
 
 @InternalActitoApi
 public val Actito.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String
-    get() = "com.actito.intent.action.internal.GeofenceTransition"
+    get() = Actito.geo().INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION
 
 public val Actito.INTENT_ACTION_LOCATION_UPDATED: String
-    get() = "com.actito.intent.action.LocationUpdated"
+    get() = Actito.geo().INTENT_ACTION_LOCATION_UPDATED
 
 public val Actito.INTENT_ACTION_REGION_ENTERED: String
-    get() = "com.actito.intent.action.RegionEntered"
+    get() = Actito.geo().INTENT_ACTION_REGION_ENTERED
 
 public val Actito.INTENT_ACTION_REGION_EXITED: String
-    get() = "com.actito.intent.action.RegionExited"
+    get() = Actito.geo().INTENT_ACTION_REGION_EXITED
 
 public val Actito.INTENT_ACTION_BEACON_ENTERED: String
-    get() = "com.actito.intent.action.BeaconEntered"
+    get() = Actito.geo().INTENT_ACTION_BEACON_ENTERED
 
 public val Actito.INTENT_ACTION_BEACON_EXITED: String
-    get() = "com.actito.intent.action.BeaconExited"
+    get() = Actito.geo().INTENT_ACTION_BEACON_EXITED
 
 public val Actito.INTENT_ACTION_BEACONS_RANGED: String
-    get() = "com.actito.intent.action.BeaconsRanged"
+    get() = Actito.geo().INTENT_ACTION_BEACONS_RANGED
 
 public val Actito.INTENT_ACTION_BEACON_NOTIFICATION_OPENED: String
-    get() = "com.actito.intent.action.BeaconNotificationOpened"
+    get() = Actito.geo().INTENT_ACTION_BEACON_NOTIFICATION_OPENED
 
 // endregion
 
 // region Intent extras
 
 public val Actito.INTENT_EXTRA_LOCATION: String
-    get() = "com.actito.intent.extra.Location"
+    get() = Actito.geo().INTENT_EXTRA_LOCATION
 
 public val Actito.INTENT_EXTRA_REGION: String
-    get() = "com.actito.intent.extra.Region"
+    get() = Actito.geo().INTENT_EXTRA_REGION
 
 public val Actito.INTENT_EXTRA_BEACON: String
-    get() = "com.actito.intent.extra.Beacon"
+    get() = Actito.geo().INTENT_EXTRA_BEACON
 
 public val Actito.INTENT_EXTRA_RANGED_BEACONS: String
-    get() = "com.actito.intent.extra.RangedBeacons"
+    get() = Actito.geo().INTENT_EXTRA_RANGED_BEACONS
 
 // endregion
 

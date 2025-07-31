@@ -1,6 +1,5 @@
 package com.actito.geo.ktx
 
-import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.ActitoEventsModule
 import com.actito.geo.models.ActitoBeaconSession
@@ -17,7 +16,7 @@ internal suspend fun ActitoEventsModule.logRegionSession(
     val sessionEnd = session.end ?: Date()
     val sessionLength = (sessionEnd.time - session.start.time) / 1000.0
 
-    Actito.eventsInternal().log(
+    log(
         event = "re.notifica.event.region.Session",
         data = mapOf(
             "region" to session.regionId,
@@ -52,7 +51,7 @@ internal suspend fun ActitoEventsModule.logBeaconSession(
     val sessionEnd = session.end ?: Date()
     val sessionLength = (sessionEnd.time - session.start.time) / 1000.0
 
-    Actito.eventsInternal().log(
+    log(
         event = "re.notifica.event.beacon.Session",
         data = mapOf(
             "fence" to session.regionId,

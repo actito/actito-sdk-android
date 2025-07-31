@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.actito.Actito
 import com.actito.models.ActitoNotification
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.databinding.ActitoNotificationImageFragmentBinding
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.utilities.image.loadImage
 import com.actito.utilities.parcel.parcelable
@@ -34,13 +33,13 @@ public class ActitoImageFragment : NotificationFragment() {
 
         if (notification.content.isEmpty()) {
             onMainThread {
-                Actito.pushUIInternal().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationFailedToPresent(notification)
                 }
             }
         } else {
             onMainThread {
-                Actito.pushUIInternal().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationPresented(notification)
                 }
             }

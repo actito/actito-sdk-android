@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.internal.ActitoLaunchComponent
+import com.actito.loyalty.ActitoLoyalty
 import com.actito.models.ActitoNotification
 
 public class LaunchComponent : ActitoLaunchComponent {
@@ -39,7 +40,7 @@ public class LaunchComponent : ActitoLaunchComponent {
             val notification = map["notification"] as ActitoNotification
             val callback = map["callback"] as ActitoCallback<Unit>
 
-            ActitoLoyaltyImpl.handlePassPresentation(activity, notification, callback)
+            ActitoLoyalty.handlePassPresentation(activity, notification, callback)
         }
 
         else -> throw UnsupportedOperationException("Function '$command' not supported in Loyalty Implementation")

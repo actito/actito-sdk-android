@@ -27,7 +27,6 @@ import com.actito.internal.storage.SharedPreferencesMigration
 import com.actito.internal.storage.database.ActitoDatabase
 import com.actito.internal.storage.preferences.ActitoSharedPreferences
 import com.actito.ktx.device
-import com.actito.ktx.deviceImplementation
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
@@ -396,7 +395,7 @@ public object Actito {
         }
 
         logger.debug("Removing device.")
-        deviceImplementation().delete()
+        ActitoDeviceModule.delete()
 
         logger.info("Un-launched Actito.")
         state = ActitoLaunchState.CONFIGURED
@@ -712,7 +711,7 @@ public object Actito {
     public fun handleTestDeviceIntent(intent: Intent): Boolean {
         val nonce = parseTestDeviceNonce(intent) ?: return false
 
-        deviceImplementation().registerTestDevice(
+        ActitoDeviceModule.registerTestDevice(
             nonce,
             object : ActitoCallback<Unit> {
                 override fun onSuccess(result: Unit) {

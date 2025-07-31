@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import androidx.core.net.toUri
-import com.actito.Actito
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.databinding.ActitoNotificationUrlFragmentBinding
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.utils.NotificationWebViewClient
 import com.actito.push.ui.utils.removeQueryParameter
@@ -42,7 +41,7 @@ public class ActitoUrlFragment : NotificationFragment() {
         val content = notification.content.firstOrNull()
         val urlStr = content?.data as? String ?: run {
             onMainThread {
-                Actito.pushUIInternal().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationFailedToPresent(notification)
                 }
             }

@@ -6,7 +6,6 @@ import com.actito.push.internal.ActitoSystemRemoteMessage
 import com.actito.push.internal.ActitoUnknownRemoteMessage
 import com.actito.push.internal.logger
 import com.actito.push.ktx.push
-import com.actito.push.ktx.pushInternal
 import com.actito.push.models.ActitoTransport
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -14,7 +13,7 @@ import com.google.firebase.messaging.RemoteMessage
 public open class ActitoFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
-        Actito.pushInternal().handleNewToken(ActitoTransport.GCM, token)
+        ActitoPush.handleNewToken(ActitoTransport.GCM, token)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
@@ -36,16 +35,16 @@ public open class ActitoFirebaseMessagingService : FirebaseMessagingService() {
                 message.data["system"]?.toBoolean() ?: false
 
             if (isSystemNotification) {
-                Actito.pushInternal().handleRemoteMessage(
+                ActitoPush.handleRemoteMessage(
                     ActitoSystemRemoteMessage(message),
                 )
             } else {
-                Actito.pushInternal().handleRemoteMessage(
+                ActitoPush.handleRemoteMessage(
                     ActitoNotificationRemoteMessage(message),
                 )
             }
         } else {
-            Actito.pushInternal().handleRemoteMessage(
+            ActitoPush.handleRemoteMessage(
                 ActitoUnknownRemoteMessage(message),
             )
         }

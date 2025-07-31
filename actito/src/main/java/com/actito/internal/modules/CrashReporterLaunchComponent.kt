@@ -2,9 +2,9 @@ package com.actito.internal.modules
 
 import android.content.SharedPreferences
 import com.actito.Actito
+import com.actito.ActitoEventsModule
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.logger
-import com.actito.ktx.eventsImplementation
 
 public class CrashReporterLaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
@@ -13,8 +13,8 @@ public class CrashReporterLaunchComponent : ActitoLaunchComponent {
 
     override fun configure() {
         if (checkNotNull(Actito.options).crashReportsEnabled) {
-            ActitoCrashReporterModuleImpl.defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-            Thread.setDefaultUncaughtExceptionHandler(ActitoCrashReporterModuleImpl.uncaughtExceptionHandler)
+            ActitoCrashReporterModule.defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+            Thread.setDefaultUncaughtExceptionHandler(ActitoCrashReporterModule.uncaughtExceptionHandler)
         }
     }
 
@@ -29,7 +29,7 @@ public class CrashReporterLaunchComponent : ActitoLaunchComponent {
         }
 
         try {
-            Actito.eventsImplementation().log(crashReport)
+            ActitoEventsModule.log(crashReport)
             logger.info("Crash report processed.")
 
             // Clean up the stored crash report

@@ -20,10 +20,10 @@ public class SessionLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        if (ActitoSessionModuleImpl.sessionId == null && Actito.device().currentDevice != null) {
+        if (ActitoSessionModule.sessionId == null && Actito.device().currentDevice != null) {
             // Launch is taking place after the first activity has been created.
             // Start the application session.
-            ActitoSessionModuleImpl.startSession()
+            ActitoSessionModule.startSession()
         }
     }
 
@@ -32,8 +32,8 @@ public class SessionLaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun unlaunch() {
-        ActitoSessionModuleImpl.sessionEnd = Date()
-        ActitoSessionModuleImpl.stopSession()
+        ActitoSessionModule.sessionEnd = Date()
+        ActitoSessionModule.stopSession()
     }
 
     override suspend fun executeCommand(command: String, data: Any?) {

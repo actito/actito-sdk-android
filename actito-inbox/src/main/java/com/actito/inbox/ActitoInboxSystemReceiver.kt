@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.actito.Actito
 import com.actito.inbox.internal.logger
-import com.actito.inbox.ktx.inboxImplementation
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.models.ActitoNotification
 import com.actito.utilities.coroutines.actitoCoroutineScope
@@ -43,7 +42,7 @@ internal class ActitoInboxSystemReceiver : BroadcastReceiver() {
     }
 
     private fun onReload() {
-        Actito.inboxImplementation().refresh()
+        ActitoInbox.refresh()
     }
 
     private fun onNotificationReceived(notification: ActitoNotification, bundle: Bundle) {
@@ -76,7 +75,7 @@ internal class ActitoInboxSystemReceiver : BroadcastReceiver() {
         actitoCoroutineScope.launch {
             try {
                 logger.debug("Adding inbox item to the database.")
-                Actito.inboxImplementation().addItem(item, inboxItemVisible)
+                ActitoInbox.addItem(item, inboxItemVisible)
             } catch (e: Exception) {
                 logger.error("Failed to save inbox item to the database.", e)
             }
@@ -88,14 +87,14 @@ internal class ActitoInboxSystemReceiver : BroadcastReceiver() {
     private fun onMarkItemAsRead(id: String) {
         actitoCoroutineScope.launch {
             try {
-                val entity = Actito.inboxImplementation().database.inbox().findById(id) ?: run {
+                val entity = ActitoInbox.database.inbox().findById(id) ?: run {
                     logger.warning("Unable to find item '$id' in the local database.")
                     return@launch
                 }
 
                 // Mark the item as read in the local inbox.
                 entity.opened = true
-                Actito.inboxImplementation().database.inbox().update(entity)
+                ActitoInbox.database.inbox().update(entity)
             } catch (e: Exception) {
                 logger.error("Failed to mark item '$id' as read.", e)
             }

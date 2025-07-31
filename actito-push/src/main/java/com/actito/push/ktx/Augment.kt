@@ -1,71 +1,63 @@
 package com.actito.push.ktx
 
 import com.actito.Actito
-import com.actito.ActitoInternalEventsModule
-import com.actito.ktx.events
-import com.actito.push.ActitoInternalPush
 import com.actito.push.ActitoPush
-import com.actito.push.internal.ActitoPushImpl
 
 @Suppress("unused")
-public fun Actito.push(): ActitoPush = ActitoPushImpl
-
-internal fun Actito.pushInternal(): ActitoInternalPush = push() as ActitoInternalPush
-
-internal fun Actito.eventsInternal(): ActitoInternalEventsModule = events() as ActitoInternalEventsModule
+public fun Actito.push(): ActitoPush = ActitoPush
 
 // region Intent actions
 
 public val Actito.INTENT_ACTION_SUBSCRIPTION_CHANGED: String
-    get() = "com.actito.intent.action.SubscriptionChanged"
+    get() = Actito.push().INTENT_ACTION_SUBSCRIPTION_CHANGED
 
 public val Actito.INTENT_ACTION_TOKEN_CHANGED: String
-    get() = "com.actito.intent.action.TokenChanged"
+    get() = Actito.push().INTENT_ACTION_TOKEN_CHANGED
 
 public val Actito.INTENT_ACTION_REMOTE_MESSAGE_OPENED: String
-    get() = "com.actito.intent.action.RemoteMessageOpened"
+    get() = Actito.push().INTENT_ACTION_REMOTE_MESSAGE_OPENED
 
 public val Actito.INTENT_ACTION_NOTIFICATION_RECEIVED: String
-    get() = "com.actito.intent.action.NotificationReceived"
+    get() = Actito.push().INTENT_ACTION_NOTIFICATION_RECEIVED
 
 public val Actito.INTENT_ACTION_SYSTEM_NOTIFICATION_RECEIVED: String
-    get() = "com.actito.intent.action.SystemNotificationReceived"
+    get() = Actito.push().INTENT_ACTION_SYSTEM_NOTIFICATION_RECEIVED
 
 public val Actito.INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED: String
-    get() = "com.actito.intent.action.UnknownNotificationReceived"
+    get() = Actito.push().INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED
 
 public val Actito.INTENT_ACTION_NOTIFICATION_OPENED: String
-    get() = "com.actito.intent.action.NotificationOpened"
+    get() = Actito.push().INTENT_ACTION_NOTIFICATION_OPENED
 
 public val Actito.INTENT_ACTION_ACTION_OPENED: String
-    get() = "com.actito.intent.action.ActionOpened"
+    get() = Actito.push().INTENT_ACTION_ACTION_OPENED
 
 public val Actito.INTENT_ACTION_QUICK_RESPONSE: String
-    get() = "com.actito.intent.action.NotificationQuickResponse"
+    get() = Actito.push().INTENT_ACTION_QUICK_RESPONSE
 
 public val Actito.INTENT_ACTION_LIVE_ACTIVITY_UPDATE: String
-    get() = "com.actito.intent.action.LiveActivityUpdate"
+    get() = Actito.push().INTENT_ACTION_LIVE_ACTIVITY_UPDATE
 
 // endregion
 
 // region Intent extras
 
 public val Actito.INTENT_EXTRA_SUBSCRIPTION: String
-    get() = "com.actito.intent.extra.Subscription"
+    get() = Actito.push().INTENT_EXTRA_SUBSCRIPTION
 
 public val Actito.INTENT_EXTRA_TOKEN: String
-    get() = "com.actito.intent.extra.Token"
+    get() = Actito.push().INTENT_EXTRA_TOKEN
 
 public val Actito.INTENT_EXTRA_REMOTE_MESSAGE: String
-    get() = "com.actito.intent.extra.RemoteMessage"
+    get() = Actito.push().INTENT_EXTRA_REMOTE_MESSAGE
 
 public val Actito.INTENT_EXTRA_TEXT_RESPONSE: String
-    get() = "com.actito.intent.extra.TextResponse"
+    get() = Actito.push().INTENT_EXTRA_TEXT_RESPONSE
 
 public val Actito.INTENT_EXTRA_LIVE_ACTIVITY_UPDATE: String
-    get() = "com.actito.intent.extra.LiveActivityUpdate"
+    get() = Actito.push().INTENT_EXTRA_LIVE_ACTIVITY_UPDATE
 
 public val Actito.INTENT_EXTRA_DELIVERY_MECHANISM: String
-    get() = "com.actito.intent.extra.DeliveryMechanism"
+    get() = Actito.push().INTENT_EXTRA_DELIVERY_MECHANISM
 
 // endregion

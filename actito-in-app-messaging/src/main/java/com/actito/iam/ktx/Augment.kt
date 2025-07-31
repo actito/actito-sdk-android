@@ -1,23 +1,15 @@
 package com.actito.iam.ktx
 
 import com.actito.Actito
-import com.actito.ActitoInternalEventsModule
 import com.actito.iam.ActitoInAppMessaging
-import com.actito.iam.internal.ActitoInAppMessagingImpl
-import com.actito.ktx.events
 
 @Suppress("unused")
-public fun Actito.inAppMessaging(): ActitoInAppMessaging = ActitoInAppMessagingImpl
-
-internal fun Actito.inAppMessagingImplementation(): ActitoInAppMessagingImpl =
-    inAppMessaging() as ActitoInAppMessagingImpl
-
-internal fun Actito.eventsInternal(): ActitoInternalEventsModule = events() as ActitoInternalEventsModule
+public fun Actito.inAppMessaging(): ActitoInAppMessaging = ActitoInAppMessaging
 
 // region Intent extras
 
 @Suppress("unused")
 public val Actito.INTENT_EXTRA_IN_APP_MESSAGE: String
-    get() = "com.actito.intent.extra.InAppMessage"
+    get() = Actito.inAppMessaging().INTENT_EXTRA_IN_APP_MESSAGE
 
 // endregion

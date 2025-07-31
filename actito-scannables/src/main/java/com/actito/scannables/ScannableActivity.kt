@@ -15,7 +15,6 @@ import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.scannables.internal.logger
 import com.actito.scannables.ktx.scannables
-import com.actito.scannables.ktx.scannablesImplementation
 import com.actito.scannables.models.ActitoScannable
 import com.actito.scannables.ui.QrCodeScannerFragment
 import com.actito.utilities.parcel.getEnum
@@ -34,8 +33,7 @@ public class ScannableActivity : AppCompatActivity() {
 
     private var onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            Actito.scannablesImplementation()
-                .notifyListeners(ActitoUserCancelledScannableSessionException())
+            ActitoScannables.notifyListeners(ActitoUserCancelledScannableSessionException())
 
             isEnabled = false
             onBackPressedDispatcher.onBackPressed()
@@ -169,12 +167,12 @@ public class ScannableActivity : AppCompatActivity() {
             tag,
             object : ActitoCallback<ActitoScannable> {
                 override fun onSuccess(result: ActitoScannable) {
-                    Actito.scannablesImplementation().notifyListeners(result)
+                    ActitoScannables.notifyListeners(result)
                     finish()
                 }
 
                 override fun onFailure(e: Exception) {
-                    Actito.scannablesImplementation().notifyListeners(e)
+                    ActitoScannables.notifyListeners(e)
                     finish()
                 }
             },
@@ -182,7 +180,7 @@ public class ScannableActivity : AppCompatActivity() {
     }
 
     public fun handleScannableError(error: Exception) {
-        Actito.scannablesImplementation().notifyListeners(error)
+        ActitoScannables.notifyListeners(error)
     }
 
     internal enum class ScanMode {

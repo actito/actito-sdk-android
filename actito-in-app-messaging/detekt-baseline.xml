@@ -3,13 +3,13 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ConstructorParameterNaming:Responses.kt$InAppMessageResponse.Message$val _id: String</ID>
-    <ID>InstanceOfCheckForException:ActitoInAppMessagingImpl.kt$ActitoInAppMessagingImpl$e is CancellationException</ID>
-    <ID>InstanceOfCheckForException:ActitoInAppMessagingImpl.kt$ActitoInAppMessagingImpl$e is NetworkException.ValidationException</ID>
+    <ID>InstanceOfCheckForException:ActitoInAppMessaging.kt$ActitoInAppMessaging$e is CancellationException</ID>
+    <ID>InstanceOfCheckForException:ActitoInAppMessaging.kt$ActitoInAppMessaging$e is NetworkException.ValidationException</ID>
+    <ID>MaxLineLength:ActitoInAppMessaging.kt$ActitoInAppMessaging$"Skipping context evaluation since in-app messages on ${activity::class.java.simpleName} are being suppressed."</ID>
+    <ID>MaxLineLength:ActitoInAppMessaging.kt$ActitoInAppMessaging$"The current in-app message should have been dismissed for being in the background for longer than the grace period."</ID>
     <ID>MaxLineLength:ActitoInAppMessaging.kt$ActitoInAppMessaging.MessageLifecycleListener$"Action failed to execute, please override onActionFailedToExecute if you want to receive these events."</ID>
     <ID>MaxLineLength:ActitoInAppMessaging.kt$ActitoInAppMessaging.MessageLifecycleListener$"Message failed to present, please override onMessageFailedToPresent if you want to receive these events."</ID>
     <ID>MaxLineLength:ActitoInAppMessaging.kt$ActitoInAppMessaging.MessageLifecycleListener$"Message finished presenting, please override onMessageFinishedPresenting if you want to receive these events."</ID>
-    <ID>MaxLineLength:ActitoInAppMessagingImpl.kt$ActitoInAppMessagingImpl$"Skipping context evaluation since in-app messages on ${activity::class.java.simpleName} are being suppressed."</ID>
-    <ID>MaxLineLength:ActitoInAppMessagingImpl.kt$ActitoInAppMessagingImpl$"The current in-app message should have been dismissed for being in the background for longer than the grace period."</ID>
     <ID>MaxLineLength:InAppMessagingActivity.kt$InAppMessagingActivity$"Dismissing the current in-app message for being in the background for longer than the grace period."</ID>
   </CurrentIssues>
 </SmellBaseline>

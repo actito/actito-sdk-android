@@ -13,9 +13,9 @@ import android.webkit.WebViewClient
 import androidx.core.net.toUri
 import com.actito.Actito
 import com.actito.models.ActitoNotification
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.closeWindowQueryParameter
 import com.actito.push.ui.internal.logger
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.openActionQueryParameter
 import com.actito.push.ui.openActionsQueryParameter
@@ -59,7 +59,7 @@ internal open class NotificationWebViewClient(
 
         if (loadingError == null) {
             onMainThread {
-                Actito.pushUIInternal().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationPresented(notification)
                 }
             }
@@ -74,7 +74,7 @@ internal open class NotificationWebViewClient(
         loadingError = error
 
         onMainThread {
-            Actito.pushUIInternal().lifecycleListeners.forEach {
+            ActitoPushUI.lifecycleListeners.forEach {
                 it.get()?.onNotificationFailedToPresent(notification)
             }
         }
@@ -138,7 +138,7 @@ internal open class NotificationWebViewClient(
         val options = checkNotNull(Actito.options)
         if (options.urlSchemes.contains(uri.scheme)) {
             onMainThread {
-                Actito.pushUIInternal().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationUrlClicked(notification, uri)
                 }
             }

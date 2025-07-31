@@ -9,11 +9,11 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.actito.Actito
+import com.actito.iam.ActitoInAppMessaging
 import com.actito.iam.R
 import com.actito.iam.databinding.ActitoInAppMessagingActivityBinding
 import com.actito.iam.internal.logger
 import com.actito.iam.ktx.INTENT_EXTRA_IN_APP_MESSAGE
-import com.actito.iam.ktx.inAppMessagingImplementation
 import com.actito.iam.models.ActitoInAppMessage
 import com.actito.utilities.parcel.parcelable
 import com.actito.utilities.threading.onMainThread
@@ -48,7 +48,7 @@ public open class InAppMessagingActivity : AppCompatActivity() {
             }
 
             val expired = backgroundTimestamp != null &&
-                Actito.inAppMessagingImplementation().hasExpiredBackgroundPeriod(backgroundTimestamp)
+                ActitoInAppMessaging.hasExpiredBackgroundPeriod(backgroundTimestamp)
 
             if (expired) {
                 logger.debug(
@@ -78,7 +78,7 @@ public open class InAppMessagingActivity : AppCompatActivity() {
 
         val backgroundTimestamp = this.backgroundTimestamp
         val expired = backgroundTimestamp != null &&
-            Actito.inAppMessagingImplementation().hasExpiredBackgroundPeriod(backgroundTimestamp)
+            ActitoInAppMessaging.hasExpiredBackgroundPeriod(backgroundTimestamp)
 
         if (expired) {
             logger.debug(
@@ -111,7 +111,7 @@ public open class InAppMessagingActivity : AppCompatActivity() {
         }
 
         onMainThread {
-            Actito.inAppMessagingImplementation().lifecycleListeners.forEach {
+            ActitoInAppMessaging.lifecycleListeners.forEach {
                 it.get()?.onMessageFinishedPresenting(message)
             }
         }

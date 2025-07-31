@@ -3,16 +3,18 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>InstanceOfCheckForException:InboxIntegration.kt$InboxIntegration$e is ClassNotFoundException</ID>
-    <ID>MaxLineLength:ActitoPushImpl.kt$ActitoPushImpl$"Cannot process remote messages before Actito is configured. Invoke Actito.configure() when the application starts."</ID>
+    <ID>MaxLineLength:ActitoPush.kt$ActitoPush$"Cannot process remote messages before Actito is configured. Invoke Actito.configure() when the application starts."</ID>
+    <ID>MaxLineLength:ActitoPush.kt$ActitoPush$public const val INTENT_ACTION_SYSTEM_NOTIFICATION_RECEIVED: String = "com.actito.intent.action.SystemNotificationReceived"</ID>
+    <ID>MaxLineLength:ActitoPush.kt$ActitoPush$public const val INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED: String = "com.actito.intent.action.UnknownNotificationReceived"</ID>
     <ID>MaxLineLength:ActitoPushIntentReceiver.kt$ActitoPushIntentReceiver$"Received a live activity update, please override onLiveActivityUpdate if you want to receive these intents."</ID>
     <ID>MaxLineLength:ActitoPushIntentReceiver.kt$ActitoPushIntentReceiver$"Received a system notification, please override onSystemNotificationReceived if you want to receive these intents."</ID>
     <ID>MaxLineLength:ActitoPushIntentReceiver.kt$ActitoPushIntentReceiver$"Received an unknown notification, please override onUnknownNotificationReceived if you want to receive these intents."</ID>
     <ID>MaxLineLength:InboxIntegration.kt$InboxIntegration$"The inbox module is not available. Please include it if you want to leverage the inbox capabilities."</ID>
-    <ID>NestedBlockDepth:ActitoPushImpl.kt$ActitoPushImpl$@SuppressLint("MissingPermission") private fun generateNotification( message: ActitoNotificationRemoteMessage, notification: ActitoNotification, )</ID>
-    <ID>NestedBlockDepth:ActitoPushImpl.kt$ActitoPushImpl$private fun handleSystemNotification(message: ActitoSystemRemoteMessage)</ID>
+    <ID>NestedBlockDepth:ActitoPush.kt$ActitoPush$@SuppressLint("MissingPermission") private fun generateNotification( message: ActitoNotificationRemoteMessage, notification: ActitoNotification, )</ID>
+    <ID>NestedBlockDepth:ActitoPush.kt$ActitoPush$private fun handleSystemNotification(message: ActitoSystemRemoteMessage)</ID>
     <ID>NestedBlockDepth:LaunchComponent.kt$LaunchComponent$override fun migrate(savedState: SharedPreferences, settings: SharedPreferences)</ID>
-    <ID>ObjectPropertyNaming:ActitoPushImpl.kt$ActitoPushImpl$internal val _allowedUIStream = MutableStateFlow(false)</ID>
-    <ID>ObjectPropertyNaming:ActitoPushImpl.kt$ActitoPushImpl$internal val _subscriptionStream = MutableStateFlow&lt;ActitoPushSubscription?&gt;(null)</ID>
-    <ID>SwallowedException:ActitoPushImpl.kt$ActitoPushImpl$e: IllegalArgumentException</ID>
+    <ID>ObjectPropertyNaming:ActitoPush.kt$ActitoPush$internal val _allowedUIStream = MutableStateFlow(false)</ID>
+    <ID>ObjectPropertyNaming:ActitoPush.kt$ActitoPush$internal val _subscriptionStream = MutableStateFlow&lt;ActitoPushSubscription?&gt;(null)</ID>
+    <ID>SwallowedException:ActitoPush.kt$ActitoPush$e: IllegalArgumentException</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.actito.Actito
 import com.actito.models.ActitoNotification
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.R
 import com.actito.push.ui.databinding.ActitoAlertDialogBinding
 import com.actito.push.ui.internal.logger
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.utilities.content.applicationName
 import com.actito.utilities.parcel.parcelable
 import com.actito.utilities.threading.onMainThread
@@ -82,7 +81,7 @@ public class NotificationDialog : DialogFragment() {
         val dialog = builder.create()
 
         onMainThread {
-            Actito.pushUIInternal().lifecycleListeners.forEach { it.get()?.onNotificationPresented(notification) }
+            ActitoPushUI.lifecycleListeners.forEach { it.get()?.onNotificationPresented(notification) }
         }
 
         return dialog

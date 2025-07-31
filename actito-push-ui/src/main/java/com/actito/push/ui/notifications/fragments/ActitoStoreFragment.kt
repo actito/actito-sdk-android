@@ -9,10 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.Keep
-import com.actito.Actito
 import com.actito.models.ActitoNotification
+import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.R
-import com.actito.push.ui.ktx.pushUIInternal
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.utilities.threading.onMainThread
 
@@ -74,7 +73,7 @@ public class ActitoStoreFragment : NotificationFragment() {
                 callback.onNotificationFragmentFinished()
 
                 onMainThread {
-                    Actito.pushUIInternal().lifecycleListeners.forEach {
+                    ActitoPushUI.lifecycleListeners.forEach {
                         it.get()?.onNotificationPresented(notification)
                     }
                 }
@@ -87,7 +86,7 @@ public class ActitoStoreFragment : NotificationFragment() {
                         callback.onNotificationFragmentFinished()
 
                         onMainThread {
-                            Actito.pushUIInternal().lifecycleListeners.forEach {
+                            ActitoPushUI.lifecycleListeners.forEach {
                                 it.get()?.onNotificationPresented(notification)
                             }
                         }
@@ -98,7 +97,7 @@ public class ActitoStoreFragment : NotificationFragment() {
                         callback.onNotificationFragmentFinished()
 
                         onMainThread {
-                            Actito.pushUIInternal().lifecycleListeners.forEach {
+                            ActitoPushUI.lifecycleListeners.forEach {
                                 it.get()?.onNotificationFailedToPresent(notification)
                             }
                         }
@@ -110,7 +109,7 @@ public class ActitoStoreFragment : NotificationFragment() {
                     callback.onNotificationFragmentFinished()
 
                     onMainThread {
-                        Actito.pushUIInternal().lifecycleListeners.forEach {
+                        ActitoPushUI.lifecycleListeners.forEach {
                             it.get()?.onNotificationFailedToPresent(notification)
                         }
                     }
@@ -123,7 +122,7 @@ public class ActitoStoreFragment : NotificationFragment() {
             callback.onNotificationFragmentFinished()
 
             onMainThread {
-                Actito.pushUIInternal().lifecycleListeners.forEach {
+                ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationFailedToPresent(notification)
                 }
             }
