@@ -26,7 +26,7 @@ public class ActitoOptions internal constructor(context: Context) {
 
     public val crashReportsEnabled: Boolean
         get() {
-            return metadata.getBoolean("com.actito.crash_reports_enabled", true)
+            return metadata.getBoolean("com.actito.crash_reports_enabled", false)
         }
 
     public val notificationActionLabelPrefix: String?

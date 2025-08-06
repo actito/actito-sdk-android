@@ -13,6 +13,10 @@ public class CrashReporterLaunchComponent : ActitoLaunchComponent {
 
     override fun configure() {
         if (checkNotNull(Actito.options).crashReportsEnabled) {
+            logger.warning(
+                "Crash reporting is deprecated. We recommend using another solution to collect crash analytics.",
+            )
+
             ActitoCrashReporterModule.defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
             Thread.setDefaultUncaughtExceptionHandler(ActitoCrashReporterModule.uncaughtExceptionHandler)
         }
