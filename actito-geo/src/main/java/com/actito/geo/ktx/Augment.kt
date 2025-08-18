@@ -9,12 +9,10 @@ public fun Actito.geo(): ActitoGeo = ActitoGeo
 
 // region Intent actions
 
-@InternalActitoApi
-public val Actito.INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String
+internal val Actito.INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String
     get() = Actito.geo().INTENT_ACTION_INTERNAL_LOCATION_UPDATED
 
-@InternalActitoApi
-public val Actito.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String
+internal val Actito.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String
     get() = Actito.geo().INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION
 
 public val Actito.INTENT_ACTION_LOCATION_UPDATED: String
