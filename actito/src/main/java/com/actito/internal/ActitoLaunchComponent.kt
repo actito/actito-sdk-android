@@ -38,8 +38,7 @@ public interface ActitoLaunchComponent {
         IN_APP_MESSAGING(fqn = "com.actito.iam.internal.LaunchComponent"),
         USER_INBOX(fqn = "com.actito.inbox.user.internal.LaunchComponent");
 
-        @InternalActitoApi
-        public val isAvailable: Boolean
+        internal val isAvailable: Boolean
             get() {
                 return try {
                     // Will throw unless the class can be found.
