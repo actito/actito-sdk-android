@@ -1,8 +1,8 @@
-package com.actito.push.ui.utils
+package com.actito.utilities.networking
 
 import android.net.Uri
 
-internal fun Uri.Builder.removeQueryParameter(key: String): Uri.Builder {
+public fun Uri.Builder.removeQueryParameter(key: String): Uri.Builder {
     val uri = this.build()
 
     this.clearQuery()

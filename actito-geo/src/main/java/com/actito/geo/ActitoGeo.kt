@@ -50,7 +50,6 @@ import com.actito.geo.ktx.INTENT_EXTRA_RANGED_BEACONS
 import com.actito.geo.ktx.INTENT_EXTRA_REGION
 import com.actito.geo.ktx.logBeaconSession
 import com.actito.geo.ktx.logRegionSession
-import com.actito.geo.ktx.takeEvenlySpaced
 import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoBeaconSession
 import com.actito.geo.models.ActitoLocation
@@ -60,6 +59,7 @@ import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.ktx.events
 import com.actito.models.ActitoApplication
+import com.actito.utilities.collections.takeEvenlySpaced
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.utilities.threading.onMainThread
 import com.google.android.gms.common.ConnectionResult

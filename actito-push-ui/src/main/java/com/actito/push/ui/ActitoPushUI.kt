@@ -34,8 +34,8 @@ import com.actito.push.ui.notifications.fragments.ActitoUrlFragment
 import com.actito.push.ui.notifications.fragments.ActitoVideoFragment
 import com.actito.push.ui.notifications.fragments.ActitoWebPassFragment
 import com.actito.push.ui.notifications.fragments.ActitoWebViewFragment
-import com.actito.push.ui.utils.removeQueryParameter
 import com.actito.utilities.coroutines.actitoCoroutineScope
+import com.actito.utilities.networking.removeQueryParameter
 import com.actito.utilities.threading.onMainThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
