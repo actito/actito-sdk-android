@@ -326,8 +326,8 @@ public object ActitoInAppMessaging {
             try {
                 val message = fetchInAppMessage(context)
                 processInAppMessage(message)
-            } catch (e: Exception) {
-                if (e is NetworkException.ValidationException && e.response.code == 404) {
+            } catch (e: NetworkException.ValidationException) {
+                if (e.response.code == 404) {
                     logger.debug("There is no in-app message for '${context.rawValue}' context to process.")
 
                     if (context == ApplicationContext.LAUNCH) {
@@ -336,7 +336,7 @@ public object ActitoInAppMessaging {
 
                     return@launch
                 }
-
+            } catch (e: Exception) {
                 logger.error("Failed to process in-app message for context '${context.rawValue}'.", e)
             }
         }
@@ -355,12 +355,10 @@ public object ActitoInAppMessaging {
                     )
                     delay(message.delaySeconds * 1000L)
                     present(message)
+                } catch (_: CancellationException) {
+                    logger.debug("The delayed in-app message job has been canceled.")
+                    return@launch
                 } catch (e: Exception) {
-                    if (e is CancellationException) {
-                        logger.debug("The delayed in-app message job has been canceled.")
-                        return@launch
-                    }
-
                     logger.error("Failed to present the delayed in-app message.", e)
 
                     onMainThread {
