@@ -405,8 +405,8 @@ public object ActitoInbox {
 
             logger.info("The inbox has been modified. Performing a full sync.")
             reloadInbox()
-        } catch (e: Exception) {
-            if (e is NetworkException.ValidationException && e.response.code == 304) {
+        } catch (e: NetworkException.ValidationException) {
+            if (e.response.code == 304) {
                 logger.debug("The inbox has not been modified. Proceeding with locally stored data.")
             } else {
                 // Rethrow the exception to be handled by the caller.
