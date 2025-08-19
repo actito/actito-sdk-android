@@ -46,7 +46,7 @@ public interface ActitoLaunchComponent {
                     Class.forName(fqn)
 
                     true
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     false
                 }
             }
@@ -59,7 +59,7 @@ public interface ActitoLaunchComponent {
                     val klass = Class.forName(fqn)
 
                     return klass.getDeclaredConstructor().newInstance() as? ActitoLaunchComponent
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     null
                 }
             }
