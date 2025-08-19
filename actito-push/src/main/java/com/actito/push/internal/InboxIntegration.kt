@@ -25,14 +25,11 @@ internal object InboxIntegration {
             }
 
             Actito.requireContext().sendBroadcast(intent)
+        } catch (_: ClassNotFoundException) {
+            logger.debug(
+                "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
+            )
         } catch (e: Exception) {
-            if (e is ClassNotFoundException) {
-                logger.debug(
-                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
-                )
-                return
-            }
-
             logger.debug("Failed to send an inbox broadcast.", e)
         }
     }
@@ -63,14 +60,11 @@ internal object InboxIntegration {
             }
 
             Actito.requireContext().sendBroadcast(intent)
+        } catch (_: ClassNotFoundException) {
+            logger.debug(
+                "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
+            )
         } catch (e: Exception) {
-            if (e is ClassNotFoundException) {
-                logger.debug(
-                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
-                )
-                return
-            }
-
             logger.debug("Failed to send an inbox broadcast.", e)
         }
     }
@@ -92,14 +86,11 @@ internal object InboxIntegration {
             }
 
             Actito.requireContext().sendBroadcast(intent)
+        } catch (_: ClassNotFoundException) {
+            logger.debug(
+                "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
+            )
         } catch (e: Exception) {
-            if (e is ClassNotFoundException) {
-                logger.debug(
-                    "The inbox module is not available. Please include it if you want to leverage the inbox capabilities.",
-                )
-                return
-            }
-
             logger.debug("Failed to send an inbox broadcast.", e)
         }
     }
