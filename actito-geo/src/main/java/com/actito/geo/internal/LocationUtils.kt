@@ -57,7 +57,10 @@ private fun ActitoRegion.AdvancedGeometry.contains(location: Location): Boolean 
             dx = x2 - x1
         }
 
-        if (x1 <= location.longitude && x2 > location.longitude || x1 >= location.longitude && x2 < location.longitude) {
+        if (
+            x1 <= location.longitude && x2 > location.longitude ||
+            x1 >= location.longitude && x2 < location.longitude
+        ) {
             val grad: Double = (point.latitude - lastPoint.latitude) / dx
             val intersectAtLat: Double = lastPoint.latitude + (location.longitude - x1) * grad
             if (intersectAtLat > location.latitude) isInside = !isInside
