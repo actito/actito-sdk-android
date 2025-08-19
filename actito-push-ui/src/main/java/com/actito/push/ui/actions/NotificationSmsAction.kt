@@ -38,7 +38,7 @@ internal class NotificationSmsAction(
                         context.resources.getText(R.string.actito_action_title_intent_sms),
                     ),
                 )
-            } catch (e: ActivityNotFoundException) {
+            } catch (_: ActivityNotFoundException) {
                 throw Exception(context.getString(R.string.actito_action_error_no_sms_clients))
             }
 

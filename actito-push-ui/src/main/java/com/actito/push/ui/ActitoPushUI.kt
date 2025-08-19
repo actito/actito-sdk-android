@@ -452,7 +452,7 @@ public object ActitoPushUI {
             try {
                 val link = Actito.fetchDynamicLink(url)
                 presentDeepLink(activity, notification, link.target.toUri())
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
                 }

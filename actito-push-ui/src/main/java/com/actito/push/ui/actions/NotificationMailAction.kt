@@ -39,7 +39,7 @@ internal class NotificationMailAction(
                         context.resources.getText(R.string.actito_action_title_intent_email),
                     ),
                 )
-            } catch (e: ActivityNotFoundException) {
+            } catch (_: ActivityNotFoundException) {
                 throw Exception(context.getString(R.string.actito_action_error_no_email_clients))
             }
 

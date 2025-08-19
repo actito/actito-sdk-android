@@ -38,7 +38,7 @@ internal class NotificationTelephoneAction(
                         context.resources.getText(R.string.actito_action_title_intent_telephone),
                     ),
                 )
-            } catch (e: ActivityNotFoundException) {
+            } catch (_: ActivityNotFoundException) {
                 throw Exception(context.getString(R.string.actito_action_error_no_dialer))
             }
 

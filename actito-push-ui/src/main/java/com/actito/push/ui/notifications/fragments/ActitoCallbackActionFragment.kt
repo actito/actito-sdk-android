@@ -46,7 +46,7 @@ public class ActitoCallbackActionFragment : Fragment() {
 
         try {
             callback = parentFragment as NotificationFragment.Callback
-        } catch (e: ClassCastException) {
+        } catch (_: ClassCastException) {
             throw ClassCastException("Parent fragment must implement NotificationFragment.Callback.")
         }
 
