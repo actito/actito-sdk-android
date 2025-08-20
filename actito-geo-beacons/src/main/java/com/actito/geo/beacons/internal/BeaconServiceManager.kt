@@ -40,8 +40,8 @@ internal class BeaconServiceManager(
     proximityUUID: String,
     onBeaconEnter: (String, Int?) -> Unit,
     onBeaconExit: (String, Int?) -> Unit,
-    onBeaconRanged: (String, List<Beacon>) -> Unit,
-) : BeaconServiceManager(proximityUUID, onBeaconEnter, onBeaconExit, onBeaconRanged), MonitorNotifier, RangeNotifier {
+    onBeaconsRanged: (String, List<Beacon>) -> Unit,
+) : BeaconServiceManager(proximityUUID, onBeaconEnter, onBeaconExit, onBeaconsRanged), MonitorNotifier, RangeNotifier {
 
     private val beaconManager: BeaconManager
     private val notificationSequence = AtomicInteger()
@@ -208,7 +208,7 @@ internal class BeaconServiceManager(
     override fun didRangeBeaconsInRegion(beacons: MutableCollection<org.altbeacon.beacon.Beacon>?, region: Region?) {
         if (beacons == null || region == null) return
 
-        onBeaconRanged(
+        onBeaconsRanged(
             region.uniqueId,
             beacons.map { b ->
                 Beacon(

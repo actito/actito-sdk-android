@@ -11,7 +11,7 @@ public abstract class BeaconServiceManager(
     protected val proximityUUID: String,
     protected val onBeaconEnter: (String, Int?) -> Unit,
     protected val onBeaconExit: (String, Int?) -> Unit,
-    protected val onBeaconRanged: (String, List<Beacon>) -> Unit,
+    protected val onBeaconsRanged: (String, List<Beacon>) -> Unit,
 ) {
 
     public abstract fun startMonitoring(region: ActitoRegion, beacons: List<ActitoBeacon>)
@@ -31,7 +31,7 @@ public abstract class BeaconServiceManager(
 
             val onBeaconEnter = ActitoGeo::handleBeaconEnter
             val onBeaconExit = ActitoGeo::handleBeaconExit
-            val onBeaconRanged = ActitoGeo::handleRangingBeacons
+            val onBeaconsRanged = ActitoGeo::handleRangingBeacons
 
             return try {
                 val klass = Class.forName(FQN)
@@ -40,8 +40,9 @@ public abstract class BeaconServiceManager(
                     Function2::class.java,
                     Function2::class.java,
                     Function2::class.java,
-                ).newInstance(proximityUUID, onBeaconEnter, onBeaconExit, onBeaconRanged) as? BeaconServiceManager
+                ).newInstance(proximityUUID, onBeaconEnter, onBeaconExit, onBeaconsRanged) as? BeaconServiceManager
             } catch (e: Exception) {
+                logger.warning("Unable to find a constructor suitable to instantiate $FQN")
                 null
             }
         }
