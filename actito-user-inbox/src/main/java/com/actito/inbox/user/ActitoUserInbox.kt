@@ -117,7 +117,7 @@ public object ActitoUserInbox {
 
         Actito.events().logNotificationOpen(item.notification.id)
 
-        Actito.removeNotificationFromNotificationCenter(item.notification)
+        Actito.cancelNotification(item.notification.id)
     }
 
     /**
@@ -148,7 +148,7 @@ public object ActitoUserInbox {
 
         removeUserInboxItem(item)
 
-        Actito.removeNotificationFromNotificationCenter(item.notification)
+        Actito.cancelNotification(item.notification.id)
     }
 
     /**

@@ -11,7 +11,7 @@ import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.databinding.ActitoNotificationUrlFragmentBinding
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.utils.NotificationWebViewClient
-import com.actito.push.ui.utils.removeQueryParameter
+import com.actito.utilities.networking.removeQueryParameter
 import com.actito.utilities.threading.onMainThread
 
 public class ActitoUrlFragment : NotificationFragment() {

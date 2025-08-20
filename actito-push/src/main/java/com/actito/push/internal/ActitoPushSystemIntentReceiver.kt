@@ -68,7 +68,7 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
             sendQuickResponse(notification, action, responseText)
 
             // Remove the notification from the notification center.
-            Actito.removeNotificationFromNotificationCenter(notification)
+            Actito.cancelNotification(notification.id)
 
             // Notify the inbox to mark the item as read.
             InboxIntegration.markItemAsRead(message)

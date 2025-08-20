@@ -1,21 +1,12 @@
 package com.actito.geo.ktx
 
 import com.actito.Actito
-import com.actito.InternalActitoApi
 import com.actito.geo.ActitoGeo
 
 @Suppress("unused")
 public fun Actito.geo(): ActitoGeo = ActitoGeo
 
 // region Intent actions
-
-@InternalActitoApi
-public val Actito.INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String
-    get() = Actito.geo().INTENT_ACTION_INTERNAL_LOCATION_UPDATED
-
-@InternalActitoApi
-public val Actito.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String
-    get() = Actito.geo().INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION
 
 public val Actito.INTENT_ACTION_LOCATION_UPDATED: String
     get() = Actito.geo().INTENT_ACTION_LOCATION_UPDATED
@@ -58,20 +49,16 @@ public val Actito.INTENT_EXTRA_RANGED_BEACONS: String
 
 // region Default values
 
-@InternalActitoApi
-public val Actito.DEFAULT_LOCATION_UPDATES_INTERVAL: Long
+internal val Actito.DEFAULT_LOCATION_UPDATES_INTERVAL: Long
     get() = (60 * 1000).toLong()
 
-@InternalActitoApi
-public val Actito.DEFAULT_LOCATION_UPDATES_FASTEST_INTERVAL: Long
+internal val Actito.DEFAULT_LOCATION_UPDATES_FASTEST_INTERVAL: Long
     get() = (30 * 1000).toLong()
 
-@InternalActitoApi
-public val Actito.DEFAULT_LOCATION_UPDATES_SMALLEST_DISPLACEMENT: Double
+internal val Actito.DEFAULT_LOCATION_UPDATES_SMALLEST_DISPLACEMENT: Double
     get() = 10.0
 
-@InternalActitoApi
-public val Actito.DEFAULT_GEOFENCE_RESPONSIVENESS: Int
+internal val Actito.DEFAULT_GEOFENCE_RESPONSIVENESS: Int
     get() = 0
 
 // endregion

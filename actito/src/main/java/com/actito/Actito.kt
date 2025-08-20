@@ -635,11 +635,6 @@ public object Actito {
         "https://$host/upload${response.filename}"
     }
 
-    @InternalActitoApi
-    public fun removeNotificationFromNotificationCenter(notification: ActitoNotification) {
-        cancelNotification(notification.id)
-    }
-
     /**
      * Cancels a notification by its ID.
      *
