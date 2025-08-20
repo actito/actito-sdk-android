@@ -1,4 +1,4 @@
-package com.actito.geo.ktx
+package com.actito.utilities.collections
 
 import kotlin.math.round
 
@@ -7,7 +7,7 @@ import kotlin.math.round
  *
  * @param n the number of elements to extract.
  */
-internal fun <T> List<T>.takeEvenlySpaced(n: Int): List<T> {
+public fun <T> List<T>.takeEvenlySpaced(n: Int): List<T> {
     require(n >= 0) { "Requested element count $n is less than zero." }
 
     if (size <= n) {

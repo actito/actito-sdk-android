@@ -5,8 +5,6 @@ import android.content.Intent
 import androidx.annotation.Keep
 import androidx.core.app.NotificationCompat
 import com.actito.Actito
-import com.actito.InternalActitoApi
-import com.actito.geo.ActitoGeo
 import com.actito.geo.beacons.beaconBackgroundScanInterval
 import com.actito.geo.beacons.beaconForegroundScanInterval
 import com.actito.geo.beacons.beaconForegroundServiceEnabled
@@ -37,10 +35,13 @@ private const val BEACON_LAYOUT_APPLE = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-
 // AltBeacon.id3        = Minor
 
 @Keep
-@InternalActitoApi
-public class BeaconServiceManager(
+@Suppress("unused")
+internal class BeaconServiceManager(
     proximityUUID: String,
-) : BeaconServiceManager(proximityUUID), MonitorNotifier, RangeNotifier {
+    onBeaconEnter: (String, Int?) -> Unit,
+    onBeaconExit: (String, Int?) -> Unit,
+    onBeaconsRanged: (String, List<Beacon>) -> Unit,
+) : BeaconServiceManager(proximityUUID, onBeaconEnter, onBeaconExit, onBeaconsRanged), MonitorNotifier, RangeNotifier {
 
     private val beaconManager: BeaconManager
     private val notificationSequence = AtomicInteger()
@@ -170,7 +171,7 @@ public class BeaconServiceManager(
 
     override fun didEnterRegion(region: Region) {
         logger.debug("Entered beacon region ${region.id1} / ${region.id2} / ${region.id3}")
-        ActitoGeo.handleBeaconEnter(region.uniqueId, region.id2.toInt(), region.id3?.toInt())
+        onBeaconEnter(region.uniqueId, region.id3?.toInt())
 
 //        if (region.id3 == null) {
 //            // This is the main region. There's no minor.
@@ -180,7 +181,7 @@ public class BeaconServiceManager(
 
     override fun didExitRegion(region: Region) {
         logger.debug("Exited beacon region ${region.id1} / ${region.id2} / ${region.id3}")
-        ActitoGeo.handleBeaconExit(region.uniqueId, region.id2.toInt(), region.id3?.toInt())
+        onBeaconExit(region.uniqueId, region.id3?.toInt())
 
 //        if (region.id3 == null) {
 //            // This is the main region. There's no minor.
@@ -207,9 +208,9 @@ public class BeaconServiceManager(
     override fun didRangeBeaconsInRegion(beacons: MutableCollection<org.altbeacon.beacon.Beacon>?, region: Region?) {
         if (beacons == null || region == null) return
 
-        ActitoGeo.handleRangingBeacons(
-            regionId = region.uniqueId,
-            beacons = beacons.map { b ->
+        onBeaconsRanged(
+            region.uniqueId,
+            beacons.map { b ->
                 Beacon(
                     major = b.id2.toInt(),
                     minor = b.id3.toInt(),

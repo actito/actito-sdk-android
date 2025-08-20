@@ -21,7 +21,6 @@ import com.actito.ActitoCallback
 import com.actito.ActitoGoogleServicesUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
-import com.actito.InternalActitoApi
 import com.actito.geo.internal.BeaconServiceManager
 import com.actito.geo.internal.LocationReceiver
 import com.actito.geo.internal.contains
@@ -51,7 +50,6 @@ import com.actito.geo.ktx.INTENT_EXTRA_RANGED_BEACONS
 import com.actito.geo.ktx.INTENT_EXTRA_REGION
 import com.actito.geo.ktx.logBeaconSession
 import com.actito.geo.ktx.logRegionSession
-import com.actito.geo.ktx.takeEvenlySpaced
 import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoBeaconSession
 import com.actito.geo.models.ActitoLocation
@@ -61,6 +59,7 @@ import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.ktx.events
 import com.actito.models.ActitoApplication
+import com.actito.utilities.collections.takeEvenlySpaced
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.utilities.threading.onMainThread
 import com.google.android.gms.common.ConnectionResult
@@ -253,11 +252,9 @@ public object ActitoGeo {
 
     // region Intent actions
 
-    @InternalActitoApi
     public const val INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String =
         "com.actito.intent.action.internal.LocationUpdated"
 
-    @InternalActitoApi
     public const val INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String =
         "com.actito.intent.action.internal.GeofenceTransition"
 
@@ -675,8 +672,7 @@ public object ActitoGeo {
         }
     }
 
-    @InternalActitoApi
-    public fun handleBeaconEnter(uniqueId: String, major: Int, minor: Int?) {
+    internal fun handleBeaconEnter(uniqueId: String, minor: Int?) {
         val beacon = localStorage.monitoredBeacons.firstOrNull { it.id == uniqueId } ?: run {
             logger.warning("Received a beacon enter event for non-cached beacon '$uniqueId'.")
             return
@@ -704,8 +700,7 @@ public object ActitoGeo {
         }
     }
 
-    @InternalActitoApi
-    public fun handleBeaconExit(uniqueId: String, major: Int, minor: Int?) {
+    internal fun handleBeaconExit(uniqueId: String, minor: Int?) {
         val beacon = localStorage.monitoredBeacons.firstOrNull { it.id == uniqueId } ?: run {
             logger.warning("Received a beacon exit event for non-cached beacon '$uniqueId'.")
             return
@@ -733,8 +728,7 @@ public object ActitoGeo {
         }
     }
 
-    @InternalActitoApi
-    public fun handleRangingBeacons(regionId: String, beacons: List<BeaconServiceManager.Beacon>) {
+    internal fun handleRangingBeacons(regionId: String, beacons: List<BeaconServiceManager.Beacon>) {
         val region = localStorage.monitoredRegions[regionId] ?: run {
             logger.warning("Received a ranging beacons event for non-cached region '$regionId'.")
             return

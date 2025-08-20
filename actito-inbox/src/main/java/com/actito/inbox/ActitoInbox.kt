@@ -235,7 +235,7 @@ public object ActitoInbox {
         }
 
         // No need to keep the item in the notification center.
-        Actito.removeNotificationFromNotificationCenter(item.notification)
+        Actito.cancelNotification(item.notification.id)
     }
 
     /**
@@ -291,7 +291,7 @@ public object ActitoInbox {
         database.inbox().remove(item.id)
 
         // Remove the item from the notification center.
-        Actito.removeNotificationFromNotificationCenter(item.notification)
+        Actito.cancelNotification(item.notification.id)
     }
 
     /**
@@ -360,7 +360,7 @@ public object ActitoInbox {
         val item = cachedEntities.find { it.id == id }?.toInboxItem()
 
         if (item != null) {
-            Actito.removeNotificationFromNotificationCenter(item.notification)
+            Actito.cancelNotification(item.notification.id)
         }
 
         reloadLiveItems()
