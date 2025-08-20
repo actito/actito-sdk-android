@@ -10,6 +10,5 @@
     <ID>MaxLineLength:LocalStorage.kt$LocalStorage$"Cannot update the beacon session for region with major '${entry.key}' since the corresponding region is not being monitored."</ID>
     <ID>MaxLineLength:LocalStorage.kt$LocalStorage$"Cannot update the beacon session for region with major '${entry.key}' since there's no ongoing session."</ID>
     <ID>NestedBlockDepth:LocationUtils.kt$private fun ActitoRegion.AdvancedGeometry.contains(location: Location): Boolean</ID>
-    <ID>UnusedParameter:ActitoGeo.kt$ActitoGeo$major: Int</ID>
   </CurrentIssues>
 </SmellBaseline>
