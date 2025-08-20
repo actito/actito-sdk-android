@@ -4,10 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.location.Location
-import com.actito.Actito
 import com.actito.geo.ActitoGeo
-import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION
-import com.actito.geo.ktx.INTENT_ACTION_INTERNAL_LOCATION_UPDATED
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 import com.google.android.gms.location.LocationResult
@@ -16,7 +13,7 @@ internal class LocationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
-            Actito.INTENT_ACTION_INTERNAL_LOCATION_UPDATED -> {
+            ActitoGeo.INTENT_ACTION_INTERNAL_LOCATION_UPDATED -> {
                 if (LocationResult.hasResult(intent)) {
                     val result = LocationResult.extractResult(intent) ?: return
                     val location = result.lastLocation ?: return
@@ -24,7 +21,7 @@ internal class LocationReceiver : BroadcastReceiver() {
                     onLocationUpdated(location)
                 }
             }
-            Actito.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION -> {
+            ActitoGeo.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION -> {
                 val event = GeofencingEvent.fromIntent(intent) ?: return
                 if (event.hasError()) {
                     logger.warning("Geofencing error: ${event.errorCode}")
