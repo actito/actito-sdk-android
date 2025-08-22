@@ -1,52 +1,18 @@
 package com.actito.push
 
-import com.actito.Actito
-import com.actito.push.internal.ActitoNotificationRemoteMessage
-import com.actito.push.internal.ActitoSystemRemoteMessage
-import com.actito.push.internal.ActitoUnknownRemoteMessage
 import com.actito.push.internal.logger
-import com.actito.push.ktx.push
-import com.actito.push.models.ActitoTransport
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 public open class ActitoFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
-        ActitoPush.handleNewToken(ActitoTransport.GCM, token)
+        logger.info("Received a new push token.")
+        ActitoPush.onNewToken(token)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         logger.debug("Received a remote notification from FCM.")
-
-        if (Actito.push().isActitoNotification(message)) {
-            val application = Actito.application ?: run {
-                @Suppress("detekt:MaxLineLength")
-                logger.warning("Actito application unavailable. Ensure Actito is configured during the application launch.")
-                return
-            }
-
-            if (application.id != message.data["x-application"]) {
-                logger.warning("Incoming notification originated from another application.")
-                return
-            }
-
-            val isSystemNotification = message.data["system"] == "1" ||
-                message.data["system"]?.toBoolean() ?: false
-
-            if (isSystemNotification) {
-                ActitoPush.handleRemoteMessage(
-                    ActitoSystemRemoteMessage(message),
-                )
-            } else {
-                ActitoPush.handleRemoteMessage(
-                    ActitoNotificationRemoteMessage(message),
-                )
-            }
-        } else {
-            ActitoPush.handleRemoteMessage(
-                ActitoUnknownRemoteMessage(message),
-            )
-        }
+        ActitoPush.onMessageReceived(message)
     }
 }

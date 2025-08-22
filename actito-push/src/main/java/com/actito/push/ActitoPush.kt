@@ -33,9 +33,13 @@ import com.actito.ktx.device
 import com.actito.ktx.events
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
+import com.actito.push.internal.ActitoNotificationRemoteMessage
 import com.actito.push.internal.ActitoPushSystemIntentReceiver
 import com.actito.push.internal.ActitoSharedPreferences
+import com.actito.push.internal.ActitoSystemRemoteMessage
+import com.actito.push.internal.ActitoUnknownRemoteMessage
 import com.actito.push.internal.InboxIntegration
+import com.actito.push.internal.firebase.isActitoSystemNotification
 import com.actito.push.internal.logger
 import com.actito.push.internal.network.push.CreateLiveActivityPayload
 import com.actito.push.internal.network.push.UpdateDeviceNotificationSettingsPayload
@@ -516,13 +520,8 @@ public object ActitoPush {
         callback: ActitoCallback<Unit>,
     ): Unit = toCallbackFunction(::endLiveActivity)(activityId, callback::onSuccess, callback::onFailure)
 
-    // endregion
-
-    // region Actito Push Internal
-
-    internal fun handleNewToken(transport: ActitoTransport, token: String) {
-        logger.info("Received a new push token.")
-
+    @JvmStatic
+    public fun onNewToken(token: String) {
         if (!Actito.isReady) {
             logger.debug("Actito is not ready. Postponing token registration...")
             return
@@ -535,12 +534,41 @@ public object ActitoPush {
 
         actitoCoroutineScope.launch {
             try {
-                updateDeviceSubscription(transport, token)
+                updateDeviceSubscription(ActitoTransport.GCM, token)
             } catch (e: Exception) {
                 logger.debug("Failed to update the push subscription.", e)
             }
         }
     }
+
+    @JvmStatic
+    public fun onMessageReceived(message: RemoteMessage) {
+        if (!isActitoNotification(message)) {
+            handleRemoteMessage(ActitoUnknownRemoteMessage(message))
+            return
+        }
+
+        val application = Actito.application ?: run {
+            @Suppress("detekt:MaxLineLength")
+            logger.warning("Actito application unavailable. Ensure Actito is configured during the application launch.")
+            return
+        }
+
+        if (application.id != message.data["x-application"]) {
+            logger.warning("Incoming notification originated from another application.")
+            return
+        }
+
+        if (message.isActitoSystemNotification) {
+            handleRemoteMessage(ActitoSystemRemoteMessage(message))
+        } else {
+            handleRemoteMessage(ActitoNotificationRemoteMessage(message))
+        }
+    }
+
+    // endregion
+
+    // region Actito Push Internal
 
     internal fun handleRemoteMessage(message: ActitoRemoteMessage) {
         if (!Actito.isConfigured) {
