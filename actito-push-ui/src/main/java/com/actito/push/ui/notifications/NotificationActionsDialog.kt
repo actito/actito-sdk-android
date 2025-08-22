@@ -30,7 +30,7 @@ public class NotificationActionsDialog : DialogFragment() {
 
         try {
             callback = parentFragment as Callback
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw ClassCastException("Parent fragment must implement NotificationActionsDialog.Callback.")
         }
 

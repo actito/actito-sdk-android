@@ -26,7 +26,7 @@ internal object ActitoSessionModule {
         actitoCoroutineScope.launch {
             try {
                 stopSession()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 // Silent.
             }
         }
@@ -54,7 +54,7 @@ internal object ActitoSessionModule {
             ActitoEventsModule.logApplicationOpen(
                 sessionId = sessionId,
             )
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             logger.warning("Failed to process an application session start.")
         }
     }
@@ -77,7 +77,7 @@ internal object ActitoSessionModule {
                 sessionId = sessionId,
                 sessionLength = (sessionEnd.time - sessionStart.time) / 1000.toDouble(),
             )
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             logger.warning("Failed to process an application session stop.")
         }
     }
@@ -110,7 +110,7 @@ internal object ActitoSessionModule {
                     actitoCoroutineScope.launch {
                         try {
                             startSession()
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             // Silent.
                         }
                     }

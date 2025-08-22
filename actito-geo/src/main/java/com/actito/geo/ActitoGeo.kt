@@ -252,9 +252,11 @@ public object ActitoGeo {
 
     // region Intent actions
 
-    internal const val INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String = "com.actito.intent.action.internal.LocationUpdated"
+    internal const val INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String =
+        "com.actito.intent.action.internal.LocationUpdated"
 
-    internal const val INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String = "com.actito.intent.action.internal.GeofenceTransition"
+    internal const val INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String =
+        "com.actito.intent.action.internal.GeofenceTransition"
 
     public const val INTENT_ACTION_LOCATION_UPDATED: String = "com.actito.intent.action.LocationUpdated"
     public const val INTENT_ACTION_REGION_ENTERED: String = "com.actito.intent.action.RegionEntered"
@@ -262,7 +264,8 @@ public object ActitoGeo {
     public const val INTENT_ACTION_BEACON_ENTERED: String = "com.actito.intent.action.BeaconEntered"
     public const val INTENT_ACTION_BEACON_EXITED: String = "com.actito.intent.action.BeaconExited"
     public const val INTENT_ACTION_BEACONS_RANGED: String = "com.actito.intent.action.BeaconsRanged"
-    public const val INTENT_ACTION_BEACON_NOTIFICATION_OPENED: String = "com.actito.intent.action.BeaconNotificationOpened"
+    public const val INTENT_ACTION_BEACON_NOTIFICATION_OPENED: String =
+        "com.actito.intent.action.BeaconNotificationOpened"
 
     // endregion
 
@@ -384,7 +387,7 @@ public object ActitoGeo {
     public fun enableLocationUpdates() {
         try {
             checkPrerequisites()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return
         }
 
@@ -401,7 +404,7 @@ public object ActitoGeo {
     public fun disableLocationUpdates() {
         try {
             checkPrerequisites()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return
         }
 
@@ -971,7 +974,11 @@ public object ActitoGeo {
 
         // Update the location when we can monitor geofences but no fences were loaded yet.
         // This typically happens when tracking the user's location and later upgrading to background permission.
-        if (hasBackgroundLocationPermission && hasPreciseLocationPermission && localStorage.monitoredRegions.isEmpty()) {
+        if (
+            hasBackgroundLocationPermission &&
+            hasPreciseLocationPermission &&
+            localStorage.monitoredRegions.isEmpty()
+        ) {
             return true
         }
 

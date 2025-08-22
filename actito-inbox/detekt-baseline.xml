@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>InstanceOfCheckForException:ActitoInbox.kt$ActitoInbox$e is NetworkException.ValidationException</ID>
     <ID>MaxLineLength:InboxDao.kt$InboxDao$"SELECT * FROM inbox WHERE (visible IS NULL OR visible == 1) AND (expires IS NULL OR expires &gt; strftime('%s', 'now') || substr(strftime('%f', 'now'), 4))"</ID>
   </CurrentIssues>
 </SmellBaseline>

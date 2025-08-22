@@ -106,8 +106,10 @@ public object ActitoPush {
     public const val INTENT_ACTION_TOKEN_CHANGED: String = "com.actito.intent.action.TokenChanged"
     public const val INTENT_ACTION_REMOTE_MESSAGE_OPENED: String = "com.actito.intent.action.RemoteMessageOpened"
     public const val INTENT_ACTION_NOTIFICATION_RECEIVED: String = "com.actito.intent.action.NotificationReceived"
-    public const val INTENT_ACTION_SYSTEM_NOTIFICATION_RECEIVED: String = "com.actito.intent.action.SystemNotificationReceived"
-    public const val INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED: String = "com.actito.intent.action.UnknownNotificationReceived"
+    public const val INTENT_ACTION_SYSTEM_NOTIFICATION_RECEIVED: String =
+        "com.actito.intent.action.SystemNotificationReceived"
+    public const val INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED: String =
+        "com.actito.intent.action.UnknownNotificationReceived"
     public const val INTENT_ACTION_NOTIFICATION_OPENED: String = "com.actito.intent.action.NotificationOpened"
     public const val INTENT_ACTION_ACTION_OPENED: String = "com.actito.intent.action.ActionOpened"
     public const val INTENT_ACTION_QUICK_RESPONSE: String = "com.actito.intent.action.NotificationQuickResponse"
@@ -681,67 +683,7 @@ public object ActitoPush {
     private fun createUniqueNotificationId(): Int = notificationSequence.incrementAndGet()
 
     private fun handleSystemNotification(message: ActitoSystemRemoteMessage) {
-        if (message.type.startsWith("re.notifica.")) {
-            logger.info("Processing system notification: ${message.type}")
-            when (message.type) {
-                "re.notifica.notification.system.Application" -> {
-                    Actito.fetchApplication(
-                        object : ActitoCallback<ActitoApplication> {
-                            override fun onSuccess(result: ActitoApplication) {
-                                logger.debug("Updated cached application info.")
-                            }
-
-                            override fun onFailure(e: Exception) {
-                                logger.error("Failed to update cached application info.", e)
-                            }
-                        },
-                    )
-                }
-
-                "re.notifica.notification.system.Inbox" -> InboxIntegration.reloadInbox()
-                "re.notifica.notification.system.LiveActivity" -> {
-                    val activity = message.extra["activity"] ?: run {
-                        logger.warning(
-                            "Cannot parse a live activity system notification without the 'activity' property.",
-                        )
-                        return
-                    }
-
-                    val content = try {
-                        message.extra["content"]?.let { JSONObject(it) }
-                    } catch (e: Exception) {
-                        logger.warning("Cannot parse the content of the live activity.", e)
-                        return
-                    }
-
-                    val timestamp = message.extra["timestamp"]?.toLongOrNull() ?: run {
-                        logger.warning("Cannot parse the timestamp of the live activity.")
-                        return
-                    }
-
-                    val dismissalDateTimestamp = message.extra["dismissalDate"]?.toLongOrNull()
-
-                    val update = ActitoLiveActivityUpdate(
-                        activity = activity,
-                        title = message.extra["title"],
-                        subtitle = message.extra["subtitle"],
-                        message = message.extra["message"],
-                        content = content,
-                        final = message.extra["final"]?.toBooleanStrictOrNull() ?: false,
-                        dismissalDate = dismissalDateTimestamp?.let { Date(it) },
-                        timestamp = Date(timestamp),
-                    )
-
-                    Actito.requireContext().sendBroadcast(
-                        Intent(Actito.requireContext(), intentReceiver)
-                            .setAction(Actito.INTENT_ACTION_LIVE_ACTIVITY_UPDATE)
-                            .putExtra(Actito.INTENT_EXTRA_LIVE_ACTIVITY_UPDATE, update),
-                    )
-                }
-
-                else -> logger.warning("Unhandled system notification: ${message.type}")
-            }
-        } else {
+        if (!message.type.startsWith("re.notifica.")) {
             logger.info("Processing custom system notification.")
             val notification = ActitoSystemNotification(
                 id = requireNotNull(message.id),
@@ -754,6 +696,68 @@ public object ActitoPush {
                     .setAction(Actito.INTENT_ACTION_SYSTEM_NOTIFICATION_RECEIVED)
                     .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification),
             )
+
+            return
+        }
+
+        logger.info("Processing system notification: ${message.type}")
+        when (message.type) {
+            "re.notifica.notification.system.Application" -> {
+                Actito.fetchApplication(
+                    object : ActitoCallback<ActitoApplication> {
+                        override fun onSuccess(result: ActitoApplication) {
+                            logger.debug("Updated cached application info.")
+                        }
+
+                        override fun onFailure(e: Exception) {
+                            logger.error("Failed to update cached application info.", e)
+                        }
+                    },
+                )
+            }
+
+            "re.notifica.notification.system.Inbox" -> InboxIntegration.reloadInbox()
+            "re.notifica.notification.system.LiveActivity" -> {
+                val activity = message.extra["activity"] ?: run {
+                    logger.warning(
+                        "Cannot parse a live activity system notification without the 'activity' property.",
+                    )
+                    return
+                }
+
+                val content = try {
+                    message.extra["content"]?.let { JSONObject(it) }
+                } catch (e: Exception) {
+                    logger.warning("Cannot parse the content of the live activity.", e)
+                    return
+                }
+
+                val timestamp = message.extra["timestamp"]?.toLongOrNull() ?: run {
+                    logger.warning("Cannot parse the timestamp of the live activity.")
+                    return
+                }
+
+                val dismissalDateTimestamp = message.extra["dismissalDate"]?.toLongOrNull()
+
+                val update = ActitoLiveActivityUpdate(
+                    activity = activity,
+                    title = message.extra["title"],
+                    subtitle = message.extra["subtitle"],
+                    message = message.extra["message"],
+                    content = content,
+                    final = message.extra["final"]?.toBooleanStrictOrNull() ?: false,
+                    dismissalDate = dismissalDateTimestamp?.let { Date(it) },
+                    timestamp = Date(timestamp),
+                )
+
+                Actito.requireContext().sendBroadcast(
+                    Intent(Actito.requireContext(), intentReceiver)
+                        .setAction(Actito.INTENT_ACTION_LIVE_ACTIVITY_UPDATE)
+                        .putExtra(Actito.INTENT_EXTRA_LIVE_ACTIVITY_UPDATE, update),
+                )
+            }
+
+            else -> logger.warning("Unhandled system notification: ${message.type}")
         }
     }
 
@@ -1025,7 +1029,7 @@ public object ActitoPush {
                 val offMs = message.lightsOff ?: checkNotNull(Actito.options).notificationLightsOff
 
                 builder.setLights(color, onMs, offMs)
-            } catch (e: IllegalArgumentException) {
+            } catch (_: IllegalArgumentException) {
                 logger.warning("The color '$lightsColor' could not be parsed.")
             }
         }

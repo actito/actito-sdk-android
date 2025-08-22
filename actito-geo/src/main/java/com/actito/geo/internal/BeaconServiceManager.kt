@@ -41,7 +41,7 @@ public abstract class BeaconServiceManager(
                     Function2::class.java,
                     Function2::class.java,
                 ).newInstance(proximityUUID, onBeaconEnter, onBeaconExit, onBeaconsRanged) as? BeaconServiceManager
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 logger.warning("Unable to find a constructor suitable to instantiate $FQN")
                 null
             }

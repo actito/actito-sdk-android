@@ -98,7 +98,7 @@ public class NotificationContainerFragment :
 
         try {
             callback = activity as Callback
-        } catch (e: ClassCastException) {
+        } catch (_: ClassCastException) {
             throw ClassCastException("Parent activity must implement NotificationContainerFragment.Callback.")
         }
     }
@@ -447,8 +447,6 @@ public class NotificationContainerFragment :
     // endregion
 
     public companion object {
-        private const val CAMERA_REQUEST_CODE = 1
-
         public fun newInstance(
             notification: ActitoNotification,
             action: ActitoNotification.Action?,

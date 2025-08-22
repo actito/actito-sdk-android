@@ -16,15 +16,5 @@
     <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Notification url clicked, please override onNotificationUrlClicked if you want to receive these events."</ID>
     <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Notification will present, please override onNotificationWillPresent if you want to receive these events."</ID>
     <ID>MaxLineLength:NotificationCallbackAction.kt$NotificationCallbackAction$?:</ID>
-    <ID>SwallowedException:ActitoCallbackActionFragment.kt$ActitoCallbackActionFragment$e: ClassCastException</ID>
-    <ID>SwallowedException:ActitoPushUI.kt$ActitoPushUI$e: Exception</ID>
-    <ID>SwallowedException:NotificationActionsDialog.kt$NotificationActionsDialog$e: Exception</ID>
-    <ID>SwallowedException:NotificationContainerFragment.kt$NotificationContainerFragment$e: ClassCastException</ID>
-    <ID>SwallowedException:NotificationDialog.kt$NotificationDialog$e: Exception</ID>
-    <ID>SwallowedException:NotificationFragment.kt$NotificationFragment$e: ClassCastException</ID>
-    <ID>SwallowedException:NotificationMailAction.kt$NotificationMailAction$e: ActivityNotFoundException</ID>
-    <ID>SwallowedException:NotificationSmsAction.kt$NotificationSmsAction$e: ActivityNotFoundException</ID>
-    <ID>SwallowedException:NotificationTelephoneAction.kt$NotificationTelephoneAction$e: ActivityNotFoundException</ID>
-    <ID>UnusedPrivateProperty:NotificationContainerFragment.kt$NotificationContainerFragment.Companion$private const val CAMERA_REQUEST_CODE = 1</ID>
   </CurrentIssues>
 </SmellBaseline>
