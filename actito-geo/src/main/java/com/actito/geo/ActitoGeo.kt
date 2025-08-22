@@ -252,10 +252,10 @@ public object ActitoGeo {
 
     // region Intent actions
 
-    public const val INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String =
+    internal const val INTENT_ACTION_INTERNAL_LOCATION_UPDATED: String =
         "com.actito.intent.action.internal.LocationUpdated"
 
-    public const val INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String =
+    internal const val INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION: String =
         "com.actito.intent.action.internal.GeofenceTransition"
 
     public const val INTENT_ACTION_LOCATION_UPDATED: String = "com.actito.intent.action.LocationUpdated"
