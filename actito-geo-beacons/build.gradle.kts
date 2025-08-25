@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("actito-library")
     id("publish")
@@ -28,12 +30,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-        freeCompilerArgs = listOf(
-            "-Xexplicit-api=strict",
-            "-opt-in=com.actito.InternalActitoApi",
-        )
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+            freeCompilerArgs.addAll(
+                listOf(
+                    "-Xexplicit-api=strict",
+                    "-opt-in=com.actito.InternalActitoApi",
+                ),
+            )
+        }
     }
 
     publishing {
