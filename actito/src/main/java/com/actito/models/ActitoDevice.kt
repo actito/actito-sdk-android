@@ -11,6 +11,7 @@ public typealias ActitoUserData = Map<String, String>
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+@ConsistentCopyVisibility
 public data class ActitoDevice internal constructor(
     val id: String,
     val userId: String?,
