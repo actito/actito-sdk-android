@@ -76,9 +76,9 @@ import com.actito.utilities.image.loadBitmap
 import com.actito.utilities.parcel.parcelable
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
 import com.google.firebase.messaging.RemoteMessage
-import com.google.firebase.messaging.ktx.messaging
+import com.google.firebase.messaging.messaging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
