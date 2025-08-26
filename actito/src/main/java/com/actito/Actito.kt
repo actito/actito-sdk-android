@@ -857,21 +857,21 @@ public object Actito {
 
     private fun loadServicesInfoFromResources(context: Context): ActitoServicesInfo {
         val applicationKey = try {
-            context.getString(R.string.notificare_services_application_key)
+            context.getString(R.string.actito_services_application_key)
         } catch (_: Resources.NotFoundException) {
             error("Application secret resource unavailable.")
         }
 
         val applicationSecret = try {
-            context.getString(R.string.notificare_services_application_secret)
+            context.getString(R.string.actito_services_application_secret)
         } catch (_: Resources.NotFoundException) {
             error("Application secret resource unavailable.")
         }
 
         val hosts = try {
-            val restApi = context.resources.getString(R.string.notificare_services_hosts_rest_api)
-            val appLinks = context.resources.getString(R.string.notificare_services_hosts_app_links)
-            val shortLinks = context.resources.getString(R.string.notificare_services_hosts_short_links)
+            val restApi = context.resources.getString(R.string.actito_services_hosts_rest_api)
+            val appLinks = context.resources.getString(R.string.actito_services_hosts_app_links)
+            val shortLinks = context.resources.getString(R.string.actito_services_hosts_short_links)
 
             if (restApi.isNotBlank() && appLinks.isNotBlank() && shortLinks.isNotBlank()) {
                 ActitoServicesInfo.Hosts(restApi, appLinks, shortLinks)
