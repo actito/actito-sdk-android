@@ -543,6 +543,12 @@ public object ActitoPush {
 
     @JvmStatic
     public fun onMessageReceived(message: RemoteMessage) {
+        if (!Actito.isConfigured) {
+            @Suppress("detekt:MaxLineLength")
+            logger.warning("Cannot process remote messages before Actito is configured. Invoke Actito.configure() when the application starts.")
+            return
+        }
+
         if (!isActitoNotification(message)) {
             handleRemoteMessage(ActitoUnknownRemoteMessage(message))
             return
