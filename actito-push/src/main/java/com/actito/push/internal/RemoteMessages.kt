@@ -9,8 +9,11 @@ import com.actito.push.models.ActitoUnknownNotification
 import com.actito.push.models.ActitoUnknownRemoteMessage
 import com.google.firebase.messaging.RemoteMessage
 
-internal fun ActitoUnknownRemoteMessage(message: RemoteMessage): ActitoUnknownRemoteMessage =
-    ActitoUnknownRemoteMessage(
+internal fun ActitoUnknownRemoteMessage(message: RemoteMessage): ActitoUnknownRemoteMessage {
+    @Suppress("DEPRECATION")
+    val to = message.to
+
+    return ActitoUnknownRemoteMessage(
         messageId = message.messageId,
         sentTime = message.sentTime,
         collapseKey = message.collapseKey,
@@ -18,7 +21,7 @@ internal fun ActitoUnknownRemoteMessage(message: RemoteMessage): ActitoUnknownRe
         messageType = message.messageType,
         senderId = message.senderId,
         from = message.from,
-        to = message.to,
+        to = to,
         priority = message.priority,
         originalPriority = message.originalPriority,
         notification = message.notification?.let {
@@ -53,6 +56,7 @@ internal fun ActitoUnknownRemoteMessage(message: RemoteMessage): ActitoUnknownRe
         },
         data = message.data,
     )
+}
 
 internal fun ActitoSystemRemoteMessage(message: RemoteMessage): ActitoSystemRemoteMessage {
     val ignoreKeys = listOf(
@@ -81,9 +85,25 @@ internal fun ActitoSystemRemoteMessage(message: RemoteMessage): ActitoSystemRemo
 
 internal fun ActitoNotificationRemoteMessage(message: RemoteMessage): ActitoNotificationRemoteMessage {
     val ignoreKeys = listOf(
-        "id", "notification_id", "notification_type", "notification_channel", "notification_group", "alert",
-        "alert_title", "alert_subtitle", "attachment", "action_category", "inbox_item_id", "inbox_item_visible",
-        "inbox_item_expires", "presentation", "notify", "sound", "lights_color", "lights_on", "lights_off",
+        "id",
+        "notification_id",
+        "notification_type",
+        "notification_channel",
+        "notification_group",
+        "alert",
+        "alert_title",
+        "alert_subtitle",
+        "attachment",
+        "action_category",
+        "inbox_item_id",
+        "inbox_item_visible",
+        "inbox_item_expires",
+        "presentation",
+        "notify",
+        "sound",
+        "lights_color",
+        "lights_on",
+        "lights_off",
     )
 
     val extras = message.data.filterKeys { key ->
