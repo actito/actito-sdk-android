@@ -20,7 +20,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.EMPTY
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
@@ -189,7 +188,7 @@ public class ActitoRequest private constructor(
             this.method = method
             this.url = url
             this.body = when (body) {
-                null -> if (HTTP_METHODS_REQUIRE_BODY.contains(method)) EMPTY else null
+                null -> if (HTTP_METHODS_REQUIRE_BODY.contains(method)) RequestBody.EMPTY else null
                 is ByteArray -> body.toRequestBody()
                 is FormBody -> body
                 else -> try {
