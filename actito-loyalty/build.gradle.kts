@@ -38,12 +38,8 @@ android {
     kotlin {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
-            freeCompilerArgs.addAll(
-                listOf(
-                    "-Xexplicit-api=strict",
-                    "-opt-in=com.actito.InternalActitoApi",
-                ),
-            )
+            explicitApi()
+            optIn.add("com.actito.InternalActitoApi")
         }
     }
 
