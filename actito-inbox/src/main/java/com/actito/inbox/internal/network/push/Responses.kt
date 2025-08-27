@@ -16,8 +16,8 @@ internal data class InboxResponse(
     @UseDefaultsWhenNull
     @JsonClass(generateAdapter = true)
     data class InboxItem(
-        @Json(name = "_id") val id: String,
-        @Json(name = "notification") val notificationId: String,
+        @param:Json(name = "_id") val id: String,
+        @param:Json(name = "notification") val notificationId: String,
         val type: String,
         val time: Date,
         val title: String?,

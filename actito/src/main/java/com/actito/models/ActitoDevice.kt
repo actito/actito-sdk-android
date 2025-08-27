@@ -11,7 +11,7 @@ public typealias ActitoUserData = Map<String, String>
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-public data class ActitoDevice internal constructor(
+public data class ActitoDevice(
     val id: String,
     val userId: String?,
     val userName: String?,
