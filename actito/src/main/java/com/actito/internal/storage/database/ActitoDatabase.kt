@@ -25,6 +25,6 @@ internal abstract class ActitoDatabase : RoomDatabase() {
                 context,
                 ActitoDatabase::class.java,
                 DB_NAME,
-            ).fallbackToDestructiveMigration().build()
+            ).fallbackToDestructiveMigration(false).build()
     }
 }

@@ -16,7 +16,7 @@ internal data class ApplicationResponse(
 
     @JsonClass(generateAdapter = true)
     internal data class Application(
-        @Json(name = "_id") val id: String,
+        @param:Json(name = "_id") val id: String,
         val name: String,
         val category: String,
         val services: Map<String, Boolean>,
@@ -62,7 +62,7 @@ internal data class CreateDeviceResponse(
 
     @JsonClass(generateAdapter = true)
     internal data class Device(
-        @Json(name = "deviceID") val deviceId: String,
+        @param:Json(name = "deviceID") val deviceId: String,
     )
 }
 
@@ -89,7 +89,7 @@ public data class NotificationResponse(
 
     @JsonClass(generateAdapter = true)
     public data class Notification(
-        @Json(name = "_id") val id: String,
+        @param:Json(name = "_id") val id: String,
         val partial: Boolean = false,
         val type: String,
         val time: Date,

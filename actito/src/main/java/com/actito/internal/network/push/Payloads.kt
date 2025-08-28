@@ -34,7 +34,7 @@ internal data class UpdateDevicePayload(
 @EncodeNulls
 @JsonClass(generateAdapter = true)
 internal data class UpdateDeviceUserPayload(
-    @Json(name = "userID") val userId: String?,
+    @param:Json(name = "userID") val userId: String?,
     val userName: String?,
 )
 
@@ -52,7 +52,7 @@ internal data class UpdateDeviceUserDataPayload(
 
 @JsonClass(generateAdapter = true)
 internal data class UpgradeToLongLivedDevicePayload(
-    @Json(name = "deviceID") val deviceId: String,
+    @param:Json(name = "deviceID") val deviceId: String,
     val transport: String,
     val subscriptionId: String?,
     val language: String,
@@ -85,9 +85,9 @@ internal data class DeviceTagsPayload(
 
 @JsonClass(generateAdapter = true)
 internal data class CreateNotificationReplyPayload(
-    @Json(name = "notification") val notificationId: String,
-    @Json(name = "deviceID") val deviceId: String,
-    @Json(name = "userID") val userId: String?,
+    @param:Json(name = "notification") val notificationId: String,
+    @param:Json(name = "deviceID") val deviceId: String,
+    @param:Json(name = "userID") val userId: String?,
     val label: String,
     val data: Data,
 ) {
@@ -103,5 +103,5 @@ internal data class CreateNotificationReplyPayload(
 
 @JsonClass(generateAdapter = true)
 internal data class TestDeviceRegistrationPayload(
-    @Json(name = "deviceID") val deviceId: String,
+    @param:Json(name = "deviceID") val deviceId: String,
 )

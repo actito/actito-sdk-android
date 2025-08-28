@@ -14,10 +14,10 @@ public typealias ActitoEventData = Map<String, Any?>
 public data class ActitoEvent(
     val type: String,
     val timestamp: Long,
-    @Json(name = "deviceID") val deviceId: String,
-    @Json(name = "sessionID") val sessionId: String?,
-    @Json(name = "notification") val notificationId: String?,
-    @Json(name = "userID") val userId: String?,
+    @param:Json(name = "deviceID") val deviceId: String,
+    @param:Json(name = "sessionID") val sessionId: String?,
+    @param:Json(name = "notification") val notificationId: String?,
+    @param:Json(name = "userID") val userId: String?,
     val data: ActitoEventData?,
 ) {
 
