@@ -4,6 +4,7 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven(url = "https://maven.notifica.re/releases")
+        mavenLocal()
     }
 }
 
