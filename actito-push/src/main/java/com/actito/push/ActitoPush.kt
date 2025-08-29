@@ -33,13 +33,13 @@ import com.actito.ktx.device
 import com.actito.ktx.events
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
-import com.actito.push.internal.ActitoNotificationRemoteMessage
 import com.actito.push.internal.ActitoPushSystemIntentReceiver
 import com.actito.push.internal.ActitoSharedPreferences
-import com.actito.push.internal.ActitoSystemRemoteMessage
-import com.actito.push.internal.ActitoUnknownRemoteMessage
 import com.actito.push.internal.InboxIntegration
 import com.actito.push.internal.firebase.isActitoSystemNotification
+import com.actito.push.internal.firebase.messages.ActitoNotificationRemoteMessage
+import com.actito.push.internal.firebase.messages.ActitoSystemRemoteMessage
+import com.actito.push.internal.firebase.messages.ActitoUnknownRemoteMessage
 import com.actito.push.internal.logger
 import com.actito.push.internal.network.push.CreateLiveActivityPayload
 import com.actito.push.internal.network.push.UpdateDeviceNotificationSettingsPayload
@@ -63,13 +63,8 @@ import com.actito.push.models.ActitoLiveActivityUpdate
 import com.actito.push.models.ActitoNotificationActionOpenedIntentResult
 import com.actito.push.models.ActitoNotificationDeliveryMechanism
 import com.actito.push.models.ActitoNotificationOpenedIntentResult
-import com.actito.push.models.ActitoNotificationRemoteMessage
 import com.actito.push.models.ActitoPushSubscription
-import com.actito.push.models.ActitoRemoteMessage
-import com.actito.push.models.ActitoSystemNotification
-import com.actito.push.models.ActitoSystemRemoteMessage
 import com.actito.push.models.ActitoTransport
-import com.actito.push.models.ActitoUnknownRemoteMessage
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.utilities.image.loadBitmap
@@ -544,13 +539,13 @@ public object ActitoPush {
     @JvmStatic
     public fun onMessageReceived(message: RemoteMessage) {
         if (!Actito.isConfigured) {
-            @Suppress("detekt:MaxLineLength")
+            @Suppress("detekt:MaxLineLength", "ktlint:standard:argument-list-wrapping")
             logger.warning("Cannot process remote messages before Actito is configured. Invoke Actito.configure() when the application starts.")
             return
         }
 
         if (!isActitoNotification(message)) {
-            handleRemoteMessage(ActitoUnknownRemoteMessage(message))
+            handleUnknownRemoteMessage(ActitoUnknownRemoteMessage.create(message))
             return
         }
 
@@ -566,36 +561,9 @@ public object ActitoPush {
         }
 
         if (message.isActitoSystemNotification) {
-            handleRemoteMessage(ActitoSystemRemoteMessage(message))
+            handleSystemRemoteMessage(ActitoSystemRemoteMessage.create(message))
         } else {
-            handleRemoteMessage(ActitoNotificationRemoteMessage(message))
-        }
-    }
-
-    // endregion
-
-    // region Actito Push Internal
-
-    internal fun handleRemoteMessage(message: ActitoRemoteMessage) {
-        if (!Actito.isConfigured) {
-            logger.warning(
-                "Cannot process remote messages before Actito is configured. Invoke Actito.configure() when the application starts.",
-            )
-            return
-        }
-
-        when (message) {
-            is ActitoSystemRemoteMessage -> handleSystemNotification(message)
-            is ActitoNotificationRemoteMessage -> handleNotification(message)
-            is ActitoUnknownRemoteMessage -> {
-                val notification = message.toNotification()
-
-                Actito.requireContext().sendBroadcast(
-                    Intent(Actito.requireContext(), intentReceiver)
-                        .setAction(Actito.INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED)
-                        .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification),
-                )
-            }
+            handleNotificationRemoteMessage(ActitoNotificationRemoteMessage.create(message))
         }
     }
 
@@ -716,14 +684,49 @@ public object ActitoPush {
 
     private fun createUniqueNotificationId(): Int = notificationSequence.incrementAndGet()
 
-    private fun handleSystemNotification(message: ActitoSystemRemoteMessage) {
+    private fun handleNotificationRemoteMessage(message: ActitoNotificationRemoteMessage) {
+        actitoCoroutineScope.launch {
+            try {
+                Actito.events().logNotificationReceived(message.notificationId)
+
+                val notification = try {
+                    Actito.fetchNotification(message.id)
+                } catch (e: Exception) {
+                    logger.error("Failed to fetch notification.", e)
+                    message.toNotification()
+                }
+
+                if (message.notify) {
+                    generateNotification(
+                        message = message,
+                        notification = notification,
+                    )
+                }
+
+                // Attempt to place the item in the inbox.
+                InboxIntegration.addItemToInbox(message, notification)
+
+                val deliveryMechanism = when {
+                    message.notify -> ActitoNotificationDeliveryMechanism.STANDARD
+                    else -> ActitoNotificationDeliveryMechanism.SILENT
+                }
+
+                Actito.requireContext().sendBroadcast(
+                    Intent(Actito.requireContext(), intentReceiver)
+                        .setAction(Actito.INTENT_ACTION_NOTIFICATION_RECEIVED)
+                        .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification)
+                        .putExtra(Actito.INTENT_EXTRA_DELIVERY_MECHANISM, deliveryMechanism as Parcelable),
+                )
+            } catch (e: Exception) {
+                logger.error("Unable to process remote notification.", e)
+            }
+        }
+    }
+
+    private fun handleSystemRemoteMessage(message: ActitoSystemRemoteMessage) {
         if (!message.type.startsWith("re.notifica.")) {
             logger.info("Processing custom system notification.")
-            val notification = ActitoSystemNotification(
-                id = requireNotNull(message.id),
-                type = message.type,
-                extra = message.extra,
-            )
+            val notification = message.toNotification()
 
             Actito.requireContext().sendBroadcast(
                 Intent(Actito.requireContext(), intentReceiver)
@@ -795,43 +798,14 @@ public object ActitoPush {
         }
     }
 
-    private fun handleNotification(message: ActitoNotificationRemoteMessage) {
-        actitoCoroutineScope.launch {
-            try {
-                Actito.events().logNotificationReceived(message.notificationId)
+    private fun handleUnknownRemoteMessage(message: ActitoUnknownRemoteMessage) {
+        val notification = message.toNotification()
 
-                val notification = try {
-                    Actito.fetchNotification(message.id)
-                } catch (e: Exception) {
-                    logger.error("Failed to fetch notification.", e)
-                    message.toNotification()
-                }
-
-                if (message.notify) {
-                    generateNotification(
-                        message = message,
-                        notification = notification,
-                    )
-                }
-
-                // Attempt to place the item in the inbox.
-                InboxIntegration.addItemToInbox(message, notification)
-
-                val deliveryMechanism = when {
-                    message.notify -> ActitoNotificationDeliveryMechanism.STANDARD
-                    else -> ActitoNotificationDeliveryMechanism.SILENT
-                }
-
-                Actito.requireContext().sendBroadcast(
-                    Intent(Actito.requireContext(), intentReceiver)
-                        .setAction(Actito.INTENT_ACTION_NOTIFICATION_RECEIVED)
-                        .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification)
-                        .putExtra(Actito.INTENT_EXTRA_DELIVERY_MECHANISM, deliveryMechanism as Parcelable),
-                )
-            } catch (e: Exception) {
-                logger.error("Unable to process remote notification.", e)
-            }
-        }
+        Actito.requireContext().sendBroadcast(
+            Intent(Actito.requireContext(), intentReceiver)
+                .setAction(Actito.INTENT_ACTION_UNKNOWN_NOTIFICATION_RECEIVED)
+                .putExtra(Actito.INTENT_EXTRA_NOTIFICATION, notification),
+        )
     }
 
     @SuppressLint("MissingPermission")

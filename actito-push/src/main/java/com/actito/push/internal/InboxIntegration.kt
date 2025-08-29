@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.core.os.bundleOf
 import com.actito.Actito
 import com.actito.models.ActitoNotification
-import com.actito.push.models.ActitoNotificationRemoteMessage
+import com.actito.push.internal.firebase.messages.ActitoNotificationRemoteMessage
 
 internal object InboxIntegration {
 
