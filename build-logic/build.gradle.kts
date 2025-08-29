@@ -7,6 +7,7 @@ repositories {
     mavenCentral()
     gradlePluginPortal()
     maven(url = "https://maven.notifica.re/releases")
+    mavenLocal()
 }
 
 dependencies {
@@ -20,7 +21,7 @@ dependencies {
 
     // Apps
     implementation(apps.plugins.android.application.asDependency())
-    implementation(apps.plugins.notificare.services.asDependency())
+    implementation(apps.plugins.actito.services.asDependency())
     implementation(apps.plugins.google.services.asDependency())
 }
 

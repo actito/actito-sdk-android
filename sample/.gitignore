@@ -1,6 +1,6 @@
 /build
 
-notificare-services.json
+actito-services.json
 agconnect-services.json
 google-services.json
 *.keystore

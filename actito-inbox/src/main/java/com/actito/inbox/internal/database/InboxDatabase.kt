@@ -32,6 +32,6 @@ internal abstract class InboxDatabase : RoomDatabase() {
                 context,
                 InboxDatabase::class.java,
                 DB_NAME,
-            ).fallbackToDestructiveMigration().build()
+            ).fallbackToDestructiveMigration(false).build()
     }
 }
