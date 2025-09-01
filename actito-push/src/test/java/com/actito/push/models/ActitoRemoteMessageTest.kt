@@ -2,6 +2,8 @@ package com.actito.push.models
 
 import android.net.Uri
 import com.actito.models.ActitoNotification
+import com.actito.push.internal.firebase.messages.ActitoNotificationRemoteMessage
+import com.actito.push.internal.firebase.messages.ActitoUnknownRemoteMessage
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -158,15 +160,12 @@ public class ActitoRemoteMessageTest {
         )
 
         val notification = ActitoNotificationRemoteMessage(
-            messageId = "testMessageId",
-            sentTime = 1,
-            collapseKey = "testCollapseKey",
-            ttl = 1,
             id = "testId",
             notificationId = "testNotificationId",
             notificationType = "testNotificationType",
             notificationChannel = "testNotificationChannel",
             notificationGroup = "testNotificationGroup",
+            sentTime = 1,
             alert = "testAlert",
             alertTitle = "testAlertTitle",
             alertSubtitle = "testAlertSubtitle",
@@ -207,15 +206,12 @@ public class ActitoRemoteMessageTest {
         )
 
         val notification = ActitoNotificationRemoteMessage(
-            messageId = null,
-            sentTime = 1,
-            collapseKey = null,
-            ttl = 1,
             id = "testId",
             notificationId = "testNotificationId",
             notificationType = "testNotificationType",
             notificationChannel = null,
             notificationGroup = null,
+            sentTime = 1,
             alert = "testAlert",
             alertTitle = null,
             alertSubtitle = null,

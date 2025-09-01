@@ -16,7 +16,10 @@ public data class ActitoUnknownNotification(
     val senderId: String?,
     val collapseKey: String?,
     val from: String?,
+
+    @Deprecated("This attribute was deprecated in Firebase Messaging. Check their documentation for more information.")
     val to: String?,
+
     val sentTime: Long,
     val ttl: Long,
     val priority: Int,
