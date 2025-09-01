@@ -88,7 +88,7 @@ import java.util.Date
 import java.util.concurrent.atomic.AtomicInteger
 
 public object ActitoPush {
-    internal const val DEFAULT_NOTIFICATION_CHANNEL_ID: String = "actito_channel_default"
+    internal const val DEFAULT_NOTIFICATION_CHANNEL_ID: String = "notificare_channel_default"
 
     private val notificationSequence = AtomicInteger()
     internal val _subscriptionStream = MutableStateFlow<ActitoPushSubscription?>(null)
