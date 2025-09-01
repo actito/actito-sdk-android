@@ -58,7 +58,7 @@ dependencies {
 
     implementation(libs.google.playServices.base)
 
-    implementation(libs.google.firebase.messaging)
+    api(libs.google.firebase.messaging)
 
     // OkHttp
     implementation(libs.okhttp)
