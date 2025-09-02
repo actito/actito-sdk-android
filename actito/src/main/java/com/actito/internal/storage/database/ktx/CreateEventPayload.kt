@@ -26,5 +26,5 @@ internal fun ActitoEventEntity.toPayload(): CreateEventPayload =
         sessionId = this.sessionId,
         notificationId = this.notificationId,
         userId = this.userId,
-        data = this.data?.let { ActitoEventsModule.dataAdapter.fromJson(it.toString()) },
+        data = this.data?.let { ActitoEventsModule.dataAdapter.fromJson(it) },
     )
