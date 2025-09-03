@@ -6,21 +6,25 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.actito.internal.logger
+import com.actito.internal.moshi
+import com.actito.internal.network.push.CreateEventPayload
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.ktx.toEntity
 import com.actito.internal.workers.ProcessEventsWorker
 import com.actito.ktx.device
 import com.actito.ktx.session
 import com.actito.models.ActitoDevice
-import com.actito.models.ActitoEvent
-import com.actito.models.ActitoEventData
 import com.actito.utilities.content.applicationVersion
 import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.utilities.device.deviceString
 import com.actito.utilities.device.osVersion
 import com.actito.utilities.networking.isRecoverable
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Types
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
+public typealias ActitoEventData = Map<String, Any?>
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
@@ -32,6 +36,15 @@ private const val EVENT_NOTIFICATION_OPEN = "re.notifica.event.notification.Open
 private const val TASK_UPLOAD_EVENTS = "re.notifica.tasks.events.Upload"
 
 public object ActitoEventsModule {
+    internal val dataAdapter: JsonAdapter<ActitoEventData> by lazy {
+        Actito.moshi.adapter(
+            Types.newParameterizedType(
+                Map::class.java,
+                String::class.java,
+                Any::class.java,
+            ),
+        )
+    }
 
     private val discardableEvents = listOf<String>()
 
@@ -139,7 +152,7 @@ public object ActitoEventsModule {
             ?: throw ActitoDeviceUnavailableException()
 
         log(
-            ActitoEvent(
+            CreateEventPayload(
                 type = event,
                 timestamp = System.currentTimeMillis(),
                 deviceId = device.id,
@@ -180,7 +193,7 @@ public object ActitoEventsModule {
         )
     }
 
-    internal suspend fun log(event: ActitoEvent): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun log(payload: CreateEventPayload): Unit = withContext(Dispatchers.IO) {
         if (!Actito.isConfigured) {
             logger.debug("Actito is not configured. Skipping event log...")
             return@withContext
@@ -188,17 +201,17 @@ public object ActitoEventsModule {
 
         try {
             ActitoRequest.Builder()
-                .post("/event", event)
+                .post("/event", payload)
                 .response()
 
-            logger.info("Event '${event.type}' sent successfully.")
+            logger.info("Event '${payload.type}' sent successfully.")
         } catch (e: Exception) {
-            logger.warning("Failed to send the event: ${event.type}", e)
+            logger.warning("Failed to send the event: ${payload.type}", e)
 
-            if (!discardableEvents.contains(event.type) && e.isRecoverable) {
+            if (!discardableEvents.contains(payload.type) && e.isRecoverable) {
                 logger.info("Queuing event to be sent whenever possible.")
 
-                Actito.database.events().insert(event.toEntity())
+                Actito.database.events().insert(payload.toEntity())
                 scheduleUploadWorker()
 
                 return@withContext
@@ -226,10 +239,10 @@ public object ActitoEventsModule {
             )
     }
 
-    internal fun createThrowableEvent(throwable: Throwable, device: ActitoDevice): ActitoEvent {
+    internal fun createThrowableEvent(throwable: Throwable, device: ActitoDevice): CreateEventPayload {
         val timestamp = System.currentTimeMillis()
 
-        return ActitoEvent(
+        return CreateEventPayload(
             type = EVENT_APPLICATION_EXCEPTION,
             timestamp = timestamp,
             deviceId = device.id,

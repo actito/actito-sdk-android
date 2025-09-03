@@ -1,5 +1,6 @@
 package com.actito.internal.network.push
 
+import com.actito.ActitoEventData
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.utilities.moshi.EncodeNulls
 import com.squareup.moshi.Json
@@ -104,4 +105,15 @@ internal data class CreateNotificationReplyPayload(
 @JsonClass(generateAdapter = true)
 internal data class TestDeviceRegistrationPayload(
     @param:Json(name = "deviceID") val deviceId: String,
+)
+
+@JsonClass(generateAdapter = true)
+internal data class CreateEventPayload(
+    val type: String,
+    val timestamp: Long,
+    @param:Json(name = "deviceID") val deviceId: String,
+    @param:Json(name = "sessionID") val sessionId: String?,
+    @param:Json(name = "notification") val notificationId: String?,
+    @param:Json(name = "userID") val userId: String?,
+    val data: ActitoEventData?,
 )

@@ -7,7 +7,7 @@ import com.actito.Actito
 import com.actito.internal.logger
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.entities.ActitoEventEntity
-import com.actito.internal.storage.database.ktx.toModel
+import com.actito.internal.storage.database.ktx.toPayload
 import com.actito.utilities.networking.isRecoverable
 import java.util.Calendar
 import java.util.Date
@@ -49,7 +49,7 @@ internal class ProcessEventsWorker(context: Context, params: WorkerParameters) :
 
         try {
             ActitoRequest.Builder()
-                .post("/event", entity.toModel())
+                .post("/event", entity.toPayload())
                 .response()
 
             logger.debug("Event processed. Removing from storage...")

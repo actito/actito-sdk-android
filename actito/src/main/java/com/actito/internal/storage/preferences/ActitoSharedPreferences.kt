@@ -5,9 +5,9 @@ import androidx.core.content.edit
 import com.actito.Actito
 import com.actito.internal.logger
 import com.actito.internal.moshi
+import com.actito.internal.network.push.CreateEventPayload
 import com.actito.internal.storage.preferences.entities.StoredDevice
 import com.actito.models.ActitoApplication
-import com.actito.models.ActitoEvent
 
 internal class ActitoSharedPreferences(context: Context) {
 
@@ -124,12 +124,12 @@ internal class ActitoSharedPreferences(context: Context) {
             }
         }
 
-    var crashReport: ActitoEvent?
+    var crashReport: CreateEventPayload?
         get() {
             return sharedPreferences.getString(PREFERENCE_CRASH_REPORT, null)
                 ?.let {
                     try {
-                        Actito.moshi.adapter(ActitoEvent::class.java).fromJson(it)
+                        Actito.moshi.adapter(CreateEventPayload::class.java).fromJson(it)
                     } catch (e: Exception) {
                         logger.warning("Failed to decode the stored crash report.", e)
 
@@ -145,7 +145,7 @@ internal class ActitoSharedPreferences(context: Context) {
                 if (value == null) remove(PREFERENCE_CRASH_REPORT)
                 else putString(
                     PREFERENCE_CRASH_REPORT,
-                    Actito.moshi.adapter(ActitoEvent::class.java).toJson(value),
+                    Actito.moshi.adapter(CreateEventPayload::class.java).toJson(value),
                 )
             }
         }
