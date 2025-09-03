@@ -6,11 +6,11 @@ import androidx.core.content.edit
 import com.actito.Actito
 import com.actito.geo.internal.canInsertBeacon
 import com.actito.geo.internal.logger
+import com.actito.geo.internal.network.push.RegionSessionPayload
 import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoBeaconSession
 import com.actito.geo.models.ActitoLocation
 import com.actito.geo.models.ActitoRegion
-import com.actito.geo.models.ActitoRegionSession
 import com.actito.internal.moshi
 import com.squareup.moshi.Types
 import java.util.Date
@@ -131,14 +131,14 @@ internal class LocalStorage(context: Context) {
 
     // region Region sessions
 
-    var regionSessions: Map<String, ActitoRegionSession>
+    var regionSessions: Map<String, RegionSessionPayload>
         get() {
             val jsonStr = sharedPreferences.getString(PREFERENCE_REGION_SESSIONS, null)
                 ?: return emptyMap()
 
             try {
-                val type = Types.newParameterizedType(List::class.java, ActitoRegionSession::class.java)
-                val adapter = Actito.moshi.adapter<List<ActitoRegionSession>>(type)
+                val type = Types.newParameterizedType(List::class.java, RegionSessionPayload::class.java)
+                val adapter = Actito.moshi.adapter<List<RegionSessionPayload>>(type)
 
                 val sessions = adapter.fromJson(jsonStr) ?: emptyList()
 
@@ -156,8 +156,8 @@ internal class LocalStorage(context: Context) {
             try {
                 val sessions = value.values.toList()
 
-                val type = Types.newParameterizedType(List::class.java, ActitoRegionSession::class.java)
-                val adapter = Actito.moshi.adapter<List<ActitoRegionSession>>(type)
+                val type = Types.newParameterizedType(List::class.java, RegionSessionPayload::class.java)
+                val adapter = Actito.moshi.adapter<List<RegionSessionPayload>>(type)
 
                 sharedPreferences.edit {
                     putString(PREFERENCE_REGION_SESSIONS, adapter.toJson(sessions))
@@ -167,7 +167,7 @@ internal class LocalStorage(context: Context) {
             }
         }
 
-    fun addRegionSession(session: ActitoRegionSession) {
+    fun addRegionSession(session: RegionSessionPayload) {
         regionSessions = regionSessions.toMutableMap().apply {
             put(session.regionId, session)
         }
@@ -179,7 +179,7 @@ internal class LocalStorage(context: Context) {
         }
     }
 
-    fun removeRegionSession(session: ActitoRegionSession) {
+    fun removeRegionSession(session: RegionSessionPayload) {
         regionSessions = regionSessions.toMutableMap().apply {
             remove(session.regionId)
         }

@@ -2,8 +2,8 @@ package com.actito.geo.ktx
 
 import com.actito.ActitoCallback
 import com.actito.ActitoEventsModule
+import com.actito.geo.internal.network.push.RegionSessionPayload
 import com.actito.geo.models.ActitoBeaconSession
-import com.actito.geo.models.ActitoRegionSession
 import com.actito.utilities.coroutines.toCallbackFunction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,7 +11,7 @@ import java.util.Date
 
 @Suppress("unused")
 internal suspend fun ActitoEventsModule.logRegionSession(
-    session: ActitoRegionSession,
+    session: RegionSessionPayload,
 ): Unit = withContext(Dispatchers.IO) {
     val sessionEnd = session.end ?: Date()
     val sessionLength = (sessionEnd.time - session.start.time) / 1000.0
@@ -40,7 +40,7 @@ internal suspend fun ActitoEventsModule.logRegionSession(
 }
 
 internal fun ActitoEventsModule.logRegionSession(
-    session: ActitoRegionSession,
+    session: RegionSessionPayload,
     callback: ActitoCallback<Unit>,
 ): Unit = toCallbackFunction(::logRegionSession)(session, callback::onSuccess, callback::onFailure)
 

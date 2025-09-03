@@ -1,7 +1,9 @@
 package com.actito.geo.internal.network.push
 
+import com.actito.geo.models.ActitoLocation
 import com.actito.utilities.moshi.EncodeNulls
 import com.squareup.moshi.JsonClass
+import java.util.Date
 
 @EncodeNulls
 @JsonClass(generateAdapter = true)
@@ -21,6 +23,14 @@ internal data class UpdateDeviceLocationPayload(
 @JsonClass(generateAdapter = true)
 internal data class UpdateBluetoothPayload(
     val bluetoothEnabled: Boolean,
+)
+
+@JsonClass(generateAdapter = true)
+internal data class RegionSessionPayload(
+    val regionId: String,
+    val start: Date,
+    val end: Date?,
+    val locations: MutableList<ActitoLocation>,
 )
 
 @JsonClass(generateAdapter = true)

@@ -30,6 +30,7 @@ import com.actito.geo.internal.models.ActitoBeaconSupport
 import com.actito.geo.internal.network.push.BeaconTriggerPayload
 import com.actito.geo.internal.network.push.FetchBeaconsResponse
 import com.actito.geo.internal.network.push.FetchRegionsResponse
+import com.actito.geo.internal.network.push.RegionSessionPayload
 import com.actito.geo.internal.network.push.RegionTriggerPayload
 import com.actito.geo.internal.network.push.UpdateBluetoothPayload
 import com.actito.geo.internal.network.push.UpdateDeviceLocationPayload
@@ -54,7 +55,6 @@ import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoBeaconSession
 import com.actito.geo.models.ActitoLocation
 import com.actito.geo.models.ActitoRegion
-import com.actito.geo.models.ActitoRegionSession
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.ktx.device
 import com.actito.ktx.events
@@ -1315,7 +1315,12 @@ public object ActitoGeo {
 
     private fun startRegionSession(region: ActitoRegion) {
         logger.debug("Starting session for region '${region.name}'.")
-        val session = ActitoRegionSession(region)
+        val session = RegionSessionPayload(
+            regionId = region.id,
+            start = Date(),
+            end = null,
+            locations = mutableListOf(),
+        )
 
         val location = lastKnownLocation?.let { ActitoLocation(it) }
         if (location != null) {
