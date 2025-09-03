@@ -152,18 +152,19 @@ public object ActitoInbox {
     public suspend fun refresh(): Unit = withContext(Dispatchers.IO) {
         val application = Actito.application ?: run {
             logger.warning("Actito application not yet available.")
-            return@withContext
+            throw ActitoApplicationUnavailableException()
         }
 
         if (application.inboxConfig?.useInbox != true) {
             logger.warning("Actito inbox functionality is not enabled.")
-            return@withContext
+            throw ActitoServiceUnavailableException(service = ActitoApplication.ServiceKeys.INBOX)
         }
 
         try {
             reloadInbox()
         } catch (e: Exception) {
             logger.error("Failed to refresh the inbox.", e)
+            throw e
         }
     }
 
