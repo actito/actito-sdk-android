@@ -1316,10 +1316,10 @@ public object ActitoGeo {
     private fun startRegionSession(region: ActitoRegion) {
         logger.debug("Starting session for region '${region.name}'.")
         val session = RegionSessionPayload(
-            region.id,
-            Date(),
-            null,
-            mutableListOf(),
+            regionId = region.id,
+            start = Date(),
+            end = null,
+            locations = mutableListOf(),
         )
 
         val location = lastKnownLocation?.let { ActitoLocation(it) }
