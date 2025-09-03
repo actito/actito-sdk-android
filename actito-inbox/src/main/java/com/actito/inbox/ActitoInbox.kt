@@ -149,25 +149,30 @@ public object ActitoInbox {
      * Refreshes the inbox data, ensuring the items and badge count reflect the latest server state.
      */
     @JvmStatic
-    public fun refresh() {
+    public suspend fun refresh(): Unit = withContext(Dispatchers.IO) {
         val application = Actito.application ?: run {
             logger.warning("Actito application not yet available.")
-            return
+            return@withContext
         }
 
         if (application.inboxConfig?.useInbox != true) {
             logger.warning("Actito inbox functionality is not enabled.")
-            return
+            return@withContext
         }
 
-        actitoCoroutineScope.launch {
-            try {
-                reloadInbox()
-            } catch (e: Exception) {
-                logger.error("Failed to refresh the inbox.", e)
-            }
+        try {
+            reloadInbox()
+        } catch (e: Exception) {
+            logger.error("Failed to refresh the inbox.", e)
         }
     }
+
+    /**
+     * Refreshes the inbox data, ensuring the items and badge count reflect the latest server state.
+     */
+    @JvmStatic
+    public fun refresh(callback: ActitoCallback<Unit>): Unit =
+        toCallbackFunction(::refresh)(callback::onSuccess, callback::onFailure)
 
     /**
      * Opens a specified inbox item, marking it as read and returning the associated notification.

@@ -42,7 +42,9 @@ internal class ActitoInboxSystemReceiver : BroadcastReceiver() {
     }
 
     private fun onReload() {
-        ActitoInbox.refresh()
+        actitoCoroutineScope.launch {
+            ActitoInbox.refresh()
+        }
     }
 
     private fun onNotificationReceived(notification: ActitoNotification, bundle: Bundle) {
