@@ -150,26 +150,13 @@ public object ActitoInbox {
      */
     @JvmStatic
     public suspend fun refresh(): Unit = withContext(Dispatchers.IO) {
-        val application = Actito.application ?: run {
-            logger.warning("Actito application not yet available.")
-            throw ActitoApplicationUnavailableException()
-        }
+        checkPrerequisites()
 
-        if (application.inboxConfig?.useInbox != true) {
-            logger.warning("Actito inbox functionality is not enabled.")
-            throw ActitoServiceUnavailableException(service = ActitoApplication.ServiceKeys.INBOX)
-        }
-
-        try {
-            reloadInbox()
-        } catch (e: Exception) {
-            logger.error("Failed to refresh the inbox.", e)
-            throw e
-        }
+        reloadInbox()
     }
 
     /**
-     * Refreshes the inbox data, ensuring the items and badge count reflect the latest server state.
+     * Refreshes the inbox data, ensuring the items and badge count reflect the latest server state, with a callback.
      */
     @JvmStatic
     public fun refresh(callback: ActitoCallback<Unit>): Unit =
