@@ -149,25 +149,18 @@ public object ActitoInbox {
      * Refreshes the inbox data, ensuring the items and badge count reflect the latest server state.
      */
     @JvmStatic
-    public fun refresh() {
-        val application = Actito.application ?: run {
-            logger.warning("Actito application not yet available.")
-            return
-        }
+    public suspend fun refresh(): Unit = withContext(Dispatchers.IO) {
+        checkPrerequisites()
 
-        if (application.inboxConfig?.useInbox != true) {
-            logger.warning("Actito inbox functionality is not enabled.")
-            return
-        }
-
-        actitoCoroutineScope.launch {
-            try {
-                reloadInbox()
-            } catch (e: Exception) {
-                logger.error("Failed to refresh the inbox.", e)
-            }
-        }
+        reloadInbox()
     }
+
+    /**
+     * Refreshes the inbox data, ensuring the items and badge count reflect the latest server state, with a callback.
+     */
+    @JvmStatic
+    public fun refresh(callback: ActitoCallback<Unit>): Unit =
+        toCallbackFunction(::refresh)(callback::onSuccess, callback::onFailure)
 
     /**
      * Opens a specified inbox item, marking it as read and returning the associated notification.
@@ -415,7 +408,7 @@ public object ActitoInbox {
         }
     }
 
-    private suspend fun reloadInbox(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun reloadInbox(): Unit = withContext(Dispatchers.IO) {
         clearLocalInbox()
         requestRemoteInboxItems()
     }

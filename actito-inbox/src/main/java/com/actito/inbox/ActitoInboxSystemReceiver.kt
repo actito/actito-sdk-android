@@ -42,7 +42,13 @@ internal class ActitoInboxSystemReceiver : BroadcastReceiver() {
     }
 
     private fun onReload() {
-        ActitoInbox.refresh()
+        actitoCoroutineScope.launch {
+            try {
+                ActitoInbox.reloadInbox()
+            } catch (e: Exception) {
+                logger.error("Failed to refresh the inbox.", e)
+            }
+        }
     }
 
     private fun onNotificationReceived(notification: ActitoNotification, bundle: Bundle) {
