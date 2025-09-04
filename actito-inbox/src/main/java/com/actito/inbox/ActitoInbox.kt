@@ -408,7 +408,7 @@ public object ActitoInbox {
         }
     }
 
-    private suspend fun reloadInbox(): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun reloadInbox(): Unit = withContext(Dispatchers.IO) {
         clearLocalInbox()
         requestRemoteInboxItems()
     }
