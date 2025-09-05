@@ -3,15 +3,16 @@ package com.actito.internal.network.request
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.InternalActitoApi
+import com.actito.internal.ktx.await
 import com.actito.internal.logger
 import com.actito.internal.moshi
 import com.actito.internal.network.ActitoHeadersInterceptor
 import com.actito.internal.network.NetworkException
 import com.actito.utilities.coroutines.toCallbackFunction
+import com.actito.utilities.networking.isRecoverable
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.Credentials
 import okhttp3.FormBody
 import okhttp3.HttpUrl
@@ -23,11 +24,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import java.io.IOException
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 import kotlin.reflect.KClass
 
 @InternalActitoApi
@@ -43,6 +39,9 @@ public class ActitoRequest private constructor(
 
         private val HTTP_METHODS_REQUIRE_BODY = arrayOf("PATCH", "POST", "PUT")
         private val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
+        private const val MAX_RETRIES = 5
+        private const val INITIAL_DELAY: Long = 500
+        private const val BACKOFF_FACTOR = 2
 
         private val client = OkHttpClient.Builder()
             // .authenticator(NotificareBasicAuthenticator())
@@ -59,20 +58,50 @@ public class ActitoRequest private constructor(
             .build()
     }
 
-    public suspend fun response(closeResponse: Boolean): Response = suspendCoroutine { continuation ->
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                continuation.resumeWithException(e)
+    public suspend fun response(closeResponse: Boolean): Response {
+        try {
+            val response = client.newCall(request).await()
+            return handleResponse(
+                response = response,
+                closeResponse = closeResponse,
+            )
+        } catch (e: Exception) {
+            if (e.isRecoverable) {
+                logger.debug("Network request failed. Retrying...")
+                return retryResponse(closeResponse)
+            } else {
+                throw e
             }
+        }
+    }
 
-            override fun onResponse(call: Call, response: Response) {
-                handleResponse(
+    private suspend fun retryResponse(closeResponse: Boolean): Response {
+        var attempt = 0
+        var delay = INITIAL_DELAY
+        var lastException: Exception? = null
+
+        while (attempt < MAX_RETRIES) {
+            try {
+                val response = client.newCall(request).await()
+
+                return handleResponse(
                     response = response,
                     closeResponse = closeResponse,
-                    continuation = continuation,
                 )
+            } catch (e: Exception) {
+                attempt++
+                lastException = e
+
+                if (e.isRecoverable) {
+                    logger.debug("Network request retry attempt $attempt failed. Retrying...")
+                    delay(delay)
+                    delay = delay * BACKOFF_FACTOR
+                }
             }
-        })
+        }
+
+        logger.debug("Network request retry attempt $attempt failed.")
+        throw lastException ?: NetworkException.InaccessibleServiceException(attempt)
     }
 
     public suspend fun responseString(): String {
@@ -137,23 +166,19 @@ public class ActitoRequest private constructor(
         }
     }
 
-    private fun handleResponse(response: Response, closeResponse: Boolean, continuation: Continuation<Response>) {
+    private fun handleResponse(response: Response, closeResponse: Boolean): Response {
         try {
             if (response.code !in validStatusCodes) {
                 // Forcefully close the body. Decodable responses will not proceed.
                 response.body?.close()
 
-                continuation.resumeWithException(
-                    NetworkException.ValidationException(
-                        response = response,
-                        validStatusCodes = validStatusCodes,
-                    ),
+                throw NetworkException.ValidationException(
+                    response = response,
+                    validStatusCodes = validStatusCodes,
                 )
-
-                return
             }
 
-            continuation.resume(response)
+            return response
         } finally {
             if (closeResponse) response.body?.close()
         }
