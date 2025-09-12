@@ -68,14 +68,14 @@ public class ActitoRequest private constructor(
         } catch (e: Exception) {
             if (e.isRecoverable) {
                 logger.debug("Network request failed. Retrying...")
-                return retryResponse(closeResponse, MAX_RETRIES)
+                return retryResponse(closeResponse)
             } else {
                 throw e
             }
         }
     }
 
-    private suspend fun retryResponse(closeResponse: Boolean, maxRetries: Int): Response {
+    private suspend fun retryResponse(closeResponse: Boolean, maxRetries: Int = MAX_RETRIES): Response {
         var attempt = 0
         var delay = INITIAL_DELAY
         var lastException: Exception? = null
