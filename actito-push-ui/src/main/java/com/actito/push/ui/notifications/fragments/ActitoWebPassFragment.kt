@@ -41,7 +41,7 @@ public class ActitoWebPassFragment : NotificationFragment() {
         val content = notification.content.firstOrNull()
         val passUrlStr = content?.data as? String
         val application = Actito.application
-        val host = Actito.servicesInfo?.hosts?.restApi
+        var host = Actito.servicesInfo?.hosts?.restApi
 
         if (
             content?.type != ActitoNotification.Content.TYPE_PK_PASS ||
@@ -58,10 +58,14 @@ public class ActitoWebPassFragment : NotificationFragment() {
             return
         }
 
+        if (!host.startsWith("http://") && !host.startsWith("https://")) {
+            host = "https://$host"
+        }
+
         val components = passUrlStr.split("/")
         val id = components.last()
 
-        val url = "https://$host/pass/web/$id?showWebVersion=1"
+        val url = "$host/pass/web/$id?showWebVersion=1"
 
         binding.webView.loadUrl(url)
     }

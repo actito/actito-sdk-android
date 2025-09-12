@@ -135,8 +135,13 @@ public open class PassbookActivity : AppCompatActivity() {
     }
 
     private fun showWebPassView(serial: String) {
-        val host = Actito.servicesInfo?.hosts?.restApi ?: return
-        val url = "https://$host/pass/web/$serial?showWebVersion=1"
+        var host = Actito.servicesInfo?.hosts?.restApi ?: return
+
+        if (!host.startsWith("http://") && !host.startsWith("https://")) {
+            host = "https://$host"
+        }
+
+        val url = "$host/pass/web/$serial?showWebVersion=1"
 
         webView.loadUrl(url)
     }

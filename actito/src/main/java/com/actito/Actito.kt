@@ -631,8 +631,13 @@ public object Actito {
             .post("/upload/reply", payload)
             .responseDecodable(ActitoUploadResponse::class)
 
-        val host = checkNotNull(servicesInfo).hosts.restApi
-        "https://$host/upload${response.filename}"
+        var host = checkNotNull(servicesInfo).hosts.restApi
+
+        if (!host.startsWith("http://") || !host.startsWith("https://")) {
+            host = "https://$host"
+        }
+
+        "$host/upload${response.filename}"
     }
 
     /**
