@@ -68,19 +68,23 @@ public class ActitoRequest private constructor(
         } catch (e: Exception) {
             if (e.isRecoverable) {
                 logger.debug("Network request failed. Retrying...")
-                return retryResponse(closeResponse)
+                return retryResponse(closeResponse, MAX_RETRIES)
             } else {
                 throw e
             }
         }
     }
 
-    private suspend fun retryResponse(closeResponse: Boolean): Response {
+    private suspend fun retryResponse(closeResponse: Boolean, maxRetries: Int): Response {
         var attempt = 0
         var delay = INITIAL_DELAY
         var lastException: Exception? = null
 
-        while (attempt < MAX_RETRIES) {
+        if (maxRetries <= 0) {
+            throw IllegalArgumentException("Number of retries must be 1 or larger.")
+        }
+
+        while (attempt < maxRetries) {
             try {
                 val response = client.newCall(request).await()
 
@@ -96,12 +100,15 @@ public class ActitoRequest private constructor(
                     logger.debug("Network request retry attempt $attempt failed. Retrying...")
                     delay(delay)
                     delay = delay * BACKOFF_FACTOR
+                } else {
+                    logger.debug("Network request failed.", e)
+                    throw e
                 }
             }
         }
 
         logger.debug("Network request retry attempt $attempt failed.")
-        throw lastException ?: NetworkException.InaccessibleServiceException(attempt)
+        throw NetworkException.InaccessibleServiceException(attempt, lastException)
     }
 
     public suspend fun responseString(): String {

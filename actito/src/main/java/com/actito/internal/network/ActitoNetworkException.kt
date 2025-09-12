@@ -16,5 +16,6 @@ public sealed class NetworkException(message: String?, cause: Throwable?) : Exce
 
     public class InaccessibleServiceException(
         attempts: Int,
-    ) : NetworkException("Network request failed after $attempts attempts.", null)
+        cause: Throwable? = null,
+    ) : NetworkException("Network request failed after $attempts attempts.", cause)
 }
