@@ -24,6 +24,7 @@ internal data class ApplicationResponse(
         val regionConfig: ActitoApplication.RegionConfig?,
         val userDataFields: List<ActitoApplication.UserDataField>,
         val actionCategories: List<ActionCategory>,
+        val enforceSizeLimit: Boolean,
     ) {
 
         @JsonClass(generateAdapter = true)
@@ -51,6 +52,7 @@ internal data class ApplicationResponse(
                         category.actions.mapNotNull { it.toModel() },
                     )
                 },
+                enforceSizeLimit,
             )
     }
 }
