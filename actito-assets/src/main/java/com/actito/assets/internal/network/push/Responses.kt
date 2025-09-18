@@ -3,6 +3,7 @@ package com.actito.assets.internal.network.push
 import com.actito.Actito
 import com.actito.assets.models.ActitoAsset
 import com.actito.utilities.moshi.UseDefaultsWhenNull
+import com.actito.utilities.networking.ensureScheme
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -27,12 +28,7 @@ internal data class FetchAssetsResponse(
                 description = description,
                 key = key,
                 url = key?.let { key ->
-                    var host = Actito.servicesInfo?.hosts?.restApi ?: return@let null
-
-                    if (!host.startsWith("http://") && !host.startsWith("https://")) {
-                        host = "https://$host"
-                    }
-
+                    val host = Actito.servicesInfo?.hosts?.restApi?.ensureScheme() ?: return@let null
                     "$host/asset/file/$key"
                 },
                 button = button?.let {

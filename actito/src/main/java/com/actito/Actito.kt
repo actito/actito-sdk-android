@@ -31,6 +31,7 @@ import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
 import com.actito.utilities.coroutines.toCallbackFunction
+import com.actito.utilities.networking.ensureScheme
 import com.actito.utilities.threading.onMainThread
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
@@ -631,11 +632,7 @@ public object Actito {
             .post("/upload/reply", payload)
             .responseDecodable(ActitoUploadResponse::class)
 
-        var host = checkNotNull(servicesInfo).hosts.restApi
-
-        if (!host.startsWith("http://") || !host.startsWith("https://")) {
-            host = "https://$host"
-        }
+        val host = checkNotNull(servicesInfo).hosts.restApi.ensureScheme()
 
         "$host/upload${response.filename}"
     }
