@@ -1,6 +1,5 @@
 package com.actito
 
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
 public class ActitoServicesInfoTests {
@@ -17,7 +16,6 @@ public class ActitoServicesInfoTests {
         )
 
         servicesInfo.validate()
-        assertTrue(true)
     }
 
     @Test
@@ -33,7 +31,6 @@ public class ActitoServicesInfoTests {
         )
 
         servicesInfo.validate()
-        assertTrue(true)
     }
 
     @Test
@@ -49,7 +46,6 @@ public class ActitoServicesInfoTests {
         )
 
         servicesInfo.validate()
-        assertTrue(true)
     }
 
     @Test
@@ -65,6 +61,20 @@ public class ActitoServicesInfoTests {
         )
 
         servicesInfo.validate()
-        assertTrue(true)
+    }
+
+    @Test(expected = IllegalStateException::class)
+    public fun testInvalidLink() {
+        val servicesInfo = ActitoServicesInfo(
+            applicationKey = "testKey",
+            applicationSecret = "testSecret",
+            hosts = ActitoServicesInfo.Hosts(
+                restApi = "http://localhost:3000:3000",
+                appLinks = "http://localhost:3000:3000",
+                shortLinks = "http://localhost:3000:3000",
+            ),
+        )
+
+        servicesInfo.validate()
     }
 }
