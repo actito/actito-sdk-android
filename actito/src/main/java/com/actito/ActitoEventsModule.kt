@@ -208,7 +208,7 @@ public object ActitoEventsModule {
                 throw NetworkException.ParsingException(message = "Unable to validate event data size.", cause = e)
             }
 
-            if (serializedData.length > 4 * 1024) {
+            if (serializedData.toByteArray().size > 4 * 1024) {
                 throw NetworkException.LargeEventDataException("Event data for '${payload.type}' exceeds 4KB.")
             }
         }
