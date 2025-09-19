@@ -7,6 +7,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.actito.internal.logger
 import com.actito.internal.moshi
+import com.actito.internal.network.NetworkException
 import com.actito.internal.network.push.CreateEventPayload
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.ktx.toEntity
@@ -197,6 +198,19 @@ public object ActitoEventsModule {
         if (!Actito.isConfigured) {
             logger.debug("Actito is not configured. Skipping event log...")
             return@withContext
+        }
+
+        if (Actito.application?.enforceSizeLimit == true && payload.data != null) {
+            val adapter = Actito.moshi.adapter(ActitoEventData::class.java)
+            val serializedData = try {
+                adapter.toJson(payload.data)
+            } catch (e: Exception) {
+                throw NetworkException.ParsingException(message = "Unable to validate event data size.", cause = e)
+            }
+
+            if (serializedData.toByteArray().size > 4 * 1024) {
+                throw NetworkException.LargeEventDataException("Event data for '${payload.type}' exceeds 4KB.")
+            }
         }
 
         try {

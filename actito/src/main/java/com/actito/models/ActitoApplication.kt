@@ -18,6 +18,7 @@ public data class ActitoApplication(
     val regionConfig: RegionConfig?,
     val userDataFields: List<UserDataField>,
     val actionCategories: List<ActionCategory>,
+    val enforceSizeLimit: Boolean,
 ) : Parcelable {
 
     public fun toJson(): JSONObject {

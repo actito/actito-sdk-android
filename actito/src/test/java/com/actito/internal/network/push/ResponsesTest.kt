@@ -58,6 +58,7 @@ public class ResponsesTest {
                     ),
                 ),
             ),
+            enforceSizeLimit = true,
         )
 
         val application = ApplicationResponse.Application(
@@ -102,6 +103,7 @@ public class ResponsesTest {
                     ),
                 ),
             ),
+            enforceSizeLimit = true,
         ).toModel()
 
         assertEquals(expectedApplication, application)
