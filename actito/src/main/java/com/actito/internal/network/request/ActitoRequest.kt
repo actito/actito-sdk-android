@@ -40,7 +40,7 @@ public class ActitoRequest private constructor(
         private val HTTP_METHODS_REQUIRE_BODY = arrayOf("PATCH", "POST", "PUT")
         private val MEDIA_TYPE_JSON = "application/json; charset=utf-8".toMediaType()
         private const val MAX_RETRIES = 5
-        private const val INITIAL_DELAY: Long = 500
+        private const val INITIAL_DELAY_MILLISECONDS: Long = 500
         private const val BACKOFF_FACTOR = 2
 
         private val client = OkHttpClient.Builder()
@@ -77,7 +77,7 @@ public class ActitoRequest private constructor(
 
     private suspend fun retryResponse(closeResponse: Boolean, maxRetries: Int = MAX_RETRIES): Response {
         var attempt = 0
-        var delay = INITIAL_DELAY
+        var delay = INITIAL_DELAY_MILLISECONDS
         var lastException: Exception? = null
 
         if (maxRetries <= 0) {
