@@ -14,7 +14,8 @@ public sealed class NetworkException(message: String?, cause: Throwable?) : Exce
         public val validStatusCodes: IntRange,
     ) : NetworkException("Unexpected status code '${response.code}'.", null)
 
-    public class LargeEventDataException(
-        message: String,
-    ) : NetworkException(message, null)
+    public class InaccessibleServiceException(
+        attempts: Int,
+        cause: Throwable? = null,
+    ) : NetworkException("Network request failed after $attempts attempts.", cause)
 }
