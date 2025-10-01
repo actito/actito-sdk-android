@@ -7,6 +7,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.actito.internal.logger
 import com.actito.internal.moshi
+import com.actito.internal.network.NetworkException
 import com.actito.internal.network.push.CreateEventPayload
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.ktx.toEntity
@@ -25,6 +26,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 public typealias ActitoEventData = Map<String, Any?>
+
+private const val MAX_DATA_SIZE_BYTES = 4 * 1024
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
@@ -197,6 +200,23 @@ public object ActitoEventsModule {
         if (!Actito.isConfigured) {
             logger.debug("Actito is not configured. Skipping event log...")
             return@withContext
+        }
+
+        if (Actito.application?.enforceSizeLimit == true && payload.data != null) {
+            val adapter = Actito.moshi.adapter(ActitoEventData::class.java)
+            val serializedData = try {
+                adapter.toJson(payload.data)
+            } catch (e: Exception) {
+                throw NetworkException.ParsingException(message = "Unable to validate event data size.", cause = e)
+            }
+
+            val size = serializedData.toByteArray().size
+
+            if (size > MAX_DATA_SIZE_BYTES) {
+                throw ActitoContentTooLargeException(
+                    "Data for event '${payload.type}' of size ${size}B exceeds max size of ${MAX_DATA_SIZE_BYTES}B",
+                )
+            }
         }
 
         try {
