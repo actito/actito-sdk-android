@@ -18,3 +18,7 @@ public class ActitoServiceUnavailableException(
 
 public class ActitoGoogleServicesUnavailableException :
     Exception("Google services are not available on this device. Ensure they are installed and up to date.")
+
+public class ActitoContentTooLargeException(
+    override val message: String?,
+) : Exception(message)

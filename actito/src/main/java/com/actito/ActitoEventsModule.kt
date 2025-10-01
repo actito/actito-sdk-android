@@ -27,6 +27,8 @@ import kotlinx.coroutines.withContext
 
 public typealias ActitoEventData = Map<String, Any?>
 
+private const val MAX_DATA_SIZE_BYTES = 4 * 1024
+
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
 private const val EVENT_APPLICATION_UPGRADE = "re.notifica.event.application.Upgrade"
@@ -208,8 +210,12 @@ public object ActitoEventsModule {
                 throw NetworkException.ParsingException(message = "Unable to validate event data size.", cause = e)
             }
 
-            if (serializedData.toByteArray().size > 4 * 1024) {
-                throw NetworkException.LargeEventDataException("Event data for '${payload.type}' exceeds 4KB.")
+            val size = serializedData.toByteArray().size
+
+            if (size > MAX_DATA_SIZE_BYTES) {
+                throw ActitoContentTooLargeException(
+                    "Data for event '${payload.type}' of size ${size}B exceeds max size of ${MAX_DATA_SIZE_BYTES}B",
+                )
             }
         }
 
