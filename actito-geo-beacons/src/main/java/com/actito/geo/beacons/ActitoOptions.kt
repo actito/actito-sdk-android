@@ -8,7 +8,7 @@ private const val DEFAULT_FOREGROUND_SCAN_INTERVAL: Long = 0L // always-on
 private const val DEFAULT_BACKGROUND_SCAN_INTERVAL: Long = 30000L // 30 seconds
 private const val DEFAULT_BACKGROUND_SCAN_INTERVAL_O: Long = 900000L // 15 minutes
 private const val DEFAULT_SAMPLE_EXPIRATION: Long = 10000L // 10 seconds
-private const val DEFAULT_NOTIFICATION_CHANNEL: String = "actito_channel_default"
+private const val DEFAULT_NOTIFICATION_CHANNEL: String = "notificare_channel_default"
 
 public val ActitoOptions.beaconForegroundScanInterval: Long
     get() {
