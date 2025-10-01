@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
 
 public typealias ActitoEventData = Map<String, Any?>
 
-private const val MAX_DATA_SIZE = 4 * 1024
+private const val MAX_DATA_SIZE_BYTES = 4 * 1024
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
@@ -212,9 +212,9 @@ public object ActitoEventsModule {
 
             val size = serializedData.toByteArray().size
 
-            if (size > MAX_DATA_SIZE) {
+            if (size > MAX_DATA_SIZE_BYTES) {
                 throw ActitoContentTooLargeException(
-                    "Data for event '${payload.type}' of size ${size}B exceeds max size of ${MAX_DATA_SIZE}B",
+                    "Data for event '${payload.type}' of size ${size}B exceeds max size of ${MAX_DATA_SIZE_BYTES}B",
                 )
             }
         }
