@@ -61,6 +61,7 @@ public object ActitoEventsModule {
      *
      * @param throwable The exception instance to be logged.
      */
+    @Deprecated("logApplicationException is deprecated. Please use another solution to collect crash analytics.")
     public suspend fun logApplicationException(throwable: Throwable) {
         val device = Actito.device().currentDevice
             ?: throw ActitoDeviceUnavailableException()
@@ -78,6 +79,7 @@ public object ActitoEventsModule {
      * @param throwable The exception instance to be logged.
      * @param callback The callback invoked upon completion of the logging operation.
      */
+    @Deprecated("logApplicationException is deprecated. Please use using another solution to collect crash analytics.")
     @JvmStatic
     public fun logApplicationException(throwable: Throwable, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::logApplicationException)(throwable, callback::onSuccess, callback::onFailure)
