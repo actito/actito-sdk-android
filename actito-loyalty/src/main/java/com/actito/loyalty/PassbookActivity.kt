@@ -18,7 +18,6 @@ import com.actito.loyalty.ktx.INTENT_EXTRA_PASSBOOK
 import com.actito.loyalty.ktx.loyalty
 import com.actito.loyalty.models.ActitoPass
 import com.actito.utilities.content.applicationName
-import com.actito.utilities.networking.ensureScheme
 import com.actito.utilities.parcel.parcelable
 
 public open class PassbookActivity : AppCompatActivity() {
@@ -136,7 +135,7 @@ public open class PassbookActivity : AppCompatActivity() {
     }
 
     private fun showWebPassView(serial: String) {
-        val host = Actito.servicesInfo?.hosts?.restApi?.ensureScheme() ?: return
+        val host = Actito.servicesInfo?.hosts?.restApi ?: return
         val url = "$host/pass/web/$serial?showWebVersion=1"
 
         webView.loadUrl(url)

@@ -26,10 +26,15 @@ public data class ActitoServicesInfo @JvmOverloads constructor(
     }
 
     public data class Hosts(
-        val restApi: String,
+        var restApi: String,
         val appLinks: String,
         val shortLinks: String,
     ) {
+        init {
+            if (!restApi.startsWith("http://") && !restApi.startsWith("https://")) {
+                restApi = "https://$restApi"
+            }
+        }
 
         public constructor() : this(
             restApi = DEFAULT_REST_API_HOST,
@@ -39,7 +44,7 @@ public data class ActitoServicesInfo @JvmOverloads constructor(
     }
 
     public companion object {
-        private const val DEFAULT_REST_API_HOST = "push.notifica.re"
+        private const val DEFAULT_REST_API_HOST = "https://push.notifica.re"
         private const val DEFAULT_SHORT_LINKS_HOST = "ntc.re"
         private const val DEFAULT_APP_LINKS_HOST = "applinks.notifica.re"
 

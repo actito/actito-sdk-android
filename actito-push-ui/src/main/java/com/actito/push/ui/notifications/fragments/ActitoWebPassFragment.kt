@@ -12,7 +12,6 @@ import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.databinding.ActitoNotificationWebPassFragmentBinding
 import com.actito.push.ui.notifications.fragments.base.NotificationFragment
 import com.actito.push.ui.utils.NotificationWebViewClient
-import com.actito.utilities.networking.ensureScheme
 import com.actito.utilities.threading.onMainThread
 
 public class ActitoWebPassFragment : NotificationFragment() {
@@ -42,7 +41,7 @@ public class ActitoWebPassFragment : NotificationFragment() {
         val content = notification.content.firstOrNull()
         val passUrlStr = content?.data as? String
         val application = Actito.application
-        val host = Actito.servicesInfo?.hosts?.restApi?.ensureScheme()
+        val host = Actito.servicesInfo?.hosts?.restApi
 
         if (
             content?.type != ActitoNotification.Content.TYPE_PK_PASS ||
