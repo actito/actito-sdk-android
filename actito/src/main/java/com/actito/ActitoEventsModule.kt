@@ -123,6 +123,23 @@ public object ActitoEventsModule {
     public suspend fun logCustom(event: String, data: ActitoEventData? = null) {
         if (!Actito.isReady) throw ActitoNotReadyException()
 
+        if (Actito.application?.enforceSizeLimit == true && data != null) {
+            val adapter = Actito.moshi.adapter(ActitoEventData::class.java)
+            val serializedData = try {
+                adapter.toJson(data)
+            } catch (e: Exception) {
+                throw NetworkException.ParsingException(message = "Unable to validate event data size.", cause = e)
+            }
+
+            val size = serializedData.toByteArray().size
+
+            if (size > MAX_DATA_SIZE_BYTES) {
+                throw ActitoContentTooLargeException(
+                    "Data for event '$event' of size ${size}B exceeds max size of ${MAX_DATA_SIZE_BYTES}B",
+                )
+            }
+        }
+
         log("re.notifica.event.custom.$event", data)
     }
 
@@ -200,23 +217,6 @@ public object ActitoEventsModule {
         if (!Actito.isConfigured) {
             logger.debug("Actito is not configured. Skipping event log...")
             return@withContext
-        }
-
-        if (Actito.application?.enforceSizeLimit == true && payload.data != null) {
-            val adapter = Actito.moshi.adapter(ActitoEventData::class.java)
-            val serializedData = try {
-                adapter.toJson(payload.data)
-            } catch (e: Exception) {
-                throw NetworkException.ParsingException(message = "Unable to validate event data size.", cause = e)
-            }
-
-            val size = serializedData.toByteArray().size
-
-            if (size > MAX_DATA_SIZE_BYTES) {
-                throw ActitoContentTooLargeException(
-                    "Data for event '${payload.type}' of size ${size}B exceeds max size of ${MAX_DATA_SIZE_BYTES}B",
-                )
-            }
         }
 
         try {
