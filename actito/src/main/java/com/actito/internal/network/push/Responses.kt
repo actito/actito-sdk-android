@@ -5,7 +5,7 @@ import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
-import com.actito.utilities.collections.filterNotNull
+import com.actito.utilities.collections.filterNestedNotNull
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
@@ -143,7 +143,7 @@ public data class NotificationResponse(
                 content,
                 actions.mapNotNull { it.toModel() },
                 attachments,
-                extra.filterNotNull { it.value },
+                extra.filterNestedNotNull { it.value },
             )
     }
 }

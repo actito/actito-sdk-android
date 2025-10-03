@@ -83,4 +83,27 @@ public class MapTests {
 
         assertEquals(expectedMap, filteredMap)
     }
+
+    @Test
+    public fun testMapNestedNullFilter() {
+        val map: Map<String, Any?> = mapOf(
+            "foo" to "bar",
+            "baz" to null,
+            "product" to mapOf(
+                "name" to null,
+                "price" to 100,
+            ),
+        )
+
+        val expectedMap: Map<String, Any> = mapOf(
+            "foo" to "bar",
+            "product" to mapOf(
+                "price" to 100,
+            ),
+        )
+
+        val filteredMap = map.filterNestedNotNull { it.value }
+
+        assertEquals(expectedMap, filteredMap)
+    }
 }

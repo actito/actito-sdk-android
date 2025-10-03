@@ -19,3 +19,21 @@ public inline fun <K, V, R : Any> Map<out K, V>.filterNotNull(predicate: (Map.En
     }
     return result
 }
+
+public fun <K, V, R : Any> Map<out K, V>.filterNestedNotNull(predicate: (Map.Entry<K, V>) -> R?): Map<K, R> {
+    val result = LinkedHashMap<K, R>()
+    for (entry in this) {
+        @Suppress("UNCHECKED_CAST")
+        val transformed = when (val value = entry.value) {
+            is Map<*, *> -> {
+                val nested = (value as Map<K, V>).filterNestedNotNull(predicate)
+                if (nested.isNotEmpty()) nested as R else null
+            }
+            else -> predicate(entry)
+        }
+        if (transformed != null) {
+            result[entry.key] = transformed
+        }
+    }
+    return result
+}
