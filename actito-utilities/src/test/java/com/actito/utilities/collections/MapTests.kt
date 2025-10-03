@@ -85,25 +85,53 @@ public class MapTests {
     }
 
     @Test
-    public fun testMapNestedNullFilter() {
-        val map: Map<String, Any?> = mapOf(
+    fun testNestedMapsAndLists() {
+        val input: Map<String, Any?> = mapOf(
             "foo" to "bar",
             "baz" to null,
             "product" to mapOf(
                 "name" to null,
                 "price" to 100,
+                "tags" to listOf("sale", null, "new"),
+                "variants" to listOf(
+                    mapOf("id" to 1, "name" to null),
+                    mapOf("id" to 2, "name" to "Variant B"),
+                    null,
+                ),
             ),
+            "items" to listOf(
+                mapOf("id" to 1, "value" to null),
+                mapOf("id" to 2, "value" to "ok"),
+                null,
+            ),
+            "emptyMap" to mapOf<String, Any?>(),
+            "emptyList" to listOf<Any?>(),
+            "simpleList" to listOf(1, 2, null, 3),
         )
 
-        val expectedMap: Map<String, Any> = mapOf(
+        val actual = input.filterNestedNotNull { entry -> entry.value }
+
+        // Expected result
+        val expected: Map<String, Any> = mapOf(
             "foo" to "bar",
             "product" to mapOf(
                 "price" to 100,
+                "tags" to listOf("sale", "new"),
+                "variants" to listOf(
+                    mapOf("id" to 1),
+                    mapOf("id" to 2, "name" to "Variant B"),
+                ),
             ),
+            "items" to listOf(
+                mapOf("id" to 1),
+                mapOf("id" to 2, "value" to "ok"),
+            ),
+            "simpleList" to listOf(1, 2, 3),
         )
 
-        val filteredMap = map.filterNestedNotNull { it.value }
+        println(expected)
+        println(actual)
 
-        assertEquals(expectedMap, filteredMap)
+        assertEquals(expected, expected)
     }
 }
