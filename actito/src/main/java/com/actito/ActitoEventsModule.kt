@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
 
 public typealias ActitoEventData = Map<String, Any?>
 
-private const val MAX_DATA_SIZE_BYTES = 4 * 1024
+private const val MAX_DATA_SIZE_BYTES = 2 * 1024
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
