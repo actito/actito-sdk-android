@@ -29,6 +29,10 @@ public fun <K, V, R : Any> Map<out K, V>.filterNestedNotNull(predicate: (Map.Ent
                 val nested = (value as Map<K, V>).filterNestedNotNull(predicate)
                 if (nested.isNotEmpty()) nested as R else null
             }
+            is List<*> -> {
+                val nestedList = (value as List<*>).filterNestedListNotNull()
+                if (nestedList.isNotEmpty()) nestedList as R else null
+            }
             else -> predicate(entry)
         }
         if (transformed != null) {

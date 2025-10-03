@@ -24,3 +24,15 @@ public fun <T> List<T>.takeEvenlySpaced(n: Int): List<T> {
 
     return elements
 }
+
+@Suppress("UNCHECKED_CAST")
+public fun List<*>.filterNestedListNotNull(): List<Any> {
+    return this.mapNotNull { element ->
+        when (element) {
+            null -> null
+            is Map<*, *> -> (element as Map<String, Any?>).filterNestedNotNull { it.value }.takeIf { it.isNotEmpty() }
+            is List<*> -> element.filterNestedListNotNull().takeIf { it.isNotEmpty() }
+            else -> element
+        }
+    }
+}
