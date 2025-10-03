@@ -24,7 +24,7 @@ internal data class InboxResponse(
         val subtitle: String?,
         val message: String,
         val attachment: ActitoNotification.Attachment?,
-        val extra: Map<String, Any> = mapOf(),
+        val extra: Map<String, Any?> = mapOf(),
         val opened: Boolean = false,
         val visible: Boolean = true,
         val expires: Date? = null,
