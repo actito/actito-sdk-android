@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
 
 public typealias ActitoEventData = Map<String, Any?>
 
-private const val MAX_DATA_SIZE_BYTES = 4 * 1024
+private const val MAX_DATA_SIZE_BYTES = 2 * 1024
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
@@ -61,6 +61,7 @@ public object ActitoEventsModule {
      *
      * @param throwable The exception instance to be logged.
      */
+    @Deprecated("logApplicationException is deprecated. Please use another solution to collect crash analytics.")
     public suspend fun logApplicationException(throwable: Throwable) {
         val device = Actito.device().currentDevice
             ?: throw ActitoDeviceUnavailableException()
@@ -78,6 +79,7 @@ public object ActitoEventsModule {
      * @param throwable The exception instance to be logged.
      * @param callback The callback invoked upon completion of the logging operation.
      */
+    @Deprecated("logApplicationException is deprecated. Please use using another solution to collect crash analytics.")
     @JvmStatic
     public fun logApplicationException(throwable: Throwable, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::logApplicationException)(throwable, callback::onSuccess, callback::onFailure)
@@ -122,6 +124,23 @@ public object ActitoEventsModule {
      */
     public suspend fun logCustom(event: String, data: ActitoEventData? = null) {
         if (!Actito.isReady) throw ActitoNotReadyException()
+
+        if (Actito.application?.enforceSizeLimit == true && data != null) {
+            val adapter = Actito.moshi.adapter(ActitoEventData::class.java)
+            val serializedData = try {
+                adapter.toJson(data)
+            } catch (e: Exception) {
+                throw NetworkException.ParsingException(message = "Unable to validate event data size.", cause = e)
+            }
+
+            val size = serializedData.toByteArray().size
+
+            if (size > MAX_DATA_SIZE_BYTES) {
+                throw ActitoContentTooLargeException(
+                    "Data for event '$event' of size ${size}B exceeds max size of ${MAX_DATA_SIZE_BYTES}B",
+                )
+            }
+        }
 
         log("re.notifica.event.custom.$event", data)
     }
@@ -200,23 +219,6 @@ public object ActitoEventsModule {
         if (!Actito.isConfigured) {
             logger.debug("Actito is not configured. Skipping event log...")
             return@withContext
-        }
-
-        if (Actito.application?.enforceSizeLimit == true && payload.data != null) {
-            val adapter = Actito.moshi.adapter(ActitoEventData::class.java)
-            val serializedData = try {
-                adapter.toJson(payload.data)
-            } catch (e: Exception) {
-                throw NetworkException.ParsingException(message = "Unable to validate event data size.", cause = e)
-            }
-
-            val size = serializedData.toByteArray().size
-
-            if (size > MAX_DATA_SIZE_BYTES) {
-                throw ActitoContentTooLargeException(
-                    "Data for event '${payload.type}' of size ${size}B exceeds max size of ${MAX_DATA_SIZE_BYTES}B",
-                )
-            }
         }
 
         try {
