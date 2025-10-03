@@ -209,7 +209,24 @@ public object Actito {
         }
 
         this.context = WeakReference(context.applicationContext)
-        this.servicesInfo = servicesInfo
+
+        var restApi = servicesInfo.hosts.restApi
+        if (restApi.startsWith("http://") && !restApi.startsWith("https://")) {
+            restApi = "https://$restApi"
+        }
+
+        this.servicesInfo = servicesInfo.copy(
+            hosts = servicesInfo.hosts.copy(
+                restApi = servicesInfo.hosts.restApi.let { host ->
+                    if (host.startsWith("http://") || host.startsWith("https://")) {
+                        host
+                    } else {
+                        "https://$host"
+                    }
+                },
+            ),
+        )
+
         this.options = ActitoOptions(context.applicationContext)
 
         logger.hasDebugLoggingEnabled = checkNotNull(this.options).debugLoggingEnabled

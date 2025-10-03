@@ -26,16 +26,10 @@ public data class ActitoServicesInfo @JvmOverloads constructor(
     }
 
     public data class Hosts(
-        var restApi: String,
+        val restApi: String,
         val appLinks: String,
         val shortLinks: String,
     ) {
-        init {
-            if (!restApi.startsWith("http://") && !restApi.startsWith("https://")) {
-                restApi = "https://$restApi"
-            }
-        }
-
         public constructor() : this(
             restApi = DEFAULT_REST_API_HOST,
             appLinks = DEFAULT_APP_LINKS_HOST,
