@@ -28,6 +28,8 @@ import kotlinx.coroutines.withContext
 public typealias ActitoEventData = Map<String, Any?>
 
 private const val MAX_DATA_SIZE_BYTES = 2 * 1024
+private const val MIN_EVENT_NAME_SIZE_CHAR = 3
+private const val MAX_EVENT_NAME_SIZE_CHAR = 64
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
@@ -124,6 +126,18 @@ public object ActitoEventsModule {
      */
     public suspend fun logCustom(event: String, data: ActitoEventData? = null) {
         if (!Actito.isReady) throw ActitoNotReadyException()
+
+        if (Actito.application?.enforceEventNameRestrictions == true) {
+            val regex = Regex("^[a-zA-Z0-9]([a-zA-Z0-9_-]{0,62}[a-zA-Z0-9])?$")
+
+            if (
+                event.length !in MIN_EVENT_NAME_SIZE_CHAR..MAX_EVENT_NAME_SIZE_CHAR ||
+                !regex.matches(event)
+            ) {
+                @Suppress("detekt:MaxLineLength", "ktlint:standard:argument-list-wrapping")
+                throw IllegalArgumentException("Invalid event name '$event'. Event name must have between ${MIN_EVENT_NAME_SIZE_CHAR}-${MAX_EVENT_NAME_SIZE_CHAR} characters and match this pattern: ${regex.pattern}")
+            }
+        }
 
         if (Actito.application?.enforceSizeLimit == true && data != null) {
             val adapter = Actito.moshi.adapter(ActitoEventData::class.java)
