@@ -20,17 +20,17 @@ public inline fun <K, V, R : Any> Map<out K, V>.filterNotNull(predicate: (Map.En
     return result
 }
 
-public fun <K, V, R : Any> Map<out K, V>.filterNestedNotNull(predicate: (Map.Entry<K, V>) -> R?): Map<K, R> {
+public fun <K, V, R : Any> Map<out K, V>.filterNotNullRecursive(predicate: (Map.Entry<K, V>) -> R?): Map<K, R> {
     val result = LinkedHashMap<K, R>()
     for (entry in this) {
         @Suppress("UNCHECKED_CAST")
         val transformed = when (val value = entry.value) {
             is Map<*, *> -> {
-                val nested = (value as Map<K, V>).filterNestedNotNull(predicate)
+                val nested = (value as Map<K, V>).filterNotNullRecursive(predicate)
                 if (nested.isNotEmpty()) nested as R else null
             }
             is List<*> -> {
-                val nestedList = (value as List<*>).filterNestedListNotNull()
+                val nestedList = (value as List<*>).filterNotNullRecursive()
                 if (nestedList.isNotEmpty()) nestedList as R else null
             }
             else -> predicate(entry)
