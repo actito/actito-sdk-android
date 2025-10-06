@@ -111,11 +111,6 @@ public object ActitoInbox {
                 return 0
             }
 
-            if (application.inboxConfig?.autoBadge != true) {
-                logger.warning("Actito auto badge functionality is not enabled.")
-                return 0
-            }
-
             return field
         }
 
