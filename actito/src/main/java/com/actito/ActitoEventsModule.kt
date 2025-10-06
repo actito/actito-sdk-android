@@ -30,6 +30,7 @@ public typealias ActitoEventData = Map<String, Any?>
 private const val MAX_DATA_SIZE_BYTES = 2 * 1024
 private const val MIN_EVENT_NAME_SIZE_CHAR = 3
 private const val MAX_EVENT_NAME_SIZE_CHAR = 64
+private const val EVENT_NAME_REGEX = "^[a-zA-Z0-9]([a-zA-Z0-9_-]+[a-zA-Z0-9])?$"
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
@@ -128,7 +129,7 @@ public object ActitoEventsModule {
         if (!Actito.isReady) throw ActitoNotReadyException()
 
         if (Actito.application?.enforceEventNameRestrictions == true) {
-            val regex = Regex("^[a-zA-Z0-9]([a-zA-Z0-9_-]{0,62}[a-zA-Z0-9])?$")
+            val regex = EVENT_NAME_REGEX.toRegex()
 
             if (
                 event.length !in MIN_EVENT_NAME_SIZE_CHAR..MAX_EVENT_NAME_SIZE_CHAR ||
