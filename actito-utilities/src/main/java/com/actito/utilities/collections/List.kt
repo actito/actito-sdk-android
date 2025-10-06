@@ -24,3 +24,16 @@ public fun <T> List<T>.takeEvenlySpaced(n: Int): List<T> {
 
     return elements
 }
+
+@Suppress("UNCHECKED_CAST")
+public fun List<*>.filterNotNullRecursive(): List<Any> {
+    return this.mapNotNull { element ->
+        when (element) {
+            null -> null
+            is Map<*, *> ->
+                (element as Map<String, Any?>).filterNotNullRecursive { it.value }.takeIf { it.isNotEmpty() }
+            is List<*> -> element.filterNotNullRecursive().takeIf { it.isNotEmpty() }
+            else -> element
+        }
+    }
+}
