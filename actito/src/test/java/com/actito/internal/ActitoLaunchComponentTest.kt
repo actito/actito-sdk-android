@@ -15,7 +15,6 @@ public class ActitoLaunchComponentTest {
             ActitoLaunchComponent.Module.PUSH_UI,
             ActitoLaunchComponent.Module.INBOX,
             ActitoLaunchComponent.Module.ASSETS,
-            ActitoLaunchComponent.Module.SCANNABLES,
             ActitoLaunchComponent.Module.GEO,
             ActitoLaunchComponent.Module.LOYALTY,
             ActitoLaunchComponent.Module.IN_APP_MESSAGING,

@@ -17,9 +17,6 @@
             android:id="@+id/action_mainFragment_to_beaconsFragment"
             app:destination="@id/beaconsFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_scannablesFragment"
-            app:destination="@id/scannablesFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_assetsFragment"
             app:destination="@id/assetsFragment" />
         <action
@@ -40,11 +37,6 @@
         android:name="com.actito.sample.ui.beacons.BeaconsFragment"
         android:label="@string/beacons_title"
         tools:layout="@layout/fragment_beacons" />
-    <fragment
-        android:id="@+id/scannablesFragment"
-        android:name="com.actito.sample.ui.scannables.ScannablesFragment"
-        android:label="@string/scannables_title"
-        tools:layout="@layout/fragment_scannables" />
     <fragment
         android:id="@+id/assetsFragment"
         android:name="com.actito.sample.ui.assets.AssetsFragment"
