@@ -2,7 +2,7 @@ package com.actito.assets.internal.network.push
 
 import com.actito.Actito
 import com.actito.assets.models.ActitoAsset
-import com.actito.utilities.collections.filterNestedNotNull
+import com.actito.utilities.collections.filterNotNullRecursive
 import com.actito.utilities.moshi.UseDefaultsWhenNull
 import com.squareup.moshi.JsonClass
 
@@ -44,7 +44,7 @@ internal data class FetchAssetsResponse(
                         contentLength = it.contentLength,
                     )
                 },
-                extra = extra.filterNestedNotNull { it.value },
+                extra = extra.filterNotNullRecursive { it.value },
             )
         }
 

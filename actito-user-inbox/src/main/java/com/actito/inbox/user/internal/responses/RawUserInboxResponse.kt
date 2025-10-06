@@ -2,7 +2,7 @@ package com.actito.inbox.user.internal.responses
 
 import com.actito.inbox.user.models.ActitoUserInboxItem
 import com.actito.models.ActitoNotification
-import com.actito.utilities.collections.filterNestedNotNull
+import com.actito.utilities.collections.filterNotNullRecursive
 import com.actito.utilities.moshi.UseDefaultsWhenNull
 import com.squareup.moshi.JsonClass
 import java.util.Date
@@ -42,7 +42,7 @@ internal data class RawUserInboxResponse(
                     subtitle = subtitle,
                     message = message,
                     attachments = attachment?.let { listOf(it) } ?: listOf(),
-                    extra = extra.filterNestedNotNull { it.value },
+                    extra = extra.filterNotNullRecursive { it.value },
                 ),
                 time = time,
                 opened = opened,
