@@ -109,7 +109,7 @@ public class MapTests {
             "simpleList" to listOf(1, 2, null, 3),
         )
 
-        val actual = input.filterNestedNotNull { entry -> entry.value }
+        val actual = input.filterNotNullRecursive { entry -> entry.value }
 
         // Expected result
         val expected: Map<String, Any> = mapOf(
