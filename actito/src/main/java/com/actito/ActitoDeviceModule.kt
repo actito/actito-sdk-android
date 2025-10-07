@@ -38,6 +38,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
+private const val MIN_TAG_SIZE_CHAR = 3
+private const val MAX_TAG_SIZE_CHAR = 64
+private const val TAG_REGEX = "^[a-zA-Z0-9]([a-zA-Z0-9_-]+[a-zA-Z0-9])?$"
+
 public object ActitoDeviceModule {
 
     internal var storedDevice: StoredDevice?
@@ -264,6 +268,19 @@ public object ActitoDeviceModule {
      */
     public suspend fun addTags(tags: List<String>): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
+
+        if (Actito.application?.enforceEventNameRestrictions == true) {
+            val regex = TAG_REGEX.toRegex()
+
+            val invalidTags = tags.filter { tag ->
+                tag.length !in MIN_TAG_SIZE_CHAR..MAX_TAG_SIZE_CHAR || !regex.matches(tag)
+            }
+
+            if (invalidTags.isNotEmpty()) {
+                @Suppress("detekt:MaxLineLength", "ktlint:standard:argument-list-wrapping")
+                throw IllegalArgumentException("Invalid tags: $invalidTags. Tags must have between ${MIN_TAG_SIZE_CHAR}-${MAX_TAG_SIZE_CHAR} characters and match this pattern: ${regex.pattern}")
+            }
+        }
 
         val device = checkNotNull(storedDevice)
         ActitoRequest.Builder()
