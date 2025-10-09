@@ -136,7 +136,7 @@ public open class PassbookActivity : AppCompatActivity() {
 
     private fun showWebPassView(serial: String) {
         val host = Actito.servicesInfo?.hosts?.restApi ?: return
-        val url = "https://$host/pass/web/$serial?showWebVersion=1"
+        val url = "$host/pass/web/$serial?showWebVersion=1"
 
         webView.loadUrl(url)
     }

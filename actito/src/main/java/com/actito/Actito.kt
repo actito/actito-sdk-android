@@ -209,7 +209,19 @@ public object Actito {
         }
 
         this.context = WeakReference(context.applicationContext)
-        this.servicesInfo = servicesInfo
+
+        this.servicesInfo = servicesInfo.copy(
+            hosts = servicesInfo.hosts.copy(
+                restApi = servicesInfo.hosts.restApi.let { host ->
+                    if (host.startsWith("http://") || host.startsWith("https://")) {
+                        host
+                    } else {
+                        "https://$host"
+                    }
+                },
+            ),
+        )
+
         this.options = ActitoOptions(context.applicationContext)
 
         logger.hasDebugLoggingEnabled = checkNotNull(this.options).debugLoggingEnabled
@@ -632,7 +644,8 @@ public object Actito {
             .responseDecodable(ActitoUploadResponse::class)
 
         val host = checkNotNull(servicesInfo).hosts.restApi
-        "https://$host/upload${response.filename}"
+
+        "$host/upload${response.filename}"
     }
 
     /**

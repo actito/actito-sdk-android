@@ -29,7 +29,7 @@ internal data class FetchAssetsResponse(
                 key = key,
                 url = key?.let { key ->
                     val host = Actito.servicesInfo?.hosts?.restApi ?: return@let null
-                    "https://$host/asset/file/$key"
+                    "$host/asset/file/$key"
                 },
                 button = button?.let {
                     ActitoAsset.Button(

@@ -30,7 +30,6 @@ public data class ActitoServicesInfo @JvmOverloads constructor(
         val appLinks: String,
         val shortLinks: String,
     ) {
-
         public constructor() : this(
             restApi = DEFAULT_REST_API_HOST,
             appLinks = DEFAULT_APP_LINKS_HOST,
@@ -39,13 +38,13 @@ public data class ActitoServicesInfo @JvmOverloads constructor(
     }
 
     public companion object {
-        private const val DEFAULT_REST_API_HOST = "push.notifica.re"
+        private const val DEFAULT_REST_API_HOST = "https://push.notifica.re"
         private const val DEFAULT_SHORT_LINKS_HOST = "ntc.re"
         private const val DEFAULT_APP_LINKS_HOST = "applinks.notifica.re"
 
         @Suppress("detekt:MaxLineLength")
         private val HOST_REGEX = Regex(
-            "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])$",
+            "^(https?://)?(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])(:[0-9]{1,5})?$",
         )
     }
 }
