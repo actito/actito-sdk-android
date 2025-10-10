@@ -1,6 +1,6 @@
 [versions]
 maven-artifactGroup = "com.actito"
-maven-artifactVersion = "5.0.0-canary.2"
+maven-artifactVersion = "5.0.0-canary.3"
 android-compileSdk = "36"
 android-buildTools = "35.0.0"
 android-minSdk = "23"
