@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("actito-library")
-    id("publish")
     id("linting")
 }
 
@@ -40,12 +39,6 @@ android {
             jvmTarget = JvmTarget.JVM_11
             explicitApi()
             optIn.add("com.actito.InternalActitoApi")
-        }
-    }
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
         }
     }
 }

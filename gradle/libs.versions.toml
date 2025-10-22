@@ -35,6 +35,7 @@ ktlint = "12.3.0"
 detekt = "1.23.8"
 junit = "4.13.2"
 robolectric = "4.16"
+mavenPublish = "0.34.0"
 mockito = "5.20.0"
 androidx-test-core = "1.7.0"
 
@@ -83,6 +84,7 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "google-ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
 
 [bundles]
 androidx-lifecycle = ["androidx-lifecycle-livedata", "androidx-lifecycle-process"]
