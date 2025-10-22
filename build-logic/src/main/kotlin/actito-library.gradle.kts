@@ -15,7 +15,11 @@ mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
 
-    coordinates(project.group.toString(), project.name, project.version.toString())
+    coordinates(
+        groupId = project.group.toString(),
+        artifactId = project.name,
+        version = project.version.toString(),
+    )
 
     pom {
         name.set("Actito Android SDK")
