@@ -17,7 +17,7 @@ dependencies {
     implementation(libs.plugins.google.ksp.asDependency())
     implementation(libs.plugins.ktlint.asDependency())
     implementation(libs.plugins.detekt.asDependency())
-    implementation(libs.plugins.google.services.asDependency())
+    implementation(libs.plugins.mavenPublish.asDependency())
 
     // Apps
     implementation(apps.plugins.android.application.asDependency())
