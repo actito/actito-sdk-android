@@ -1,6 +1,6 @@
 [versions]
 maven-artifactGroup = "com.actito"
-maven-artifactVersion = "5.0.0-beta.1-SNAPSHOT"
+maven-artifactVersion = "5.0.0-beta.1"
 android-library = "8.13.0"
 android-compileSdk = "36"
 android-buildTools = "35.0.0"
