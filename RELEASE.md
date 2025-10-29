@@ -5,5 +5,5 @@
 3. Update the `CHANGELOG.md`.
 4. Push the changes to the repo.
 5. Run `./gradlew clean`.
-6. Run `./gradlew publishReleasePublicationToS3Repository`.
+6. Run `./gradlew publishAndReleaseToMavenCentral`.
 7. Create a GitHub release with the contents of the `CHANGELOG.md`.
