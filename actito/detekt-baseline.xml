@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MaxLineLength:ActitoNotification.kt$ActitoNotification.Action.Companion$message = "The WebView action type becomes a backwards compatible alias. Use the InAppBrowser action type instead."</ID>
+  </CurrentIssues>
+</SmellBaseline>

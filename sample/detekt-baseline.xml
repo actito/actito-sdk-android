@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>PackageNaming:CoffeeBrewerContentState.kt$package com.actito.sample.live_activities.models</ID>
+    <ID>PackageNaming:CoffeeBrewingState.kt$package com.actito.sample.live_activities.models</ID>
+    <ID>PackageNaming:CoffeeLiveNotification.kt$package com.actito.sample.live_activities.ui</ID>
+    <ID>PackageNaming:LiveActivitiesController.kt$package com.actito.sample.live_activities</ID>
+    <ID>PackageNaming:LiveActivity.kt$package com.actito.sample.live_activities</ID>
+    <ID>SwallowedException:LiveActivityDismissalWorker.kt$CoffeeBrewerDismissalWorker$e: Exception</ID>
+  </CurrentIssues>
+</SmellBaseline>

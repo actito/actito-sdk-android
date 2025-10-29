@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexCondition:LocationUtils.kt$x1 &lt;= location.longitude &amp;&amp; x2 &gt; location.longitude || x1 &gt;= location.longitude &amp;&amp; x2 &lt; location.longitude</ID>
+    <ID>ConstructorParameterNaming:Responses.kt$FetchBeaconsResponse.Beacon$val _id: String</ID>
+    <ID>ConstructorParameterNaming:Responses.kt$FetchRegionsResponse.Region$val _id: String</ID>
+    <ID>MaxLineLength:ActitoGeo.kt$ActitoGeo$"Cannot start the session for beacon '${beacon.name}' since the corresponding region is not being monitored."</ID>
+    <ID>MaxLineLength:ActitoGeo.kt$ActitoGeo$"The monitored regions limit cannot exceed the OS limit of $MAX_MONITORED_REGIONS_LIMIT. Using the OS limit for geofences."</ID>
+    <ID>MaxLineLength:LocalStorage.kt$LocalStorage$"Cannot update the beacon session for region with major '${entry.key}' since the corresponding region is not being monitored."</ID>
+    <ID>MaxLineLength:LocalStorage.kt$LocalStorage$"Cannot update the beacon session for region with major '${entry.key}' since there's no ongoing session."</ID>
+    <ID>NestedBlockDepth:LocationUtils.kt$private fun ActitoRegion.AdvancedGeometry.contains(location: Location): Boolean</ID>
+  </CurrentIssues>
+</SmellBaseline>

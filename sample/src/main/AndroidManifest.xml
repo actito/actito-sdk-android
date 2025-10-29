@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".MainApplication"
+        android:allowBackup="false"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Sample">
+        <activity
+            android:name=".SampleActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Sample">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.actito.intent.action.RemoteMessageOpened" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.actito.intent.action.NotificationOpened" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.actito.intent.action.ActionOpened" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.actito.intent.action.BeaconNotificationOpened" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="${applicationId}" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/notificare_dynamic_link_hostname"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/notificare_app_links_hostname"
+                    android:pathPrefix="/testdevice"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.actito.push.ui.NotificationActivity"
+            android:theme="@style/Theme.App.Actito.Translucent" />
+        <activity
+            android:name="com.actito.loyalty.PassbookActivity"
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/notificare_app_links_hostname"
+                    android:pathPrefix="/pass"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.actito.iam.ui.InAppMessagingActivity"
+            android:theme="@style/Theme.App.Actito.Iam"
+            tools:replace="android:theme" />
+        <receiver
+            android:name=".SampleGeoIntentReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".SamplePushIntentReceiver"
+            android:exported="false" />
+        <meta-data
+            android:name="com.actito.debug_logging_enabled"
+            android:value="true" />
+        <meta-data
+            android:name="com.actito.push.notification_small_icon"
+            android:resource="@drawable/ic_rocket_black_24dp" />
+        <meta-data
+            android:name="com.actito.push.ui.show_notification_toasts"
+            android:value="true" />
+        <meta-data
+            android:name="com.actito.geo.beacons.foreground_service_enabled"
+            android:value="true" />
+        <meta-data
+            android:name="com.actito.geo.beacons.service_notification_small_icon"
+            android:resource="@drawable/ic_baseline_bluetooth_searching_24" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${googleMapsApiKey}" />
+    </application>
+
+</manifest>

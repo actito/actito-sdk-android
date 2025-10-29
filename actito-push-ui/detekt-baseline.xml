@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexCondition:ActitoWebPassFragment.kt$ActitoWebPassFragment$content?.type != ActitoNotification.Content.TYPE_PK_PASS || passUrlStr == null || application == null || host == null</ID>
+    <ID>ComplexCondition:NotificationContainerFragment.kt$NotificationContainerFragment$action == null &amp;&amp; notification.type != ActitoNotification.TYPE_ALERT &amp;&amp; notification.type != ActitoNotification.TYPE_PASSBOOK &amp;&amp; notification.actions.isNotEmpty()</ID>
+    <ID>MaxLineLength:ActitoCallbackActionFragment.kt$ActitoCallbackActionFragment$ActitoPendingResult.CAPTURE_IMAGE_AND_KEYBOARD_REQUEST_CODE -&gt; R.layout.actito_action_callback_camera_keyboard</ID>
+    <ID>MaxLineLength:ActitoOptions.kt$"Invalid color resource provided for 'com.actito.push.ui.custom_tabs_navigation_bar_divider_color'."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI$"Attempting to create a fragment for a notification of type 'InAppBrowser'. This type contains no visual interface."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI$"Attempting to create a fragment for a notification of type 'UrlScheme'. This type contains no visual interface."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI$"Attempting to create a fragment for a notification of type 'none'. This type contains to visual interface."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI$"Attempting to present a notification of type 'none'. These should be handled by the application instead."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Action failed to execute, please override onActionFailedToExecute if you want to receive these events."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Notification failed to present, please override onNotificationFailedToPresent if you want to receive these events."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Notification finished presenting, please override onNotificationFinishedPresenting if you want to receive these events."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Notification url clicked, please override onNotificationUrlClicked if you want to receive these events."</ID>
+    <ID>MaxLineLength:ActitoPushUI.kt$ActitoPushUI.NotificationLifecycleListener$"Notification will present, please override onNotificationWillPresent if you want to receive these events."</ID>
+    <ID>MaxLineLength:NotificationCallbackAction.kt$NotificationCallbackAction$?:</ID>
+  </CurrentIssues>
+</SmellBaseline>

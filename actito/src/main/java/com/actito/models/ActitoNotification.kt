@@ -1,0 +1,227 @@
+package com.actito.models
+
+import android.content.Context
+import android.os.Parcelable
+import com.actito.Actito
+import com.actito.internal.moshi
+import com.actito.internal.parcelize.ActitoExtraParceler
+import com.actito.utilities.parcelize.NotificationContentDataParceler
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.WriteWith
+import org.json.JSONObject
+import java.util.Date
+
+@Parcelize
+@JsonClass(generateAdapter = true)
+public data class ActitoNotification(
+    val id: String,
+    val partial: Boolean = false,
+    val type: String,
+    val time: Date,
+    val title: String?,
+    val subtitle: String?,
+    val message: String,
+    val content: List<Content> = listOf(),
+    val actions: List<Action> = listOf(),
+    val attachments: List<Attachment> = listOf(),
+    val extra: @WriteWith<ActitoExtraParceler> Map<String, Any> = mapOf(),
+) : Parcelable {
+
+    public fun toJson(): JSONObject {
+        val jsonStr = adapter.toJson(this)
+        return JSONObject(jsonStr)
+    }
+
+    public companion object {
+        public const val TYPE_NONE: String = "re.notifica.notification.None"
+        public const val TYPE_ALERT: String = "re.notifica.notification.Alert"
+        public const val TYPE_IN_APP_BROWSER: String = "re.notifica.notification.InAppBrowser"
+        public const val TYPE_WEB_VIEW: String = "re.notifica.notification.WebView"
+        public const val TYPE_URL: String = "re.notifica.notification.URL"
+        public const val TYPE_URL_RESOLVER: String = "re.notifica.notification.URLResolver"
+        public const val TYPE_URL_SCHEME: String = "re.notifica.notification.URLScheme"
+        public const val TYPE_IMAGE: String = "re.notifica.notification.Image"
+        public const val TYPE_VIDEO: String = "re.notifica.notification.Video"
+        public const val TYPE_MAP: String = "re.notifica.notification.Map"
+        public const val TYPE_RATE: String = "re.notifica.notification.Rate"
+        public const val TYPE_PASSBOOK: String = "re.notifica.notification.Passbook"
+        public const val TYPE_STORE: String = "re.notifica.notification.Store"
+
+        private val adapter = Actito.moshi.adapter(ActitoNotification::class.java)
+
+        public fun fromJson(json: JSONObject): ActitoNotification {
+            val jsonStr = json.toString()
+            return requireNotNull(adapter.fromJson(jsonStr))
+        }
+    }
+
+    @Parcelize
+    @JsonClass(generateAdapter = true)
+    public data class Content(
+        val type: String,
+        val data: @WriteWith<NotificationContentDataParceler> Any,
+    ) : Parcelable {
+
+        public fun toJson(): JSONObject {
+            val jsonStr = adapter.toJson(this)
+            return JSONObject(jsonStr)
+        }
+
+        public companion object {
+            public const val TYPE_HTML: String = "re.notifica.content.HTML"
+            public const val TYPE_PK_PASS: String = "re.notifica.content.PKPass"
+            public const val TYPE_GOOGLE_PLAY_DETAILS: String = "re.notifica.content.GooglePlayDetails"
+            public const val TYPE_GOOGLE_PLAY_DEVELOPER: String = "re.notifica.content.GooglePlayDeveloper"
+            public const val TYPE_GOOGLE_PLAY_SEARCH: String = "re.notifica.content.GooglePlaySearch"
+            public const val TYPE_GOOGLE_PLAY_COLLECTION: String = "re.notifica.content.GooglePlayCollection"
+            public const val TYPE_APP_GALLERY_DETAILS: String = "re.notifica.content.AppGalleryDetails"
+            public const val TYPE_APP_GALLERY_SEARCH: String = "re.notifica.content.AppGallerySearch"
+
+            private val adapter = Actito.moshi.adapter(Content::class.java)
+
+            public fun fromJson(json: JSONObject): Content {
+                val jsonStr = json.toString()
+                return requireNotNull(adapter.fromJson(jsonStr))
+            }
+        }
+    }
+
+    @Parcelize
+    @JsonClass(generateAdapter = true)
+    public data class Action(
+        val type: String,
+        val label: String,
+        val target: String?,
+        val camera: Boolean,
+        val keyboard: Boolean,
+        val destructive: Boolean?,
+        val icon: Icon?,
+    ) : Parcelable {
+
+        public fun getLocalizedLabel(context: Context): String {
+            val prefix = Actito.options?.notificationActionLabelPrefix ?: ""
+            val resourceName = "$prefix$label"
+            val resource = context.resources.getIdentifier(resourceName, "string", context.packageName)
+
+            return if (resource == 0) label else context.getString(resource)
+        }
+
+        public fun getIconResource(context: Context): Int {
+            val icon = icon?.android ?: return 0
+
+            return context.resources.getIdentifier(icon, "drawable", "android")
+        }
+
+        public fun toJson(): JSONObject {
+            val jsonStr = adapter.toJson(this)
+            return JSONObject(jsonStr)
+        }
+
+        public companion object {
+            public const val TYPE_APP: String = "re.notifica.action.App"
+            public const val TYPE_BROWSER: String = "re.notifica.action.Browser"
+            public const val TYPE_CALLBACK: String = "re.notifica.action.Callback"
+            public const val TYPE_CUSTOM: String = "re.notifica.action.Custom"
+            public const val TYPE_MAIL: String = "re.notifica.action.Mail"
+            public const val TYPE_SMS: String = "re.notifica.action.SMS"
+            public const val TYPE_TELEPHONE: String = "re.notifica.action.Telephone"
+            public const val TYPE_IN_APP_BROWSER: String = "re.notifica.action.InAppBrowser"
+
+            @Deprecated(
+                message = "The WebView action type becomes a backwards compatible alias. Use the InAppBrowser action type instead.",
+                replaceWith = ReplaceWith("ActitoNotification.Action.TYPE_IN_APP_BROWSER"),
+            )
+            public const val TYPE_WEB_VIEW: String = "re.notifica.action.WebView"
+
+            private val adapter = Actito.moshi.adapter(Action::class.java)
+
+            public fun fromJson(json: JSONObject): Action {
+                val jsonStr = json.toString()
+                return requireNotNull(adapter.fromJson(jsonStr))
+            }
+        }
+
+        @Parcelize
+        @JsonClass(generateAdapter = true)
+        public data class Icon(
+            val android: String?,
+            val ios: String?,
+            val web: String?,
+        ) : Parcelable {
+
+            public fun toJson(): JSONObject {
+                val jsonStr = adapter.toJson(this)
+                return JSONObject(jsonStr)
+            }
+
+            public companion object {
+                private val adapter = Actito.moshi.adapter(Icon::class.java)
+
+                public fun fromJson(json: JSONObject): Icon {
+                    val jsonStr = json.toString()
+                    return requireNotNull(adapter.fromJson(jsonStr))
+                }
+            }
+        }
+    }
+
+    @Parcelize
+    @JsonClass(generateAdapter = true)
+    public data class Attachment(
+        val mimeType: String,
+        val uri: String,
+    ) : Parcelable {
+
+        public fun toJson(): JSONObject {
+            val jsonStr = adapter.toJson(this)
+            return JSONObject(jsonStr)
+        }
+
+        public companion object {
+            private val adapter = Actito.moshi.adapter(Attachment::class.java)
+
+            public fun fromJson(json: JSONObject): Attachment {
+                val jsonStr = json.toString()
+                return requireNotNull(adapter.fromJson(jsonStr))
+            }
+        }
+    }
+
+    @Suppress("ktlint:standard:trailing-comma-on-declaration-site")
+    public enum class NotificationType {
+        NONE,
+        ALERT,
+        IN_APP_BROWSER,
+        WEB_VIEW,
+        URL,
+        URL_RESOLVER,
+        URL_SCHEME,
+        IMAGE,
+        VIDEO,
+        MAP,
+        RATE,
+        PASSBOOK,
+        STORE;
+
+        public companion object {
+            public fun from(type: String): NotificationType? =
+                when (type) {
+                    TYPE_NONE -> NONE
+                    TYPE_ALERT -> ALERT
+                    TYPE_IN_APP_BROWSER -> IN_APP_BROWSER
+                    TYPE_WEB_VIEW -> WEB_VIEW
+                    TYPE_URL -> URL
+                    TYPE_URL_RESOLVER -> URL_RESOLVER
+                    TYPE_URL_SCHEME -> URL_SCHEME
+                    TYPE_IMAGE -> IMAGE
+                    TYPE_VIDEO -> VIDEO
+                    TYPE_MAP -> MAP
+                    TYPE_RATE -> RATE
+                    TYPE_PASSBOOK -> PASSBOOK
+                    TYPE_STORE -> STORE
+                    else -> null
+                }
+        }
+    }
+}

@@ -1,0 +1,55 @@
+package com.actito.geo.internal
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.location.Location
+import com.actito.geo.ActitoGeo
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingEvent
+import com.google.android.gms.location.LocationResult
+
+internal class LocationReceiver : BroadcastReceiver() {
+
+    override fun onReceive(context: Context, intent: Intent) {
+        when (intent.action) {
+            ActitoGeo.INTENT_ACTION_INTERNAL_LOCATION_UPDATED -> {
+                if (LocationResult.hasResult(intent)) {
+                    val result = LocationResult.extractResult(intent) ?: return
+                    val location = result.lastLocation ?: return
+
+                    onLocationUpdated(location)
+                }
+            }
+            ActitoGeo.INTENT_ACTION_INTERNAL_GEOFENCE_TRANSITION -> {
+                val event = GeofencingEvent.fromIntent(intent) ?: return
+                if (event.hasError()) {
+                    logger.warning("Geofencing error: ${event.errorCode}")
+                    return
+                }
+
+                val geofences = event.triggeringGeofences ?: return
+
+                when (event.geofenceTransition) {
+                    Geofence.GEOFENCE_TRANSITION_ENTER -> onRegionEnter(geofences)
+                    Geofence.GEOFENCE_TRANSITION_EXIT -> onRegionExit(geofences)
+                }
+            }
+        }
+    }
+
+    private fun onLocationUpdated(location: Location) {
+        logger.debug("Location updated = (${location.latitude}, ${location.longitude})")
+        ActitoGeo.handleLocationUpdate(location)
+    }
+
+    private fun onRegionEnter(geofences: List<Geofence>) {
+        logger.debug("Received a region enter event for ${geofences.size} geofences.")
+        ActitoGeo.handleRegionEnter(geofences.map { it.requestId })
+    }
+
+    private fun onRegionExit(geofences: List<Geofence>) {
+        logger.debug("Received a region exit event for ${geofences.size} geofences.")
+        ActitoGeo.handleRegionExit(geofences.map { it.requestId })
+    }
+}

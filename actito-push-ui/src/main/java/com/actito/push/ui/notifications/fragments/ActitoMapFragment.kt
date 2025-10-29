@@ -1,0 +1,127 @@
+package com.actito.push.ui.notifications.fragments
+
+import android.os.Bundle
+import androidx.annotation.Keep
+import com.actito.Actito
+import com.actito.models.ActitoNotification
+import com.actito.push.ui.ActitoPushUI
+import com.actito.utilities.parcel.parcelable
+import com.actito.utilities.threading.onMainThread
+import com.actito.utilities.view.waitForLayout
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
+
+@Keep
+public class ActitoMapFragment : SupportMapFragment(), OnMapReadyCallback {
+
+    private lateinit var notification: ActitoNotification
+    // private lateinit var callback: NotificationFragment.Callback
+
+    private val notificationMarkers: List<NotificationMarker> by lazy {
+        notification.content
+            .filter { it.type == "re.notifica.content.Marker" }
+            .mapNotNull { content ->
+                val data = content.data as? Map<*, *> ?: return@mapNotNull null
+                val latitude = data["latitude"] as? Double ?: return@mapNotNull null
+                val longitude = data["longitude"] as? Double ?: return@mapNotNull null
+
+                return@mapNotNull NotificationMarker(
+                    latitude = latitude,
+                    longitude = longitude,
+                    title = data["title"] as? String,
+                    description = data["description"] as? String,
+                )
+            }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // TODO callback
+//        try {
+//            callback = parentFragment as Callback
+//        } catch (e: ClassCastException) {
+//            throw ClassCastException("Parent fragment must implement NotificationFragment.Callback.")
+//        }
+
+        notification = savedInstanceState?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+            ?: arguments?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
+            ?: throw IllegalArgumentException("Missing required notification parameter.")
+
+        getMapAsync(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(Actito.INTENT_EXTRA_NOTIFICATION, notification)
+    }
+
+    // region OnMapReadyCallback
+
+    override fun onMapReady(map: GoogleMap) {
+        map.uiSettings.isRotateGesturesEnabled = false
+        map.uiSettings.isZoomControlsEnabled = false
+
+        populateMarkers(map)
+        configureMapZoom(map)
+
+        onMainThread {
+            ActitoPushUI.lifecycleListeners.forEach {
+                it.get()?.onNotificationPresented(
+                    notification,
+                )
+            }
+        }
+    }
+
+    // endregion
+
+    private fun populateMarkers(map: GoogleMap) {
+        notificationMarkers.forEach { marker ->
+            val coordinates = LatLng(marker.latitude, marker.longitude)
+
+            map.addMarker(
+                MarkerOptions()
+                    .position(coordinates)
+                    .title(marker.title)
+                    .snippet(marker.description),
+            )
+        }
+    }
+
+    private fun configureMapZoom(map: GoogleMap) {
+        if (notificationMarkers.isEmpty()) return
+
+        if (notificationMarkers.size == 1) {
+            val marker = notificationMarkers.first()
+
+            view?.waitForLayout {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(marker.latitude, marker.longitude), 17f))
+            }
+
+            return
+        }
+
+        val zoomBounds = LatLngBounds.Builder().apply {
+            notificationMarkers.forEach {
+                include(LatLng(it.latitude, it.longitude))
+            }
+        }.build()
+
+        view?.waitForLayout {
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(zoomBounds, 50))
+        }
+    }
+
+    private data class NotificationMarker(
+        val latitude: Double,
+        val longitude: Double,
+        val title: String?,
+        val description: String?,
+    )
+}
