@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 5.0.0
+## 5.0.0-beta.1
 
 - Updated to Kotlin 2.0
 - Improved network request retry mechanism
