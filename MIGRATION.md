@@ -116,7 +116,7 @@ private fun handleIntent(intent: Intent) {
 
 > **Tip:**
 > 
-> A global search-and-replace can accelerate this migration, but review your code carefully —  especially where custom extensions or wrappers reference old `Notificare` types or package names.
+> A global search-and-replace can accelerate this migration, but review your code carefully — especially where custom extensions or wrappers reference old `Notificare` types or package names.
 
 #### Refactor Java Compatibility Usages
 
