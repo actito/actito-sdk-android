@@ -93,16 +93,20 @@ public class ActitoRequest private constructor(
                     closeResponse = closeResponse,
                 )
             } catch (e: Exception) {
-                attempt++
                 lastException = e
 
-                if (e.isRecoverable) {
-                    logger.debug("Network request retry attempt $attempt failed. Retrying...")
-                    delay(delay)
-                    delay = delay * BACKOFF_FACTOR
-                } else {
+                if (!e.isRecoverable) {
                     logger.debug("Network request failed.", e)
                     throw e
+                }
+
+                attempt++
+
+                if (attempt < maxRetries) {
+                    logger.debug("Network request retry attempt $attempt failed. Retrying...")
+
+                    delay(delay)
+                    delay = delay * BACKOFF_FACTOR
                 }
             }
         }
