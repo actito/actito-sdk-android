@@ -1,11 +1,13 @@
 package com.actito.inbox.internal
 
 import android.content.SharedPreferences
+import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.inbox.ActitoInbox
 import com.actito.inbox.internal.database.InboxDatabase
 import com.actito.internal.ActitoLaunchComponent
 
+@Keep
 public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op

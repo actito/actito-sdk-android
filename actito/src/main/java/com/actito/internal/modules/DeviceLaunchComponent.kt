@@ -1,6 +1,7 @@
 package com.actito.internal.modules
 
 import android.content.SharedPreferences
+import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.ActitoDeviceModule
 import com.actito.ActitoEventsModule
@@ -10,6 +11,7 @@ import com.actito.internal.network.NetworkException
 import com.actito.internal.storage.preferences.ktx.asPublic
 import com.actito.utilities.content.applicationVersion
 
+@Keep
 public class DeviceLaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op

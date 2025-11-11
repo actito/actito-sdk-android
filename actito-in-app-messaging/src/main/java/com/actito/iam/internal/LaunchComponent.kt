@@ -1,10 +1,12 @@
 package com.actito.iam.internal
 
 import android.content.SharedPreferences
+import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.iam.ActitoInAppMessaging
 import com.actito.internal.ActitoLaunchComponent
 
+@Keep
 public class LaunchComponent : ActitoLaunchComponent {
 
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
