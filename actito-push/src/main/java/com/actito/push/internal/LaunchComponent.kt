@@ -1,6 +1,7 @@
 package com.actito.push.internal
 
 import android.content.SharedPreferences
+import androidx.annotation.Keep
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -11,6 +12,7 @@ import com.actito.push.automaticDefaultChannelEnabled
 import com.actito.push.ktx.INTENT_ACTION_REMOTE_MESSAGE_OPENED
 import org.json.JSONObject
 
+@Keep
 public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         val preferences = ActitoSharedPreferences(Actito.requireContext())

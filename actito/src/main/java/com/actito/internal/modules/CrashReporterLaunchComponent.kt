@@ -1,11 +1,13 @@
 package com.actito.internal.modules
 
 import android.content.SharedPreferences
+import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.ActitoEventsModule
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.logger
 
+@Keep
 public class CrashReporterLaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op

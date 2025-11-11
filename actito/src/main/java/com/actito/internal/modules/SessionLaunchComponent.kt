@@ -1,11 +1,13 @@
 package com.actito.internal.modules
 
 import android.content.SharedPreferences
+import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.ktx.device
 import java.util.Date
 
+@Keep
 public class SessionLaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op

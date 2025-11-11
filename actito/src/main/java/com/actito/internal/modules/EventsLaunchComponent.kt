@@ -1,9 +1,11 @@
 package com.actito.internal.modules
 
 import android.content.SharedPreferences
+import androidx.annotation.Keep
 import com.actito.ActitoEventsModule
 import com.actito.internal.ActitoLaunchComponent
 
+@Keep
 public class EventsLaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op
