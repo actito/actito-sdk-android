@@ -93,13 +93,12 @@ public class ActitoRequest private constructor(
                     closeResponse = closeResponse,
                 )
             } catch (e: Exception) {
-                lastException = e
-
                 if (!e.isRecoverable) {
                     logger.debug("Network request failed.", e)
                     throw e
                 }
 
+                lastException = e
                 attempt++
 
                 if (attempt < maxRetries) {
