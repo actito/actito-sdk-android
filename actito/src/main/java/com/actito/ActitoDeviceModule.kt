@@ -269,7 +269,7 @@ public object ActitoDeviceModule {
     public suspend fun addTags(tags: List<String>): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
-        if (Actito.application?.enforceEventNameRestrictions == true) {
+        if (Actito.application?.enforceTagRestrictions == true) {
             val regex = TAG_REGEX.toRegex()
 
             val invalidTags = tags.filter { tag ->
