@@ -55,7 +55,15 @@ public class ActitoVideoFragment : NotificationFragment() {
             }
         }
 
-        binding.webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null)
+        val referrer = context?.packageName?.let { "https://$it" }
+
+        binding.webView.loadDataWithBaseURL(
+            referrer,
+            html,
+            "text/html",
+            "utf-8",
+            null,
+        )
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {

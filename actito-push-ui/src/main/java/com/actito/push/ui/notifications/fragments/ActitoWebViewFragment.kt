@@ -48,7 +48,15 @@ public class ActitoWebViewFragment : NotificationFragment() {
             return
         }
 
-        binding.webView.loadDataWithBaseURL("x-data:/base", html, "text/html", "utf-8", null)
+        val referrer = context?.packageName?.let { "https://$it" }
+
+        binding.webView.loadDataWithBaseURL(
+            referrer ?: "x-data:/base",
+            html,
+            "text/html",
+            "utf-8",
+            null,
+        )
 
         if (html.contains("getOpenActionQueryParameter") || html.contains("getOpenActionsQueryParameter")) {
             callback.onNotificationFragmentCanHideActionsMenu()
