@@ -43,7 +43,7 @@ Table of contents
 
 ### Integration
 
-To integrate the Actito SDK into your application, follow the full setup and implementation guides available in our [official documentation](https://developers.actito.com/docs/push-implementation/android/implementation/)
+To integrate the Actito Android SDK into your application, follow the full setup and implementation guides available in our [official documentation](https://developers.actito.com/docs/push-implementation/android/implementation/)
 
 The documentation includes step-by-step instructions for installation, configuration, and advanced customization across all supported platforms.
 
