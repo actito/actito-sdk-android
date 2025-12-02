@@ -41,7 +41,7 @@ private const val EVENT_APPLICATION_EXCEPTION = "re.notifica.event.application.E
 private const val EVENT_NOTIFICATION_OPEN = "re.notifica.event.notification.Open"
 private const val TASK_UPLOAD_EVENTS = "re.notifica.tasks.events.Upload"
 
-public object ActitoEventsModule {
+public object ActitoEventsComponent {
     internal val dataAdapter: JsonAdapter<ActitoEventData> by lazy {
         Actito.moshi.adapter(
             Types.newParameterizedType(
@@ -202,6 +202,15 @@ public object ActitoEventsModule {
     }
 
     // endregion
+
+    internal fun configure() {
+//      TODO listen to connectivity changes
+//      TODO listen to lifecycle changes (app open)
+    }
+
+    internal fun launch() {
+        scheduleUploadWorker()
+    }
 
     internal suspend fun logApplicationInstall() {
         log(EVENT_APPLICATION_INSTALL)

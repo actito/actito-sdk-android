@@ -1,7 +1,7 @@
 package com.actito.internal.ktx
 
 import com.actito.ActitoEventData
-import com.actito.ActitoEventsModule
+import com.actito.ActitoEventsComponent
 import org.json.JSONObject
 
 /**
@@ -18,6 +18,5 @@ import org.json.JSONObject
  * @return A non-null [ActitoEventData] parsed from this [JSONObject].
  * @throws IllegalArgumentException if the JSON cannot be deserialized into [ActitoEventData].
  */
-public fun JSONObject.toEventData(): ActitoEventData {
-    return requireNotNull(ActitoEventsModule.dataAdapter.fromJson(this.toString()))
-}
+public fun JSONObject.toEventData(): ActitoEventData =
+    requireNotNull(ActitoEventsComponent.dataAdapter.fromJson(this.toString()))

@@ -1,13 +1,13 @@
-package com.actito.internal.modules
+package com.actito.internal.components
 
 import androidx.annotation.Keep
 import com.actito.Actito
-import com.actito.ActitoEventsModule
+import com.actito.ActitoEventsComponent
 import com.actito.internal.logger
 import com.actito.ktx.device
 
 @Keep
-internal object ActitoCrashReporterModule {
+internal object ActitoCrashReporterComponent {
 
     internal var defaultUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
     internal val uncaughtExceptionHandler = Thread.UncaughtExceptionHandler { thread: Thread, throwable: Throwable ->
@@ -19,7 +19,7 @@ internal object ActitoCrashReporterModule {
         }
 
         // Save the crash report to be processed when the app recovers.
-        val event = ActitoEventsModule.createThrowableEvent(throwable, device)
+        val event = ActitoEventsComponent.createThrowableEvent(throwable, device)
         Actito.sharedPreferences.crashReport = event
         logger.debug("Saved crash report in storage to upload on next start.")
 
@@ -30,5 +30,33 @@ internal object ActitoCrashReporterModule {
         }
 
         defaultUncaughtExceptionHandler.uncaughtException(thread, throwable)
+    }
+
+    internal fun configure() {
+        if (checkNotNull(Actito.options).crashReportsEnabled) {
+            logger.warning(
+                "Crash reporting is deprecated. We recommend using another solution to collect crash analytics.",
+            )
+
+            defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+            Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler)
+        }
+    }
+
+    internal suspend fun launch() {
+        val crashReport = Actito.sharedPreferences.crashReport ?: run {
+            logger.debug("No crash report to process.")
+            return
+        }
+
+        try {
+            ActitoEventsComponent.log(crashReport)
+            logger.info("Crash report processed.")
+
+            // Clean up the stored crash report
+            Actito.sharedPreferences.crashReport = null
+        } catch (e: Exception) {
+            logger.error("Failed to process a crash report.", e)
+        }
     }
 }

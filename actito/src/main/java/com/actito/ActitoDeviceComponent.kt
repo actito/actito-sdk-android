@@ -3,7 +3,9 @@ package com.actito
 import android.content.Intent
 import com.actito.internal.ACTITO_VERSION
 import com.actito.internal.ActitoLaunchComponent
+import com.actito.internal.components.ActitoSessionComponent
 import com.actito.internal.logger
+import com.actito.internal.network.NetworkException
 import com.actito.internal.network.push.CreateDevicePayload
 import com.actito.internal.network.push.CreateDeviceResponse
 import com.actito.internal.network.push.DeviceDoNotDisturbResponse
@@ -42,7 +44,7 @@ private const val MIN_TAG_SIZE_CHAR = 3
 private const val MAX_TAG_SIZE_CHAR = 64
 private const val TAG_REGEX = "^[a-zA-Z0-9]([a-zA-Z0-9_-]+[a-zA-Z0-9])?$"
 
-public object ActitoDeviceModule {
+public object ActitoDeviceComponent {
 
     internal var storedDevice: StoredDevice?
         get() = Actito.sharedPreferences.device
@@ -51,27 +53,6 @@ public object ActitoDeviceModule {
         }
 
     internal var hasPendingDeviceRegistrationEvent: Boolean? = null
-
-    internal suspend fun resetLocalStorage() {
-        ActitoLaunchComponent.Module.entries.forEach { module ->
-            module.instance?.run {
-                logger.debug("Resetting module: ${module.name.lowercase()}")
-                try {
-                    this.clearStorage()
-                } catch (e: Exception) {
-                    logger.debug("Failed to reset '${module.name.lowercase()}': $e")
-                    throw e
-                }
-            }
-        }
-
-        Actito.database.events().clear()
-
-        // Should only clear device-related local storage properties.
-        Actito.sharedPreferences.device = null
-        Actito.sharedPreferences.preferredLanguage = null
-        Actito.sharedPreferences.preferredRegion = null
-    }
 
     // region Actito Device Module
 
@@ -524,6 +505,93 @@ public object ActitoDeviceModule {
 
     // endregion
 
+    // Launches device and session components
+    internal suspend fun launch() {
+        upgradeToLongLivedDeviceWhenNeeded()
+
+        val storedDevice = storedDevice
+
+        if (storedDevice == null) {
+            logger.debug("New install detected")
+
+            createDevice()
+            hasPendingDeviceRegistrationEvent = true
+
+            // Ensure a session exists for the current device.
+            ActitoSessionComponent.launch()
+
+            // We will log the Install & Registration events here since this will execute only one time at the start.
+            ActitoEventsComponent.logApplicationInstall()
+            ActitoEventsComponent.logApplicationRegistration()
+        } else {
+            val isApplicationUpgrade = storedDevice.appVersion != Actito.requireContext().applicationVersion
+
+            try {
+                updateDevice()
+            } catch (e: NetworkException.ValidationException) {
+                if (e.response.code == 404) {
+                    logger.warning("The device was removed from Actito. Recovering...")
+
+                    logger.debug("Resetting local storage.")
+                    resetLocalStorage()
+
+                    logger.debug("Creating a new device.")
+                    createDevice()
+                    hasPendingDeviceRegistrationEvent = true
+
+                    // Ensure a session exists for the current device.
+                    ActitoSessionComponent.launch()
+
+                    // We will log the Install & Registration events here since this will execute
+                    // only one time at the start.
+                    ActitoEventsComponent.logApplicationInstall()
+                    ActitoEventsComponent.logApplicationRegistration()
+
+                    return
+                }
+
+                throw e
+            }
+
+            // Ensure a session exists for the current device.
+            ActitoSessionComponent.launch()
+
+            if (isApplicationUpgrade) {
+                // It's not the same version, let's log it as an upgrade.
+                logger.debug("New version detected")
+                ActitoEventsComponent.logApplicationUpgrade()
+            }
+        }
+    }
+
+    internal fun postLaunch() {
+        val device = storedDevice
+        if (device != null && hasPendingDeviceRegistrationEvent == true) {
+            notifyDeviceRegistered(device.asPublic())
+        }
+    }
+
+    private suspend fun resetLocalStorage() {
+        ActitoLaunchComponent.Module.entries.forEach { module ->
+            module.instance?.run {
+                logger.debug("Resetting module: ${module.name.lowercase()}")
+                try {
+                    this.clearStorage()
+                } catch (e: Exception) {
+                    logger.debug("Failed to reset '${module.name.lowercase()}': $e")
+                    throw e
+                }
+            }
+        }
+
+        Actito.database.events().clear()
+
+        // Should only clear device-related local storage properties.
+        Actito.sharedPreferences.device = null
+        Actito.sharedPreferences.preferredLanguage = null
+        Actito.sharedPreferences.preferredRegion = null
+    }
+
     internal suspend fun delete(): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -599,7 +667,7 @@ public object ActitoDeviceModule {
             .put("/push/${storedDevice.id}", payload)
             .response()
 
-        this@ActitoDeviceModule.storedDevice = storedDevice.copy(
+        this@ActitoDeviceComponent.storedDevice = storedDevice.copy(
             timeZoneOffset = payload.timeZoneOffset,
             osVersion = payload.osVersion,
             sdkVersion = payload.sdkVersion,

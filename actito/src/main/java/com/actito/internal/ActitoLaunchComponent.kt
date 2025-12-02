@@ -21,13 +21,6 @@ public interface ActitoLaunchComponent {
 
     @Suppress("ktlint:standard:trailing-comma-on-declaration-site")
     public enum class Module(private val fqn: String) {
-        // Default modules
-        DEVICE(fqn = "com.actito.internal.modules.DeviceLaunchComponent"),
-        SESSION(fqn = "com.actito.internal.modules.SessionLaunchComponent"),
-        EVENTS(fqn = "com.actito.internal.modules.EventsLaunchComponent"),
-        CRASH_REPORTER(fqn = "com.actito.internal.modules.CrashReporterLaunchComponent"),
-
-        // Peer modules
         PUSH(fqn = "com.actito.push.internal.LaunchComponent"),
         PUSH_UI(fqn = "com.actito.push.ui.internal.LaunchComponent"),
         INBOX(fqn = "com.actito.inbox.internal.LaunchComponent"),
@@ -59,14 +52,6 @@ public interface ActitoLaunchComponent {
                     return klass.getDeclaredConstructor().newInstance() as? ActitoLaunchComponent
                 } catch (_: Exception) {
                     null
-                }
-            }
-
-        internal val isPeer: Boolean
-            get() {
-                return when (this) {
-                    DEVICE, EVENTS, SESSION, CRASH_REPORTER -> false
-                    else -> true
                 }
             }
     }

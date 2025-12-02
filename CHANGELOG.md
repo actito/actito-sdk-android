@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Upcoming release
+
+- Simplify core component loading and align naming conventions
+- Add required referrer for embedded YouTube videos
+
 ## 5.0.0-beta.1
 
 - Updated to Kotlin 2.0
