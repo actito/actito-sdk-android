@@ -17,6 +17,8 @@ import com.actito.internal.ActitoLaunchState
 import com.actito.internal.ActitoOptions
 import com.actito.internal.ActitoUtils
 import com.actito.internal.logger
+import com.actito.internal.modules.ActitoCrashReporterModule
+import com.actito.internal.modules.ActitoSessionModule
 import com.actito.internal.network.push.ActitoUploadResponse
 import com.actito.internal.network.push.ApplicationResponse
 import com.actito.internal.network.push.CreateNotificationReplyPayload
@@ -230,6 +232,8 @@ public object Actito {
         this.database = ActitoDatabase.create(context.applicationContext)
         this.sharedPreferences = ActitoSharedPreferences(context.applicationContext)
 
+        ActitoCrashReporterModule.configure()
+
         ActitoLaunchComponent.Module.entries.forEach { module ->
             module.instance?.run {
                 logger.debug("Configuring module: ${module.name.lowercase()}")
@@ -321,6 +325,16 @@ public object Actito {
 
             sharedPreferences.application = application
 
+            try {
+                ActitoDeviceModule.launch()
+            } catch (e: Exception) {
+                logger.debug("Failed to launch device component: $e")
+                throw e
+            }
+
+            ActitoEventsModule.launch()
+            ActitoCrashReporterModule.launch()
+
             // Loop all possible modules and launch the available ones.
             ActitoLaunchComponent.Module.entries.forEach { module ->
                 module.instance?.run {
@@ -354,6 +368,12 @@ public object Actito {
         }
 
         launch {
+            try {
+                ActitoDeviceModule.postLaunch()
+            } catch (e: Exception) {
+                logger.error("Failed to post-launch device component': $e")
+            }
+
             // Loop all possible modules and post-launch the available ones.
             ActitoLaunchComponent.Module.entries.forEach { module ->
                 module.instance?.run {
@@ -391,6 +411,7 @@ public object Actito {
         }
 
         logger.info("Un-launching Actito.")
+        ActitoSessionModule.unlaunch()
 
         // Loop all possible modules and un-launch the available ones.
         ActitoLaunchComponent.Module.entries.reversed().forEach { module ->

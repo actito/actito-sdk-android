@@ -31,4 +31,32 @@ internal object ActitoCrashReporterModule {
 
         defaultUncaughtExceptionHandler.uncaughtException(thread, throwable)
     }
+
+    internal fun configure() {
+        if (checkNotNull(Actito.options).crashReportsEnabled) {
+            logger.warning(
+                "Crash reporting is deprecated. We recommend using another solution to collect crash analytics.",
+            )
+
+            defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+            Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler)
+        }
+    }
+
+    internal suspend fun launch() {
+        val crashReport = Actito.sharedPreferences.crashReport ?: run {
+            logger.debug("No crash report to process.")
+            return
+        }
+
+        try {
+            ActitoEventsModule.log(crashReport)
+            logger.info("Crash report processed.")
+
+            // Clean up the stored crash report
+            Actito.sharedPreferences.crashReport = null
+        } catch (e: Exception) {
+            logger.error("Failed to process a crash report.", e)
+        }
+    }
 }

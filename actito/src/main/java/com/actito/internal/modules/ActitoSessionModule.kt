@@ -9,6 +9,7 @@ import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.ActitoEventsModule
 import com.actito.internal.logger
+import com.actito.ktx.device
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,6 +39,19 @@ internal object ActitoSessionModule {
 
     var sessionId: String? = null
         private set
+
+    internal suspend fun launch() {
+        if (sessionId == null && Actito.device().currentDevice != null) {
+            // Launch is taking place after the first activity has been created.
+            // Start the application session.
+            startSession()
+        }
+    }
+
+    internal suspend fun unlaunch() {
+        sessionEnd = Date()
+        stopSession()
+    }
 
     internal suspend fun startSession() = withContext(Dispatchers.IO) {
         val sessionId = UUID.randomUUID().toString()

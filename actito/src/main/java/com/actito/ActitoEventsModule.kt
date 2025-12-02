@@ -203,6 +203,15 @@ public object ActitoEventsModule {
 
     // endregion
 
+    internal fun configure() {
+//      TODO listen to connectivity changes
+//      TODO listen to lifecycle changes (app open)
+    }
+
+    internal fun launch() {
+        scheduleUploadWorker()
+    }
+
     internal suspend fun logApplicationInstall() {
         log(EVENT_APPLICATION_INSTALL)
     }
