@@ -1,7 +1,7 @@
 package com.actito.geo.ktx
 
 import com.actito.ActitoCallback
-import com.actito.ActitoEventsModule
+import com.actito.ActitoEventsComponent
 import com.actito.geo.internal.network.push.RegionSessionPayload
 import com.actito.geo.models.ActitoBeaconSession
 import com.actito.utilities.coroutines.toCallbackFunction
@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 import java.util.Date
 
 @Suppress("unused")
-internal suspend fun ActitoEventsModule.logRegionSession(
+internal suspend fun ActitoEventsComponent.logRegionSession(
     session: RegionSessionPayload,
 ): Unit = withContext(Dispatchers.IO) {
     val sessionEnd = session.end ?: Date()
@@ -39,13 +39,13 @@ internal suspend fun ActitoEventsModule.logRegionSession(
     )
 }
 
-internal fun ActitoEventsModule.logRegionSession(
+internal fun ActitoEventsComponent.logRegionSession(
     session: RegionSessionPayload,
     callback: ActitoCallback<Unit>,
 ): Unit = toCallbackFunction(::logRegionSession)(session, callback::onSuccess, callback::onFailure)
 
 @Suppress("unused")
-internal suspend fun ActitoEventsModule.logBeaconSession(
+internal suspend fun ActitoEventsComponent.logBeaconSession(
     session: ActitoBeaconSession,
 ): Unit = withContext(Dispatchers.IO) {
     val sessionEnd = session.end ?: Date()
@@ -76,7 +76,7 @@ internal suspend fun ActitoEventsModule.logBeaconSession(
     )
 }
 
-internal fun ActitoEventsModule.logBeaconSession(
+internal fun ActitoEventsComponent.logBeaconSession(
     session: ActitoBeaconSession,
     callback: ActitoCallback<Unit>,
 ): Unit = toCallbackFunction(::logBeaconSession)(session, callback::onSuccess, callback::onFailure)

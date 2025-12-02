@@ -3,8 +3,8 @@ package com.actito
 import android.content.Intent
 import com.actito.internal.ACTITO_VERSION
 import com.actito.internal.ActitoLaunchComponent
+import com.actito.internal.components.ActitoSessionComponent
 import com.actito.internal.logger
-import com.actito.internal.modules.ActitoSessionModule
 import com.actito.internal.network.NetworkException
 import com.actito.internal.network.push.CreateDevicePayload
 import com.actito.internal.network.push.CreateDeviceResponse
@@ -44,7 +44,7 @@ private const val MIN_TAG_SIZE_CHAR = 3
 private const val MAX_TAG_SIZE_CHAR = 64
 private const val TAG_REGEX = "^[a-zA-Z0-9]([a-zA-Z0-9_-]+[a-zA-Z0-9])?$"
 
-public object ActitoDeviceModule {
+public object ActitoDeviceComponent {
 
     internal var storedDevice: StoredDevice?
         get() = Actito.sharedPreferences.device
@@ -518,11 +518,11 @@ public object ActitoDeviceModule {
             hasPendingDeviceRegistrationEvent = true
 
             // Ensure a session exists for the current device.
-            ActitoSessionModule.launch()
+            ActitoSessionComponent.launch()
 
             // We will log the Install & Registration events here since this will execute only one time at the start.
-            ActitoEventsModule.logApplicationInstall()
-            ActitoEventsModule.logApplicationRegistration()
+            ActitoEventsComponent.logApplicationInstall()
+            ActitoEventsComponent.logApplicationRegistration()
         } else {
             val isApplicationUpgrade = storedDevice.appVersion != Actito.requireContext().applicationVersion
 
@@ -540,12 +540,12 @@ public object ActitoDeviceModule {
                     hasPendingDeviceRegistrationEvent = true
 
                     // Ensure a session exists for the current device.
-                    ActitoSessionModule.launch()
+                    ActitoSessionComponent.launch()
 
                     // We will log the Install & Registration events here since this will execute
                     // only one time at the start.
-                    ActitoEventsModule.logApplicationInstall()
-                    ActitoEventsModule.logApplicationRegistration()
+                    ActitoEventsComponent.logApplicationInstall()
+                    ActitoEventsComponent.logApplicationRegistration()
 
                     return
                 }
@@ -554,12 +554,12 @@ public object ActitoDeviceModule {
             }
 
             // Ensure a session exists for the current device.
-            ActitoSessionModule.launch()
+            ActitoSessionComponent.launch()
 
             if (isApplicationUpgrade) {
                 // It's not the same version, let's log it as an upgrade.
                 logger.debug("New version detected")
-                ActitoEventsModule.logApplicationUpgrade()
+                ActitoEventsComponent.logApplicationUpgrade()
             }
         }
     }
@@ -667,7 +667,7 @@ public object ActitoDeviceModule {
             .put("/push/${storedDevice.id}", payload)
             .response()
 
-        this@ActitoDeviceModule.storedDevice = storedDevice.copy(
+        this@ActitoDeviceComponent.storedDevice = storedDevice.copy(
             timeZoneOffset = payload.timeZoneOffset,
             osVersion = payload.osVersion,
             sdkVersion = payload.sdkVersion,

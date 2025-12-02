@@ -16,9 +16,9 @@ import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.ActitoLaunchState
 import com.actito.internal.ActitoOptions
 import com.actito.internal.ActitoUtils
+import com.actito.internal.components.ActitoCrashReporterComponent
+import com.actito.internal.components.ActitoSessionComponent
 import com.actito.internal.logger
-import com.actito.internal.modules.ActitoCrashReporterModule
-import com.actito.internal.modules.ActitoSessionModule
 import com.actito.internal.network.push.ActitoUploadResponse
 import com.actito.internal.network.push.ApplicationResponse
 import com.actito.internal.network.push.CreateNotificationReplyPayload
@@ -232,7 +232,7 @@ public object Actito {
         this.database = ActitoDatabase.create(context.applicationContext)
         this.sharedPreferences = ActitoSharedPreferences(context.applicationContext)
 
-        ActitoCrashReporterModule.configure()
+        ActitoCrashReporterComponent.configure()
 
         ActitoLaunchComponent.Module.entries.forEach { module ->
             module.instance?.run {
@@ -326,14 +326,14 @@ public object Actito {
             sharedPreferences.application = application
 
             try {
-                ActitoDeviceModule.launch()
+                ActitoDeviceComponent.launch()
             } catch (e: Exception) {
                 logger.debug("Failed to launch device component: $e")
                 throw e
             }
 
-            ActitoEventsModule.launch()
-            ActitoCrashReporterModule.launch()
+            ActitoEventsComponent.launch()
+            ActitoCrashReporterComponent.launch()
 
             // Loop all possible modules and launch the available ones.
             ActitoLaunchComponent.Module.entries.forEach { module ->
@@ -369,7 +369,7 @@ public object Actito {
 
         launch {
             try {
-                ActitoDeviceModule.postLaunch()
+                ActitoDeviceComponent.postLaunch()
             } catch (e: Exception) {
                 logger.error("Failed to post-launch device component': $e")
             }
@@ -411,7 +411,7 @@ public object Actito {
         }
 
         logger.info("Un-launching Actito.")
-        ActitoSessionModule.unlaunch()
+        ActitoSessionComponent.unlaunch()
 
         // Loop all possible modules and un-launch the available ones.
         ActitoLaunchComponent.Module.entries.reversed().forEach { module ->
@@ -428,7 +428,7 @@ public object Actito {
         }
 
         logger.debug("Removing device.")
-        ActitoDeviceModule.delete()
+        ActitoDeviceComponent.delete()
 
         logger.info("Un-launched Actito.")
         state = ActitoLaunchState.CONFIGURED
@@ -743,7 +743,7 @@ public object Actito {
     public fun handleTestDeviceIntent(intent: Intent): Boolean {
         val nonce = parseTestDeviceNonce(intent) ?: return false
 
-        ActitoDeviceModule.registerTestDevice(
+        ActitoDeviceComponent.registerTestDevice(
             nonce,
             object : ActitoCallback<Unit> {
                 override fun onSuccess(result: Unit) {
