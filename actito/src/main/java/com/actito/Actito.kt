@@ -921,7 +921,7 @@ public object Actito {
 
     private fun printLaunchSummary(application: ActitoApplication) {
         val enabledServices = application.services.filter { it.value }.map { it.key }
-        val enabledModules = ActitoUtils.getEnabledPeerModules()
+        val enabledModules = ActitoUtils.getEnabledModules()
 
         logger.info("Actito is ready to use for application.")
         logger.debug("/==================================================================================/")

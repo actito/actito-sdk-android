@@ -21,7 +21,6 @@ public interface ActitoLaunchComponent {
 
     @Suppress("ktlint:standard:trailing-comma-on-declaration-site")
     public enum class Module(private val fqn: String) {
-        // Peer modules
         PUSH(fqn = "com.actito.push.internal.LaunchComponent"),
         PUSH_UI(fqn = "com.actito.push.ui.internal.LaunchComponent"),
         INBOX(fqn = "com.actito.inbox.internal.LaunchComponent"),
@@ -53,13 +52,6 @@ public interface ActitoLaunchComponent {
                     return klass.getDeclaredConstructor().newInstance() as? ActitoLaunchComponent
                 } catch (_: Exception) {
                     null
-                }
-            }
-
-        internal val isPeer: Boolean
-            get() {
-                return when (this) {
-                    else -> true
                 }
             }
     }
