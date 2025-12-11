@@ -16,7 +16,7 @@ internal suspend fun ActitoEventsComponent.logRegionSession(
     val sessionEnd = session.end ?: Date()
     val sessionLength = (sessionEnd.time - session.start.time) / 1000.0
 
-    log(
+    logInternalEvent(
         event = "re.notifica.event.region.Session",
         data = mapOf(
             "region" to session.regionId,
@@ -51,7 +51,7 @@ internal suspend fun ActitoEventsComponent.logBeaconSession(
     val sessionEnd = session.end ?: Date()
     val sessionLength = (sessionEnd.time - session.start.time) / 1000.0
 
-    log(
+    logInternalEvent(
         event = "re.notifica.event.beacon.Session",
         data = mapOf(
             "fence" to session.regionId,

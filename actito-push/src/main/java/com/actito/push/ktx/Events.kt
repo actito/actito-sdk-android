@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 @Suppress("unused")
 public suspend fun ActitoEventsComponent.logNotificationReceived(id: String): Unit = withContext(Dispatchers.IO) {
-    log(
+    logInternalEvent(
         event = "re.notifica.event.notification.Receive",
         data = null,
         notificationId = id,
@@ -20,7 +20,7 @@ public fun ActitoEventsComponent.logNotificationReceived(id: String, callback: A
 
 @Suppress("unused")
 public suspend fun ActitoEventsComponent.logNotificationInfluenced(id: String): Unit = withContext(Dispatchers.IO) {
-    log(
+    logInternalEvent(
         event = "re.notifica.event.notification.Influenced",
         data = null,
         notificationId = id,
@@ -32,7 +32,7 @@ public fun ActitoEventsComponent.logNotificationInfluenced(id: String, callback:
 
 @Suppress("unused")
 public suspend fun ActitoEventsComponent.logPushRegistration(): Unit = withContext(Dispatchers.IO) {
-    log(
+    logInternalEvent(
         event = "re.notifica.event.push.Registration",
         data = null,
         notificationId = null,

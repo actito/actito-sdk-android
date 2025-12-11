@@ -96,7 +96,7 @@ public object ActitoEventsComponent {
      * @param id The unique identifier of the opened notification.
      */
     public suspend fun logNotificationOpen(id: String) {
-        log(
+        logInternalEvent(
             event = EVENT_NOTIFICATION_OPEN,
             data = null,
             notificationId = id,
@@ -157,7 +157,7 @@ public object ActitoEventsComponent {
             }
         }
 
-        log("re.notifica.event.custom.$event", data)
+        logInternalEvent("re.notifica.event.custom.$event", data)
     }
 
     /**
@@ -179,7 +179,7 @@ public object ActitoEventsComponent {
     // region Actito Internal Events Module
 
     @InternalActitoApi
-    public suspend fun log(
+    public suspend fun logInternalEvent(
         event: String,
         data: ActitoEventData? = null,
         sessionId: String? = null,
@@ -213,26 +213,26 @@ public object ActitoEventsComponent {
     }
 
     internal suspend fun logApplicationInstall() {
-        log(EVENT_APPLICATION_INSTALL)
+        logInternalEvent(EVENT_APPLICATION_INSTALL)
     }
 
     internal suspend fun logApplicationRegistration() {
-        log(EVENT_APPLICATION_REGISTRATION)
+        logInternalEvent(EVENT_APPLICATION_REGISTRATION)
     }
 
     internal suspend fun logApplicationUpgrade() {
-        log(EVENT_APPLICATION_UPGRADE)
+        logInternalEvent(EVENT_APPLICATION_UPGRADE)
     }
 
     internal suspend fun logApplicationOpen(sessionId: String) {
-        log(
+        logInternalEvent(
             event = EVENT_APPLICATION_OPEN,
             sessionId = sessionId,
         )
     }
 
     internal suspend fun logApplicationClose(sessionId: String, sessionLength: Double) {
-        log(
+        logInternalEvent(
             event = EVENT_APPLICATION_CLOSE,
             data = mapOf("length" to sessionLength.toString()),
             sessionId = sessionId,
