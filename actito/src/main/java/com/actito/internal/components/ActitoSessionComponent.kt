@@ -35,7 +35,7 @@ internal object ActitoSessionComponent {
 
     private var activityCounter = 0
     private var sessionStart: Date? = null
-    internal var sessionEnd: Date? = null
+    private var sessionEnd: Date? = null
 
     var sessionId: String? = null
         private set
@@ -53,7 +53,7 @@ internal object ActitoSessionComponent {
         stopSession()
     }
 
-    internal suspend fun startSession() = withContext(Dispatchers.IO) {
+    private suspend fun startSession() = withContext(Dispatchers.IO) {
         val sessionId = UUID.randomUUID().toString()
         val sessionStart = Date()
 
@@ -73,7 +73,7 @@ internal object ActitoSessionComponent {
         }
     }
 
-    internal suspend fun stopSession() = withContext(Dispatchers.IO) {
+    private suspend fun stopSession() = withContext(Dispatchers.IO) {
         // Skip when no session has started. Should never happen.
         val sessionId = sessionId ?: return@withContext
         val sessionStart = sessionStart ?: return@withContext

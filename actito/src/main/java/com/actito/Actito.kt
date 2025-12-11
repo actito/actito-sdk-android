@@ -1072,6 +1072,27 @@ public object Actito {
         }
     }
 
+    internal suspend fun resetLocalStorage() {
+        ActitoLaunchComponent.Module.entries.forEach { module ->
+            module.instance?.run {
+                logger.debug("Resetting module: ${module.name.lowercase()}")
+                try {
+                    this.clearStorage()
+                } catch (e: Exception) {
+                    logger.debug("Failed to reset '${module.name.lowercase()}': $e")
+                    throw e
+                }
+            }
+        }
+
+        database.events().clear()
+
+        // Should only clear device-related local storage properties.
+        sharedPreferences.device = null
+        sharedPreferences.preferredLanguage = null
+        sharedPreferences.preferredRegion = null
+    }
+
     /**
      * Interface definition for a listener to be notified of Actito SDK state changes.
      *

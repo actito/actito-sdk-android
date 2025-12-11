@@ -2,7 +2,6 @@ package com.actito
 
 import android.content.Intent
 import com.actito.internal.ACTITO_VERSION
-import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.components.ActitoSessionComponent
 import com.actito.internal.logger
 import com.actito.internal.network.NetworkException
@@ -46,13 +45,13 @@ private const val TAG_REGEX = "^[a-zA-Z0-9]([a-zA-Z0-9_-]+[a-zA-Z0-9])?$"
 
 public object ActitoDeviceComponent {
 
-    internal var storedDevice: StoredDevice?
+    private var storedDevice: StoredDevice?
         get() = Actito.sharedPreferences.device
         set(value) {
             Actito.sharedPreferences.device = value
         }
 
-    internal var hasPendingDeviceRegistrationEvent: Boolean? = null
+    private var hasPendingDeviceRegistrationEvent: Boolean? = null
 
     // region Actito Device Module
 
@@ -533,7 +532,7 @@ public object ActitoDeviceComponent {
                     logger.warning("The device was removed from Actito. Recovering...")
 
                     logger.debug("Resetting local storage.")
-                    resetLocalStorage()
+                    Actito.resetLocalStorage()
 
                     logger.debug("Creating a new device.")
                     createDevice()
@@ -571,27 +570,6 @@ public object ActitoDeviceComponent {
         }
     }
 
-    private suspend fun resetLocalStorage() {
-        ActitoLaunchComponent.Module.entries.forEach { module ->
-            module.instance?.run {
-                logger.debug("Resetting module: ${module.name.lowercase()}")
-                try {
-                    this.clearStorage()
-                } catch (e: Exception) {
-                    logger.debug("Failed to reset '${module.name.lowercase()}': $e")
-                    throw e
-                }
-            }
-        }
-
-        Actito.database.events().clear()
-
-        // Should only clear device-related local storage properties.
-        Actito.sharedPreferences.device = null
-        Actito.sharedPreferences.preferredLanguage = null
-        Actito.sharedPreferences.preferredRegion = null
-    }
-
     internal suspend fun delete(): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
@@ -616,7 +594,7 @@ public object ActitoDeviceComponent {
         }
     }
 
-    internal suspend fun createDevice(): Unit = withContext(Dispatchers.IO) {
+    private suspend fun createDevice(): Unit = withContext(Dispatchers.IO) {
         val payload = CreateDevicePayload(
             language = getDeviceLanguage(),
             region = getDeviceRegion(),
@@ -649,7 +627,7 @@ public object ActitoDeviceComponent {
         )
     }
 
-    internal suspend fun updateDevice(): Unit = withContext(Dispatchers.IO) {
+    private suspend fun updateDevice(): Unit = withContext(Dispatchers.IO) {
         val storedDevice = checkNotNull(storedDevice)
 
         val payload = UpdateDevicePayload(
@@ -680,7 +658,7 @@ public object ActitoDeviceComponent {
         )
     }
 
-    internal suspend fun upgradeToLongLivedDeviceWhenNeeded(): Unit = withContext(Dispatchers.IO) {
+    private suspend fun upgradeToLongLivedDeviceWhenNeeded(): Unit = withContext(Dispatchers.IO) {
         val currentDevice = Actito.sharedPreferences.device
             ?: return@withContext
 
@@ -800,7 +778,7 @@ public object ActitoDeviceComponent {
             .response()
     }
 
-    internal fun notifyDeviceRegistered(device: ActitoDevice) {
+    private fun notifyDeviceRegistered(device: ActitoDevice) {
         Actito.requireContext().sendBroadcast(
             Intent(Actito.requireContext(), Actito.intentReceiver)
                 .setAction(Actito.INTENT_ACTION_DEVICE_REGISTERED)

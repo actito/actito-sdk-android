@@ -267,24 +267,6 @@ public object ActitoEventsComponent {
         }
     }
 
-    internal fun scheduleUploadWorker() {
-        logger.debug("Scheduling a worker to process stored events when there's connectivity.")
-
-        WorkManager
-            .getInstance(Actito.requireContext())
-            .enqueueUniqueWork(
-                TASK_UPLOAD_EVENTS,
-                ExistingWorkPolicy.KEEP,
-                OneTimeWorkRequestBuilder<ProcessEventsWorker>()
-                    .setConstraints(
-                        Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .build(),
-                    )
-                    .build(),
-            )
-    }
-
     internal fun createThrowableEvent(throwable: Throwable, device: ActitoDevice): CreateEventPayload {
         val timestamp = System.currentTimeMillis()
 
@@ -307,5 +289,23 @@ public object ActitoEventsComponent {
                 "stackSymbols" to throwable.stackTraceToString(),
             ),
         )
+    }
+
+    private fun scheduleUploadWorker() {
+        logger.debug("Scheduling a worker to process stored events when there's connectivity.")
+
+        WorkManager
+            .getInstance(Actito.requireContext())
+            .enqueueUniqueWork(
+                TASK_UPLOAD_EVENTS,
+                ExistingWorkPolicy.KEEP,
+                OneTimeWorkRequestBuilder<ProcessEventsWorker>()
+                    .setConstraints(
+                        Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .build(),
+                    )
+                    .build(),
+            )
     }
 }

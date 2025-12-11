@@ -9,8 +9,8 @@ import com.actito.ktx.device
 @Keep
 internal object ActitoCrashReporterComponent {
 
-    internal var defaultUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
-    internal val uncaughtExceptionHandler = Thread.UncaughtExceptionHandler { thread: Thread, throwable: Throwable ->
+    private var defaultUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
+    private val uncaughtExceptionHandler = Thread.UncaughtExceptionHandler { thread: Thread, throwable: Throwable ->
         val device = Actito.device().currentDevice ?: run {
             logger.warning("Cannot process a crash report before the device becomes available.")
             defaultUncaughtExceptionHandler?.uncaughtException(thread, throwable)
