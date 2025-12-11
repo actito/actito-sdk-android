@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.StrictMode
 import com.actito.Actito
 import com.actito.geo.ktx.geo
-import com.actito.ktx.device
 import com.actito.models.ActitoApplication
 import com.actito.push.ktx.push
 import com.actito.sample.live_activities.LiveActivitiesController
@@ -13,7 +12,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class MainApplication : Application(), Actito.Listener {
+class MainApplication :
+    Application(),
+    Actito.Listener {
     private val applicationScope = MainScope()
 
     override fun onCreate() {

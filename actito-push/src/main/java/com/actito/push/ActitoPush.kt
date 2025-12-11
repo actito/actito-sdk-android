@@ -29,8 +29,6 @@ import com.actito.ActitoGoogleServicesUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
 import com.actito.internal.network.request.ActitoRequest
-import com.actito.ktx.device
-import com.actito.ktx.events
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
 import com.actito.push.internal.ActitoPushSystemIntentReceiver

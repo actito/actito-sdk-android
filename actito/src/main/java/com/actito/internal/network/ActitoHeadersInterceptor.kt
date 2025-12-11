@@ -2,7 +2,6 @@ package com.actito.internal.network
 
 import com.actito.Actito
 import com.actito.internal.ktx.unsafeHeader
-import com.actito.ktx.device
 import com.actito.utilities.content.applicationVersion
 import com.actito.utilities.device.deviceLanguage
 import com.actito.utilities.device.deviceRegion

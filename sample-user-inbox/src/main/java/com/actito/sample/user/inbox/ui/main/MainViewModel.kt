@@ -8,7 +8,6 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.actito.Actito
 import com.actito.inbox.user.ktx.userInbox
-import com.actito.ktx.device
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.actito.Actito
-import com.actito.ktx.device
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

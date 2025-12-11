@@ -56,8 +56,6 @@ import com.actito.geo.models.ActitoBeaconSession
 import com.actito.geo.models.ActitoLocation
 import com.actito.geo.models.ActitoRegion
 import com.actito.internal.network.request.ActitoRequest
-import com.actito.ktx.device
-import com.actito.ktx.events
 import com.actito.models.ActitoApplication
 import com.actito.utilities.collections.takeEvenlySpaced
 import com.actito.utilities.coroutines.actitoCoroutineScope
