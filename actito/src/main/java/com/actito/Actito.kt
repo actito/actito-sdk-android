@@ -28,7 +28,6 @@ import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.SharedPreferencesMigration
 import com.actito.internal.storage.database.ActitoDatabase
 import com.actito.internal.storage.preferences.ActitoSharedPreferences
-import com.actito.ktx.device
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
@@ -142,6 +141,18 @@ public object Actito {
                 logger.warning("Calling this method requires Actito to have been configured.")
             }
         }
+
+    /**
+     * Returns the device component. Use this to access device-related functionality.
+     */
+    @JvmStatic
+    public fun device(): ActitoDeviceComponent = ActitoDeviceComponent
+
+    /**
+     * Returns the events component. Use this to access event-related functionality.
+     */
+    @JvmStatic
+    public fun events(): ActitoEventsComponent = ActitoEventsComponent
 
     /**
      * Configures Actito with the application context using the services info in the provided configuration file.

@@ -4,7 +4,6 @@ import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.ActitoEventsComponent
 import com.actito.internal.logger
-import com.actito.ktx.device
 
 @Keep
 internal object ActitoCrashReporterComponent {

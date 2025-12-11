@@ -17,7 +17,6 @@ import com.actito.iam.ktx.INTENT_EXTRA_IN_APP_MESSAGE
 import com.actito.iam.ktx.logInAppMessageActionClicked
 import com.actito.iam.ktx.logInAppMessageViewed
 import com.actito.iam.models.ActitoInAppMessage
-import com.actito.ktx.events
 import com.actito.utilities.parcel.parcelable
 import com.actito.utilities.threading.onMainThread
 import kotlinx.coroutines.launch

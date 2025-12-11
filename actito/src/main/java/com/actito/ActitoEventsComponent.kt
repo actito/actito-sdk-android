@@ -12,7 +12,6 @@ import com.actito.internal.network.push.CreateEventPayload
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.ktx.toEntity
 import com.actito.internal.workers.ProcessEventsWorker
-import com.actito.ktx.device
 import com.actito.ktx.session
 import com.actito.models.ActitoDevice
 import com.actito.utilities.content.applicationVersion

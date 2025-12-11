@@ -14,8 +14,6 @@ import com.actito.inbox.user.models.ActitoUserInboxResponse
 import com.actito.internal.moshi
 import com.actito.internal.network.push.NotificationResponse
 import com.actito.internal.network.request.ActitoRequest
-import com.actito.ktx.device
-import com.actito.ktx.events
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
 import com.actito.utilities.coroutines.toCallbackFunction
