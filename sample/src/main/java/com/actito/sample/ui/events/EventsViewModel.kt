@@ -2,7 +2,6 @@ package com.actito.sample.ui.events
 
 import androidx.lifecycle.viewModelScope
 import com.actito.Actito
-import com.actito.ktx.events
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

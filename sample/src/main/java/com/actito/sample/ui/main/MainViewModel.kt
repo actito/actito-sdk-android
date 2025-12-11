@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.actito.Actito
 import com.actito.geo.ktx.geo
 import com.actito.iam.ktx.inAppMessaging
-import com.actito.ktx.device
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDevice
 import com.actito.models.ActitoDoNotDisturb
@@ -28,7 +27,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleObserver, Actito.Listener {
+class MainViewModel :
+    com.actito.sample.core.BaseViewModel(),
+    DefaultLifecycleObserver,
+    Actito.Listener {
     private val _actitoConfigured = MutableLiveData(isActitoConfigured)
     val actitoConfigured: LiveData<Boolean> = _actitoConfigured
 
@@ -69,7 +71,7 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
     private val _hasBluetoothPermission = MutableLiveData(checkBluetoothPermission)
     val hasBluetoothPermission: LiveData<Boolean> = _hasBluetoothPermission
 
-    private var _iamEvaluateContext = false
+    private var iamEvaluateContext = false
 
     private val _iamSuppressed = MutableLiveData(isIamSuppressed)
     val iamSuppressed: LiveData<Boolean> = _iamSuppressed
@@ -299,11 +301,11 @@ class MainViewModel : com.actito.sample.core.BaseViewModel(), DefaultLifecycleOb
     }
 
     fun updateIamEvaluateContextStatus(evaluate: Boolean) {
-        _iamEvaluateContext = evaluate
+        iamEvaluateContext = evaluate
     }
 
     fun updateIamSuppressedStatus(suppressed: Boolean) {
-        Actito.inAppMessaging().setMessagesSuppressed(suppressed, _iamEvaluateContext)
+        Actito.inAppMessaging().setMessagesSuppressed(suppressed, iamEvaluateContext)
         _iamSuppressed.postValue(isIamSuppressed)
     }
 
