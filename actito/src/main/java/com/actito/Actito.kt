@@ -941,7 +941,7 @@ public object Actito {
         val uri = intent.data ?: return null
         val pathSegments = uri.pathSegments ?: return null
 
-        val application = Actito.application ?: return null
+        val application = application ?: return null
         val appLinksDomain = servicesInfo?.hosts?.appLinks ?: return null
 
         if (
