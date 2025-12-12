@@ -1,19 +1,11 @@
 package com.actito.ktx
 
 import com.actito.Actito
-import com.actito.ActitoDeviceModule
-import com.actito.ActitoEventsModule
-import com.actito.internal.modules.ActitoCrashReporterModule
-import com.actito.internal.modules.ActitoSessionModule
+import com.actito.internal.components.ActitoCrashReporterComponent
+import com.actito.internal.components.ActitoSessionComponent
 
 @Suppress("unused")
-public fun Actito.device(): ActitoDeviceModule = ActitoDeviceModule
+internal fun Actito.session(): ActitoSessionComponent = ActitoSessionComponent
 
 @Suppress("unused")
-public fun Actito.events(): ActitoEventsModule = ActitoEventsModule
-
-@Suppress("unused")
-internal fun Actito.session(): ActitoSessionModule = ActitoSessionModule
-
-@Suppress("unused")
-internal fun Actito.crashReporter(): ActitoCrashReporterModule = ActitoCrashReporterModule
+internal fun Actito.crashReporter(): ActitoCrashReporterComponent = ActitoCrashReporterComponent

@@ -12,7 +12,6 @@ import com.actito.internal.network.push.CreateEventPayload
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.ktx.toEntity
 import com.actito.internal.workers.ProcessEventsWorker
-import com.actito.ktx.device
 import com.actito.ktx.session
 import com.actito.models.ActitoDevice
 import com.actito.utilities.content.applicationVersion
@@ -41,7 +40,7 @@ private const val EVENT_APPLICATION_EXCEPTION = "re.notifica.event.application.E
 private const val EVENT_NOTIFICATION_OPEN = "re.notifica.event.notification.Open"
 private const val TASK_UPLOAD_EVENTS = "re.notifica.tasks.events.Upload"
 
-public object ActitoEventsModule {
+public object ActitoEventsComponent {
     internal val dataAdapter: JsonAdapter<ActitoEventData> by lazy {
         Actito.moshi.adapter(
             Types.newParameterizedType(
@@ -96,7 +95,7 @@ public object ActitoEventsModule {
      * @param id The unique identifier of the opened notification.
      */
     public suspend fun logNotificationOpen(id: String) {
-        log(
+        logInternalEvent(
             event = EVENT_NOTIFICATION_OPEN,
             data = null,
             notificationId = id,
@@ -157,7 +156,7 @@ public object ActitoEventsModule {
             }
         }
 
-        log("re.notifica.event.custom.$event", data)
+        logInternalEvent("re.notifica.event.custom.$event", data)
     }
 
     /**
@@ -179,7 +178,7 @@ public object ActitoEventsModule {
     // region Actito Internal Events Module
 
     @InternalActitoApi
-    public suspend fun log(
+    public suspend fun logInternalEvent(
         event: String,
         data: ActitoEventData? = null,
         sessionId: String? = null,
@@ -203,27 +202,36 @@ public object ActitoEventsModule {
 
     // endregion
 
+    internal fun configure() {
+//      TODO listen to connectivity changes
+//      TODO listen to lifecycle changes (app open)
+    }
+
+    internal fun launch() {
+        scheduleUploadWorker()
+    }
+
     internal suspend fun logApplicationInstall() {
-        log(EVENT_APPLICATION_INSTALL)
+        logInternalEvent(EVENT_APPLICATION_INSTALL)
     }
 
     internal suspend fun logApplicationRegistration() {
-        log(EVENT_APPLICATION_REGISTRATION)
+        logInternalEvent(EVENT_APPLICATION_REGISTRATION)
     }
 
     internal suspend fun logApplicationUpgrade() {
-        log(EVENT_APPLICATION_UPGRADE)
+        logInternalEvent(EVENT_APPLICATION_UPGRADE)
     }
 
     internal suspend fun logApplicationOpen(sessionId: String) {
-        log(
+        logInternalEvent(
             event = EVENT_APPLICATION_OPEN,
             sessionId = sessionId,
         )
     }
 
     internal suspend fun logApplicationClose(sessionId: String, sessionLength: Double) {
-        log(
+        logInternalEvent(
             event = EVENT_APPLICATION_CLOSE,
             data = mapOf("length" to sessionLength.toString()),
             sessionId = sessionId,
@@ -258,24 +266,6 @@ public object ActitoEventsModule {
         }
     }
 
-    internal fun scheduleUploadWorker() {
-        logger.debug("Scheduling a worker to process stored events when there's connectivity.")
-
-        WorkManager
-            .getInstance(Actito.requireContext())
-            .enqueueUniqueWork(
-                TASK_UPLOAD_EVENTS,
-                ExistingWorkPolicy.KEEP,
-                OneTimeWorkRequestBuilder<ProcessEventsWorker>()
-                    .setConstraints(
-                        Constraints.Builder()
-                            .setRequiredNetworkType(NetworkType.CONNECTED)
-                            .build(),
-                    )
-                    .build(),
-            )
-    }
-
     internal fun createThrowableEvent(throwable: Throwable, device: ActitoDevice): CreateEventPayload {
         val timestamp = System.currentTimeMillis()
 
@@ -298,5 +288,23 @@ public object ActitoEventsModule {
                 "stackSymbols" to throwable.stackTraceToString(),
             ),
         )
+    }
+
+    private fun scheduleUploadWorker() {
+        logger.debug("Scheduling a worker to process stored events when there's connectivity.")
+
+        WorkManager
+            .getInstance(Actito.requireContext())
+            .enqueueUniqueWork(
+                TASK_UPLOAD_EVENTS,
+                ExistingWorkPolicy.KEEP,
+                OneTimeWorkRequestBuilder<ProcessEventsWorker>()
+                    .setConstraints(
+                        Constraints.Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .build(),
+                    )
+                    .build(),
+            )
     }
 }

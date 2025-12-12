@@ -23,8 +23,6 @@ import com.actito.inbox.internal.workers.ExpireItemWorker
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.internal.network.NetworkException
 import com.actito.internal.network.request.ActitoRequest
-import com.actito.ktx.device
-import com.actito.ktx.events
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
 import com.actito.utilities.coroutines.actitoCoroutineScope

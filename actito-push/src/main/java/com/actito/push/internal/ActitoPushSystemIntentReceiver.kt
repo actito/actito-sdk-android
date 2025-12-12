@@ -6,7 +6,6 @@ import android.content.Intent
 import androidx.core.app.RemoteInput
 import androidx.core.net.toUri
 import com.actito.Actito
-import com.actito.ktx.events
 import com.actito.models.ActitoNotification
 import com.actito.push.internal.firebase.messages.ActitoNotificationRemoteMessage
 import com.actito.push.ktx.INTENT_ACTION_QUICK_RESPONSE

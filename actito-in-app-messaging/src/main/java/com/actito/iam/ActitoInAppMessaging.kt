@@ -16,7 +16,6 @@ import com.actito.iam.models.ActitoInAppMessage
 import com.actito.iam.ui.InAppMessagingActivity
 import com.actito.internal.network.NetworkException
 import com.actito.internal.network.request.ActitoRequest
-import com.actito.ktx.device
 import com.actito.utilities.content.activityInfo
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.utilities.threading.onMainThread

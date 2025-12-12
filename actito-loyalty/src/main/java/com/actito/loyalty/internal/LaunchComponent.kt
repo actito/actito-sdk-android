@@ -2,12 +2,14 @@ package com.actito.loyalty.internal
 
 import android.app.Activity
 import android.content.SharedPreferences
+import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.ActitoCallback
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.loyalty.ActitoLoyalty
 import com.actito.models.ActitoNotification
 
+@Keep
 public class LaunchComponent : ActitoLaunchComponent {
     override fun migrate(savedState: SharedPreferences, settings: SharedPreferences) {
         // no-op

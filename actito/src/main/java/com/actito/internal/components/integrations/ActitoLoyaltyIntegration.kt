@@ -1,4 +1,4 @@
-package com.actito.internal.modules.integrations
+package com.actito.internal.components.integrations
 
 import android.app.Activity
 import com.actito.ActitoCallback

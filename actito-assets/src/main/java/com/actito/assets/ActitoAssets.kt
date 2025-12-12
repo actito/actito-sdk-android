@@ -9,7 +9,6 @@ import com.actito.assets.internal.logger
 import com.actito.assets.internal.network.push.FetchAssetsResponse
 import com.actito.assets.models.ActitoAsset
 import com.actito.internal.network.request.ActitoRequest
-import com.actito.ktx.device
 import com.actito.models.ActitoApplication
 import com.actito.utilities.coroutines.toCallbackFunction
 import kotlinx.coroutines.Dispatchers

@@ -7,7 +7,6 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.actito.Actito
-import com.actito.ktx.events
 import com.actito.push.ktx.push
 import com.actito.push.models.ActitoPushSubscription
 import com.actito.sample.R

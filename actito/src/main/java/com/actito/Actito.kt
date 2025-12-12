@@ -16,6 +16,8 @@ import com.actito.internal.ActitoLaunchComponent
 import com.actito.internal.ActitoLaunchState
 import com.actito.internal.ActitoOptions
 import com.actito.internal.ActitoUtils
+import com.actito.internal.components.ActitoCrashReporterComponent
+import com.actito.internal.components.ActitoSessionComponent
 import com.actito.internal.logger
 import com.actito.internal.network.push.ActitoUploadResponse
 import com.actito.internal.network.push.ApplicationResponse
@@ -26,7 +28,6 @@ import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.SharedPreferencesMigration
 import com.actito.internal.storage.database.ActitoDatabase
 import com.actito.internal.storage.preferences.ActitoSharedPreferences
-import com.actito.ktx.device
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
@@ -142,6 +143,18 @@ public object Actito {
         }
 
     /**
+     * Returns the device component. Use this to access device-related functionality.
+     */
+    @JvmStatic
+    public fun device(): ActitoDeviceComponent = ActitoDeviceComponent
+
+    /**
+     * Returns the events component. Use this to access event-related functionality.
+     */
+    @JvmStatic
+    public fun events(): ActitoEventsComponent = ActitoEventsComponent
+
+    /**
      * Configures Actito with the application context using the services info in the provided configuration file.
      *
      * This method configures the SDK using the given context and the services info in the provided
@@ -229,6 +242,8 @@ public object Actito {
         // Late init modules
         this.database = ActitoDatabase.create(context.applicationContext)
         this.sharedPreferences = ActitoSharedPreferences(context.applicationContext)
+
+        ActitoCrashReporterComponent.configure()
 
         ActitoLaunchComponent.Module.entries.forEach { module ->
             module.instance?.run {
@@ -321,6 +336,16 @@ public object Actito {
 
             sharedPreferences.application = application
 
+            try {
+                ActitoDeviceComponent.launch()
+            } catch (e: Exception) {
+                logger.debug("Failed to launch device component: $e")
+                throw e
+            }
+
+            ActitoEventsComponent.launch()
+            ActitoCrashReporterComponent.launch()
+
             // Loop all possible modules and launch the available ones.
             ActitoLaunchComponent.Module.entries.forEach { module ->
                 module.instance?.run {
@@ -354,6 +379,12 @@ public object Actito {
         }
 
         launch {
+            try {
+                ActitoDeviceComponent.postLaunch()
+            } catch (e: Exception) {
+                logger.error("Failed to post-launch device component': $e")
+            }
+
             // Loop all possible modules and post-launch the available ones.
             ActitoLaunchComponent.Module.entries.forEach { module ->
                 module.instance?.run {
@@ -391,6 +422,7 @@ public object Actito {
         }
 
         logger.info("Un-launching Actito.")
+        ActitoSessionComponent.unlaunch()
 
         // Loop all possible modules and un-launch the available ones.
         ActitoLaunchComponent.Module.entries.reversed().forEach { module ->
@@ -407,7 +439,7 @@ public object Actito {
         }
 
         logger.debug("Removing device.")
-        ActitoDeviceModule.delete()
+        ActitoDeviceComponent.delete()
 
         logger.info("Un-launched Actito.")
         state = ActitoLaunchState.CONFIGURED
@@ -722,7 +754,7 @@ public object Actito {
     public fun handleTestDeviceIntent(intent: Intent): Boolean {
         val nonce = parseTestDeviceNonce(intent) ?: return false
 
-        ActitoDeviceModule.registerTestDevice(
+        ActitoDeviceComponent.registerTestDevice(
             nonce,
             object : ActitoCallback<Unit> {
                 override fun onSuccess(result: Unit) {
@@ -900,7 +932,7 @@ public object Actito {
 
     private fun printLaunchSummary(application: ActitoApplication) {
         val enabledServices = application.services.filter { it.value }.map { it.key }
-        val enabledModules = ActitoUtils.getEnabledPeerModules()
+        val enabledModules = ActitoUtils.getEnabledModules()
 
         logger.info("Actito is ready to use for application.")
         logger.debug("/==================================================================================/")
@@ -920,7 +952,7 @@ public object Actito {
         val uri = intent.data ?: return null
         val pathSegments = uri.pathSegments ?: return null
 
-        val application = Actito.application ?: return null
+        val application = application ?: return null
         val appLinksDomain = servicesInfo?.hosts?.appLinks ?: return null
 
         if (
@@ -1049,6 +1081,27 @@ public object Actito {
         return@withContext deferredReferrerDetails.await().also {
             installReferrerDetails = it
         }
+    }
+
+    internal suspend fun resetLocalStorage() {
+        ActitoLaunchComponent.Module.entries.forEach { module ->
+            module.instance?.run {
+                logger.debug("Resetting module: ${module.name.lowercase()}")
+                try {
+                    this.clearStorage()
+                } catch (e: Exception) {
+                    logger.debug("Failed to reset '${module.name.lowercase()}': $e")
+                    throw e
+                }
+            }
+        }
+
+        database.events().clear()
+
+        // Should only clear device-related local storage properties.
+        sharedPreferences.device = null
+        sharedPreferences.preferredLanguage = null
+        sharedPreferences.preferredRegion = null
     }
 
     /**

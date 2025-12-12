@@ -7,18 +7,15 @@
 
 The Actito Android SDK makes it quick and easy to communicate efficiently with many of the Actito API services and enables you to seamlessly integrate our various features, from Push Notifications to Contextualised Storage.
 
-Get started with our [📚 integration guides](https://developers.actito.com/docs/push-implementation/android/implementation/) and [example projects](#examples).
-
 
 Table of contents
 =================
 
 * [Features](#features)
-* [Installation](#installation)
-    * [Requirements](#requirements)
-    * [Configuration](#configuration)
+* [Requirements](#requirements)
 * [Getting Started](#getting-started)
-* [Examples](#examples)
+  * [Integration](#integration)
+  * [Examples](#examples)
 
 
 ## Features
@@ -38,46 +35,19 @@ Table of contents
 **Assets**: Add powerful contextual marketing features to your apps. Show the right content to the right users at the right time or location. Maximise the content you're already creating without increasing development costs.
 
 
-## Installation
-
-### Requirements
+## Requirements
 
 * Android 6 (API level 23) and above
-
-### Configuration
-
-Add the Actito Services Plugin to your project's build.gradle dependencies.
-
-```gradle
-plugins {
-    id("com.actito.gradle.actito-services") version "1.0.0" apply false
-}
-```
-
-Apply the plugin and add the following dependencies to your app's `build.gradle`.
-
-```gradle
-plugins {
-    id("com.actito.gradle.actito-services")
-}
-
-dependencies {
-    def actito_version = '5.0.0'
-    implementation "com.actito:actito:$actito_version"
-
-    // Optional modules
-    implementation "com.actito:actito-inbox:$actito_version"
-    implementation "com.actito:actito-push:$actito_version"
-    implementation "com.actito:actito-push-ui:$actito_version"
-}
-```
 
 ## Getting Started
 
 ### Integration
-Get started with our [📚 integration guides](https://developers.actito.com/docs/push-implementation/android/implementation/) and [example projects](#examples).
 
+To integrate the Actito Android SDK into your application, follow the full setup and implementation guides available in our [official documentation](https://developers.actito.com/docs/push-implementation/android/implementation/)
+
+The documentation includes step-by-step instructions for installation, configuration, and advanced customization across all supported platforms.
 
 ### Examples
+
 - The [example project](https://github.com/actito/actito-sdk-android/tree/main/sample) demonstrates integrations in a simplified fashion, to quickly understand how a given feature should be implemented.
 - The [Actito Go](https://github.com/actito/actito-go-android) app demonstrates the integration of the libraries and Actito's suite of features in a real-world app.

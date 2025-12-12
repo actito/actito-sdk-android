@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 5.0.0-beta.2
+
+- Add required referrer for embedded YouTube videos
+- Fix conflicting flags in geo pending intents
+- Simplify core component loading and align naming conventions
+- Move `device()` and `events()` to `Actito`, removing the need for the KTX import
+
 ## 5.0.0-beta.1
 
 - Updated to Kotlin 2.0
