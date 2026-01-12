@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import com.actito.inbox.internal.network.push.InboxResponse
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.models.ActitoNotification
-import com.actito.utilities.collections.filterNotNullRecursive
 import java.util.Date
 
 @Entity(
@@ -56,7 +55,7 @@ internal data class InboxItemEntity(
                     subtitle = item.subtitle,
                     message = item.message,
                     attachments = item.attachment?.let { listOf(it) } ?: listOf(),
-                    extra = item.extra.filterNotNullRecursive { it.value },
+                    extra = item.extra,
                 ),
                 time = item.time,
                 opened = item.opened,
