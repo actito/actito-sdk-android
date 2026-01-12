@@ -55,6 +55,8 @@ public class ActitoApplicationTest {
                 ),
             ),
             enforceSizeLimit = true,
+            enforceTagRestrictions = true,
+            enforceEventNameRestrictions = true,
         )
 
         val convertedApplication = ActitoApplication.fromJson(application.toJson())
@@ -101,6 +103,8 @@ public class ActitoApplicationTest {
                 ),
             ),
             enforceSizeLimit = true,
+            enforceTagRestrictions = true,
+            enforceEventNameRestrictions = true,
         )
 
         val convertedApplication = ActitoApplication.fromJson(application.toJson())
