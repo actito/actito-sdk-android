@@ -1,6 +1,6 @@
 package com.actito.internal.storage.database.ktx
 
-import com.actito.ActitoEventsComponent
+import com.actito.Actito
 import com.actito.internal.network.push.CreateEventPayload
 import com.actito.internal.storage.database.entities.ActitoEventEntity
 
@@ -13,7 +13,7 @@ internal fun CreateEventPayload.toEntity(): ActitoEventEntity =
         sessionId = this.sessionId,
         notificationId = this.notificationId,
         userId = this.userId,
-        data = ActitoEventsComponent.dataAdapter.toJson(this.data),
+        data = Actito.events().dataAdapter.toJson(this.data),
         retries = 0,
         ttl = 86400, // 24 hours
     )
@@ -26,5 +26,5 @@ internal fun ActitoEventEntity.toPayload(): CreateEventPayload =
         sessionId = this.sessionId,
         notificationId = this.notificationId,
         userId = this.userId,
-        data = this.data?.let { ActitoEventsComponent.dataAdapter.fromJson(it) },
+        data = this.data?.let { Actito.events().dataAdapter.fromJson(it) },
     )

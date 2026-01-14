@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Keep
 import com.actito.Actito
-import com.actito.ActitoEventsComponent
 import com.actito.internal.logger
 import com.actito.utilities.coroutines.actitoCoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +63,7 @@ internal object ActitoSessionComponent {
         logger.debug("Session '$sessionId' started at ${format.format(sessionStart)}")
 
         try {
-            ActitoEventsComponent.logApplicationOpen(
+            Actito.events().logApplicationOpen(
                 sessionId = sessionId,
             )
         } catch (_: Exception) {
@@ -86,7 +85,7 @@ internal object ActitoSessionComponent {
         logger.debug("Session '$sessionId' stopped at ${format.format(sessionEnd)}")
 
         try {
-            ActitoEventsComponent.logApplicationClose(
+            Actito.events().logApplicationClose(
                 sessionId = sessionId,
                 sessionLength = (sessionEnd.time - sessionStart.time) / 1000.toDouble(),
             )
