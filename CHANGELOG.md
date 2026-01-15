@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Upcoming release
+
+- Device and Events components can only be accessed though `Actito.device()` and `Actito.events()`
+
 ## 5.0.0-beta.2
 
 - Add required referrer for embedded YouTube videos
