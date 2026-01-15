@@ -68,12 +68,12 @@ public object Actito {
     // internal var reachability: NotificareReachability? = null
     //     private set
 
-    // Singletons
-    private val device by lazy {
+    // Components singleton
+    private val deviceComponent by lazy {
         ActitoDeviceComponent()
     }
 
-    private val events by lazy {
+    private val eventsComponent by lazy {
         ActitoEventsComponent()
     }
 
@@ -155,13 +155,13 @@ public object Actito {
      * Returns the device component. Use this to access device-related functionality.
      */
     @JvmStatic
-    public fun device(): ActitoDeviceComponent = device
+    public fun device(): ActitoDeviceComponent = deviceComponent
 
     /**
      * Returns the events component. Use this to access event-related functionality.
      */
     @JvmStatic
-    public fun events(): ActitoEventsComponent = events
+    public fun events(): ActitoEventsComponent = eventsComponent
 
     /**
      * Configures Actito with the application context using the services info in the provided configuration file.
