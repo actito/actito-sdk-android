@@ -40,7 +40,7 @@ private const val EVENT_APPLICATION_EXCEPTION = "re.notifica.event.application.E
 private const val EVENT_NOTIFICATION_OPEN = "re.notifica.event.notification.Open"
 private const val TASK_UPLOAD_EVENTS = "re.notifica.tasks.events.Upload"
 
-public object ActitoEventsComponent {
+public class ActitoEventsComponent internal constructor() {
     internal val dataAdapter: JsonAdapter<ActitoEventData> by lazy {
         Actito.moshi.adapter(
             Types.newParameterizedType(
@@ -82,7 +82,6 @@ public object ActitoEventsComponent {
      * @param callback The callback invoked upon completion of the logging operation.
      */
     @Deprecated("logApplicationException is deprecated. Please use using another solution to collect crash analytics.")
-    @JvmStatic
     public fun logApplicationException(throwable: Throwable, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::logApplicationException)(throwable, callback::onSuccess, callback::onFailure)
 
@@ -111,7 +110,6 @@ public object ActitoEventsComponent {
      * @param id The unique identifier of the opened notification.
      * @param callback The callback invoked upon completion of the logging operation.
      */
-    @JvmStatic
     public fun logNotificationOpen(id: String, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::logNotificationOpen)(id, callback::onSuccess, callback::onFailure)
 
@@ -169,7 +167,7 @@ public object ActitoEventsComponent {
      * @param data Optional structured event data for further details.
      * @param callback The callback invoked upon completion of the logging operation.
      */
-    @JvmStatic
+    @JvmOverloads
     public fun logCustom(event: String, data: ActitoEventData? = null, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::logCustom)(event, data, callback::onSuccess, callback::onFailure)
 

@@ -43,7 +43,7 @@ private const val MIN_TAG_SIZE_CHAR = 3
 private const val MAX_TAG_SIZE_CHAR = 64
 private const val TAG_REGEX = "^[a-zA-Z0-9]([a-zA-Z0-9_-]+[a-zA-Z0-9])?$"
 
-public object ActitoDeviceComponent {
+public class ActitoDeviceComponent internal constructor() {
 
     private var storedDevice: StoredDevice?
         get() = Actito.sharedPreferences.device
@@ -58,14 +58,12 @@ public object ActitoDeviceComponent {
     /**
      * Provides the current registered device information.
      */
-    @JvmStatic
     public val currentDevice: ActitoDevice?
         get() = Actito.sharedPreferences.device?.asPublic()
 
     /**
      * Provides the preferred language of the current device for notifications and messages.
      */
-    @JvmStatic
     public val preferredLanguage: String?
         get() {
             val preferredLanguage = Actito.sharedPreferences.preferredLanguage ?: return null
@@ -107,7 +105,6 @@ public object ActitoDeviceComponent {
         replaceWith = ReplaceWith("updateUser(userId, userName, callback)"),
     )
     @Suppress("DEPRECATION")
-    @JvmStatic
     public fun register(userId: String?, userName: String?, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::register)(userId, userName, callback::onSuccess, callback::onFailure)
 
@@ -149,7 +146,6 @@ public object ActitoDeviceComponent {
      * @param userId Optional user identifier.
      * @param userName Optional user name.
      */
-    @JvmStatic
     public fun updateUser(userId: String?, userName: String?, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::updateUser)(userId, userName, callback::onSuccess, callback::onFailure)
 
@@ -193,7 +189,6 @@ public object ActitoDeviceComponent {
      * @param preferredLanguage The preferred language code.
      * @param callback The callback handling the update result.
      */
-    @JvmStatic
     public fun updatePreferredLanguage(preferredLanguage: String?, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::updatePreferredLanguage)(preferredLanguage, callback::onSuccess, callback::onFailure)
 
@@ -218,7 +213,6 @@ public object ActitoDeviceComponent {
      *
      * @param callback The callback handling the tags retrieval result.
      */
-    @JvmStatic
     public fun fetchTags(callback: ActitoCallback<List<String>>): Unit =
         toCallbackFunction(::fetchTags)(callback::onSuccess, callback::onFailure)
 
@@ -237,7 +231,6 @@ public object ActitoDeviceComponent {
      * @param tag The tag to add.
      * @param callback The callback handling the tag addition result.
      */
-    @JvmStatic
     public fun addTag(tag: String, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::addTag)(tag, callback::onSuccess, callback::onFailure)
 
@@ -274,7 +267,6 @@ public object ActitoDeviceComponent {
      * @param tags A list of tags to add.
      * @param callback The callback handling the tags addition result.
      */
-    @JvmStatic
     public fun addTags(tags: List<String>, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::addTags)(tags, callback::onSuccess, callback::onFailure)
 
@@ -293,7 +285,6 @@ public object ActitoDeviceComponent {
      * @param tag The tag to remove.
      * @param callback The callback handling the tag removal result.
      */
-    @JvmStatic
     public fun removeTag(tag: String, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::removeTag)(tag, callback::onSuccess, callback::onFailure)
 
@@ -317,7 +308,6 @@ public object ActitoDeviceComponent {
      * @param tags A list of tags to remove.
      * @param callback The callback handling the tags removal result.
      */
-    @JvmStatic
     public fun removeTags(tags: List<String>, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::removeTags)(tags, callback::onSuccess, callback::onFailure)
 
@@ -338,7 +328,6 @@ public object ActitoDeviceComponent {
      *
      * @param callback The callback handling the tags clearance result.
      */
-    @JvmStatic
     public fun clearTags(callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::clearTags)(callback::onSuccess, callback::onFailure)
 
@@ -371,7 +360,6 @@ public object ActitoDeviceComponent {
      *
      * @see [ActitoDoNotDisturb]
      */
-    @JvmStatic
     public fun fetchDoNotDisturb(callback: ActitoCallback<ActitoDoNotDisturb?>): Unit =
         toCallbackFunction(::fetchDoNotDisturb)(callback::onSuccess, callback::onFailure)
 
@@ -407,7 +395,6 @@ public object ActitoDeviceComponent {
      *
      * @see [ActitoDoNotDisturb]
      */
-    @JvmStatic
     public fun updateDoNotDisturb(dnd: ActitoDoNotDisturb, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::updateDoNotDisturb)(dnd, callback::onSuccess, callback::onFailure)
 
@@ -436,7 +423,6 @@ public object ActitoDeviceComponent {
      *
      * @param callback The callback handling the DND clearance result.
      */
-    @JvmStatic
     public fun clearDoNotDisturb(callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::clearDoNotDisturb)(callback::onSuccess, callback::onFailure)
 
@@ -466,7 +452,6 @@ public object ActitoDeviceComponent {
      *
      * @param callback The callback handling the user data retrieval result.
      */
-    @JvmStatic
     public fun fetchUserData(callback: ActitoCallback<ActitoUserData>): Unit =
         toCallbackFunction(::fetchUserData)(callback::onSuccess, callback::onFailure)
 
@@ -498,7 +483,6 @@ public object ActitoDeviceComponent {
      * @param userData The updated user data to associate with the device.
      * @param callback The callback handling the user data update result.
      */
-    @JvmStatic
     public fun updateUserData(userData: Map<String, String?>, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::updateUserData)(userData, callback::onSuccess, callback::onFailure)
 
@@ -520,8 +504,8 @@ public object ActitoDeviceComponent {
             ActitoSessionComponent.launch()
 
             // We will log the Install & Registration events here since this will execute only one time at the start.
-            ActitoEventsComponent.logApplicationInstall()
-            ActitoEventsComponent.logApplicationRegistration()
+            Actito.events().logApplicationInstall()
+            Actito.events().logApplicationRegistration()
         } else {
             val isApplicationUpgrade = storedDevice.appVersion != Actito.requireContext().applicationVersion
 
@@ -543,8 +527,8 @@ public object ActitoDeviceComponent {
 
                     // We will log the Install & Registration events here since this will execute
                     // only one time at the start.
-                    ActitoEventsComponent.logApplicationInstall()
-                    ActitoEventsComponent.logApplicationRegistration()
+                    Actito.events().logApplicationInstall()
+                    Actito.events().logApplicationRegistration()
 
                     return
                 }
@@ -558,7 +542,7 @@ public object ActitoDeviceComponent {
             if (isApplicationUpgrade) {
                 // It's not the same version, let's log it as an upgrade.
                 logger.debug("New version detected")
-                ActitoEventsComponent.logApplicationUpgrade()
+                Actito.events().logApplicationUpgrade()
             }
         }
     }

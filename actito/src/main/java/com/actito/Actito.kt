@@ -68,6 +68,15 @@ public object Actito {
     // internal var reachability: NotificareReachability? = null
     //     private set
 
+    // Components singleton
+    private val deviceComponent by lazy {
+        ActitoDeviceComponent()
+    }
+
+    private val eventsComponent by lazy {
+        ActitoEventsComponent()
+    }
+
     // Configurations
     private var context: WeakReference<Context>? = null
 
@@ -146,13 +155,13 @@ public object Actito {
      * Returns the device component. Use this to access device-related functionality.
      */
     @JvmStatic
-    public fun device(): ActitoDeviceComponent = ActitoDeviceComponent
+    public fun device(): ActitoDeviceComponent = deviceComponent
 
     /**
      * Returns the events component. Use this to access event-related functionality.
      */
     @JvmStatic
-    public fun events(): ActitoEventsComponent = ActitoEventsComponent
+    public fun events(): ActitoEventsComponent = eventsComponent
 
     /**
      * Configures Actito with the application context using the services info in the provided configuration file.
@@ -337,13 +346,13 @@ public object Actito {
             sharedPreferences.application = application
 
             try {
-                ActitoDeviceComponent.launch()
+                device().launch()
             } catch (e: Exception) {
                 logger.debug("Failed to launch device component: $e")
                 throw e
             }
 
-            ActitoEventsComponent.launch()
+            events().launch()
             ActitoCrashReporterComponent.launch()
 
             // Loop all possible modules and launch the available ones.
@@ -380,7 +389,7 @@ public object Actito {
 
         launch {
             try {
-                ActitoDeviceComponent.postLaunch()
+                device().postLaunch()
             } catch (e: Exception) {
                 logger.error("Failed to post-launch device component': $e")
             }
@@ -439,7 +448,7 @@ public object Actito {
         }
 
         logger.debug("Removing device.")
-        ActitoDeviceComponent.delete()
+        device().delete()
 
         logger.info("Un-launched Actito.")
         state = ActitoLaunchState.CONFIGURED
@@ -754,7 +763,7 @@ public object Actito {
     public fun handleTestDeviceIntent(intent: Intent): Boolean {
         val nonce = parseTestDeviceNonce(intent) ?: return false
 
-        ActitoDeviceComponent.registerTestDevice(
+        device().registerTestDevice(
             nonce,
             object : ActitoCallback<Unit> {
                 override fun onSuccess(result: Unit) {

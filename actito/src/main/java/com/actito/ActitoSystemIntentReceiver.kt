@@ -24,7 +24,7 @@ internal class ActitoSystemIntentReceiver : BroadcastReceiver() {
 
         actitoCoroutineScope.launch {
             try {
-                ActitoDeviceComponent.updateTimeZone()
+                Actito.device().updateTimeZone()
                 logger.debug("Successfully updated device time zone.")
             } catch (e: Exception) {
                 logger.error("Failed to update device time zone.", e)
@@ -39,9 +39,9 @@ internal class ActitoSystemIntentReceiver : BroadcastReceiver() {
 
         actitoCoroutineScope.launch {
             try {
-                ActitoDeviceComponent.updateLanguage(
-                    language = ActitoDeviceComponent.getDeviceLanguage(),
-                    region = ActitoDeviceComponent.getDeviceRegion(),
+                Actito.device().updateLanguage(
+                    language = Actito.device().getDeviceLanguage(),
+                    region = Actito.device().getDeviceRegion(),
                 )
 
                 logger.debug("Successfully updated device locale.")
