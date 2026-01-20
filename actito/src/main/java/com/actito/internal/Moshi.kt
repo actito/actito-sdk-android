@@ -3,6 +3,7 @@ package com.actito.internal
 import com.actito.Actito
 import com.actito.InternalActitoApi
 import com.actito.internal.moshi.ActitoTimeAdapter
+import com.actito.internal.moshi.ExtrasAdapter
 import com.actito.internal.moshi.JSONObjectAdapter
 import com.actito.internal.moshi.UriAdapter
 import com.actito.utilities.moshi.EncodeNullsFactory
@@ -20,6 +21,7 @@ public val Actito.moshi: Moshi by lazy {
         .add(ActitoTimeAdapter())
         .add(UriAdapter())
         .add(JSONObjectAdapter())
+        .add(ExtrasAdapter())
 
     return@lazy builder.build()
 }

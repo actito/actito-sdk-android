@@ -7,10 +7,6 @@ public class ActitoLaunchComponentTest {
     @Test
     public fun testModuleOrder() {
         val expectedOrder = listOf(
-            ActitoLaunchComponent.Module.DEVICE,
-            ActitoLaunchComponent.Module.SESSION,
-            ActitoLaunchComponent.Module.EVENTS,
-            ActitoLaunchComponent.Module.CRASH_REPORTER,
             ActitoLaunchComponent.Module.PUSH,
             ActitoLaunchComponent.Module.PUSH_UI,
             ActitoLaunchComponent.Module.INBOX,
