@@ -4,6 +4,7 @@ android-compileSdk = "36"
 android-buildTools = "35.0.0"
 android-minSdk = "23"
 android-targetSdk = "36"
+kotlin = "2.2.20"
 kotlinx-coroutines = "1.10.2"
 androidx-appCompat = "1.7.1"
 androidx-contraintLayout = "2.2.1"
@@ -21,6 +22,8 @@ google-services = "4.4.3"
 moshi = "1.15.2"
 retrofit = "3.0.0"
 timber = "5.0.1"
+activityCompose = "1.12.2"
+composeBom = "2024.09.00"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
@@ -45,11 +48,19 @@ moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.re
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref="retrofit" }
 retrofit-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref="retrofit" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-application" }
 actito-services = { id = "com.actito.gradle.actito-services", version.ref = "actito-services" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [bundles]
 androidx-lifecycle = ["androidx-lifecycle-livedata", "androidx-lifecycle-runtime", "androidx-lifecycle-viewModel"]
