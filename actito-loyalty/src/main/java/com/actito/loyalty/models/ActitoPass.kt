@@ -29,7 +29,7 @@ import java.util.Date
  * @property redeemHistory History of past redemptions for this pass.
  * @property limit Maximum number of times the pass can be redeemed.
  * @property token Token associated with the pass for secure validation.
- * @property data Additional custom data associated with the pass.
+ * @property data Collection of key-value pairs used to add extra information to the pass.
  * @property date Timestamp indicating when the pass was created or issued.
  * @property googlePaySaveLink Optional link to save the pass to Google Pay.
  */

@@ -21,7 +21,8 @@ import org.json.JSONObject
  * @property url Optional binary file url of the asset.
  * @property button Optional button associated with the asset.
  * @property metaData Optional metadata associated with the asset.
- * @property extra Additional unstructured fields not explicitly modeled.
+ * @property extra Collection of key-value pairs used to add extra information
+ * to the asset.
  */
 @Parcelize
 @JsonClass(generateAdapter = true)

@@ -16,7 +16,8 @@ import org.json.JSONObject
  *
  * @property id Unique identifier of the system notification.
  * @property type Type of the system notification.
- * @property extra Additional unstructured fields not explicitly modeled.
+ * @property extra Collection of key-value pairs used to add extra information to
+ * the notification.
  */
 @Parcelize
 @JsonClass(generateAdapter = true)

@@ -10,7 +10,7 @@ import org.json.JSONObject
 /**
  * Defines a do-not-disturb time window for an Actito device.
  *
- * During this period, notifications or communications may be suppressed
+ * During this period, notifications or communications may be suppressed.
  *
  * @property start Start time of the do-not-disturb period.
  * @property end End time of the do-not-disturb period.

@@ -32,7 +32,8 @@ import java.util.Date
  * @property content Structured content elements associated with the notification.
  * @property actions List of actions that can be performed from the notification.
  * @property attachments List of attachments included with the notification.
- * @property extra Additional unstructured fields not explicitly modeled.
+ * @property extra Collection of key-value pairs used to add extra information to
+ * the notification.
  */
 @Parcelize
 @JsonClass(generateAdapter = true)

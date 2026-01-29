@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 
 /**
- * Represents an Actito application configuration.
+ * Represents an Actito application.
  *
  * An [ActitoApplication] describes the capabilities, services, and configuration
  * of an application as defined in Actito. It includes enabled services, region
@@ -67,10 +67,11 @@ public data class ActitoApplication(
     }
 
     /**
-     * Configuration related to the Actito inbox feature.
+     * Configuration related to inbox-based features.
+     *
      * @property useInbox Whether the inbox feature is enabled for the application.
      * @property useUserInbox Whether the user inbox feature is enabled for the application.
-     * @property autoBadge Whether unread inbox messages should automatically update the application badge count.
+     * @property autoBadge Whether inbox messages should automatically update the application badge count.
      */
     @Parcelize
     @JsonClass(generateAdapter = true)
