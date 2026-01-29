@@ -224,7 +224,7 @@ public data class ActitoNotification(
      * @property label User-visible label of the action.
      * @property target Optional target associated with the action.
      * @property camera Whether the action requires keyboard input.
-     * @property keyboard Whether the action requires camera access.
+     * @property keyboard Whether the action requires camera input.
      * @property destructive Whether the action is destructive.
      * @property icon Optional platform-specific icon configuration for the action.
      */
