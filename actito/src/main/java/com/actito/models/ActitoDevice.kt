@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 
 /**
- * Represents user-defined data associated with a device or user.
+ * Represents user-defined data associated with a device.
  */
 public typealias ActitoUserData = Map<String, String>
 

@@ -69,19 +69,19 @@ public data class ActitoBeacon(
     @Parcelize
     @JsonClass(generateAdapter = false)
     public enum class Proximity : Parcelable {
-        /** The proximity of the beacon or region cannot be determined. */
+        /** The proximity of the beacon cannot be determined. */
         @Json(name = "unknown")
         UNKNOWN,
 
-        /** The beacon or region is very close to the device. */
+        /** The beacon is very close to the device. */
         @Json(name = "immediate")
         IMMEDIATE,
 
-        /** The beacon or region is nearby. */
+        /** The beacon is nearby. */
         @Json(name = "near")
         NEAR,
 
-        /** The beacon or region is far from the device. */
+        /** The beacon is far from the device. */
         @Json(name = "far")
         FAR,
     }

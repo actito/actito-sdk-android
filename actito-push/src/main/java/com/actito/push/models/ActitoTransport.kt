@@ -8,8 +8,7 @@ import kotlinx.parcelize.Parcelize
 /**
  * Identifies the transport mechanism used to deliver a notification.
  *
- * This value indicates the underlying push delivery service used by Actito,
- * such as APNS for iOS or GCM for Android.
+ * This value indicates the underlying push delivery service used by Actito.
  */
 @Parcelize
 @JsonClass(generateAdapter = false)
