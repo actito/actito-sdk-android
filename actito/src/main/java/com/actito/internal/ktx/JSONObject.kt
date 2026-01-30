@@ -1,7 +1,7 @@
 package com.actito.internal.ktx
 
+import com.actito.Actito
 import com.actito.ActitoEventData
-import com.actito.ActitoEventsComponent
 import org.json.JSONObject
 
 /**
@@ -19,4 +19,4 @@ import org.json.JSONObject
  * @throws IllegalArgumentException if the JSON cannot be deserialized into [ActitoEventData].
  */
 public fun JSONObject.toEventData(): ActitoEventData =
-    requireNotNull(ActitoEventsComponent.dataAdapter.fromJson(this.toString()))
+    requireNotNull(Actito.events().dataAdapter.fromJson(this.toString()))

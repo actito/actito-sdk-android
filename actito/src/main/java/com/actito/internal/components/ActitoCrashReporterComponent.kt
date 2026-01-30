@@ -2,7 +2,6 @@ package com.actito.internal.components
 
 import androidx.annotation.Keep
 import com.actito.Actito
-import com.actito.ActitoEventsComponent
 import com.actito.internal.logger
 
 @Keep
@@ -18,7 +17,7 @@ internal object ActitoCrashReporterComponent {
         }
 
         // Save the crash report to be processed when the app recovers.
-        val event = ActitoEventsComponent.createThrowableEvent(throwable, device)
+        val event = Actito.events().createThrowableEvent(throwable, device)
         Actito.sharedPreferences.crashReport = event
         logger.debug("Saved crash report in storage to upload on next start.")
 
@@ -49,7 +48,7 @@ internal object ActitoCrashReporterComponent {
         }
 
         try {
-            ActitoEventsComponent.log(crashReport)
+            Actito.events().log(crashReport)
             logger.info("Crash report processed.")
 
             // Clean up the stored crash report

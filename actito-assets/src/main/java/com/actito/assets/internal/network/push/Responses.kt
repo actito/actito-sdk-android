@@ -2,7 +2,6 @@ package com.actito.assets.internal.network.push
 
 import com.actito.Actito
 import com.actito.assets.models.ActitoAsset
-import com.actito.utilities.collections.filterNotNullRecursive
 import com.actito.utilities.moshi.UseDefaultsWhenNull
 import com.squareup.moshi.JsonClass
 
@@ -19,7 +18,7 @@ internal data class FetchAssetsResponse(
         val url: String?,
         val button: Button?,
         val metaData: MetaData?,
-        val extra: Map<String, Any?> = mapOf(),
+        val extra: Map<String, Any> = mapOf(),
     ) {
 
         internal fun toModel(): ActitoAsset {
@@ -44,7 +43,7 @@ internal data class FetchAssetsResponse(
                         contentLength = it.contentLength,
                     )
                 },
-                extra = extra.filterNotNullRecursive { it.value },
+                extra = extra,
             )
         }
 

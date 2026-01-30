@@ -118,7 +118,6 @@ public class ActitoRequest private constructor(
         val response = response(closeResponse = false)
 
         val body = response.body
-            ?: throw IllegalArgumentException("The response contains an empty body. Cannot parse into 'String'.")
 
         return withContext(Dispatchers.IO) {
             try {
@@ -135,9 +134,6 @@ public class ActitoRequest private constructor(
         val response = response(closeResponse = false)
 
         val body = response.body
-            ?: throw IllegalArgumentException(
-                "The response contains an empty body. Cannot parse into '${klass.simpleName}'.",
-            )
 
         return withContext(Dispatchers.IO) {
             try {
@@ -161,9 +157,6 @@ public class ActitoRequest private constructor(
                 ?: return@withContext null
 
             val body = response.body
-                ?: throw IllegalArgumentException(
-                    "The response contains an empty body. Cannot parse into '${klass.simpleName}'.",
-                )
 
             try {
                 val adapter = Actito.moshi.adapter(klass.java)
@@ -180,7 +173,7 @@ public class ActitoRequest private constructor(
         try {
             if (response.code !in validStatusCodes) {
                 // Forcefully close the body. Decodable responses will not proceed.
-                response.body?.close()
+                response.body.close()
 
                 throw NetworkException.ValidationException(
                     response = response,
@@ -190,7 +183,7 @@ public class ActitoRequest private constructor(
 
             return response
         } finally {
-            if (closeResponse) response.body?.close()
+            if (closeResponse) response.body.close()
         }
     }
 

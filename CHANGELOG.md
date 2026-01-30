@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 5.0.0
+
+Prior to upgrading to v5.x, consult the [Migration Guide](./MIGRATION.md), which outlines all necessary changes and procedures to ensure a smooth migration.
+
+**Important changes since v4.x:**
+
+- Device and Events components must be accessed though `Actito.device()` and `Actito.events()`
+- Updated to Kotlin 2.0
+- Improved network request retry mechanism
+- Exposed Firebase Messaging handlers
+- Added name and size restrictions to tag names, event names and event payloads.
+- Crash reporting is deprecated and disabled by default. We recommend using another solution to collect crash analytics.
+- Removed Java compatibility classes `*Compat` in favor of Java-compatible module implementations.
+- Add required referrer for embedded YouTube videos
+- Fix conflicting flags in geo pending intents
+- Simplify core component loading and align naming conventions
+- Move `device()` and `events()` to `Actito`, removing the need for the KTX import
+
 ## 5.0.0-beta.2
 
 - Add required referrer for embedded YouTube videos

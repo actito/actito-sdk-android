@@ -5,7 +5,6 @@ import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
-import com.actito.utilities.collections.filterNotNullRecursive
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
@@ -106,7 +105,7 @@ public data class NotificationResponse(
         val content: List<ActitoNotification.Content> = listOf(),
         val actions: List<Action> = listOf(),
         val attachments: List<ActitoNotification.Attachment> = listOf(),
-        val extra: Map<String, Any?> = mapOf(),
+        val extra: Map<String, Any> = mapOf(),
     ) {
 
         @JsonClass(generateAdapter = true)
@@ -147,7 +146,7 @@ public data class NotificationResponse(
                 content,
                 actions.mapNotNull { it.toModel() },
                 attachments,
-                extra.filterNotNullRecursive { it.value },
+                extra,
             )
     }
 }
