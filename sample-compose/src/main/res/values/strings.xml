@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Sample</string>
+
+    <string name="permissions_button_cancel">Cancel</string>
+    <string name="permissions_button_ok">OK</string>
+
+    <string name="permissions_rationale_notifications">We need notifications permission in order to show relevant content and important notifications.</string>
+    <string name="permissions_rationale_notifications_settings">Notifications permission is denied. Enable the permission in the application settings.</string>
+
+    <string name="permissions_rationale_location_foreground">We need location foreground permission in order to show location relevant content and important notifications.</string>
+    <string name="permissions_rationale_location_foreground_settings">Location foreground permission is denied. Enable the permission in the application settings.</string>
+
+    <string name="permissions_rationale_location_background">We need location background permission in order to show region relevant content and scanning for beacons.</string>
+    <string name="permissions_rationale_location_background_settings">Location background permission is denied. Enable the permission in the application settings.</string>
+
+    <string name="permissions_rationale_bluetooth">We need bluetooth permission in order to perform beacons scanning.</string>
+    <string name="permissions_rationale_bluetooth_settings">Bluetooth permission is denied. Enable the permission in the application settings.</string>
 </resources>

@@ -1,0 +1,79 @@
+package com.actito.sample.ui.home.dnd
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.actito.models.ActitoDoNotDisturb
+import com.actito.models.ActitoTime
+import com.actito.sample.R
+import com.actito.sample.ui.components.SampleRowTimePicker
+import com.actito.sample.ui.components.SampleSwitchRow
+
+@Composable
+fun DoNotDisturbCard(
+    modifier: Modifier = Modifier,
+    viewModel: DoNotDisturbViewModel = viewModel(),
+) {
+    val dnd by viewModel.currentDnd.collectAsState()
+
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            SampleSwitchRow(
+                icon = painterResource(R.drawable.ic_baseline_do_not_disturb_24),
+                text = "DnD",
+                checked = dnd != null,
+                onCheckedChange = { enabled ->
+                    viewModel.enableDndStatus(enabled)
+                },
+            )
+
+            dnd?.let { currentDnd ->
+                Column {
+                    SampleRowTimePicker(
+                        label = "From",
+                        hour = currentDnd.start.hours,
+                        minute = currentDnd.start.minutes,
+                        onTimeSelected = { hour, minutes ->
+                            val newDnD = ActitoDoNotDisturb(
+                                start = ActitoTime(hour, minutes),
+                                end = currentDnd.end,
+                            )
+
+                            viewModel.updateDndTime(newDnD)
+                        },
+                    )
+
+                    SampleRowTimePicker(
+                        label = "To",
+                        hour = currentDnd.end.hours,
+                        minute = currentDnd.end.minutes,
+                        onTimeSelected = { hour, minutes ->
+                            val newDnD = ActitoDoNotDisturb(
+                                start = currentDnd.start,
+                                end = ActitoTime(hour, minutes),
+                            )
+
+                            viewModel.updateDndTime(newDnD)
+                        },
+                    )
+                }
+            }
+        }
+    }
+}

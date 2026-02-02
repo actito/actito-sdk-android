@@ -4,6 +4,7 @@ plugins {
     id("linting")
     id("actito-application")
     alias(apps.plugins.kotlin.compose)
+    alias(apps.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -43,16 +44,22 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core)
-    implementation(libs.androidx.lifecycle.runtime)
+    implementation(apps.androidx.appCompat)
+    implementation(apps.androidx.core)
+    implementation(apps.androidx.lifecycle.viewModel.compose)
     implementation(apps.androidx.activity.compose)
     implementation(platform(apps.androidx.compose.bom))
     implementation(apps.androidx.compose.ui)
     implementation(apps.androidx.compose.ui.graphics)
     implementation(apps.androidx.compose.ui.tooling.preview)
+    implementation(apps.google.material)
     implementation(apps.androidx.compose.material3)
-    testImplementation(libs.junit)
     debugImplementation(apps.androidx.compose.ui.tooling)
+
+    implementation(apps.bundles.coil)
+    implementation(apps.bundles.nav3)
+
+    implementation(apps.timber)
 
     implementation(project(":actito"))
     implementation(project(":actito-assets"))
