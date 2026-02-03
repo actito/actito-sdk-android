@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Build
 import android.os.StrictMode
 import com.actito.Actito
+import com.actito.models.ActitoApplication
 import com.actito.push.ktx.push
 import com.actito.sample.core.SampleNotifier
 import com.actito.sample.live_activity.LiveActivityController
@@ -50,6 +51,10 @@ class MainApplication :
         }
     }
 
+    override fun onReady(application: ActitoApplication) {
+        registerUser()
+    }
+
     private fun enableStrictMode() {
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
@@ -69,5 +74,18 @@ class MainApplication :
                 .penaltyDeath()
                 .build(),
         )
+    }
+
+    private fun registerUser() {
+        applicationScope.launch {
+            val userId = getString(R.string.sample_user_id).ifBlank { null }
+            val userName = getString(R.string.sample_user_name).ifBlank { null }
+
+            try {
+                Actito.device().updateUser(userId, userName)
+            } catch (e: Exception) {
+                Timber.e(e, "Failed to update the user.")
+            }
+        }
     }
 }
