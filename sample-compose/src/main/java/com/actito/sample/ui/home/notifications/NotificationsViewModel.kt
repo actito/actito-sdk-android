@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.actito.Actito
+import com.actito.inbox.ktx.inbox
 import com.actito.push.ktx.push
 import com.actito.sample.core.SampleNotifier
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,9 @@ class NotificationsViewModel : ViewModel() {
 
     private val _token = MutableStateFlow(currentToken)
     val token: StateFlow<String?> = _token
+
+    private val _badge = MutableStateFlow(Actito.inbox().badge)
+    val badge: StateFlow<Int> = _badge
 
     private val actitoRemoteNotificationEnabled
         get() = Actito.push().hasRemoteNotificationsEnabled
@@ -49,6 +53,14 @@ class NotificationsViewModel : ViewModel() {
                 .collect { subscription ->
                     _token.value = subscription?.token
                     SampleNotifier.emitInfo("Subscription changed: $subscription")
+                }
+        }
+
+        viewModelScope.launch {
+            Actito.inbox().observableBadge
+                .asFlow()
+                .collect { result ->
+                    _badge.value = result
                 }
         }
     }

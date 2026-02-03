@@ -20,6 +20,7 @@ import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowNavigation
 import com.actito.sample.ui.components.SampleRowStatus
 import com.actito.sample.ui.components.SampleSwitchRow
+import com.actito.sample.ui.home.notifications.components.InboxRowNavigation
 import com.actito.sample.utils.permissions.Permission
 import com.actito.sample.utils.permissions.rememberPermissionManager
 
@@ -34,6 +35,7 @@ fun NotificationsCard(
     val notificationsEnabled by viewModel.notificationsEnabled.collectAsState()
     val notificationsEnabledAndActive by viewModel.notificationsEnabledAndActive.collectAsState()
     val token by viewModel.token.collectAsState()
+    val badge by viewModel.badge.collectAsState()
 
     val permissionManager = rememberPermissionManager()
     var hasNotificationsPermissions by remember {
@@ -99,9 +101,10 @@ fun NotificationsCard(
         Column {
             HorizontalDivider()
 
-            SampleRowNavigation(
+            InboxRowNavigation(
                 icon = painterResource(R.drawable.ic_baseline_inbox_24),
                 text = "Inbox",
+                badge = badge,
                 onNavigate = onNavigateToInbox,
             )
 
