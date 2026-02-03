@@ -16,6 +16,7 @@ import com.actito.sample.ui.home.dnd.DoNotDisturbCard
 import com.actito.sample.ui.home.iam.InAppMessagingCard
 import com.actito.sample.ui.home.info.ApplicationInfoCard
 import com.actito.sample.ui.home.launch.LaunchCard
+import com.actito.sample.ui.home.live_activity.LiveActivityCard
 import com.actito.sample.ui.home.location.LocationCard
 import com.actito.sample.ui.home.notifications.NotificationsCard
 import com.actito.sample.ui.home.others.OtherFeaturesCard
@@ -49,12 +50,14 @@ fun HomeScreen(
                     onNavigateToDevice = onNavigateToDevice,
                 )
 
+                DoNotDisturbCard()
+
                 NotificationsCard(
                     onNavigateToInbox = onNavigateToInbox,
                     onNavigateToTags = onNavigateToTags,
                 )
 
-                DoNotDisturbCard()
+                LiveActivityCard()
 
                 LocationCard(
                     onNavigateToBeacons = onNavigateToBeacons,

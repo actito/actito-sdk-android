@@ -14,14 +14,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.actito.Actito
 import com.actito.assets.models.ActitoAsset
-import com.actito.sample.core.SampleNotifier
 import com.actito.sample.core.SampleSnackBar
 import com.actito.sample.core.SampleSnackbarVisuals
 import com.actito.sample.ui.assets.AssetsScreen
@@ -33,7 +30,6 @@ import com.actito.sample.ui.home.HomeScreen
 import com.actito.sample.ui.inbox.InboxScreen
 import com.actito.sample.ui.tags.TagsScreen
 import com.actito.sample.ui.theme.ActitoSampleTheme
-import kotlinx.coroutines.launch
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
@@ -64,14 +60,6 @@ private data class RouteAssetDetails(val asset: @Contextual ActitoAsset) : NavKe
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        lifecycleScope.launch {
-            try {
-                Actito.launch()
-            } catch (e: Exception) {
-                SampleNotifier.emitError("Failed to launch.", e)
-            }
-        }
 
         enableEdgeToEdge()
         setContent {

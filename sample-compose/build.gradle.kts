@@ -55,6 +55,13 @@ dependencies {
     implementation(apps.google.material)
     implementation(apps.androidx.compose.material3)
     debugImplementation(apps.androidx.compose.ui.tooling)
+    implementation(apps.androidx.work.runtime)
+    implementation(apps.androidx.datastore.preferences)
+
+    // Moshi
+    implementation(apps.moshi.kotlin)
+    implementation(apps.moshi.adapters)
+    ksp(apps.moshi.codegen)
 
     implementation(apps.bundles.coil)
     implementation(apps.bundles.nav3)

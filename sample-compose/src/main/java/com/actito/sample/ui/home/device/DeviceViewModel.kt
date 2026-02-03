@@ -69,7 +69,7 @@ class DeviceViewModel : ViewModel() {
     }
 
     fun updateUserData() {
-        val data: ActitoUserData = mapOf("firstName" to "First Name", "lastName" to "Last Name")
+        val data = mapOf("firstName" to "First Name", "lastName" to "Last Name")
 
         viewModelScope.launch {
             try {
@@ -83,7 +83,7 @@ class DeviceViewModel : ViewModel() {
     }
 
     fun removeUserDataEntry() {
-        val data: ActitoUserData = mapOf("firstName" to "First Name")
+        val data = mapOf("firstName" to "First Name", "lastName" to null)
 
         viewModelScope.launch {
             try {
