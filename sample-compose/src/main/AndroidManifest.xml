@@ -13,6 +13,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:launchMode="singleTask"
             android:label="@string/app_name"
             android:theme="@style/Base.Theme.Sample">
             <intent-filter>
