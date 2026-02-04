@@ -88,6 +88,7 @@ class MainActivity : ComponentActivity() {
                             actionLabel = event.actionLabel,
                             duration = event.duration,
                             type = event.type,
+                            withDismissAction = true,
                         ),
                     )
                 }
