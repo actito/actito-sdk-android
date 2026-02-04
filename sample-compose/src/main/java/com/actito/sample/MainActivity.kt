@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
-import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
@@ -100,87 +100,81 @@ class MainActivity : ComponentActivity() {
                 NavDisplay(
                     backStack = backStack,
                     onBack = { backStack.removeLastOrNull() },
-                    entryProvider = { key ->
-                        when (key) {
-                            is RouteHome -> NavEntry(key) {
-                                HomeScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNavigateToDevice = {
-                                        backStack.add(RouteDevice)
-                                    },
+                    entryProvider = entryProvider {
+                        entry<RouteHome> {
+                            HomeScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateToDevice = {
+                                    backStack.add(RouteDevice)
+                                },
 
-                                    onNavigateToInbox = {
-                                        backStack.add(RouteInbox)
-                                    },
-                                    onNavigateToTags = {
-                                        backStack.add(RouteTags)
-                                    },
-                                    onNavigateToBeacons = {
-                                        backStack.add(RouteBeacons)
-                                    },
-                                    onNavigateToAssets = {
-                                        backStack.add(RouteAssets)
-                                    },
-                                    onNavigateToEvents = {
-                                        backStack.add(RouteEvents)
-                                    },
-                                )
-                            }
+                                onNavigateToInbox = {
+                                    backStack.add(RouteInbox)
+                                },
+                                onNavigateToTags = {
+                                    backStack.add(RouteTags)
+                                },
+                                onNavigateToBeacons = {
+                                    backStack.add(RouteBeacons)
+                                },
+                                onNavigateToAssets = {
+                                    backStack.add(RouteAssets)
+                                },
+                                onNavigateToEvents = {
+                                    backStack.add(RouteEvents)
+                                },
+                            )
+                        }
 
-                            is RouteDevice -> NavEntry(key) {
-                                DeviceScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNavigateBack = { backStack.removeLastOrNull() },
-                                )
-                            }
+                        entry<RouteDevice> {
+                            DeviceScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                            )
+                        }
 
-                            is RouteInbox -> NavEntry(key) {
-                                InboxScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNavigateBack = { backStack.removeLastOrNull() },
-                                )
-                            }
+                        entry<RouteInbox> {
+                            InboxScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                            )
+                        }
 
-                            is RouteTags -> NavEntry(key) {
-                                TagsScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNavigateBack = { backStack.removeLastOrNull() },
-                                )
-                            }
+                        entry<RouteTags> {
+                            TagsScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                            )
+                        }
 
-                            is RouteBeacons -> NavEntry(key) {
-                                BeaconsScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNavigateBack = { backStack.removeLastOrNull() },
-                                )
-                            }
+                        entry<RouteBeacons> {
+                            BeaconsScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                            )
+                        }
 
-                            is RouteAssets -> NavEntry(key) {
-                                AssetsScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNavigateBack = { backStack.removeLastOrNull() },
-                                    onNavigateToAssetDetails = { asset -> backStack.add(RouteAssetDetails(asset)) },
-                                )
-                            }
+                        entry<RouteAssets> {
+                            AssetsScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                                onNavigateToAssetDetails = { asset -> backStack.add(RouteAssetDetails(asset)) },
+                            )
+                        }
 
-                            is RouteEvents -> NavEntry(key) {
-                                EventsScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNavigateBack = { backStack.removeLastOrNull() },
-                                )
-                            }
+                        entry<RouteEvents> {
+                            EventsScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                            )
+                        }
 
-                            is RouteAssetDetails -> NavEntry(key) {
-                                AssetDetailsScreen(
-                                    snackbarHostState = snackbarHostState,
-                                    onNavigateBack = { backStack.removeLastOrNull() },
-                                    asset = key.asset,
-                                )
-                            }
-
-                            else -> {
-                                error("Unknown route: $key")
-                            }
+                        entry<RouteAssetDetails> { key ->
+                            AssetDetailsScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                                asset = key.asset,
+                            )
                         }
                     },
                     transitionSpec = {
