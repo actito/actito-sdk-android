@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
@@ -30,7 +31,7 @@ fun BeaconsScreen(
     val rangedBeacons by viewModel.rangedBeacons.collectAsState()
 
     SampleScaffold(
-        title = "Device",
+        title = stringResource(R.string.location_beacons_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
     ) {
@@ -45,13 +46,13 @@ fun BeaconsScreen(
             ) {
                 SampleRowHeader(
                     icon = painterResource(R.drawable.ic_baseline_bluetooth_searching_24),
-                    text = "Ranged Beacons",
+                    text = stringResource(R.string.location_beacons_ranged),
                 )
 
                 val ranged = rangedBeacons
 
                 if (ranged == null) {
-                    Text("No beacons ranged")
+                    Text(text = stringResource(R.string.location_beacons_no_ranged_beacons))
                 } else {
                     LazyColumn {
                         items(ranged.beacons) { beacon ->

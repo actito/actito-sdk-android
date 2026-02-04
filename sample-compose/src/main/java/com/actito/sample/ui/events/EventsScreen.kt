@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.ActitoEventData
@@ -40,7 +41,7 @@ fun EventsScreen(
     var includeEventData by remember { mutableStateOf(false) }
 
     SampleScaffold(
-        title = "Device",
+        title = stringResource(R.string.events_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
     ) {
@@ -55,21 +56,21 @@ fun EventsScreen(
             ) {
                 SampleRowHeader(
                     icon = painterResource(R.drawable.ic_baseline_event_24),
-                    text = "Custom Event",
+                    text = stringResource(R.string.events_register_event),
                 )
 
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     state = eventName,
                     lineLimits = TextFieldLineLimits.SingleLine,
-                    placeholder = { Text("Event name") },
+                    placeholder = { Text(stringResource(R.string.events_event_name)) },
                 )
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        "Include data",
+                        stringResource(R.string.events_event_data),
                     )
                     Checkbox(
                         checked = includeEventData,
@@ -92,7 +93,7 @@ fun EventsScreen(
                             eventName.clearText()
                         },
                     ) {
-                        Text("Register")
+                        Text(stringResource(R.string.button_register))
                     }
                 }
             }

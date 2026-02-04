@@ -48,12 +48,12 @@ object LiveActivityController {
     fun registerLiveActivitiesChannel() {
         val channel = NotificationChannel(
             CHANNEL_LIVE_ACTIVITY,
-            context.getString(R.string.notification_channel_live_activities_title),
+            context.getString(R.string.live_activity_title),
             NotificationManager.IMPORTANCE_DEFAULT,
         )
 
         channel.description =
-            context.getString(R.string.notification_channel_live_activities_description)
+            context.getString(R.string.live_activity_description)
 
         _notificationManager.createNotificationChannel(channel)
     }

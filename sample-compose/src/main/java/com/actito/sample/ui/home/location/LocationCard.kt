@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
@@ -56,7 +57,7 @@ fun LocationCard(
         ) {
             SampleSwitchRow(
                 icon = painterResource(R.drawable.ic_baseline_location_on_24),
-                text = "Location",
+                text = stringResource(R.string.location_title),
                 checked = hasLocationForegroundPermission && hasLocationUpdatesEnabled,
                 onCheckedChange = { enabled ->
                     if (enabled) {
@@ -96,31 +97,31 @@ fun LocationCard(
             )
 
             SampleRowStatus(
-                label = "Permission Foreground",
+                label = stringResource(R.string.location_permission_foreground),
                 isSDK = false,
                 status = hasLocationForegroundPermission.toString(),
             )
 
             SampleRowStatus(
-                label = "Permission Background",
+                label = stringResource(R.string.location_permission_background),
                 isSDK = false,
                 status = hasLocationBackgroundPermission.toString(),
             )
 
             SampleRowStatus(
-                label = "Permission Bluetooth",
+                label = stringResource(R.string.location_permission_bluetooth),
                 isSDK = false,
                 status = hasBluetoothPermission.toString(),
             )
 
             SampleRowStatus(
-                label = "Location Enabled",
+                label = stringResource(R.string.location_updates_enabled),
                 isSDK = true,
                 status = hasLocationUpdatesEnabled.toString(),
             )
 
             SampleRowStatus(
-                label = "Bluetooth Enabled",
+                label = stringResource(R.string.location_bluetooth_enabled),
                 isSDK = true,
                 status = hasBluetoothEnabled.toString(),
             )
@@ -131,7 +132,7 @@ fun LocationCard(
 
             SampleRowNavigation(
                 icon = painterResource(R.drawable.ic_baseline_bluetooth_searching_24),
-                text = "Beacons",
+                text = stringResource(R.string.location_beacons),
                 onNavigate = onNavigateToBeacons,
             )
         }

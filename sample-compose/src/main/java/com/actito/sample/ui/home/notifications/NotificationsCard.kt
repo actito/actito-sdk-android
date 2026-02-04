@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
@@ -53,7 +54,7 @@ fun NotificationsCard(
         ) {
             SampleSwitchRow(
                 icon = painterResource(R.drawable.ic_baseline_notifications_active_24),
-                text = "Notifications",
+                text = stringResource(R.string.notifications_title),
                 checked = notificationsEnabledAndActive,
                 onCheckedChange = { enabled ->
                     if (enabled) {
@@ -74,25 +75,25 @@ fun NotificationsCard(
             )
 
             SampleRowStatus(
-                label = "Permission",
+                label = stringResource(R.string.notifications_permission),
                 isSDK = false,
                 status = hasNotificationsPermissions.toString(),
             )
 
             SampleRowStatus(
-                label = "Allowed UI",
+                label = stringResource(R.string.notifications_allowed_ui),
                 isSDK = true,
                 status = notificationsAllowedUI.toString(),
             )
 
             SampleRowStatus(
-                label = "Enabled",
+                label = stringResource(R.string.notifications_enabled),
                 isSDK = true,
                 status = notificationsEnabled.toString(),
             )
 
             SampleRowStatus(
-                label = "Token",
+                label = stringResource(R.string.notifications_token),
                 isSDK = true,
                 status = token.toString(),
             )
@@ -103,7 +104,7 @@ fun NotificationsCard(
 
             InboxRowNavigation(
                 icon = painterResource(R.drawable.ic_baseline_inbox_24),
-                text = "Inbox",
+                text = stringResource(R.string.inbox_title),
                 badge = badge,
                 onNavigate = onNavigateToInbox,
             )
@@ -112,7 +113,7 @@ fun NotificationsCard(
 
             SampleRowNavigation(
                 icon = painterResource(R.drawable.ic_baseline_discount_24),
-                text = "Tags",
+                text = stringResource(R.string.tags_title),
                 onNavigate = onNavigateToTags,
             )
         }

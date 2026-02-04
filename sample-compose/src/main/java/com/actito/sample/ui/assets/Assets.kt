@@ -26,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.assets.models.ActitoAsset
@@ -45,7 +46,7 @@ fun AssetsScreen(
     val assets by viewModel.assets.collectAsState()
 
     SampleScaffold(
-        title = "Device",
+        title = stringResource(R.string.assets_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
     ) {
@@ -61,14 +62,14 @@ fun AssetsScreen(
                 ) {
                     SampleRowHeader(
                         icon = painterResource(R.drawable.ic_baseline_folder_24),
-                        text = "Assets",
+                        text = stringResource(R.string.assets_fetch_assets_title),
                     )
 
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
                         state = assetsGroup,
                         lineLimits = TextFieldLineLimits.SingleLine,
-                        placeholder = { Text("Event name") },
+                        placeholder = { Text(text = stringResource(R.string.assets_asset_group)) },
                     )
 
                     Row(
@@ -83,7 +84,7 @@ fun AssetsScreen(
                                 assetsGroup.clearText()
                             },
                         ) {
-                            Text("Search")
+                            Text(text = stringResource(R.string.button_search))
                         }
                     }
                 }

@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -49,7 +50,7 @@ fun InboxScreen(
     var longClickedItem by remember { mutableStateOf<ActitoInboxItem?>(null) }
 
     SampleScaffold(
-        title = "Device",
+        title = stringResource(R.string.inbox_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
         actions = {
@@ -80,7 +81,7 @@ fun InboxScreen(
                 Spacer(Modifier.weight(1f))
 
                 Text(
-                    text = "Inbox is Empty",
+                    text = stringResource(R.string.inbox_empty_message),
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.ExtraLight,
                     modifier = Modifier
@@ -124,7 +125,7 @@ fun InboxScreen(
                             longClickedItem = null
                         },
                     ) {
-                        Text("Open")
+                        Text(stringResource(R.string.inbox_options_open))
                     }
 
                     TextButton(
@@ -134,7 +135,7 @@ fun InboxScreen(
                             longClickedItem = null
                         },
                     ) {
-                        Text("Remove")
+                        Text(stringResource(R.string.inbox_options_remove))
                     }
 
                     TextButton(
@@ -144,7 +145,7 @@ fun InboxScreen(
                             longClickedItem = null
                         },
                     ) {
-                        Text("Mark as Read")
+                        Text(stringResource(R.string.inbox_options_mark_as_read))
                     }
                 }
             }

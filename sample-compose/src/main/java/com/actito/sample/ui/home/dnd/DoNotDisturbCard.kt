@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.models.ActitoDoNotDisturb
@@ -36,7 +37,7 @@ fun DoNotDisturbCard(
         ) {
             SampleSwitchRow(
                 icon = painterResource(R.drawable.ic_baseline_do_not_disturb_24),
-                text = "DnD",
+                text = stringResource(R.string.dnd_title),
                 checked = dnd != null,
                 onCheckedChange = { enabled ->
                     viewModel.enableDndStatus(enabled)
@@ -46,7 +47,7 @@ fun DoNotDisturbCard(
             dnd?.let { currentDnd ->
                 Column {
                     SampleRowTimePicker(
-                        label = "From",
+                        label = stringResource(R.string.dnd_time_picker_from),
                         hour = currentDnd.start.hours,
                         minute = currentDnd.start.minutes,
                         onTimeSelected = { hour, minutes ->
@@ -60,7 +61,7 @@ fun DoNotDisturbCard(
                     )
 
                     SampleRowTimePicker(
-                        label = "To",
+                        label = stringResource(R.string.dnd_time_picker_to),
                         hour = currentDnd.end.hours,
                         minute = currentDnd.end.minutes,
                         onTimeSelected = { hour, minutes ->

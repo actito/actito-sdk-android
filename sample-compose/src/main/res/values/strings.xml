@@ -1,8 +1,107 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Sample</string>
 
-    <string name="permissions_button_cancel">Cancel</string>
-    <string name="permissions_button_ok">OK</string>
+    <string name="application_info_app_id">ID</string>
+    <string name="application_info_app_name">Name</string>
+    <string name="application_info_title">Application Info</string>
+
+    <string name="assets_asset_button">Button</string>
+    <string name="assets_asset_button_action">Action</string>
+    <string name="assets_asset_button_label">Label</string>
+    <string name="assets_asset_content_length">Content Length</string>
+    <string name="assets_asset_content_type">Content Type</string>
+    <string name="assets_asset_description">Description</string>
+    <string name="assets_asset_details">Asset Details</string>
+    <string name="assets_asset_group">Asset Group</string>
+    <string name="assets_asset_key">Key</string>
+    <string name="assets_asset_meta_data">Meta Data</string>
+    <string name="assets_asset_original_file_name">Original File Name</string>
+    <string name="assets_asset_url">URL</string>
+    <string name="assets_fetch_assets_title">Fetch Assets</string>
+    <string name="assets_title">Assets</string>
+
+    <string name="button_add">Add</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_no">No</string>
+    <string name="button_ok">OK</string>
+    <string name="button_register">Register</string>
+    <string name="button_search">Search</string>
+    <string name="button_yes">Yes</string>
+
+    <string name="device_assign_user">Assign User</string>
+    <string name="device_button_anonymous">Anonymous</string>
+    <string name="device_button_clear">Clear</string>
+    <string name="device_button_remove_one">Remove</string>
+    <string name="device_button_update">Update</string>
+    <string name="device_button_user">User</string>
+    <string name="device_current_device">Current Device</string>
+    <string name="device_id">ID</string>
+    <string name="device_preferred_language">Preferred Language</string>
+    <string name="device_title">Device</string>
+    <string name="device_user_data">User Data</string>
+    <string name="device_user_data_not_defined">User data not defined</string>
+    <string name="device_user_id">User ID</string>
+    <string name="device_user_name">User Name</string>
+
+    <string name="dnd_select_time">Select Time</string>
+    <string name="dnd_short_title">Do not disturb</string>
+    <string name="dnd_time_picker_from">From</string>
+    <string name="dnd_time_picker_to">To</string>
+    <string name="dnd_title">Do not disturb</string>
+
+    <string name="events_event_data">Event Data</string>
+    <string name="events_event_name">Event Name</string>
+    <string name="events_register_event">Register Event</string>
+    <string name="events_title">Events</string>
+
+    <string name="in_app_messaging_evaluate_context">Evaluate Context</string>
+    <string name="in_app_messaging_suppressed">Suppressed</string>
+    <string name="in_app_messaging_title">In App Messaging</string>
+
+    <string name="inbox_empty_message">You have no notifications in your inbox.</string>
+    <string name="inbox_options_mark_all_as_read">Mark all as read</string>
+    <string name="inbox_options_mark_as_read">Mark as read</string>
+    <string name="inbox_options_open">Open</string>
+    <string name="inbox_options_refresh">Refresh</string>
+    <string name="inbox_options_remove">Remove</string>
+    <string name="inbox_options_remove_all">Remove all</string>
+    <string name="inbox_title">Inbox</string>
+
+    <string name="launch_flow_button_launch">Launch</string>
+    <string name="launch_flow_button_unlaunch">Unlaunch</string>
+    <string name="launch_flow_configured">Configured</string>
+    <string name="launch_flow_launched">Launched</string>
+    <string name="launch_flow_title">Launch Flow</string>
+
+    <string name="live_activity_button_grind_beans">Grind Beans</string>
+    <string name="live_activity_button_serve_coffee">Serve the coffee</string>
+    <string name="live_activity_button_start_brewing">Start Brewing</string>
+    <string name="live_activity_description">Real-time updates for relevant content.</string>
+    <string name="live_activity_title">Live Activity</string>
+
+    <string name="location_beacons">Beacons</string>
+    <string name="location_beacons_no_ranged_beacons">Beacons not found!</string>
+    <string name="location_beacons_ranged">Ranged beacons</string>
+    <string name="location_beacons_title">Beacons</string>
+    <string name="location_bluetooth_enabled">Bluetooth Enabled</string>
+    <string name="location_permission_background">Permission Background</string>
+    <string name="location_permission_bluetooth">Permission Bluetooth</string>
+    <string name="location_permission_foreground">Permission Foreground</string>
+    <string name="location_title">Location</string>
+    <string name="location_updates_enabled">Enabled</string>
+
+    <string name="notifications_allowed_ui">Allowed UI</string>
+    <string name="notifications_enabled">Enabled</string>
+    <string name="notifications_permission">Permission</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_token">Token</string>
+
+    <string name="other_features_title">Other Features</string>
+
+    <string name="tags_manual_input">Manual Input</string>
+    <string name="tags_quick_fill">Quick Fill</string>
+    <string name="tags_title">Tags</string>
+
 
     <string name="permissions_rationale_notifications">We need notifications permission in order to show relevant content and important notifications.</string>
     <string name="permissions_rationale_notifications_settings">Notifications permission is denied. Enable the permission in the application settings.</string>
@@ -15,9 +114,6 @@
 
     <string name="permissions_rationale_bluetooth">We need bluetooth permission in order to perform beacons scanning.</string>
     <string name="permissions_rationale_bluetooth_settings">Bluetooth permission is denied. Enable the permission in the application settings.</string>
-
-    <string name="notification_channel_live_activities_title">Live Activities</string>
-    <string name="notification_channel_live_activities_description">Real-time updates for relevant content.</string>
 
     <string name="coffee_headline_served_title">Coffee is served!</string>
     <plurals name="coffee_headline_pick_up_title">

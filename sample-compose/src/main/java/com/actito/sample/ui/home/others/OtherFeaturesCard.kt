@@ -8,6 +8,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowHeader
@@ -29,7 +30,7 @@ fun OtherFeaturesCard(
         ) {
             SampleRowHeader(
                 icon = painterResource(R.drawable.ic_baseline_widgets_24),
-                text = "Other Features",
+                text = stringResource(R.string.other_features_title),
             )
         }
 
@@ -37,7 +38,7 @@ fun OtherFeaturesCard(
 
         SampleRowNavigation(
             icon = painterResource(R.drawable.ic_baseline_folder_24),
-            text = "Assets",
+            text = stringResource(R.string.assets_title),
             onNavigate = onNavigateToAssets,
         )
 
@@ -45,7 +46,7 @@ fun OtherFeaturesCard(
 
         SampleRowNavigation(
             icon = painterResource(R.drawable.ic_baseline_event_24),
-            text = "Events",
+            text = stringResource(R.string.events_title),
             onNavigate = onNavigateToEvents,
         )
     }

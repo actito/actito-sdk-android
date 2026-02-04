@@ -6,6 +6,7 @@ import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowNavigation
@@ -22,7 +23,7 @@ fun DeviceCard(
     ) {
         SampleRowNavigation(
             icon = painterResource(R.drawable.ic_baseline_phone_android_24),
-            text = "Device",
+            text = stringResource(R.string.device_title),
             onNavigate = onNavigateToDevice,
         )
     }

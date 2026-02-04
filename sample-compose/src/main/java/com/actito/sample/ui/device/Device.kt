@@ -16,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
@@ -38,7 +39,7 @@ fun DeviceScreen(
     val dnd = if (currentDevice?.dnd != null) "${currentDevice?.dnd?.start} to ${currentDevice?.dnd?.end}" else "null"
 
     SampleScaffold(
-        title = "Device",
+        title = stringResource(R.string.device_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
     ) {
@@ -58,35 +59,35 @@ fun DeviceScreen(
                 ) {
                     SampleRowHeader(
                         icon = painterResource(R.drawable.ic_baseline_phone_android_24),
-                        text = "Current Device",
+                        text = stringResource(R.string.device_current_device),
                     )
 
                     SampleRowStatus(
-                        label = "Device ID",
+                        label = stringResource(R.string.device_id),
                         isSDK = false,
                         status = currentDevice?.id.toString(),
                     )
 
                     SampleRowStatus(
-                        label = "User ID",
+                        label = stringResource(R.string.device_user_id),
                         isSDK = false,
                         status = currentDevice?.userId.toString(),
                     )
 
                     SampleRowStatus(
-                        label = "User Name",
+                        label = stringResource(R.string.device_user_name),
                         isSDK = false,
                         status = currentDevice?.userName.toString(),
                     )
 
                     SampleRowStatus(
-                        label = "DnD",
+                        label = stringResource(R.string.dnd_short_title),
                         isSDK = false,
                         status = dnd,
                     )
 
                     SampleRowStatus(
-                        label = "Preferred Language",
+                        label = stringResource(R.string.device_preferred_language),
                         isSDK = false,
                         status = preferredLanguage.toString(),
                     )
@@ -100,54 +101,52 @@ fun DeviceScreen(
                 ) {
                     SampleRowHeader(
                         icon = painterResource(R.drawable.user_attributes_24px),
-                        text = "User Data",
+                        text = stringResource(R.string.device_user_data),
                     )
 
-                    userData?.let { data ->
-                        for (entry in data) {
+                    if (userData.isNullOrEmpty()) {
+                        SampleRowStatus(
+                            label = stringResource(R.string.device_user_data_not_defined),
+                            isSDK = false,
+                            status = "",
+                        )
+                    } else {
+                        userData?.forEach { (key, value) ->
                             SampleRowStatus(
-                                label = entry.key,
+                                label = key,
                                 isSDK = false,
-                                status = entry.value,
+                                status = value,
                             )
                         }
-
-                        return@Card
                     }
-
-                    SampleRowStatus(
-                        label = "No data defined",
-                        isSDK = false,
-                        status = "",
-                    )
                 }
             }
 
             TwoActionsCard(
-                name = "Assign User",
+                name = stringResource(R.string.device_assign_user),
                 icon = painterResource(R.drawable.ic_baseline_person_24),
                 firstAction = { viewModel.assignDeviceToAnonymous() },
-                firstActionName = "Anonymous",
+                firstActionName = stringResource(R.string.device_button_anonymous),
                 secondAction = { viewModel.assignDeviceToUser() },
-                secondActionName = "User",
+                secondActionName = stringResource(R.string.device_button_user),
             )
 
             TwoActionsCard(
-                name = "Preferred Language",
+                name = stringResource(R.string.device_preferred_language),
                 icon = painterResource(R.drawable.ic_baseline_text_fields_24),
                 firstAction = { viewModel.clearPreferredLanguage() },
-                firstActionName = "Clear",
+                firstActionName = stringResource(R.string.device_button_clear),
                 secondAction = { viewModel.updatePreferredLanguage() },
-                secondActionName = "Update",
+                secondActionName = stringResource(R.string.device_button_update),
             )
 
             TwoActionsCard(
-                name = "User Data",
+                name = stringResource(R.string.device_user_data),
                 icon = painterResource(R.drawable.user_attributes_24px),
                 firstAction = { viewModel.removeUserDataEntry() },
-                firstActionName = "Remove one",
+                firstActionName = stringResource(R.string.device_button_remove_one),
                 secondAction = { viewModel.updateUserData() },
-                secondActionName = "Update",
+                secondActionName = stringResource(R.string.device_button_update),
             )
         }
     }

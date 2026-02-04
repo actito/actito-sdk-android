@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowHeader
@@ -44,7 +45,7 @@ fun AdditionalTagsCard(
         ) {
             SampleRowHeader(
                 icon = painterResource(R.drawable.ic_baseline_add_24),
-                text = "Extra Tags",
+                text = stringResource(R.string.tags_quick_fill),
             )
 
             FlowRow(
@@ -72,7 +73,7 @@ fun AdditionalTagsCard(
             OutlinedTextField(
                 state = customTag,
                 lineLimits = TextFieldLineLimits.SingleLine,
-                placeholder = { Text("Custom Tag") },
+                placeholder = { Text(stringResource(R.string.tags_manual_input)) },
             )
 
             Row(
@@ -90,7 +91,7 @@ fun AdditionalTagsCard(
                         customTag.clearText()
                     },
                 ) {
-                    Text("Add")
+                    Text(stringResource(R.string.button_add))
                 }
             }
         }

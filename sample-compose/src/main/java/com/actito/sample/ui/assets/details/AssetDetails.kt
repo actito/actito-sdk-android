@@ -12,9 +12,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.actito.assets.models.ActitoAsset
+import com.actito.sample.R
 import com.actito.sample.ui.assets.components.AssetImageView
 import com.actito.sample.ui.components.SampleColumnStatus
 import com.actito.sample.ui.components.SampleScaffold
@@ -26,7 +28,7 @@ fun AssetDetailsScreen(
     asset: ActitoAsset,
 ) {
     SampleScaffold(
-        title = "Asset Details",
+        title = stringResource(R.string.assets_asset_details),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
     ) {
@@ -50,17 +52,17 @@ fun AssetDetailsScreen(
             }
 
             SampleColumnStatus(
-                label = "Description",
+                label = stringResource(R.string.assets_asset_description),
                 status = asset.description.toString(),
             )
 
             SampleColumnStatus(
-                label = "Key",
+                label = stringResource(R.string.assets_asset_key),
                 status = asset.key.toString(),
             )
 
             SampleColumnStatus(
-                label = "URL",
+                label = stringResource(R.string.assets_asset_url),
                 status = asset.url.toString(),
             )
 
@@ -70,17 +72,17 @@ fun AssetDetailsScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Text(
-                    text = "Button",
+                    text = stringResource(R.string.assets_asset_button),
                     fontWeight = FontWeight.Bold,
                 )
 
                 SampleColumnStatus(
-                    label = "Label",
+                    label = stringResource(R.string.assets_asset_button_label),
                     status = asset.button?.label.toString(),
                 )
 
                 SampleColumnStatus(
-                    label = "Action",
+                    label = stringResource(R.string.assets_asset_button_action),
                     status = asset.button?.action.toString(),
                 )
             }
@@ -91,22 +93,22 @@ fun AssetDetailsScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Text(
-                    text = "Meta Data",
+                    text = stringResource(R.string.assets_asset_meta_data),
                     fontWeight = FontWeight.Bold,
                 )
 
                 SampleColumnStatus(
-                    label = "Original File Name",
+                    label = stringResource(R.string.assets_asset_original_file_name),
                     status = asset.metaData?.originalFileName.toString(),
                 )
 
                 SampleColumnStatus(
-                    label = "Content Type",
+                    label = stringResource(R.string.assets_asset_content_type),
                     status = asset.metaData?.contentType.toString(),
                 )
 
                 SampleColumnStatus(
-                    label = "Content Type",
+                    label = stringResource(R.string.assets_asset_content_length),
                     status = asset.metaData?.contentLength.toString(),
                 )
             }

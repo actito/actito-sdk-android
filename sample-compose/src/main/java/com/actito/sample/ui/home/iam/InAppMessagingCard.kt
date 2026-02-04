@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.actito.Actito
 import com.actito.iam.ktx.inAppMessaging
@@ -37,11 +38,11 @@ fun InAppMessagingCard(
         ) {
             SampleRowHeader(
                 icon = painterResource(R.drawable.ic_baseline_message_24),
-                text = "In App Messaging",
+                text = stringResource(R.string.in_app_messaging_title),
             )
 
             SampleSwitchRow(
-                text = "Evaluate Context",
+                text = stringResource(R.string.in_app_messaging_evaluate_context),
                 checked = evaluateContext,
                 onCheckedChange = { enabled ->
                     Actito.inAppMessaging().setMessagesSuppressed(suppressed, enabled)
@@ -50,7 +51,7 @@ fun InAppMessagingCard(
             )
 
             SampleSwitchRow(
-                text = "Suppresses",
+                text = stringResource(R.string.in_app_messaging_suppressed),
                 checked = suppressed,
                 onCheckedChange = { enabled ->
                     suppressed = enabled

@@ -79,12 +79,12 @@ class PermissionManager : ComponentActivity {
             MaterialAlertDialogBuilder(context)
                 .setTitle(context.applicationName)
                 .setMessage(permission.rationalePermission)
-                .setPositiveButton(R.string.permissions_button_ok) { dialog, _ ->
+                .setPositiveButton(R.string.button_ok) { dialog, _ ->
                     rationaleShown = true
                     currentRequest = PermissionRequest(permission, onPermissionResult)
                     permissionRequestLauncher.launch(permission.manifestValues)
                 }
-                .setNeutralButton(R.string.permissions_button_cancel) { dialog, _ ->
+                .setNeutralButton(R.string.button_cancel) { dialog, _ ->
                     onPermissionResult(false)
                 }
                 .setCancelable(false)
@@ -124,10 +124,10 @@ class PermissionManager : ComponentActivity {
         MaterialAlertDialogBuilder(context)
             .setTitle(context.applicationName)
             .setMessage(permission.rationaleSettings)
-            .setPositiveButton(R.string.permissions_button_ok) { dialog, _ ->
+            .setPositiveButton(R.string.button_ok) { dialog, _ ->
                 openSettings()
             }
-            .setNeutralButton(R.string.permissions_button_cancel) { dialog, _ ->
+            .setNeutralButton(R.string.button_cancel) { dialog, _ ->
                 currentRequest?.onPermissionResult(false)
                 currentRequest = null
             }

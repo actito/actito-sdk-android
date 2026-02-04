@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
@@ -35,7 +36,7 @@ fun LiveActivityCard(
         ) {
             SampleRowHeader(
                 icon = painterResource(R.drawable.ic_baseline_bolt_24),
-                text = "Live Activity",
+                text = stringResource(R.string.live_activity_title),
             )
 
             Button(
@@ -45,7 +46,7 @@ fun LiveActivityCard(
                     viewModel.createCoffeeSession()
                 },
             ) {
-                Text("Grind beans")
+                Text(stringResource(R.string.live_activity_button_grind_beans))
             }
 
             Button(
@@ -55,7 +56,7 @@ fun LiveActivityCard(
                     viewModel.continueCoffeeSession()
                 },
             ) {
-                Text("Start Brewing")
+                Text(stringResource(R.string.live_activity_button_start_brewing))
             }
 
             Button(
@@ -65,7 +66,7 @@ fun LiveActivityCard(
                     viewModel.continueCoffeeSession()
                 },
             ) {
-                Text("Serve the coffee!")
+                Text(stringResource(R.string.live_activity_button_serve_coffee))
             }
 
             Button(
@@ -75,7 +76,7 @@ fun LiveActivityCard(
                     viewModel.cancelCoffeeSession()
                 },
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.button_cancel))
             }
         }
     }
