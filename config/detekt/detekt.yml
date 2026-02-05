@@ -7,6 +7,8 @@ complexity:
     active: false
   CyclomaticComplexMethod:
     active: false
+  LongParameterList:
+    functionThreshold: 10
 
 exceptions:
   TooGenericExceptionCaught:
@@ -19,6 +21,9 @@ naming:
     active: false
   FunctionNaming:
     ignoreAnnotated: ['Composable']
+  PackageNaming:
+    packagePattern: '[a-z]+(\.[a-z][a-z_]*)*'
+
 
 style:
   MaxLineLength:
@@ -40,3 +45,5 @@ style:
     active: false
   UseRequire:
     active: false
+  UnusedPrivateMember:
+    ignoreAnnotated: ['Preview']
