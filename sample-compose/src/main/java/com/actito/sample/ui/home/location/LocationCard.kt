@@ -69,27 +69,20 @@ fun LocationCard(
                             }
 
                             hasLocationForegroundPermission = true
-                            viewModel.updateLocationUpdatesStatus(true)
 
-                            if (!permissionManager.requestPermission(Permission.LocationBackground())) {
-                                return@launch
+                            if (permissionManager.requestPermission(Permission.LocationBackground())) {
+                                hasLocationBackgroundPermission = true
                             }
 
-                            hasLocationBackgroundPermission = true
-                            viewModel.updateLocationUpdatesStatus(true)
-
-                            if (!permissionManager.requestPermission(Permission.Bluetooth())) {
-                                return@launch
+                            if (permissionManager.requestPermission(Permission.Bluetooth())) {
+                                hasBluetoothPermission = true
                             }
 
-                            hasBluetoothPermission = true
                             viewModel.updateLocationUpdatesStatus(true)
                         }
-
-                        return@SampleSwitchRow
+                    } else {
+                        viewModel.updateLocationUpdatesStatus(false)
                     }
-
-                    viewModel.updateLocationUpdatesStatus(false)
                 },
             )
 

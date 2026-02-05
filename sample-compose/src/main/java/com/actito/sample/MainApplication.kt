@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Build
 import android.os.StrictMode
 import com.actito.Actito
+import com.actito.geo.ktx.geo
 import com.actito.models.ActitoApplication
 import com.actito.push.ktx.push
 import com.actito.sample.core.SampleNotifier
@@ -26,6 +27,7 @@ class MainApplication :
         LiveActivityController.setup(this)
 
         Actito.push().intentReceiver = SamplePushIntentReceiver::class.java
+        Actito.geo().intentReceiver = SampleGeoIntentReceiver::class.java
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LiveActivityController.registerLiveActivitiesChannel()

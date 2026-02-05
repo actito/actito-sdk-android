@@ -1,10 +1,13 @@
 package com.actito.sample.ui.home.location
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.actito.Actito
 import com.actito.geo.ktx.geo
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class LocationViewModel : ViewModel() {
     private val _hasLocationUpdatesEnabled = MutableStateFlow(hasLocationServicesEnabled)
@@ -27,6 +30,10 @@ class LocationViewModel : ViewModel() {
         }
 
         _hasLocationUpdatesEnabled.value = hasLocationServicesEnabled
-        _hasBluetoothEnabled.value = checkBluetoothEnabled
+
+        viewModelScope.launch {
+            delay(2000)
+            _hasBluetoothEnabled.value = checkBluetoothEnabled
+        }
     }
 }
