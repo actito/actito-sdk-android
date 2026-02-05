@@ -13,26 +13,24 @@ import androidx.core.app.NotificationManagerCompat
 import com.actito.sample.R
 import com.actito.sample.utils.applicationName
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 class PermissionManager : ComponentActivity {
-    private val activity: Activity
-    private val permissionRequestLauncher: ActivityResultLauncher<Array<String>>
-    private val openSettingsLauncher: ActivityResultLauncher<Intent>
     var currentRequest: PermissionRequest? = null
-
     var rationaleShown = false
+    private val activity: Activity
+    private lateinit var permissionRequestLauncher: ActivityResultLauncher<Array<String>>
+    private lateinit var openSettingsLauncher: ActivityResultLauncher<Intent>
 
     private val context: Context
         get() = activity
 
     constructor(
         activity: Activity,
-        permissionLauncher: ActivityResultLauncher<Array<String>>,
-        openSettingsLauncher: ActivityResultLauncher<Intent>,
     ) {
         this.activity = activity
-        this.permissionRequestLauncher = permissionLauncher
-        this.openSettingsLauncher = openSettingsLauncher
     }
 
     fun checkPermission(permission: Permission): Boolean {
@@ -62,40 +60,41 @@ class PermissionManager : ComponentActivity {
         return ActivityCompat.shouldShowRequestPermissionRationale(activity, permission.manifestValues.first())
     }
 
-    fun requestPermission(permission: Permission, onPermissionResult: (Boolean) -> Unit) {
-        if (checkPermission(permission)) {
-            onPermissionResult(true)
-            return
+    suspend fun requestPermission(permission: Permission): Boolean =
+        suspendCancellableCoroutine { continuation ->
+            if (checkPermission(permission)) {
+                continuation.resume(true)
+
+                return@suspendCancellableCoroutine
+            }
+
+            if (permission.manifestValues == null) {
+                currentRequest = PermissionRequest(permission, continuation)
+                showSettingsPrompt(permission)
+
+                return@suspendCancellableCoroutine
+            }
+
+            if (shouldShowRationale(permission)) {
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(context.applicationName)
+                    .setMessage(permission.rationalePermission)
+                    .setPositiveButton(R.string.button_ok) { dialog, _ ->
+                        rationaleShown = true
+                        currentRequest = PermissionRequest(permission, continuation)
+                        permissionRequestLauncher.launch(permission.manifestValues)
+                    }
+                    .setNeutralButton(R.string.button_cancel) { dialog, _ ->
+                        continuation.resume(false)
+                    }
+                    .setCancelable(false)
+                    .show()
+
+                return@suspendCancellableCoroutine
+            }
+            currentRequest = PermissionRequest(permission, continuation)
+            permissionRequestLauncher.launch(permission.manifestValues)
         }
-
-        if (permission.manifestValues == null) {
-            currentRequest = PermissionRequest(permission, onPermissionResult)
-            showSettingsPrompt(permission)
-
-            return
-        }
-
-        if (shouldShowRationale(permission)) {
-            MaterialAlertDialogBuilder(context)
-                .setTitle(context.applicationName)
-                .setMessage(permission.rationalePermission)
-                .setPositiveButton(R.string.button_ok) { dialog, _ ->
-                    rationaleShown = true
-                    currentRequest = PermissionRequest(permission, onPermissionResult)
-                    permissionRequestLauncher.launch(permission.manifestValues)
-                }
-                .setNeutralButton(R.string.button_cancel) { dialog, _ ->
-                    onPermissionResult(false)
-                }
-                .setCancelable(false)
-                .show()
-
-            return
-        }
-
-        currentRequest = PermissionRequest(permission, onPermissionResult)
-        permissionRequestLauncher.launch(permission.manifestValues)
-    }
 
     fun shouldOpenSettings(permission: Permission): Boolean {
         if (permission.manifestValues == null) return onNonManifestPermissionStatusGranted(permission)
@@ -128,7 +127,7 @@ class PermissionManager : ComponentActivity {
                 openSettings()
             }
             .setNeutralButton(R.string.button_cancel) { dialog, _ ->
-                currentRequest?.onPermissionResult(false)
+                currentRequest?.continuation?.resume(false)
                 currentRequest = null
             }
             .setCancelable(false)
@@ -143,16 +142,24 @@ class PermissionManager : ComponentActivity {
         )
     }
 
-    internal fun onNonManifestPermissionStatusGranted(permission: Permission): Boolean = when (permission) {
+    private fun onNonManifestPermissionStatusGranted(permission: Permission): Boolean = when (permission) {
         is Permission.Notifications -> {
             NotificationManagerCompat.from(context.applicationContext).areNotificationsEnabled()
         }
 
         else -> true
     }
+
+    fun setupLaunchers(
+        permissionRequestLauncher: ActivityResultLauncher<Array<String>>,
+        openSettingsLauncher: ActivityResultLauncher<Intent>,
+    ) {
+        this.permissionRequestLauncher = permissionRequestLauncher
+        this.openSettingsLauncher = openSettingsLauncher
+    }
 }
 
 data class PermissionRequest(
     val permission: Permission,
-    val onPermissionResult: (Boolean) -> Unit,
+    val continuation: CancellableContinuation<Boolean>,
 )

@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -23,6 +24,7 @@ import com.actito.sample.ui.components.SampleRowStatus
 import com.actito.sample.ui.components.SampleSwitchRow
 import com.actito.sample.utils.permissions.Permission
 import com.actito.sample.utils.permissions.rememberPermissionManager
+import kotlinx.coroutines.launch
 
 @Composable
 fun LocationCard(
@@ -33,6 +35,7 @@ fun LocationCard(
     val hasLocationUpdatesEnabled by viewModel.hasLocationUpdatesEnabled.collectAsState()
     val hasBluetoothEnabled by viewModel.hasBluetoothEnabled.collectAsState()
 
+    val scope = rememberCoroutineScope()
     val permissionManager = rememberPermissionManager()
     var hasLocationForegroundPermission by remember {
         mutableStateOf(permissionManager.checkPermission(Permission.LocationForeground()))
@@ -61,33 +64,28 @@ fun LocationCard(
                 checked = hasLocationForegroundPermission && hasLocationUpdatesEnabled,
                 onCheckedChange = { enabled ->
                     if (enabled) {
-                        permissionManager.requestPermission(
-                            permission = Permission.LocationForeground(),
-                            onPermissionResult = { granted ->
-                                if (!granted) return@requestPermission
+                        scope.launch {
+                            if (!permissionManager.requestPermission(Permission.LocationForeground())) {
+                                return@launch
+                            }
 
-                                hasLocationForegroundPermission = true
-                                viewModel.updateLocationUpdatesStatus(true)
+                            hasLocationForegroundPermission = true
+                            viewModel.updateLocationUpdatesStatus(true)
 
-                                permissionManager.requestPermission(
-                                    permission = Permission.LocationBackground(),
-                                    onPermissionResult = { granted ->
-                                        if (!granted) return@requestPermission
+                            if (!permissionManager.requestPermission(Permission.LocationBackground())) {
+                                return@launch
+                            }
 
-                                        hasLocationBackgroundPermission = true
-                                        viewModel.updateLocationUpdatesStatus(true)
+                            hasLocationBackgroundPermission = true
+                            viewModel.updateLocationUpdatesStatus(true)
 
-                                        permissionManager.requestPermission(
-                                            permission = Permission.Bluetooth(),
-                                            onPermissionResult = { granted ->
-                                                hasBluetoothPermission = granted
-                                                if (granted) viewModel.updateLocationUpdatesStatus(true)
-                                            },
-                                        )
-                                    },
-                                )
-                            },
-                        )
+                            if (!permissionManager.requestPermission(Permission.Bluetooth())) {
+                                return@launch
+                            }
+
+                            hasBluetoothPermission = true
+                            viewModel.updateLocationUpdatesStatus(true)
+                        }
 
                         return@SampleSwitchRow
                     }

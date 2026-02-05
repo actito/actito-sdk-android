@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,6 +25,7 @@ import com.actito.sample.ui.components.SampleSwitchRow
 import com.actito.sample.ui.home.notifications.components.InboxRowNavigation
 import com.actito.sample.utils.permissions.Permission
 import com.actito.sample.utils.permissions.rememberPermissionManager
+import kotlinx.coroutines.launch
 
 @Composable
 fun NotificationsCard(
@@ -38,6 +40,7 @@ fun NotificationsCard(
     val token by viewModel.token.collectAsState()
     val badge by viewModel.badge.collectAsState()
 
+    val scope = rememberCoroutineScope()
     val permissionManager = rememberPermissionManager()
     var hasNotificationsPermissions by remember {
         mutableStateOf(permissionManager.checkPermission(Permission.Notifications()))
@@ -58,14 +61,14 @@ fun NotificationsCard(
                 checked = notificationsEnabledAndActive,
                 onCheckedChange = { enabled ->
                     if (enabled) {
-                        permissionManager.requestPermission(
-                            permission = Permission.Notifications(),
-                            onPermissionResult = { granted ->
-                                hasNotificationsPermissions = granted
+                        scope.launch {
+                            if (!permissionManager.requestPermission(Permission.Notifications())) {
+                                return@launch
+                            }
 
-                                if (granted) viewModel.updateRemoteNotificationsStatus(true)
-                            },
-                        )
+                            hasNotificationsPermissions = true
+                            viewModel.updateRemoteNotificationsStatus(true)
+                        }
 
                         return@SampleSwitchRow
                     }
