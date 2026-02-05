@@ -53,8 +53,17 @@ fun BeaconsScreen(
 
                 if (ranged == null) {
                     Text(text = stringResource(R.string.location_beacons_no_ranged_beacons))
+                } else if (ranged.beacons.isEmpty()) {
+                    Text(
+                        stringResource(
+                            R.string.location_beacons_scanning_for_region,
+                            ranged.region.name,
+                        ),
+                    )
                 } else {
-                    LazyColumn {
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(32.dp),
+                    ) {
                         items(ranged.beacons) { beacon ->
                             BeaconView(
                                 region = ranged.region,

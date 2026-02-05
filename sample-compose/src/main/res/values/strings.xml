@@ -80,11 +80,12 @@
     <string name="live_activity_title">Live Activity</string>
 
     <string name="location_beacon_name">Beacon name: %1$s</string>
-    <string name="location_beacon_minor">Beacon minor: %1$d</string>
-    <string name="location_beacon_major">Beacon major: %1$d</string>
+    <string name="location_beacon_minor">Beacon minor: %1$s</string>
+    <string name="location_beacon_major">Beacon major: %1$s</string>
     <string name="location_beacon_proximity">Beacon proximity: %1$s</string>
     <string name="location_beacons">Beacons</string>
     <string name="location_beacons_no_ranged_beacons">Beacons not found!</string>
+    <string name="location_beacons_scanning_for_region">Scanning beacons for region: %1$s</string>
     <string name="location_beacons_ranged">Ranged beacons</string>
     <string name="location_beacons_title">Beacons</string>
     <string name="location_bluetooth_enabled">Bluetooth Enabled</string>
