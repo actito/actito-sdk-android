@@ -29,7 +29,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun LocationCard(
     onNavigateToBeacons: () -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: LocationViewModel = viewModel(),
 ) {
     val hasLocationUpdatesEnabled by viewModel.hasLocationUpdatesEnabled.collectAsState()
@@ -50,7 +49,7 @@ fun LocationCard(
     }
 
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {

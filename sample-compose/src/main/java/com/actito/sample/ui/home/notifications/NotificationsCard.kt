@@ -31,7 +31,6 @@ import kotlinx.coroutines.launch
 fun NotificationsCard(
     onNavigateToInbox: () -> Unit,
     onNavigateToTags: () -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: NotificationsViewModel = viewModel(),
 ) {
     val notificationsAllowedUI by viewModel.notificationsAllowedUI.collectAsState()
@@ -47,7 +46,7 @@ fun NotificationsCard(
     }
 
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {

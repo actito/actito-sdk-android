@@ -32,8 +32,8 @@ import com.actito.sample.ui.components.SampleScaffold
 
 @Composable
 fun EventsScreen(
-    onNavigateBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
+    onNavigateBack: () -> Unit,
     viewModel: EventsViewModel = viewModel(),
 ) {
     val defaultEventData: ActitoEventData = mapOf("key_1" to "value_1", "key_2" to "value_2")
@@ -41,9 +41,9 @@ fun EventsScreen(
     var includeEventData by remember { mutableStateOf(false) }
 
     SampleScaffold(
-        title = stringResource(R.string.events_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
+        title = stringResource(R.string.events_title),
     ) {
         Card(
             modifier = Modifier

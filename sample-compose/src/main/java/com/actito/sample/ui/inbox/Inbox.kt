@@ -40,8 +40,8 @@ import com.actito.sample.utils.findActivity
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InboxScreen(
-    onNavigateBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
+    onNavigateBack: () -> Unit,
     viewModel: InboxViewModel = viewModel(),
 ) {
     val actitivy = LocalContext.current.findActivity

@@ -30,7 +30,6 @@ fun SampleRowTimePicker(
     hour: Int,
     minute: Int,
     onTimeSelected: (hour: Int, minute: Int) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     var showPicker by remember { mutableStateOf(false) }
 
@@ -59,7 +58,7 @@ fun SampleRowTimePicker(
     }
 
     Row(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .clickable { showPicker = true }
             .padding(vertical = 8.dp),

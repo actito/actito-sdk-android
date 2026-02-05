@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.actito.Actito
 import com.actito.sample.R
@@ -16,11 +17,9 @@ import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleRowStatus
 
 @Composable
-fun ApplicationInfoCard(
-    modifier: Modifier = Modifier,
-) {
+fun ApplicationInfoCard() {
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {
@@ -46,4 +45,10 @@ fun ApplicationInfoCard(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun ApplicationInfoCardPreview() {
+    ApplicationInfoCard()
 }

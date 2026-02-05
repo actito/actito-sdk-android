@@ -17,14 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.actito.assets.models.ActitoAsset
 import com.actito.sample.R
-import com.actito.sample.ui.assets.components.AssetImageView
+import com.actito.sample.ui.assets.components.AssetImage
 import com.actito.sample.ui.components.SampleColumnStatus
 import com.actito.sample.ui.components.SampleScaffold
 
 @Composable
 fun AssetDetailsScreen(
-    onNavigateBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
+    onNavigateBack: () -> Unit,
     asset: ActitoAsset,
 ) {
     SampleScaffold(
@@ -45,7 +45,7 @@ fun AssetDetailsScreen(
                     fontWeight = FontWeight.Bold,
                 )
 
-                AssetImageView(
+                AssetImage(
                     modifier = Modifier.size(128.dp),
                     asset = asset,
                 )

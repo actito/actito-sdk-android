@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.actito.Actito
 import com.actito.iam.ktx.inAppMessaging
@@ -21,14 +22,12 @@ import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleSwitchRow
 
 @Composable
-fun InAppMessagingCard(
-    modifier: Modifier = Modifier,
-) {
+fun InAppMessagingCard() {
     var evaluateContext by remember { mutableStateOf(false) }
     var suppressed by remember { mutableStateOf(Actito.inAppMessaging().hasMessagesSuppressed) }
 
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {
@@ -59,4 +58,10 @@ fun InAppMessagingCard(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun InAppMessagingCardPreview() {
+    InAppMessagingCard()
 }

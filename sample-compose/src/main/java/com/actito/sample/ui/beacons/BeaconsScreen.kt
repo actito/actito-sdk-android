@@ -24,16 +24,16 @@ import com.actito.sample.ui.components.SampleScaffold
 
 @Composable
 fun BeaconsScreen(
-    onNavigateBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
+    onNavigateBack: () -> Unit,
     viewModel: BeaconsViewModel = viewModel(),
 ) {
     val rangedBeacons by viewModel.rangedBeacons.collectAsState()
 
     SampleScaffold(
-        title = stringResource(R.string.location_beacons_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
+        title = stringResource(R.string.location_beacons_title),
     ) {
         Card(
             modifier = Modifier

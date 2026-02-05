@@ -18,11 +18,13 @@ import com.actito.sample.ui.tags.components.DeviceTagsCard
 
 @Composable
 fun TagsScreen(
-    onNavigateBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
+    onNavigateBack: () -> Unit,
     viewModel: TagsViewModel = viewModel(),
 ) {
     val tags by viewModel.tags.collectAsState()
+    val selectedDeviceTags = remember { mutableStateListOf<String>() }
+    val selectedAdditionalTags = remember { mutableStateListOf<String>() }
     val defaultTags = remember {
         mutableStateListOf(
             "Android",
@@ -34,13 +36,11 @@ fun TagsScreen(
             ".NET",
         ).filterNot { it in tags }
     }
-    val selectedDeviceTags = remember { mutableStateListOf<String>() }
-    val selectedAdditionalTags = remember { mutableStateListOf<String>() }
 
     SampleScaffold(
-        title = "Device",
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
+        title = "Device",
         actions = {
             IconButton(onClick = { viewModel.clearTags() }) {
                 Icon(

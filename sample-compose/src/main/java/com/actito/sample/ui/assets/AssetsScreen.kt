@@ -5,19 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -31,24 +28,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.assets.models.ActitoAsset
 import com.actito.sample.R
-import com.actito.sample.ui.assets.components.AssetImageView
+import com.actito.sample.ui.assets.components.AssetOverview
 import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleScaffold
 
 @Composable
 fun AssetsScreen(
+    snackbarHostState: SnackbarHostState,
     onNavigateBack: () -> Unit,
     onNavigateToAssetDetails: (asset: ActitoAsset) -> Unit,
-    snackbarHostState: SnackbarHostState,
     viewModel: AssetsViewModel = viewModel(),
 ) {
     val assetsGroup = rememberTextFieldState()
     val assets by viewModel.assets.collectAsState()
 
     SampleScaffold(
-        title = stringResource(R.string.assets_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
+        title = stringResource(R.string.assets_title),
     ) {
         Column {
             Card(
@@ -103,36 +100,6 @@ fun AssetsScreen(
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun AssetOverview(
-    asset: ActitoAsset,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(1f),
-        shape = RoundedCornerShape(12.dp),
-    ) {
-        Column {
-            AssetImageView(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                asset = asset,
-            )
-
-            Text(
-                text = asset.title,
-                modifier = Modifier
-                    .padding(8.dp),
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 1,
-            )
         }
     }
 }

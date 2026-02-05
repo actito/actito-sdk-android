@@ -11,12 +11,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
@@ -29,8 +31,8 @@ import com.actito.sample.ui.home.device.DeviceViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeviceScreen(
-    onNavigateBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
+    onNavigateBack: () -> Unit,
     viewModel: DeviceViewModel = viewModel(),
 ) {
     val currentDevice by viewModel.currentDevice.collectAsState()
@@ -39,9 +41,9 @@ fun DeviceScreen(
     val dnd = if (currentDevice?.dnd != null) "${currentDevice?.dnd?.start} to ${currentDevice?.dnd?.end}" else "null"
 
     SampleScaffold(
-        title = stringResource(R.string.device_title),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
+        title = stringResource(R.string.device_title),
     ) {
         Column(
             modifier = Modifier
@@ -105,10 +107,9 @@ fun DeviceScreen(
                     )
 
                     if (userData.isNullOrEmpty()) {
-                        SampleRowStatus(
-                            label = stringResource(R.string.device_user_data_not_defined),
-                            isSDK = false,
-                            status = "",
+                        Text(
+                            text = stringResource(R.string.device_user_data_not_defined),
+                            fontWeight = FontWeight.Bold,
                         )
                     } else {
                         userData?.forEach { (key, value) ->
@@ -126,27 +127,27 @@ fun DeviceScreen(
                 name = stringResource(R.string.device_assign_user),
                 icon = painterResource(R.drawable.ic_baseline_person_24),
                 firstAction = { viewModel.assignDeviceToAnonymous() },
-                firstActionName = stringResource(R.string.device_button_anonymous),
+                firstActionLabel = stringResource(R.string.device_button_anonymous),
                 secondAction = { viewModel.assignDeviceToUser() },
-                secondActionName = stringResource(R.string.device_button_user),
+                secondActionLabel = stringResource(R.string.device_button_user),
             )
 
             TwoActionsCard(
                 name = stringResource(R.string.device_preferred_language),
                 icon = painterResource(R.drawable.ic_baseline_text_fields_24),
                 firstAction = { viewModel.clearPreferredLanguage() },
-                firstActionName = stringResource(R.string.device_button_clear),
+                firstActionLabel = stringResource(R.string.device_button_clear),
                 secondAction = { viewModel.updatePreferredLanguage() },
-                secondActionName = stringResource(R.string.device_button_update),
+                secondActionLabel = stringResource(R.string.device_button_update),
             )
 
             TwoActionsCard(
                 name = stringResource(R.string.device_user_data),
                 icon = painterResource(R.drawable.user_attributes_24px),
                 firstAction = { viewModel.removeUserDataEntry() },
-                firstActionName = stringResource(R.string.device_button_remove_one),
+                firstActionLabel = stringResource(R.string.device_button_remove_one),
                 secondAction = { viewModel.updateUserData() },
-                secondActionName = stringResource(R.string.device_button_update),
+                secondActionLabel = stringResource(R.string.device_button_update),
             )
         }
     }

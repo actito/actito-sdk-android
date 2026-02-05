@@ -79,6 +79,10 @@
     <string name="live_activity_description">Real-time updates for relevant content.</string>
     <string name="live_activity_title">Live Activity</string>
 
+    <string name="location_beacon_name">Beacon name: %1$s</string>
+    <string name="location_beacon_minor">Beacon minor: %1$d</string>
+    <string name="location_beacon_major">Beacon major: %1$d</string>
+    <string name="location_beacon_proximity">Beacon proximity: %1$s</string>
     <string name="location_beacons">Beacons</string>
     <string name="location_beacons_no_ranged_beacons">Beacons not found!</string>
     <string name="location_beacons_ranged">Ranged beacons</string>
@@ -87,6 +91,7 @@
     <string name="location_permission_background">Permission Background</string>
     <string name="location_permission_bluetooth">Permission Bluetooth</string>
     <string name="location_permission_foreground">Permission Foreground</string>
+    <string name="location_region_name">Region name: %1$s</string>
     <string name="location_title">Location</string>
     <string name="location_updates_enabled">Enabled</string>
 

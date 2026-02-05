@@ -21,9 +21,9 @@ fun TwoActionsCard(
     name: String,
     icon: Painter,
     firstAction: () -> Unit,
-    firstActionName: String,
+    firstActionLabel: String,
     secondAction: () -> Unit,
-    secondActionName: String,
+    secondActionLabel: String,
 ) {
     Card(
         modifier = Modifier
@@ -47,7 +47,7 @@ fun TwoActionsCard(
                     modifier = Modifier.weight(1f),
                     onClick = firstAction,
                 ) {
-                    Text(firstActionName)
+                    Text(firstActionLabel)
                 }
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -56,7 +56,7 @@ fun TwoActionsCard(
                     modifier = Modifier.weight(1f),
                     onClick = secondAction,
                 ) {
-                    Text(secondActionName)
+                    Text(secondActionLabel)
                 }
             }
         }

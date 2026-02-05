@@ -26,7 +26,6 @@ import com.actito.sample.ui.components.SampleRowHeader
 
 @Composable
 fun AdditionalTagsCard(
-    modifier: Modifier = Modifier,
     defaultTags: List<String>,
     selectedTags: List<String>,
     onTagSelected: (tag: String) -> Unit,
@@ -35,7 +34,7 @@ fun AdditionalTagsCard(
     val customTag = rememberTextFieldState()
 
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {

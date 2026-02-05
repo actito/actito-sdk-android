@@ -25,14 +25,13 @@ import com.actito.sample.ui.components.SampleRowStatus
 
 @Composable
 fun LaunchCard(
-    modifier: Modifier = Modifier,
     viewModel: LaunchViewModel = viewModel(),
 ) {
     val isConfigured by viewModel.actitoConfigured.collectAsState()
     val isReady by viewModel.actitoReady.collectAsState()
 
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {

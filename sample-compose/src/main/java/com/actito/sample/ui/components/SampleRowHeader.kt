@@ -20,11 +20,9 @@ import com.actito.sample.ui.theme.Typography
 fun SampleRowHeader(
     icon: Painter,
     text: String,
-    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
@@ -43,7 +41,7 @@ fun SampleRowHeader(
 
 @Preview
 @Composable
-fun SampleRowHeaderPreview() {
+private fun SampleRowHeaderPreview() {
     SampleRowHeader(
         icon = painterResource(R.drawable.ic_baseline_notifications_active_24),
         text = "Launch Flow",

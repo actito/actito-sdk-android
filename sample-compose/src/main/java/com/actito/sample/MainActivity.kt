@@ -34,7 +34,7 @@ import com.actito.push.ktx.push
 import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.ktx.pushUI
 import com.actito.sample.core.SampleNotifier
-import com.actito.sample.core.SampleSnackBar
+import com.actito.sample.core.SampleSnackBarController
 import com.actito.sample.core.SampleSnackbarVisuals
 import com.actito.sample.ui.assets.AssetsScreen
 import com.actito.sample.ui.assets.details.AssetDetailsScreen
@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
             val snackbarHostState = remember { SnackbarHostState() }
 
             LaunchedEffect(Unit) {
-                SampleSnackBar.snackbarEvents.collect { event ->
+                SampleSnackBarController.snackbarEvents.collect { event ->
                     snackbarHostState.showSnackbar(
                         visuals = SampleSnackbarVisuals(
                             message = event.message,
@@ -107,7 +107,6 @@ class MainActivity : ComponentActivity() {
                                 onNavigateToDevice = {
                                     backStack.add(RouteDevice)
                                 },
-
                                 onNavigateToInbox = {
                                     backStack.add(RouteInbox)
                                 },
@@ -177,6 +176,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     },
+
                     transitionSpec = {
                         slideInHorizontally(initialOffsetX = { it }) togetherWith
                             slideOutHorizontally(targetOffsetX = { -it })

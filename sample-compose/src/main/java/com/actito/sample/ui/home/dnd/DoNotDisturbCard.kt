@@ -21,13 +21,12 @@ import com.actito.sample.ui.components.SampleSwitchRow
 
 @Composable
 fun DoNotDisturbCard(
-    modifier: Modifier = Modifier,
     viewModel: DoNotDisturbViewModel = viewModel(),
 ) {
     val dnd by viewModel.currentDnd.collectAsState()
 
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {

@@ -74,7 +74,7 @@ class NotificationsViewModel : ViewModel() {
                     Actito.push().disableRemoteNotifications()
                 }
             } catch (e: Exception) {
-                SampleNotifier.emitError("Failed to update remote notifications registration.", e)
+                SampleNotifier.emitError("Failed to update remote notifications status to $enabled.", e)
             }
         }
     }

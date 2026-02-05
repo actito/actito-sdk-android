@@ -3,7 +3,6 @@ package com.actito.sample.ui.home.dnd
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.actito.Actito
-import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
 import com.actito.sample.core.SampleNotifier
@@ -11,9 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DoNotDisturbViewModel :
-    ViewModel(),
-    Actito.Listener {
+class DoNotDisturbViewModel : ViewModel() {
     private val _currentDnd = MutableStateFlow(currentDeviceDoNotDisturb)
     val currentDnd: StateFlow<ActitoDoNotDisturb?> = _currentDnd
 
@@ -21,15 +18,6 @@ class DoNotDisturbViewModel :
         get() = Actito.device().currentDevice?.dnd
 
     init {
-        Actito.addListener(this)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Actito.removeListener(this)
-    }
-
-    override fun onReady(application: ActitoApplication) {
         fetchDnD()
     }
 

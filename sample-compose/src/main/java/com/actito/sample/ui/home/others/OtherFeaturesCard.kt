@@ -18,10 +18,9 @@ import com.actito.sample.ui.components.SampleRowNavigation
 fun OtherFeaturesCard(
     onNavigateToAssets: () -> Unit,
     onNavigateToEvents: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {

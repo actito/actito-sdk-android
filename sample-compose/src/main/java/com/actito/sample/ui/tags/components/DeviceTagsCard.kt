@@ -21,14 +21,13 @@ import com.actito.sample.ui.components.SampleRowHeader
 
 @Composable
 fun DeviceTagsCard(
-    modifier: Modifier = Modifier,
     deviceTags: List<String>,
     selectedTags: List<String>,
     onTagSelected: (tag: String) -> Unit,
     onRemoveTags: (tags: List<String>) -> Unit,
 ) {
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
     ) {

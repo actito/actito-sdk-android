@@ -44,7 +44,6 @@ class InboxViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().markAsRead(item)
-
                 SampleNotifier.emitInfo("Mark inbox item as read successfully.")
             } catch (e: Exception) {
                 SampleNotifier.emitError("Failed to mark inbox item as read.", e)
@@ -56,7 +55,6 @@ class InboxViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().remove(item)
-
                 SampleNotifier.emitInfo("Removed inbox item successfully.")
             } catch (e: Exception) {
                 SampleNotifier.emitError("Failed to remove inbox item.", e)
@@ -68,7 +66,6 @@ class InboxViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().markAllAsRead()
-
                 SampleNotifier.emitInfo("Marked all items as read successfully.")
             } catch (e: Exception) {
                 SampleNotifier.emitError("Failed to mark all items as read.", e)
@@ -80,7 +77,6 @@ class InboxViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().clear()
-
                 SampleNotifier.emitInfo("Inbox cleared successfully.")
             } catch (e: Exception) {
                 SampleNotifier.emitError("Failed to clear inbox.", e)
@@ -92,7 +88,6 @@ class InboxViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().refresh()
-
                 SampleNotifier.emitInfo("Refreshed inbox successfully.")
             } catch (e: Exception) {
                 SampleNotifier.emitError("Failed to refresh inbox.", e)

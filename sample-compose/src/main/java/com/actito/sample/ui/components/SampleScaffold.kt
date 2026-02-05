@@ -22,13 +22,14 @@ import androidx.compose.ui.res.painterResource
 import com.actito.sample.R
 import com.actito.sample.core.SampleSnackbarType
 import com.actito.sample.core.SampleSnackbarVisuals
+import com.actito.sample.ui.theme.DarkGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SampleScaffold(
-    title: String,
     snackbarHostState: SnackbarHostState,
     onNavigateBack: (() -> Unit)? = null,
+    title: String,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable BoxScope.() -> Unit,
 ) {
@@ -38,7 +39,7 @@ fun SampleScaffold(
                 val visuals = data.visuals as? SampleSnackbarVisuals
                 val type = visuals?.type
                 val backgroundColor = when (type) {
-                    SampleSnackbarType.INFO -> Color(0xFF003300)
+                    SampleSnackbarType.INFO -> DarkGreen
                     SampleSnackbarType.ERROR -> Color.Red
                     null -> Color.Gray
                 }

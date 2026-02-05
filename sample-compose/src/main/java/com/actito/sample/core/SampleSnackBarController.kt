@@ -5,7 +5,7 @@ import androidx.compose.material3.SnackbarVisuals
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-object SampleSnackBar {
+object SampleSnackBarController {
 
     private val _snackbarEvents = MutableSharedFlow<SampleSnackbarEvent>()
     val snackbarEvents = _snackbarEvents.asSharedFlow()
