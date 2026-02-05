@@ -17,12 +17,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.actito.sample.R
 import com.actito.sample.core.SampleSnackbarType
 import com.actito.sample.core.SampleSnackbarVisuals
-import com.actito.sample.ui.theme.DarkGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,9 +37,9 @@ fun SampleScaffold(
                 val visuals = data.visuals as? SampleSnackbarVisuals
                 val type = visuals?.type
                 val backgroundColor = when (type) {
-                    SampleSnackbarType.INFO -> DarkGreen
-                    SampleSnackbarType.ERROR -> Color.Red
-                    null -> Color.Gray
+                    SampleSnackbarType.INFO -> MaterialTheme.colorScheme.primary
+                    SampleSnackbarType.ERROR -> MaterialTheme.colorScheme.error
+                    null -> MaterialTheme.colorScheme.secondary
                 }
 
                 Snackbar(
