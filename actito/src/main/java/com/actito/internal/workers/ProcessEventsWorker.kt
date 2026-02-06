@@ -8,7 +8,7 @@ import com.actito.internal.logger
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.internal.storage.database.entities.ActitoEventEntity
 import com.actito.internal.storage.database.ktx.toPayload
-import com.actito.utilities.networking.isRecoverable
+import com.actito.shouldRetry
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
@@ -19,7 +19,13 @@ internal class ProcessEventsWorker(context: Context, params: WorkerParameters) :
 
     override suspend fun doWork(): Result {
         return try {
-            Actito.database.events().find().forEach { processEvent(it) }
+            Actito.database.events().find().forEach {
+                val shouldContinue = processEvent(it)
+                if (!shouldContinue) {
+                    logger.debug("Stopping processing due to recoverable failure.")
+                    return Result.retry()
+                }
+            }
 
             logger.debug("Finished processing all the events.")
             Result.success()
@@ -29,7 +35,7 @@ internal class ProcessEventsWorker(context: Context, params: WorkerParameters) :
         }
     }
 
-    private suspend fun processEvent(entity: ActitoEventEntity) {
+    private suspend fun processEvent(entity: ActitoEventEntity): Boolean {
         logger.debug("Processing event #${entity.id}")
 
         val now = Date()
@@ -44,7 +50,7 @@ internal class ProcessEventsWorker(context: Context, params: WorkerParameters) :
         if (now.after(expiresAt)) {
             logger.debug("Event expired. Removing...")
             Actito.database.events().delete(entity)
-            return
+            return true
         }
 
         try {
@@ -54,8 +60,9 @@ internal class ProcessEventsWorker(context: Context, params: WorkerParameters) :
 
             logger.debug("Event processed. Removing from storage...")
             Actito.database.events().delete(entity)
+            return true
         } catch (e: Exception) {
-            if (e.isRecoverable) {
+            if (e.shouldRetry) {
                 logger.debug("Failed to process event.")
 
                 // Increase the attempts counter.
@@ -68,9 +75,12 @@ internal class ProcessEventsWorker(context: Context, params: WorkerParameters) :
                     logger.debug("Event was retried too many times. Removing...")
                     Actito.database.events().delete(entity)
                 }
+
+                return false
             } else {
                 logger.debug("Failed to process event due to an unrecoverable error. Discarding it...")
                 Actito.database.events().delete(entity)
+                return true
             }
         }
     }

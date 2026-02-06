@@ -251,7 +251,7 @@ public class ActitoEventsComponent internal constructor() {
         } catch (e: Exception) {
             logger.warning("Failed to send the event: ${payload.type}", e)
 
-            if (!discardableEvents.contains(payload.type) && e.isRecoverable) {
+            if (!discardableEvents.contains(payload.type) && e.shouldRetry) {
                 logger.info("Queuing event to be sent whenever possible.")
 
                 Actito.database.events().insert(payload.toEntity())
@@ -306,3 +306,16 @@ public class ActitoEventsComponent internal constructor() {
             )
     }
 }
+
+internal val Exception.shouldRetry: Boolean
+    get() {
+        return when (this) {
+            is NetworkException.ValidationException ->
+                response.code >= 500
+
+            is NetworkException.InaccessibleServiceException ->
+                true
+
+            else -> isRecoverable
+        }
+    }
