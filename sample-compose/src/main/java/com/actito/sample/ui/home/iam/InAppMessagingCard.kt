@@ -44,7 +44,6 @@ fun InAppMessagingCard() {
                 text = stringResource(R.string.in_app_messaging_evaluate_context),
                 checked = evaluateContext,
                 onCheckedChange = { enabled ->
-                    Actito.inAppMessaging().setMessagesSuppressed(suppressed, enabled)
                     evaluateContext = enabled
                 },
             )
@@ -53,6 +52,7 @@ fun InAppMessagingCard() {
                 text = stringResource(R.string.in_app_messaging_suppressed),
                 checked = suppressed,
                 onCheckedChange = { enabled ->
+                    Actito.inAppMessaging().setMessagesSuppressed(enabled, evaluateContext)
                     suppressed = enabled
                 },
             )
