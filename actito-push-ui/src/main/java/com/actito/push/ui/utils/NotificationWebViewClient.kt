@@ -2,7 +2,6 @@ package com.actito.push.ui.utils
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.webkit.WebResourceError
@@ -26,8 +25,7 @@ internal open class NotificationWebViewClient(
     private val notification: ActitoNotification,
     private val callback: NotificationFragment.Callback,
 ) : WebViewClient() {
-
-    private var loadingError: WebResourceError? = null
+    private var hasInitialLoadCompleted = false
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean =
@@ -36,13 +34,6 @@ internal open class NotificationWebViewClient(
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         val uri = url.toUri()
         return handleOpenActions(uri) || handleOpenAction(uri) || handleUri(view, uri)
-    }
-
-    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-        super.onPageStarted(view, url, favicon)
-
-        // Clear any previous errors when starting to load the page.
-        loadingError = null
     }
 
     override fun onPageFinished(view: WebView, url: String) {
@@ -57,11 +48,15 @@ internal open class NotificationWebViewClient(
             }
         }
 
-        if (loadingError == null) {
-            onMainThread {
-                ActitoPushUI.lifecycleListeners.forEach {
-                    it.get()?.onNotificationPresented(notification)
-                }
+        if (hasInitialLoadCompleted) {
+            return
+        }
+
+        hasInitialLoadCompleted = true
+
+        onMainThread {
+            ActitoPushUI.lifecycleListeners.forEach {
+                it.get()?.onNotificationPresented(notification)
             }
         }
     }
@@ -69,9 +64,11 @@ internal open class NotificationWebViewClient(
     override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
         super.onReceivedError(view, request, error)
 
-        // Keep a reference to the error that just occurred.
-        // The onPageFinished is triggered even when the loading fails.
-        loadingError = error
+        if (hasInitialLoadCompleted || request?.isForMainFrame == false) {
+            return
+        }
+
+        hasInitialLoadCompleted = true
 
         onMainThread {
             ActitoPushUI.lifecycleListeners.forEach {
