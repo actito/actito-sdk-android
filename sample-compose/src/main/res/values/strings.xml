@@ -31,7 +31,7 @@
     <string name="device_assign_user">Assign User</string>
     <string name="device_button_anonymous">Anonymous</string>
     <string name="device_button_clear">Clear</string>
-    <string name="device_button_remove_one">Remove</string>
+    <string name="device_button_remove_one">Remove One</string>
     <string name="device_button_update">Update</string>
     <string name="device_button_user">User</string>
     <string name="device_current_device">Current Device</string>

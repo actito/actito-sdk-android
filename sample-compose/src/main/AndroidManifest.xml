@@ -117,6 +117,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${googleMapsApiKey}" />
+        <meta-data
+            android:name="com.actito.push.ui.notification_url_schemes"
+            android:resource="@array/notification_url_schemes" />
     </application>
 
 </manifest>
