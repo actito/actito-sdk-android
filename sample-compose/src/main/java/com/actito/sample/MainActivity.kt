@@ -9,9 +9,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
@@ -31,6 +34,7 @@ import com.actito.push.ui.ActitoPushUI
 import com.actito.push.ui.ktx.pushUI
 import com.actito.sample.core.SampleNotifier
 import com.actito.sample.core.SampleSnackBarController
+import com.actito.sample.core.SampleSnackbarType
 import com.actito.sample.core.SampleSnackbarVisuals
 import com.actito.sample.ui.assets.AssetsScreen
 import com.actito.sample.ui.assets.details.AssetDetailsScreen
@@ -84,7 +88,11 @@ class MainActivity : ComponentActivity() {
                         visuals = SampleSnackbarVisuals(
                             message = event.message,
                             actionLabel = event.actionLabel,
-                            duration = event.duration,
+                            duration = if (event.type == SampleSnackbarType.ERROR) {
+                                SnackbarDuration.Indefinite
+                            } else {
+                                event.duration
+                            },
                             type = event.type,
                             withDismissAction = true,
                         ),
@@ -280,6 +288,7 @@ class MainActivity : ComponentActivity() {
                 SampleNotifier.emitError(
                     "IAM action failed to execute.\n\n" +
                         "Message name: ${message.name}.\n\nAction label: ${action.label}",
+                    error,
                 )
             }
         }
@@ -342,6 +351,7 @@ class MainActivity : ComponentActivity() {
                 SampleNotifier.emitError(
                     "Action failed to execute.\n\n" +
                         "Notification ID: ${notification.id}.\n\nAction label ID: ${action.label}.",
+                    error,
                 )
             }
         }
