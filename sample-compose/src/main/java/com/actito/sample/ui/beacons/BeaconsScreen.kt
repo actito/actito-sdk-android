@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
-import com.actito.sample.ui.beacons.components.BeaconView
+import com.actito.sample.ui.beacons.components.Beacon
 import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleScaffold
 
@@ -65,7 +65,7 @@ fun BeaconsScreen(
                         verticalArrangement = Arrangement.spacedBy(32.dp),
                     ) {
                         items(ranged.beacons) { beacon ->
-                            BeaconView(
+                            Beacon(
                                 region = ranged.region,
                                 beacon = beacon,
                             )

@@ -40,8 +40,7 @@ fun TwoActionsCard(
             )
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Button(
                     modifier = Modifier.weight(1f),

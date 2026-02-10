@@ -35,8 +35,7 @@ fun AssetOverview(
 
             Text(
                 text = asset.title,
-                modifier = Modifier
-                    .padding(8.dp),
+                modifier = Modifier.padding(8.dp),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
             )

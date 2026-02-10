@@ -92,6 +92,7 @@ class PermissionManager : ComponentActivity {
 
                 return@suspendCancellableCoroutine
             }
+
             currentRequest = PermissionRequest(permission, continuation)
             permissionRequestLauncher.launch(permission.manifestValues)
         }

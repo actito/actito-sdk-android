@@ -57,8 +57,7 @@ fun LaunchCard(
             )
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Button(
                     modifier = Modifier.weight(1f),

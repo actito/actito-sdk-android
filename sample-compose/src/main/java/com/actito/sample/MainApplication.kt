@@ -86,7 +86,7 @@ class MainApplication :
             try {
                 Actito.device().updateUser(userId, userName)
             } catch (e: Exception) {
-                Timber.e(e, "Failed to update the user.")
+                SampleNotifier.emitError("Failed to update the user.", e)
             }
         }
     }

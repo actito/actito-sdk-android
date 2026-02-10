@@ -21,9 +21,7 @@ fun SampleColumnStatus(
             fontWeight = FontWeight.Bold,
         )
 
-        Text(
-            text = status,
-        )
+        Text(text = status)
     }
 }
 

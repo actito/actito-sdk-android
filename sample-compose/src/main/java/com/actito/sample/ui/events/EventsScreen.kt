@@ -69,9 +69,8 @@ fun EventsScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(
-                        stringResource(R.string.events_event_data),
-                    )
+                    Text(stringResource(R.string.events_event_data))
+
                     Checkbox(
                         checked = includeEventData,
                         onCheckedChange = { includeEventData = it },
@@ -90,6 +89,7 @@ fun EventsScreen(
                                 name = eventName.text.toString(),
                                 data = if (includeEventData) defaultEventData else null,
                             )
+
                             eventName.clearText()
                         },
                     ) {

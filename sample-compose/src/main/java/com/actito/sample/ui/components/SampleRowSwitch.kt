@@ -52,7 +52,7 @@ fun SampleSwitchRow(
 
 @Preview
 @Composable
-fun SampleSwitchRowPreview() {
+private fun SampleSwitchRowPreview() {
     SampleSwitchRow(
         icon = painterResource(R.drawable.ic_baseline_notifications_active_24),
         text = "Notifications",

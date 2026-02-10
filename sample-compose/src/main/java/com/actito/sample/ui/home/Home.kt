@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.actito.sample.R
 import com.actito.sample.ui.components.SampleScaffold
 import com.actito.sample.ui.home.device.DeviceCard
 import com.actito.sample.ui.home.dnd.DoNotDisturbCard
@@ -35,7 +37,7 @@ fun HomeScreen(
     val isReady by viewModel.isReady.collectAsState()
 
     SampleScaffold(
-        title = "Sample",
+        title = stringResource(R.string.app_name),
         snackbarHostState = snackbarHostState,
     ) {
         Column(
@@ -46,9 +48,7 @@ fun HomeScreen(
             LaunchCard()
 
             if (isReady) {
-                DeviceCard(
-                    onNavigateToDevice = onNavigateToDevice,
-                )
+                DeviceCard(onNavigateToDevice = onNavigateToDevice)
 
                 DoNotDisturbCard()
 
@@ -59,9 +59,7 @@ fun HomeScreen(
 
                 LiveActivityCard()
 
-                LocationCard(
-                    onNavigateToBeacons = onNavigateToBeacons,
-                )
+                LocationCard(onNavigateToBeacons = onNavigateToBeacons)
 
                 InAppMessagingCard()
 

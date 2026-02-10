@@ -14,7 +14,7 @@ import com.actito.geo.models.ActitoRegion
 import com.actito.sample.R
 
 @Composable
-fun BeaconView(
+fun Beacon(
     region: ActitoRegion,
     beacon: ActitoBeacon,
 ) {

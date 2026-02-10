@@ -12,9 +12,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
@@ -93,6 +91,7 @@ class MainActivity : ComponentActivity() {
                             } else {
                                 event.duration
                             },
+
                             type = event.type,
                             withDismissAction = true,
                         ),
