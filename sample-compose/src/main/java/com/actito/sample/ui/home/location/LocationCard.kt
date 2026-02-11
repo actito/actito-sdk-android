@@ -72,10 +72,10 @@ fun LocationCard(
 
                             if (permissionManager.requestPermission(Permission.LocationBackground())) {
                                 hasLocationBackgroundPermission = true
-                            }
 
-                            if (permissionManager.requestPermission(Permission.Bluetooth())) {
-                                hasBluetoothPermission = true
+                                if (permissionManager.requestPermission(Permission.Bluetooth())) {
+                                    hasBluetoothPermission = true
+                                }
                             }
 
                             viewModel.updateLocationUpdatesStatus(true)

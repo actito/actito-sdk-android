@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 object SampleSnackBarController {
-
     private val _snackbarEvents = MutableSharedFlow<SampleSnackbarEvent>()
     val snackbarEvents = _snackbarEvents.asSharedFlow()
 

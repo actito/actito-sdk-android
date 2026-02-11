@@ -1,5 +1,6 @@
 package com.actito.sample.ui.assets.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,12 +18,13 @@ import com.actito.assets.models.ActitoAsset
 @Composable
 fun AssetOverview(
     asset: ActitoAsset,
-    modifier: Modifier = Modifier,
+    onNavigateToAssetDetails: (asset: ActitoAsset) -> Unit,
 ) {
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1f),
+            .aspectRatio(1f)
+            .clickable { onNavigateToAssetDetails(asset) },
         shape = RoundedCornerShape(12.dp),
     ) {
         Column {
@@ -46,18 +48,21 @@ fun AssetOverview(
 @Preview
 @Composable
 private fun AssetOverviewPreview() {
-    AssetOverview(
-        asset = ActitoAsset(
-            title = "Title",
-            description = "Description",
-            key = "Key",
-            url = null,
-            button = null,
-            metaData = ActitoAsset.MetaData(
-                originalFileName = "FIle Name",
-                contentType = "text/css",
-                contentLength = 999,
-            ),
+    val asset = ActitoAsset(
+        title = "Title",
+        description = "Description",
+        key = "Key",
+        url = null,
+        button = null,
+        metaData = ActitoAsset.MetaData(
+            originalFileName = "FIle Name",
+            contentType = "text/css",
+            contentLength = 999,
         ),
+    )
+
+    AssetOverview(
+        asset = asset,
+        onNavigateToAssetDetails = {},
     )
 }

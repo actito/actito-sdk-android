@@ -79,10 +79,10 @@ class MainApplication :
     }
 
     private fun registerUser() {
-        applicationScope.launch {
-            val userId = getString(R.string.sample_user_id).ifBlank { null }
-            val userName = getString(R.string.sample_user_name).ifBlank { null }
+        val userId = getString(R.string.sample_user_id).ifBlank { null }
+        val userName = getString(R.string.sample_user_name).ifBlank { null }
 
+        applicationScope.launch {
             try {
                 Actito.device().updateUser(userId, userName)
             } catch (e: Exception) {

@@ -30,12 +30,12 @@ fun SampleRowStatus(
         if (isSDK) {
             Spacer(modifier = Modifier.width(6.dp))
 
-            Text(text = "SDK")
+            Text("SDK")
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Text(text = status)
+        Text(status)
     }
 }
 

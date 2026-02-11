@@ -37,7 +37,7 @@ fun InboxRowNavigation(
         BadgedBox(
             badge = {
                 Badge {
-                    Text(text = "$badge")
+                    Text("$badge")
                 }
             },
         ) {

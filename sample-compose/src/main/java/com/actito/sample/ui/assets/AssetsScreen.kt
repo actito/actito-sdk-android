@@ -1,6 +1,5 @@
 package com.actito.sample.ui.assets
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -66,7 +65,7 @@ fun AssetsScreen(
                         modifier = Modifier.fillMaxWidth(),
                         state = assetsGroup,
                         lineLimits = TextFieldLineLimits.SingleLine,
-                        placeholder = { Text(text = stringResource(R.string.assets_asset_group)) },
+                        placeholder = { Text(stringResource(R.string.assets_asset_group)) },
                     )
 
                     Row(
@@ -81,7 +80,7 @@ fun AssetsScreen(
                                 assetsGroup.clearText()
                             },
                         ) {
-                            Text(text = stringResource(R.string.button_search))
+                            Text(stringResource(R.string.button_search))
                         }
                     }
                 }
@@ -96,7 +95,7 @@ fun AssetsScreen(
                 items(assets) { asset ->
                     AssetOverview(
                         asset = asset,
-                        modifier = Modifier.clickable { onNavigateToAssetDetails(asset) },
+                        onNavigateToAssetDetails = onNavigateToAssetDetails,
                     )
                 }
             }

@@ -52,7 +52,7 @@ fun BeaconsScreen(
                 val ranged = rangedBeacons
 
                 if (ranged == null) {
-                    Text(text = stringResource(R.string.location_beacons_no_ranged_beacons))
+                    Text(stringResource(R.string.location_beacons_no_ranged_beacons))
                 } else if (ranged.beacons.isEmpty()) {
                     Text(
                         stringResource(
