@@ -25,8 +25,8 @@ internal data class ApplicationResponse(
         val userDataFields: List<ActitoApplication.UserDataField>,
         val actionCategories: List<ActionCategory>,
         val enforceSizeLimit: Boolean,
-        val enforceTagRestriction: Boolean?,
-        val enforceEventNameRestriction: Boolean?,
+        val enforceTagRestrictions: Boolean?,
+        val enforceEventNameRestrictions: Boolean?,
     ) {
 
         @JsonClass(generateAdapter = true)
@@ -55,8 +55,8 @@ internal data class ApplicationResponse(
                     )
                 },
                 enforceSizeLimit,
-                enforceTagRestriction,
-                enforceEventNameRestriction,
+                enforceTagRestrictions,
+                enforceEventNameRestrictions,
             )
     }
 }
