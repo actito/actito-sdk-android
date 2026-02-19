@@ -15,7 +15,9 @@ import com.actito.push.ui.notifications.NotificationContainerFragment
 import com.actito.utilities.parcel.parcelable
 import com.actito.utilities.threading.onMainThread
 
-public open class NotificationActivity : AppCompatActivity(), NotificationContainerFragment.Callback {
+public open class NotificationActivity :
+    AppCompatActivity(),
+    NotificationContainerFragment.Callback {
 
     private lateinit var binding: ActitoNotificationActivityBinding
     private lateinit var notification: ActitoNotification
@@ -80,12 +82,6 @@ public open class NotificationActivity : AppCompatActivity(), NotificationContai
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            onMainThread {
-                ActitoPushUI.lifecycleListeners.forEach {
-                    it.get()?.onNotificationFinishedPresenting(notification)
-                }
-            }
-
             onBackPressedDispatcher.onBackPressed()
             return true
         }
