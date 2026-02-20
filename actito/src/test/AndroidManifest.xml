@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <meta-data
+            android:name="com.actito.debug_logging_enabled"
+            android:value="true" />
+
+        <meta-data
+            android:name="com.actito.crash_reports_enabled"
+            android:value="true" />
+
+        <meta-data
+            android:name="com.actito.action_label_prefix"
+            android:value="TestPrefix" />
+    </application>
+</manifest>
