@@ -1,0 +1,12 @@
+#!/bin/sh
+
+test_command="./gradlew clean test"
+$test_command
+test_result=$?
+
+if [ $test_result -ne 0 ]; then
+    echo "Failed: $test_command"
+    exit 1
+fi
+
+exit 0
