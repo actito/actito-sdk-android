@@ -36,7 +36,9 @@ fun DeviceScreen(
     val currentDevice by viewModel.currentDevice.collectAsState()
     val preferredLanguage by viewModel.preferredLanguage.collectAsState()
     val userData by viewModel.userData.collectAsState()
-    val dnd = if (currentDevice?.dnd != null) "${currentDevice?.dnd?.start} to ${currentDevice?.dnd?.end}" else "null"
+    val dnd = currentDevice?.dnd?.let { dnd ->
+        "${dnd.start.hours}:${dnd.start.minutes} to ${dnd.end.hours}:${dnd.end.minutes}"
+    }
 
     SampleScaffold(
         snackbarHostState = snackbarHostState,
@@ -83,7 +85,7 @@ fun DeviceScreen(
                     SampleRowStatus(
                         label = stringResource(R.string.dnd_short_title),
                         isSDK = false,
-                        status = dnd,
+                        status = dnd.toString(),
                     )
 
                     SampleRowStatus(

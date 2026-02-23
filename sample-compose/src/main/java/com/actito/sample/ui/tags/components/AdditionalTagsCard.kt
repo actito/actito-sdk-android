@@ -70,6 +70,7 @@ fun AdditionalTagsCard(
             }
 
             OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 state = customTag,
                 lineLimits = TextFieldLineLimits.SingleLine,
                 placeholder = { Text(stringResource(R.string.tags_manual_input)) },
