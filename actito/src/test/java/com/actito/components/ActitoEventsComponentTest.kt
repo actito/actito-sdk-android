@@ -3,6 +3,8 @@ package com.actito.components
 import com.actito.Actito
 import com.actito.ActitoContentTooLargeException
 import com.actito.common.ActitoBaseTest
+import com.actito.common.network.ActitoTestRestApiRequest
+import com.actito.ktx.session
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
@@ -45,5 +47,12 @@ class ActitoEventsComponentTest : ActitoBaseTest() {
         val eventData = mapOf("test_key" to "test_value")
 
         Actito.events().logCustom(eventName, eventData)
+
+        val responseJson = ActitoTestRestApiRequest.get("/event/fortype/re.notifica.event.custom.test_event_data")
+        val eventsArray = responseJson.getJSONArray("events")
+        val lastEvent = eventsArray.getJSONObject(0)
+        val lastEventSessionId = lastEvent.getString("sessionID")
+
+        assert(lastEventSessionId == Actito.session().sessionId)
     }
 }

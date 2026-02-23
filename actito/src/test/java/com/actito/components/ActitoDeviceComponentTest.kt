@@ -2,8 +2,10 @@ package com.actito.components
 
 import com.actito.Actito
 import com.actito.common.ActitoBaseTest
+import com.actito.common.network.ActitoTestRestApiRequest
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
+import com.actito.utilities.device.deviceLanguage
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.FixMethodOrder
@@ -20,21 +22,33 @@ class ActitoDeviceComponentTest : ActitoBaseTest() {
 
     @Test
     fun `device_2 update with user`() = runTest {
-        val userId = "TestUserID"
+        val userId = "testuserid"
         val userName = "TestUserName"
 
         Actito.device().updateUser(userId, userName)
 
-        assert(Actito.device().currentDevice?.userId == userId)
-        assert(Actito.device().currentDevice?.userName == userName)
+        val localDevice = checkNotNull(Actito.device().currentDevice)
+        val responseJson = ActitoTestRestApiRequest.get("/device/${localDevice.id}")
+        val responseDevice = responseJson.getJSONObject("device")
+        val responseUserId = responseDevice.getString("userID")
+
+        assert(localDevice.userId == userId)
+        assert(localDevice.userName == userName)
+        assert(responseUserId == localDevice.userId)
     }
 
     @Test
     fun `device_3 update as anonymous`() = runTest {
         Actito.device().updateUser(null, null)
 
-        assert(Actito.device().currentDevice?.userId == null)
-        assert(Actito.device().currentDevice?.userName == null)
+        val localDevice = checkNotNull(Actito.device().currentDevice)
+        val responseJson = ActitoTestRestApiRequest.get("/device/${localDevice.id}")
+        val responseDevice = responseJson.getJSONObject("device")
+        val responseUserId = responseDevice.getString("userID")
+
+        assert(localDevice.userId == null)
+        assert(localDevice.userName == null)
+        assert(responseUserId != "testuserid")
     }
 
     @Test
@@ -46,14 +60,26 @@ class ActitoDeviceComponentTest : ActitoBaseTest() {
     fun `preferred_language_2 update`() = runTest {
         Actito.device().updatePreferredLanguage("pt-PT")
 
+        val localDevice = checkNotNull(Actito.device().currentDevice)
+        val responseJson = ActitoTestRestApiRequest.get("/device/${localDevice.id}")
+        val responseDevice = responseJson.getJSONObject("device")
+        val responseLanguage = responseDevice.getString("language")
+
         assert(Actito.device().preferredLanguage == "pt-PT")
+        assert(responseLanguage == "pt")
     }
 
     @Test
     fun `preferred_language_3 reset`() = runTest {
         Actito.device().updatePreferredLanguage(null)
 
+        val localDevice = checkNotNull(Actito.device().currentDevice)
+        val responseJson = ActitoTestRestApiRequest.get("/device/${localDevice.id}")
+        val responseDevice = responseJson.getJSONObject("device")
+        val responseLanguage = responseDevice.getString("language")
+
         assert(Actito.device().preferredLanguage == null)
+        assert(responseLanguage == deviceLanguage)
     }
 
     @Test

@@ -3,7 +3,7 @@ package com.actito.common.network
 import com.actito.internal.network.request.ActitoRequest
 import org.json.JSONObject
 
-internal object ActitoTestRequest {
+internal object ActitoTestRestApiRequest {
     internal suspend fun get(url: String): JSONObject {
         val responseString = ActitoRequest.Builder()
             .authentication(
