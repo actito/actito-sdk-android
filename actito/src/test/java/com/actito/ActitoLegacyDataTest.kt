@@ -52,6 +52,7 @@ class ActitoLegacyDataTests {
     @Test
     fun `parse v2 device`() {
         val migration = SharedPreferencesMigration(context)
+
         val parsedDevice = migration.parseDeviceFromV2(v2DeviceJsonStr)
 
         assert(parsedDevice == storedDevice)

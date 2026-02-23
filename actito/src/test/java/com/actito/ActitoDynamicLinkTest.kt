@@ -9,6 +9,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
 
+private const val TEST_DYNAMIC_LINK = "https://actito-sample-app-dev.test.ntc.re/0z4juv8466"
+private const val TEST_INVALID_DYNAMIC_LINK = "https://test.com/path"
+private const val TEST_DEEP_LINK = "com.actito.sample.app.test.dev://actito.com/example"
+
 class ActitoDynamicLinkTest : ActitoBaseTest() {
     @Test
     fun `dynamic link handle empty intent`() = runTest {
@@ -23,7 +27,7 @@ class ActitoDynamicLinkTest : ActitoBaseTest() {
     fun `dynamic link handle intent with wrong uri host`() = runTest {
         val intent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse("https://test.com/path"),
+            Uri.parse(TEST_INVALID_DYNAMIC_LINK),
         )
 
         val didHandle = Actito.handleDynamicLinkIntent(Activity(), intent)
@@ -35,7 +39,7 @@ class ActitoDynamicLinkTest : ActitoBaseTest() {
     fun `dynamic link handle intent`() = runTest {
         val intent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse("https://actito-sample-app-dev.test.ntc.re/0z4juv8466"),
+            Uri.parse(TEST_DYNAMIC_LINK),
         )
 
         val didHandle = Actito.handleDynamicLinkIntent(Activity(), intent)
@@ -45,7 +49,7 @@ class ActitoDynamicLinkTest : ActitoBaseTest() {
 
     @Test
     fun `dynamic link fetch invalid link`() {
-        val uri = Uri.parse("https://test.com/path")
+        val uri = Uri.parse(TEST_INVALID_DYNAMIC_LINK)
 
         Assert.assertThrows(NetworkException.ValidationException::class.java) {
             runTest {
@@ -56,10 +60,10 @@ class ActitoDynamicLinkTest : ActitoBaseTest() {
 
     @Test
     fun `dynamic link fetch link`() = runTest {
-        val uri = Uri.parse("https://actito-sample-app-dev.test.ntc.re/0z4juv8466")
+        val uri = Uri.parse(TEST_DYNAMIC_LINK)
 
         val actitoDynamicLink = Actito.fetchDynamicLink(uri)
 
-        assert(actitoDynamicLink.target == "com.actito.sample.app.test.dev://actito.com/example")
+        assert(actitoDynamicLink.target == TEST_DEEP_LINK)
     }
 }
