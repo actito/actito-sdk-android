@@ -34,6 +34,7 @@ import com.actito.sample.core.SampleNotifier
 import com.actito.sample.core.SampleSnackBarController
 import com.actito.sample.core.SampleSnackbarType
 import com.actito.sample.core.SampleSnackbarVisuals
+import com.actito.sample.ui.application.ApplicationInfoScreen
 import com.actito.sample.ui.assets.AssetsScreen
 import com.actito.sample.ui.assets.details.AssetDetailsScreen
 import com.actito.sample.ui.beacons.BeaconsScreen
@@ -49,6 +50,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 private data object RouteHome : NavKey
+
+@Serializable
+private data object RouteApplication : NavKey
 
 @Serializable
 private data object RouteDevice : NavKey
@@ -107,6 +111,9 @@ class MainActivity : ComponentActivity() {
                         entry<RouteHome> {
                             HomeScreen(
                                 snackbarHostState = snackbarHostState,
+                                onNavigateToApplicationInfo = {
+                                    backStack.add(RouteApplication)
+                                },
                                 onNavigateToDevice = {
                                     backStack.add(RouteDevice)
                                 },
@@ -125,6 +132,13 @@ class MainActivity : ComponentActivity() {
                                 onNavigateToEvents = {
                                     backStack.add(RouteEvents)
                                 },
+                            )
+                        }
+
+                        entry<RouteApplication> {
+                            ApplicationInfoScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
                             )
                         }
 

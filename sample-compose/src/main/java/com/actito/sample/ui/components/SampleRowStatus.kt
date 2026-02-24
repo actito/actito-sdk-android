@@ -33,6 +33,7 @@ fun SampleRowStatus(
             Text("SDK")
         }
 
+        Spacer(modifier = Modifier.width(24.dp))
         Spacer(modifier = Modifier.weight(1f))
 
         Text(status)

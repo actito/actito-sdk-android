@@ -1,9 +1,42 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Sample</string>
 
+    <string name="action_type">Type</string>
+    <string name="action_label">Label</string>
+    <string name="action_target">Target</string>
+    <string name="action_camera">Camera</string>
+    <string name="action_keyboard">Keyboard</string>
+    <string name="action_destructive">Destructive</string>
+    <string name="action_icon">Icon</string>
+    <string name="action_icon_android">Icon Android</string>
+    <string name="action_icon_ios">Icon iOS</string>
+    <string name="action_icon_web">Icon Web</string>
+
     <string name="application_info_app_id">ID</string>
-    <string name="application_info_app_name">Name</string>
-    <string name="application_info_title">Application Info</string>
+    <string name="application_title">Application</string>
+    <string name="application_application_info">Application Info</string>
+    <string name="application_id">ID</string>
+    <string name="application_name">Name</string>
+    <string name="application_category">Category</string>
+    <string name="application_services">Services</string>
+    <string name="application_inbox_config">Inbox Config</string>
+    <string name="application_inbox_config_use_inbox">Use Inbox</string>
+    <string name="application_inbox_config_use_user_inbox">Use User Inbox</string>
+    <string name="application_inbox_config_auto_badge">Auto Badge</string>
+    <string name="application_region_config">Region Config</string>
+    <string name="application_region_config_proximity_uuid">Proximity UUID</string>
+    <string name="application_user_data_fields">User Data Fields</string>
+    <string name="application_user_data_field_type">Type</string>
+    <string name="application_user_data_field_key">Key</string>
+    <string name="application_user_data_field_label">Label</string>
+    <string name="application_action_categories">Action Categories</string>
+    <string name="application_action_category_name">Name</string>
+    <string name="application_action_category_type">Type</string>
+    <string name="application_action_category_description">Description</string>
+    <string name="application_action_category_actions">Actions</string>
+    <string name="application_enforce_size_limit">Enforce size limit</string>
+    <string name="application_enforce_tag_restriction">Tag Restrictions</string>
+    <string name="application_enforce_event_name_restriction">Event name restriction</string>
 
     <string name="assets_asset_button">Button</string>
     <string name="assets_asset_button_action">Action</string>
@@ -27,6 +60,11 @@
     <string name="button_register">Register</string>
     <string name="button_search">Search</string>
     <string name="button_yes">Yes</string>
+
+<!--    <string name="field_type">Type</string>-->
+<!--    <string name="field_key">Key</string>-->
+<!--    <string name="field_label">Label</string>-->
+<!--    <string name="field_value">Value</string>-->
 
     <string name="device_assign_user">Assign User</string>
     <string name="device_button_anonymous">Anonymous</string>

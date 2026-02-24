@@ -26,6 +26,7 @@ import com.actito.sample.ui.home.others.OtherFeaturesCard
 @Composable
 fun HomeScreen(
     snackbarHostState: SnackbarHostState,
+    onNavigateToApplicationInfo: () -> Unit,
     onNavigateToDevice: () -> Unit,
     onNavigateToInbox: () -> Unit,
     onNavigateToTags: () -> Unit,
@@ -48,6 +49,8 @@ fun HomeScreen(
             LaunchCard()
 
             if (isReady) {
+                ApplicationInfoCard(onNavigateToApplicationInfo = onNavigateToApplicationInfo)
+
                 DeviceCard(onNavigateToDevice = onNavigateToDevice)
 
                 DoNotDisturbCard()
@@ -67,8 +70,6 @@ fun HomeScreen(
                     onNavigateToAssets = onNavigateToAssets,
                     onNavigateToEvents = onNavigateToEvents,
                 )
-
-                ApplicationInfoCard()
             }
         }
     }
