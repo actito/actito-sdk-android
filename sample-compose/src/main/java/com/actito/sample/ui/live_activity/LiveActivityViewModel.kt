@@ -1,4 +1,4 @@
-package com.actito.sample.ui.home.live_activity
+package com.actito.sample.ui.live_activity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class LiveActivityViewModel : ViewModel() {
     val coffeeBrewerUiState = LiveActivityController.coffeeActivityStream.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Eagerly,
+        started = SharingStarted.Companion.Eagerly,
         initialValue = null,
     )
 

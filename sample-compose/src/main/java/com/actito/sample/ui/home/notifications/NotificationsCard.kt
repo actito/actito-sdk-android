@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun NotificationsCard(
+    onNavigateToLiveActivity: () -> Unit,
     onNavigateToInbox: () -> Unit,
     onNavigateToTags: () -> Unit,
     viewModel: NotificationsViewModel = viewModel(),
@@ -117,6 +118,14 @@ fun NotificationsCard(
                 icon = painterResource(R.drawable.ic_baseline_discount_24),
                 text = stringResource(R.string.tags_title),
                 onNavigate = onNavigateToTags,
+            )
+
+            HorizontalDivider()
+
+            SampleRowNavigation(
+                icon = painterResource(R.drawable.ic_baseline_bolt_24),
+                text = stringResource(R.string.live_activity_title),
+                onNavigate = onNavigateToLiveActivity,
             )
         }
     }

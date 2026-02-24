@@ -42,6 +42,7 @@ import com.actito.sample.ui.device.DeviceScreen
 import com.actito.sample.ui.events.EventsScreen
 import com.actito.sample.ui.home.HomeScreen
 import com.actito.sample.ui.inbox.InboxScreen
+import com.actito.sample.ui.live_activity.LiveActivityScreen
 import com.actito.sample.ui.tags.TagsScreen
 import com.actito.sample.ui.theme.ActitoSampleTheme
 import kotlinx.coroutines.launch
@@ -59,6 +60,9 @@ private data object RouteDevice : NavKey
 
 @Serializable
 private data object RouteInbox : NavKey
+
+@Serializable
+private data object RouteLiveActivity : NavKey
 
 @Serializable
 private data object RouteTags : NavKey
@@ -117,6 +121,9 @@ class MainActivity : ComponentActivity() {
                                 onNavigateToDevice = {
                                     backStack.add(RouteDevice)
                                 },
+                                onNavigateToLiveActivity = {
+                                    backStack.add(RouteLiveActivity)
+                                },
                                 onNavigateToInbox = {
                                     backStack.add(RouteInbox)
                                 },
@@ -151,6 +158,13 @@ class MainActivity : ComponentActivity() {
 
                         entry<RouteInbox> {
                             InboxScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                            )
+                        }
+
+                        entry<RouteLiveActivity> {
+                            LiveActivityScreen(
                                 snackbarHostState = snackbarHostState,
                                 onNavigateBack = { backStack.removeLastOrNull() },
                             )
