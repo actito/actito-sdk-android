@@ -1,4 +1,4 @@
-package com.actito.sample.ui.home.device
+package com.actito.sample.ui.device
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

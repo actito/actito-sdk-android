@@ -13,10 +13,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleScaffold
-import com.actito.sample.ui.home.device.DeviceCard
+import com.actito.sample.ui.home.core.CoreCard
 import com.actito.sample.ui.home.dnd.DoNotDisturbCard
 import com.actito.sample.ui.home.iam.InAppMessagingCard
-import com.actito.sample.ui.home.info.ApplicationInfoCard
 import com.actito.sample.ui.home.launch.LaunchCard
 import com.actito.sample.ui.home.location.LocationCard
 import com.actito.sample.ui.home.notifications.NotificationsCard
@@ -49,15 +48,16 @@ fun HomeScreen(
             LaunchCard()
 
             if (isReady) {
-                ApplicationInfoCard(onNavigateToApplicationInfo = onNavigateToApplicationInfo)
-
-                DeviceCard(onNavigateToDevice = onNavigateToDevice)
+                CoreCard(
+                    onNavigateToApplicationInfo = onNavigateToApplicationInfo,
+                    onNavigateToDevice = onNavigateToDevice,
+                    onNavigateToTags = onNavigateToTags,
+                )
 
                 DoNotDisturbCard()
 
                 NotificationsCard(
                     onNavigateToInbox = onNavigateToInbox,
-                    onNavigateToTags = onNavigateToTags,
                     onNavigateToLiveActivity = onNavigateToLiveActivity,
                 )
 

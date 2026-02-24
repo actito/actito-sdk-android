@@ -61,10 +61,6 @@
     <string name="button_search">Search</string>
     <string name="button_yes">Yes</string>
 
-<!--    <string name="field_type">Type</string>-->
-<!--    <string name="field_key">Key</string>-->
-<!--    <string name="field_label">Label</string>-->
-<!--    <string name="field_value">Value</string>-->
 
     <string name="device_assign_user">Assign User</string>
     <string name="device_button_anonymous">Anonymous</string>

@@ -25,7 +25,6 @@ import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleRowStatus
 import com.actito.sample.ui.components.SampleScaffold
 import com.actito.sample.ui.device.components.TwoActionsCard
-import com.actito.sample.ui.home.device.DeviceViewModel
 
 @Composable
 fun DeviceScreen(

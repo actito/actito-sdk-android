@@ -31,7 +31,6 @@ import kotlinx.coroutines.launch
 fun NotificationsCard(
     onNavigateToLiveActivity: () -> Unit,
     onNavigateToInbox: () -> Unit,
-    onNavigateToTags: () -> Unit,
     viewModel: NotificationsViewModel = viewModel(),
 ) {
     val notificationsAllowedUI by viewModel.notificationsAllowedUI.collectAsState()
@@ -110,14 +109,6 @@ fun NotificationsCard(
                 text = stringResource(R.string.inbox_title),
                 badge = badge,
                 onNavigate = onNavigateToInbox,
-            )
-
-            HorizontalDivider()
-
-            SampleRowNavigation(
-                icon = painterResource(R.drawable.ic_baseline_discount_24),
-                text = stringResource(R.string.tags_title),
-                onNavigate = onNavigateToTags,
             )
 
             HorizontalDivider()

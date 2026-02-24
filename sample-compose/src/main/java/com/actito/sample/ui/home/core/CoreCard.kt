@@ -1,4 +1,4 @@
-package com.actito.sample.ui.home.info
+package com.actito.sample.ui.home.core
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,8 +13,10 @@ import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowNavigation
 
 @Composable
-fun ApplicationInfoCard(
+fun CoreCard(
     onNavigateToApplicationInfo: () -> Unit,
+    onNavigateToDevice: () -> Unit,
+    onNavigateToTags: () -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -26,11 +28,27 @@ fun ApplicationInfoCard(
             text = stringResource(R.string.application_title),
             onNavigate = onNavigateToApplicationInfo,
         )
+
+        SampleRowNavigation(
+            icon = painterResource(R.drawable.ic_baseline_phone_android_24),
+            text = stringResource(R.string.device_title),
+            onNavigate = onNavigateToDevice,
+        )
+
+        SampleRowNavigation(
+            icon = painterResource(R.drawable.ic_baseline_discount_24),
+            text = stringResource(R.string.tags_title),
+            onNavigate = onNavigateToTags,
+        )
     }
 }
 
 @Preview
 @Composable
-private fun ApplicationInfoCardPreview() {
-    ApplicationInfoCard {}
+private fun CoreCardPreview() {
+    CoreCard(
+        onNavigateToApplicationInfo = {},
+        onNavigateToDevice = {},
+        onNavigateToTags = {},
+    )
 }
