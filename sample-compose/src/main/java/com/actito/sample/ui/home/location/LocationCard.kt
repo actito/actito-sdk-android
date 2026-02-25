@@ -33,6 +33,7 @@ fun LocationCard(
 ) {
     val hasLocationUpdatesEnabled by viewModel.hasLocationUpdatesEnabled.collectAsState()
     val hasBluetoothEnabled by viewModel.hasBluetoothEnabled.collectAsState()
+    val enteredRegions by viewModel.enteredRegions.collectAsState()
 
     val scope = rememberCoroutineScope()
     val permissionManager = rememberPermissionManager()
@@ -114,6 +115,16 @@ fun LocationCard(
                 label = stringResource(R.string.location_bluetooth_enabled),
                 isSDK = true,
                 status = hasBluetoothEnabled.toString(),
+            )
+
+            SampleRowStatus(
+                label = stringResource(R.string.location_regions_entered),
+                isSDK = true,
+                status = if (enteredRegions.isEmpty()) {
+                    stringResource(R.string.location_regions_no_entered)
+                } else {
+                    enteredRegions.joinToString(", ") { it.name }
+                },
             )
         }
 

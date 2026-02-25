@@ -3,6 +3,7 @@ package com.actito.sample.ui.home.core
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -29,11 +30,15 @@ fun CoreCard(
             onNavigate = onNavigateToApplicationInfo,
         )
 
+        HorizontalDivider()
+
         SampleRowNavigation(
             icon = painterResource(R.drawable.ic_baseline_phone_android_24),
             text = stringResource(R.string.device_title),
             onNavigate = onNavigateToDevice,
         )
+
+        HorizontalDivider()
 
         SampleRowNavigation(
             icon = painterResource(R.drawable.ic_baseline_discount_24),
