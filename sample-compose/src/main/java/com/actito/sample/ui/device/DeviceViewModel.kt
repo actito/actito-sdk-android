@@ -35,10 +35,10 @@ class DeviceViewModel : ViewModel() {
         }
     }
 
-    fun assignDeviceToUser() {
+    fun assignDeviceToUser(id: String, name: String) {
         viewModelScope.launch {
             try {
-                Actito.device().updateUser("John", "Doe")
+                Actito.device().updateUser(id, name)
                 _currentDevice.value = Actito.device().currentDevice
             } catch (e: Exception) {
                 SampleNotifier.emitError("Failed to assign user.", e)
@@ -46,10 +46,10 @@ class DeviceViewModel : ViewModel() {
         }
     }
 
-    fun updatePreferredLanguage() {
+    fun updatePreferredLanguage(language: String) {
         viewModelScope.launch {
             try {
-                Actito.device().updatePreferredLanguage("nl-NL")
+                Actito.device().updatePreferredLanguage(language)
                 _currentDevice.value = Actito.device().currentDevice
             } catch (e: Exception) {
                 SampleNotifier.emitError("Failed to update preferred language.", e)
@@ -68,23 +68,7 @@ class DeviceViewModel : ViewModel() {
         }
     }
 
-    fun updateUserData() {
-        val data = mapOf("firstName" to "First Name", "lastName" to "Last Name")
-
-        viewModelScope.launch {
-            try {
-                Actito.device().updateUserData(data)
-            } catch (e: Exception) {
-                SampleNotifier.emitError("Failed to update user data.", e)
-            }
-
-            fetchUserData()
-        }
-    }
-
-    fun removeUserDataEntry() {
-        val data = mapOf("firstName" to "First Name", "lastName" to null)
-
+    fun updateUserData(data: Map<String, String?>) {
         viewModelScope.launch {
             try {
                 Actito.device().updateUserData(data)

@@ -24,7 +24,9 @@ import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleRowStatus
 import com.actito.sample.ui.components.SampleScaffold
-import com.actito.sample.ui.device.components.TwoActionsCard
+import com.actito.sample.ui.device.components.AssignUserComponent
+import com.actito.sample.ui.device.components.PreferredLanguageComponent
+import com.actito.sample.ui.device.components.UserDataComponent
 
 @Composable
 fun DeviceScreen(
@@ -122,31 +124,19 @@ fun DeviceScreen(
                 }
             }
 
-            TwoActionsCard(
-                name = stringResource(R.string.device_assign_user),
-                icon = painterResource(R.drawable.ic_baseline_person_24),
-                firstAction = { viewModel.assignDeviceToAnonymous() },
-                firstActionLabel = stringResource(R.string.device_button_anonymous),
-                secondAction = { viewModel.assignDeviceToUser() },
-                secondActionLabel = stringResource(R.string.device_button_user),
+            AssignUserComponent(
+                onAssignDeviceToAnonymous = { viewModel.assignDeviceToAnonymous() },
+                onAssignDeviceToUser = { id, name -> viewModel.assignDeviceToUser(id, name) },
             )
 
-            TwoActionsCard(
-                name = stringResource(R.string.device_preferred_language),
-                icon = painterResource(R.drawable.ic_baseline_text_fields_24),
-                firstAction = { viewModel.clearPreferredLanguage() },
-                firstActionLabel = stringResource(R.string.device_button_clear),
-                secondAction = { viewModel.updatePreferredLanguage() },
-                secondActionLabel = stringResource(R.string.device_button_update),
+            PreferredLanguageComponent(
+                onClearPreferredLanguage = { viewModel.clearPreferredLanguage() },
+                onUpdatePreferredLanguage = { language -> viewModel.updatePreferredLanguage(language) },
             )
 
-            TwoActionsCard(
-                name = stringResource(R.string.device_user_data),
-                icon = painterResource(R.drawable.user_attributes_24px),
-                firstAction = { viewModel.removeUserDataEntry() },
-                firstActionLabel = stringResource(R.string.device_button_remove_one),
-                secondAction = { viewModel.updateUserData() },
-                secondActionLabel = stringResource(R.string.device_button_update),
+            UserDataComponent(
+                userData = userData,
+                onUpdateUserData = { data -> viewModel.updateUserData(data) },
             )
         }
     }

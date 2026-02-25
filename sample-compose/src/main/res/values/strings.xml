@@ -61,15 +61,17 @@
     <string name="button_search">Search</string>
     <string name="button_yes">Yes</string>
 
-
     <string name="device_assign_user">Assign User</string>
     <string name="device_button_anonymous">Anonymous</string>
     <string name="device_button_clear">Clear</string>
-    <string name="device_button_remove_one">Remove One</string>
+    <string name="device_button_remove_one">Remove Last Name</string>
     <string name="device_button_update">Update</string>
-    <string name="device_button_user">User</string>
+    <string name="device_button_quick_update">Quick Update</string>
+    <string name="device_button_sample_user">Sample User</string>
+    <string name="device_button_sample_language">Sample Language</string>
     <string name="device_current_device">Current Device</string>
     <string name="device_id">ID</string>
+    <string name="device_language">Language</string>
     <string name="device_preferred_language">Preferred Language</string>
     <string name="device_title">Device</string>
     <string name="device_user_data">User Data</string>
@@ -127,6 +129,8 @@
     <string name="location_permission_bluetooth">Permission Bluetooth</string>
     <string name="location_permission_foreground">Permission Foreground</string>
     <string name="location_region_name">Region name: %1$s</string>
+    <string name="location_regions_entered">Entered regions</string>
+    <string name="location_regions_no_entered">No entered regions</string>
     <string name="location_title">Location</string>
     <string name="location_updates_enabled">Enabled</string>
 
@@ -141,7 +145,6 @@
     <string name="tags_manual_input">Manual Input</string>
     <string name="tags_quick_fill">Quick Fill</string>
     <string name="tags_title">Tags</string>
-
 
     <string name="permissions_rationale_notifications">We need notifications permission in order to show relevant content and important notifications.</string>
     <string name="permissions_rationale_notifications_settings">Notifications permission is denied. Enable the permission in the application settings.</string>
