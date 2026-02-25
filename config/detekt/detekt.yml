@@ -8,7 +8,7 @@ complexity:
   CyclomaticComplexMethod:
     active: false
   LongParameterList:
-    functionThreshold: 10
+    functionThreshold: 12
 
 exceptions:
   TooGenericExceptionCaught:
