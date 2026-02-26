@@ -1,4 +1,4 @@
-package com.actito.common
+package com.actito.e2e.common
 
 import com.actito.Actito
 import com.actito.ActitoEventsComponent

@@ -1,9 +1,9 @@
-package com.actito.components
+package com.actito.e2e.events
 
 import com.actito.Actito
 import com.actito.ActitoContentTooLargeException
-import com.actito.common.ActitoBaseTest
-import com.actito.common.network.ActitoTestRestApiRequest
+import com.actito.e2e.common.ActitoBaseTest
+import com.actito.e2e.common.network.ActitoTestRestApiRequest
 import com.actito.ktx.session
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert

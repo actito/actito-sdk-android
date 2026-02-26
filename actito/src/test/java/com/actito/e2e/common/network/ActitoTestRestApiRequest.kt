@@ -1,4 +1,4 @@
-package com.actito.common.network
+package com.actito.e2e.common.network
 
 import com.actito.internal.network.request.ActitoRequest
 import org.json.JSONObject

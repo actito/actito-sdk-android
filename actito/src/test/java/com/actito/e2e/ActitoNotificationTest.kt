@@ -1,6 +1,7 @@
-package com.actito
+package com.actito.e2e
 
-import com.actito.common.ActitoBaseTest
+import com.actito.Actito
+import com.actito.e2e.common.ActitoBaseTest
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 

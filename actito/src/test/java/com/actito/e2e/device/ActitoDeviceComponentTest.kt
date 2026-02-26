@@ -1,8 +1,8 @@
-package com.actito.components
+package com.actito.e2e.device
 
 import com.actito.Actito
-import com.actito.common.ActitoBaseTest
-import com.actito.common.network.ActitoTestRestApiRequest
+import com.actito.e2e.common.ActitoBaseTest
+import com.actito.e2e.common.network.ActitoTestRestApiRequest
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
 import com.actito.utilities.device.deviceLanguage

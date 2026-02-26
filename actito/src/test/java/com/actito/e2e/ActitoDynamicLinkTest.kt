@@ -1,9 +1,10 @@
-package com.actito
+package com.actito.e2e
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import com.actito.common.ActitoBaseTest
+import com.actito.Actito
+import com.actito.e2e.common.ActitoBaseTest
 import com.actito.internal.network.NetworkException
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
