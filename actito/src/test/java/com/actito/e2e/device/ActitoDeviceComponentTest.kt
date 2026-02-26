@@ -1,19 +1,28 @@
 package com.actito.e2e.device
 
 import com.actito.Actito
-import com.actito.e2e.common.ActitoBaseTest
 import com.actito.e2e.common.network.ActitoTestRestApiRequest
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
+import com.actito.rules.ActitoConfigurationTestRule
 import com.actito.utilities.device.deviceLanguage
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.FixMethodOrder
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class ActitoDeviceComponentTest : ActitoBaseTest() {
+class ActitoDeviceComponentTest {
+    @get:Rule
+    val configurationRule = ActitoConfigurationTestRule(
+        workflow = ActitoConfigurationTestRule.Workflow.LAUNCH,
+    )
+
     @Test
     fun `device_1 ensure initially is anonymous`() {
         assert(Actito.device().currentDevice?.userId == null)

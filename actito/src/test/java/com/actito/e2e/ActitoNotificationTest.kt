@@ -1,11 +1,20 @@
 package com.actito.e2e
 
 import com.actito.Actito
-import com.actito.e2e.common.ActitoBaseTest
+import com.actito.rules.ActitoConfigurationTestRule
 import kotlinx.coroutines.test.runTest
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
-class ActitoNotificationTest : ActitoBaseTest(shouldLaunch = false) {
+@RunWith(RobolectricTestRunner::class)
+class ActitoNotificationTest {
+    @get:Rule
+    val configurationRule = ActitoConfigurationTestRule(
+        workflow = ActitoConfigurationTestRule.Workflow.LAUNCH,
+    )
+
     @Test
     fun `notification fetch`() = runTest {
         val notification = Actito.fetchNotification("699706530ba8bedd427d3b15")
