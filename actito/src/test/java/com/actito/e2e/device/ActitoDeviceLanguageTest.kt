@@ -1,7 +1,7 @@
 package com.actito.e2e.device
 
 import com.actito.Actito
-import com.actito.e2e.common.network.ActitoTestRestApiRequest
+import com.actito.e2e.common.network.ActitoTestRestApiClient
 import com.actito.rules.ActitoConfigurationTestRule
 import com.actito.utilities.device.deviceLanguage
 import junit.framework.TestCase.assertNull
@@ -73,7 +73,7 @@ class ActitoDeviceLanguageTest {
 
     private suspend fun getRemoteLanguage(): String {
         val localDevice = checkNotNull(Actito.device().currentDevice)
-        val responseJson = ActitoTestRestApiRequest.get("/device/${localDevice.id}")
+        val responseJson = ActitoTestRestApiClient.get("/device/${localDevice.id}")
         val responseDevice = responseJson.getJSONObject("device")
         val responseLanguage = responseDevice.getString("language")
 

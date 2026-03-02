@@ -2,7 +2,7 @@ package com.actito.e2e.events
 
 import com.actito.Actito
 import com.actito.ActitoContentTooLargeException
-import com.actito.e2e.common.network.ActitoTestRestApiRequest
+import com.actito.e2e.common.network.ActitoTestRestApiClient
 import com.actito.ktx.session
 import com.actito.rules.ActitoConfigurationTestRule
 import kotlinx.coroutines.test.runTest
@@ -57,7 +57,7 @@ class ActitoEventsComponentTest {
 
         Actito.events().logCustom(eventName, eventData)
 
-        val responseJson = ActitoTestRestApiRequest.get("/event/fortype/re.notifica.event.custom.test_event_data")
+        val responseJson = ActitoTestRestApiClient.get("/event/fortype/re.notifica.event.custom.test_event_data")
         val eventsArray = responseJson.getJSONArray("events")
         val lastEvent = eventsArray.getJSONObject(0)
         val lastEventSessionId = lastEvent.getString("sessionID")

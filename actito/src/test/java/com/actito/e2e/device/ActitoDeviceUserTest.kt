@@ -1,7 +1,7 @@
 package com.actito.e2e.device
 
 import com.actito.Actito
-import com.actito.e2e.common.network.ActitoTestRestApiRequest
+import com.actito.e2e.common.network.ActitoTestRestApiClient
 import com.actito.rules.ActitoConfigurationTestRule
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -71,7 +71,7 @@ class ActitoDeviceUserTest {
 
     private suspend fun getRemoteUserId(): String {
         val localDevice = checkNotNull(Actito.device().currentDevice)
-        val responseJson = ActitoTestRestApiRequest.get("/device/${localDevice.id}")
+        val responseJson = ActitoTestRestApiClient.get("/device/${localDevice.id}")
         val responseDevice = responseJson.getJSONObject("device")
         val responseUserId = responseDevice.getString("userID")
 
