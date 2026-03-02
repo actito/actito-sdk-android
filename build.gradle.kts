@@ -15,7 +15,7 @@ subprojects {
         tasks.withType<Test>().configureEach {
             systemProperty("applicationKey", localProperties.getProperty("applicationKey"))
             systemProperty("applicationSecret", localProperties.getProperty("applicationSecret"))
-            systemProperty("applicationMaster", localProperties.getProperty("applicationMaster"))
+            systemProperty("applicationMasterSecret", localProperties.getProperty("applicationMasterSecret"))
             systemProperty("restApi", localProperties.getProperty("restApi"))
             systemProperty("shortLinks", localProperties.getProperty("shortLinks"))
             systemProperty("appLinks", localProperties.getProperty("appLinks"))
