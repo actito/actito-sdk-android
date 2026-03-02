@@ -26,14 +26,14 @@ class ActitoDeviceLanguageTest {
     )
 
     @Before
-    fun launch() {
+    fun setUp() {
         runBlocking {
             Actito.launch()
         }
     }
 
     @After
-    fun unlaunch() {
+    fun tearDown() {
         runBlocking {
             Actito.unlaunch()
         }
