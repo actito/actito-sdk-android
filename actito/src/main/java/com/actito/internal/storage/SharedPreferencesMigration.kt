@@ -61,8 +61,6 @@ internal class SharedPreferencesMigration(
             preferences.preferredRegion = region
         }
 
-        print(preferences.preferredRegion)
-
         // Signal each available module to migrate whatever data it needs.
         ActitoLaunchComponent.Module.entries.forEach {
             it.instance?.migrate(
