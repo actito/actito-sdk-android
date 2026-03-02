@@ -288,7 +288,7 @@ public class ActitoEventsComponent internal constructor() {
         )
     }
 
-    private fun scheduleUploadWorker() {
+    internal fun scheduleUploadWorker() {
         logger.debug("Scheduling a worker to process stored events when there's connectivity.")
 
         WorkManager
