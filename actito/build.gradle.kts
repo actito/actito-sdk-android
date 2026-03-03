@@ -44,6 +44,8 @@ android {
         }
     }
 
+    testFixtures.enable = true
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
@@ -77,4 +79,10 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.robolectric)
     testImplementation(libs.kotlinx.coroutines.test)
+
+    // Test fixture
+    testFixturesImplementation(libs.junit)
+    testFixturesImplementation(libs.mockk)
+    testFixturesImplementation(libs.robolectric)
+    testFixturesImplementation(libs.kotlinx.coroutines.test)
 }
