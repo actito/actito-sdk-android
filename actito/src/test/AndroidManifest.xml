@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
+        <receiver
+            android:name="com.actito.events.ActitoIntentReceiverTest"
+            android:exported="false" />
+
         <meta-data
             android:name="com.actito.debug_logging_enabled"
             android:value="true" />
