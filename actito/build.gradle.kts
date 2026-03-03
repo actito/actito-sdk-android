@@ -86,3 +86,19 @@ dependencies {
     testFixturesImplementation(libs.robolectric)
     testFixturesImplementation(libs.kotlinx.coroutines.test)
 }
+
+afterEvaluate {
+    val releaseComponent = components["release"] as AdhocComponentWithVariants
+
+    releaseComponent.withVariantsFromConfiguration(
+        configurations["releaseTestFixturesVariantReleaseApiPublication"],
+    ) {
+        skip()
+    }
+
+    releaseComponent.withVariantsFromConfiguration(
+        configurations["releaseTestFixturesVariantReleaseRuntimePublication"],
+    ) {
+        skip()
+    }
+}
