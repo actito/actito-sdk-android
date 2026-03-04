@@ -12,6 +12,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class SampleGeoIntentReceiver : ActitoGeoIntentReceiver() {
+    companion object {
+        private var rangedBeacons: RangedBeacons? = null
+    }
+
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onLocationUpdated(context: Context, location: ActitoLocation) {
@@ -45,8 +49,17 @@ class SampleGeoIntentReceiver : ActitoGeoIntentReceiver() {
     }
 
     override fun onBeaconsRanged(context: Context, region: ActitoRegion, beacons: List<ActitoBeacon>) {
-        coroutineScope.launch {
-            SampleNotifier.emitInfo("Beacons ranged.\n\nRegion: $region\n\nBeacons: $beacons")
+        if (rangedBeacons?.region?.name != region.name || rangedBeacons?.beacons != beacons) {
+            rangedBeacons = RangedBeacons(region, beacons)
+
+            coroutineScope.launch {
+                SampleNotifier.emitInfo("Beacons ranged.\n\nRegion: $region\n\nBeacons: $beacons")
+            }
         }
     }
+
+    private data class RangedBeacons(
+        val region: ActitoRegion,
+        val beacons: List<ActitoBeacon>,
+    )
 }
