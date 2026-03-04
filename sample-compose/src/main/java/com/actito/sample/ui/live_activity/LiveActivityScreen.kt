@@ -2,8 +2,11 @@ package com.actito.sample.ui.live_activity
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.SnackbarHostState
@@ -33,59 +36,66 @@ fun LiveActivityScreen(
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
         title = stringResource(R.string.live_activity_title),
-    ) {
-        Card(
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState()),
         ) {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             ) {
-                SampleRowHeader(
-                    icon = painterResource(R.drawable.ic_baseline_bolt_24),
-                    text = stringResource(R.string.live_activity_title),
-                )
-
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = brewingState == null,
-                    onClick = {
-                        viewModel.createCoffeeSession()
-                    },
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    Text(stringResource(R.string.live_activity_button_grind_beans))
-                }
+                    SampleRowHeader(
+                        icon = painterResource(R.drawable.ic_baseline_bolt_24),
+                        text = stringResource(R.string.live_activity_title),
+                    )
 
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = brewingState?.state == CoffeeBrewingState.GRINDING,
-                    onClick = {
-                        viewModel.continueCoffeeSession()
-                    },
-                ) {
-                    Text(stringResource(R.string.live_activity_button_start_brewing))
-                }
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = brewingState == null,
+                        onClick = {
+                            viewModel.createCoffeeSession()
+                        },
+                    ) {
+                        Text(stringResource(R.string.live_activity_button_grind_beans))
+                    }
 
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = brewingState?.state == CoffeeBrewingState.BREWING,
-                    onClick = {
-                        viewModel.continueCoffeeSession()
-                    },
-                ) {
-                    Text(stringResource(R.string.live_activity_button_serve_coffee))
-                }
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = brewingState?.state == CoffeeBrewingState.GRINDING,
+                        onClick = {
+                            viewModel.continueCoffeeSession()
+                        },
+                    ) {
+                        Text(stringResource(R.string.live_activity_button_start_brewing))
+                    }
 
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = brewingState != null,
-                    onClick = {
-                        viewModel.cancelCoffeeSession()
-                    },
-                ) {
-                    Text(stringResource(R.string.button_cancel))
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = brewingState?.state == CoffeeBrewingState.BREWING,
+                        onClick = {
+                            viewModel.continueCoffeeSession()
+                        },
+                    ) {
+                        Text(stringResource(R.string.live_activity_button_serve_coffee))
+                    }
+
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = brewingState != null,
+                        onClick = {
+                            viewModel.cancelCoffeeSession()
+                        },
+                    ) {
+                        Text(stringResource(R.string.button_cancel))
+                    }
                 }
             }
         }

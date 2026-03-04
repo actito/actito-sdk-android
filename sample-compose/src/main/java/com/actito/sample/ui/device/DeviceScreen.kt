@@ -45,10 +45,11 @@ fun DeviceScreen(
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
         title = stringResource(R.string.device_title),
-    ) {
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(innerPadding)
                 .verticalScroll(rememberScrollState()),
         ) {
             Card(

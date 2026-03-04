@@ -2,7 +2,7 @@ package com.actito.sample.ui.assets.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -31,11 +31,11 @@ fun AssetDetailsScreen(
         title = stringResource(R.string.assets_asset_details),
         snackbarHostState = snackbarHostState,
         onNavigateBack = onNavigateBack,
-    ) {
+    ) { innerPadding ->
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                .fillMaxSize()
+                .padding(innerPadding)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {

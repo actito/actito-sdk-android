@@ -1,6 +1,10 @@
 package com.actito.sample.ui.tags
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHostState
@@ -9,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
@@ -49,8 +54,13 @@ fun TagsScreen(
                 )
             }
         },
-    ) {
-        Column {
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState()),
+        ) {
             DeviceTagsCard(
                 deviceTags = tags,
                 selectedTags = selectedDeviceTags.toList(),

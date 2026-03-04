@@ -1,9 +1,8 @@
 package com.actito.sample.ui.components
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,9 +28,10 @@ fun SampleScaffold(
     onNavigateBack: (() -> Unit)? = null,
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
+        modifier = Modifier.imePadding(),
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { data ->
                 val visuals = data.visuals as? SampleSnackbarVisuals
@@ -73,10 +73,8 @@ fun SampleScaffold(
                 actions = actions,
             )
         },
-    ) { padding ->
-        Box(
-            modifier = Modifier.padding(padding),
-            content = content,
-        )
-    }
+        content = { padding ->
+            content(padding)
+        },
+    )
 }

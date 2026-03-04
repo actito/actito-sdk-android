@@ -2,7 +2,6 @@ package com.actito.sample.ui.inbox
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -75,9 +74,13 @@ fun InboxScreen(
                 )
             }
         },
-    ) {
+    ) { innerPadding ->
         if (items.isEmpty()) {
-            Column(modifier = Modifier.fillMaxHeight()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+            ) {
                 Spacer(Modifier.weight(1f))
 
                 Text(
@@ -92,7 +95,11 @@ fun InboxScreen(
                 Spacer(Modifier.weight(1f))
             }
         } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+            ) {
                 items(items) { item ->
                     InboxItem(
                         item = item,
