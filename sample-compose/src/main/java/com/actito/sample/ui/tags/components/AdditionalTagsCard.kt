@@ -13,11 +13,11 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -57,13 +57,17 @@ fun AdditionalTagsCard(
                         AssistChip(
                             onClick = { onTagSelected(tag) },
                             label = { Text(tag) },
-                            colors = AssistChipDefaults.assistChipColors(
-                                containerColor = if (selectedTags.contains(tag)) {
-                                    Color.White
-                                } else {
-                                    Color.Unspecified
-                                },
-                            ),
+                            colors = if (selectedTags.contains(tag)) {
+                                AssistChipDefaults.assistChipColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    labelColor = MaterialTheme.colorScheme.onPrimary,
+                                )
+                            } else {
+                                AssistChipDefaults.assistChipColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                    labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            },
                         )
                     }
                 }

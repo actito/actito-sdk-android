@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
@@ -49,63 +48,60 @@ fun AssetsScreen(
         onNavigateBack = onNavigateBack,
         title = stringResource(R.string.assets_title),
     ) { innerPadding ->
-        Column(
+        LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
+                .padding(innerPadding),
+            columns = GridCells.Adaptive(minSize = 140.dp),
+            contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                 ) {
-                    SampleRowHeader(
-                        icon = painterResource(R.drawable.ic_baseline_folder_24),
-                        text = stringResource(R.string.assets_fetch_assets_title),
-                    )
-
-                    OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        state = assetsGroup,
-                        lineLimits = TextFieldLineLimits.SingleLine,
-                        placeholder = { Text(stringResource(R.string.assets_asset_group)) },
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
-                        Button(
-                            modifier = Modifier.weight(1f),
-                            enabled = !assetsGroup.text.isEmpty(),
-                            onClick = {
-                                viewModel.fetchAssets(assetsGroup.text.toString())
-                                assetsGroup.clearText()
-                            },
+                        SampleRowHeader(
+                            icon = painterResource(R.drawable.ic_baseline_folder_24),
+                            text = stringResource(R.string.assets_fetch_assets_title),
+                        )
+
+                        OutlinedTextField(
+                            modifier = Modifier.fillMaxWidth(),
+                            state = assetsGroup,
+                            lineLimits = TextFieldLineLimits.SingleLine,
+                            placeholder = { Text(stringResource(R.string.assets_asset_group)) },
+                        )
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
                         ) {
-                            Text(stringResource(R.string.button_search))
+                            Button(
+                                modifier = Modifier.weight(1f),
+                                enabled = !assetsGroup.text.isEmpty(),
+                                onClick = {
+                                    viewModel.fetchAssets(assetsGroup.text.toString())
+                                    assetsGroup.clearText()
+                                },
+                            ) {
+                                Text(stringResource(R.string.button_search))
+                            }
                         }
                     }
                 }
             }
 
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 140.dp),
-                contentPadding = PaddingValues(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                items(assets) { asset ->
-                    AssetOverview(
-                        asset = asset,
-                        onNavigateToAssetDetails = onNavigateToAssetDetails,
-                    )
-                }
+            items(assets) { asset ->
+                AssetOverview(
+                    asset = asset,
+                    onNavigateToAssetDetails = onNavigateToAssetDetails,
+                )
             }
         }
     }

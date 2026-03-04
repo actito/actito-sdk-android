@@ -1,13 +1,10 @@
 package com.actito.sample.ui.beacons
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,42 +33,46 @@ fun BeaconsScreen(
         onNavigateBack = onNavigateBack,
         title = stringResource(R.string.location_beacons_title),
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
+            item {
                 SampleRowHeader(
                     icon = painterResource(R.drawable.ic_baseline_bluetooth_searching_24),
                     text = stringResource(R.string.location_beacons_ranged),
                 )
+            }
 
-                val ranged = rangedBeacons
+            val ranged = rangedBeacons
 
-                if (ranged == null) {
-                    Text(stringResource(R.string.location_beacons_no_ranged_beacons))
-                } else if (ranged.beacons.isEmpty()) {
-                    Text(
-                        stringResource(
-                            R.string.location_beacons_scanning_for_region,
-                            ranged.region.name,
-                        ),
-                    )
-                } else {
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(32.dp),
-                    ) {
-                        items(ranged.beacons) { beacon ->
-                            Beacon(
-                                region = ranged.region,
-                                beacon = beacon,
-                            )
-                        }
+            when {
+                ranged == null -> {
+                    item {
+                        Text(stringResource(R.string.location_beacons_no_ranged_beacons))
+                    }
+                }
+
+                ranged.beacons.isEmpty() -> {
+                    item {
+                        Text(
+                            stringResource(
+                                R.string.location_beacons_scanning_for_region,
+                                ranged.region.name,
+                            ),
+                        )
+                    }
+                }
+
+                else -> {
+                    items(ranged.beacons) { beacon ->
+                        Beacon(
+                            region = ranged.region,
+                            beacon = beacon,
+                        )
                     }
                 }
             }
