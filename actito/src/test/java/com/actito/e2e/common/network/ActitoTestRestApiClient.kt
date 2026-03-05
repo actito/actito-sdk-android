@@ -9,7 +9,7 @@ internal object ActitoTestRestApiClient {
             .authentication(
                 ActitoRequest.Authentication.Basic(
                     username = requireNotNull(System.getProperty("applicationKey")),
-                    password = requireNotNull(System.getProperty("applicationMaster")),
+                    password = requireNotNull(System.getProperty("applicationMasterSecret")),
 
                 ),
             )

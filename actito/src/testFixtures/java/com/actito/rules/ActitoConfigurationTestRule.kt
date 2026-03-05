@@ -14,7 +14,7 @@ import org.junit.runner.Description
 import org.robolectric.RuntimeEnvironment
 import kotlin.reflect.KClass
 
-class ActitoConfigurationTestRule(
+public class ActitoConfigurationTestRule(
     private val workflow: Workflow,
     private val servicesInfo: ActitoServicesInfo? = null,
 ) : TestWatcher() {
@@ -77,12 +77,12 @@ class ActitoConfigurationTestRule(
         every { Actito.events() } returns events
     }
 
-    companion object {
+    private companion object {
         private val initializedClasses = mutableSetOf<KClass<*>>()
         private val finishedTests = mutableMapOf<KClass<*>, MutableSet<String>>()
     }
 
-    enum class Workflow {
+    public enum class Workflow {
         CONFIGURATION_ONLY,
         LAUNCH,
     }
