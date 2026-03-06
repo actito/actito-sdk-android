@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +18,7 @@ import com.actito.assets.models.ActitoAsset
 import com.actito.sample.R
 import com.actito.sample.ui.assets.components.AssetImage
 import com.actito.sample.ui.components.SampleColumnStatus
+import com.actito.sample.ui.components.SampleHorizontalDivider
 import com.actito.sample.ui.components.SampleScaffold
 
 @Composable
@@ -66,7 +66,7 @@ fun AssetDetailsScreen(
                 status = asset.url.toString(),
             )
 
-            HorizontalDivider()
+            SampleHorizontalDivider()
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -87,7 +87,7 @@ fun AssetDetailsScreen(
                 )
             }
 
-            HorizontalDivider()
+            SampleHorizontalDivider()
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),

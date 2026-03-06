@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
+import com.actito.sample.ui.components.SampleHorizontalDivider
 import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleRowStatus
 import com.actito.sample.ui.components.SampleScaffold
@@ -97,7 +97,7 @@ fun DeviceScreen(
                     )
                 }
 
-                HorizontalDivider()
+                SampleHorizontalDivider()
 
                 Column(
                     modifier = Modifier.padding(16.dp),

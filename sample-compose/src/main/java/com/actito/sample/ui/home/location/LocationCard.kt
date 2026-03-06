@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
+import com.actito.sample.ui.components.SampleHorizontalDivider
 import com.actito.sample.ui.components.SampleRowNavigation
 import com.actito.sample.ui.components.SampleRowStatus
 import com.actito.sample.ui.components.SampleSwitchRow
@@ -129,7 +129,7 @@ fun LocationCard(
         }
 
         Column {
-            HorizontalDivider()
+            SampleHorizontalDivider()
 
             SampleRowNavigation(
                 icon = painterResource(R.drawable.ic_baseline_bluetooth_searching_24),
