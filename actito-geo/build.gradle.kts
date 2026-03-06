@@ -38,6 +38,10 @@ android {
             optIn.add("com.actito.InternalActitoApi")
         }
     }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -62,6 +66,7 @@ dependencies {
     ksp(libs.moshi.codegen)
 
     // Tests
+    testImplementation(testFixtures(project(":actito")))
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
 }
