@@ -1,4 +1,4 @@
-package com.actito.sample.ui.home.dnd
+package com.actito.sample.ui.device.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,13 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.models.ActitoDoNotDisturb
 import com.actito.models.ActitoTime
 import com.actito.sample.R
@@ -21,10 +18,10 @@ import com.actito.sample.ui.components.SampleSwitchRow
 
 @Composable
 fun DoNotDisturbCard(
-    viewModel: DoNotDisturbViewModel = viewModel(),
+    dnd: ActitoDoNotDisturb?,
+    onUpdateDndStatus: (enabled: Boolean) -> Unit,
+    onUpdateDndTime: (dnd: ActitoDoNotDisturb) -> Unit,
 ) {
-    val dnd by viewModel.currentDnd.collectAsState()
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +36,7 @@ fun DoNotDisturbCard(
                 text = stringResource(R.string.dnd_title),
                 checked = dnd != null,
                 onCheckedChange = { enabled ->
-                    viewModel.enableDndStatus(enabled)
+                    onUpdateDndStatus(enabled)
                 },
             )
 
@@ -55,7 +52,7 @@ fun DoNotDisturbCard(
                                 end = currentDnd.end,
                             )
 
-                            viewModel.updateDndTime(newDnD)
+                            onUpdateDndTime(newDnD)
                         },
                     )
 
@@ -69,7 +66,7 @@ fun DoNotDisturbCard(
                                 end = ActitoTime(hour, minutes),
                             )
 
-                            viewModel.updateDndTime(newDnD)
+                            onUpdateDndTime(newDnD)
                         },
                     )
                 }

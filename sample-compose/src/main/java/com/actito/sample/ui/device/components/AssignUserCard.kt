@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -21,14 +22,16 @@ import androidx.compose.ui.unit.dp
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowHeader
 
-private const val SAMPLE_PREFERRED_LANGUAGE = "nl-NL"
+private const val SAMPLE_USER_ID = "sample.user@actito.com"
+private const val SAMPLE_USER_NAME = "Sample User"
 
 @Composable
-fun PreferredLanguageComponent(
-    onClearPreferredLanguage: () -> Unit,
-    onUpdatePreferredLanguage: (language: String) -> Unit,
+fun AssignUserCard(
+    onAssignDeviceToAnonymous: () -> Unit,
+    onAssignDeviceToUser: (id: String, name: String) -> Unit,
 ) {
-    val language = rememberTextFieldState()
+    val userId = rememberTextFieldState()
+    val userName = rememberTextFieldState()
 
     Card(
         modifier = Modifier
@@ -41,14 +44,21 @@ fun PreferredLanguageComponent(
         ) {
             SampleRowHeader(
                 icon = painterResource(R.drawable.ic_baseline_text_fields_24),
-                text = stringResource(R.string.device_preferred_language),
+                text = stringResource(R.string.device_assign_user),
             )
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                state = language,
+                state = userId,
                 lineLimits = TextFieldLineLimits.SingleLine,
-                placeholder = { Text(stringResource(R.string.device_language)) },
+                placeholder = { Text(stringResource(R.string.device_user_id)) },
+            )
+
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                state = userName,
+                lineLimits = TextFieldLineLimits.SingleLine,
+                placeholder = { Text(stringResource(R.string.device_user_name)) },
             )
 
             Column(
@@ -60,10 +70,15 @@ fun PreferredLanguageComponent(
                 ) {
                     Button(
                         modifier = Modifier.weight(1f),
-                        enabled = !language.text.isEmpty(),
-                        onClick = { onUpdatePreferredLanguage(language.text.toString()) },
+                        enabled = !userId.text.isEmpty() && !userName.text.isEmpty(),
+                        onClick = {
+                            onAssignDeviceToUser(userId.text.toString(), userName.text.toString())
+
+                            userId.clearText()
+                            userName.clearText()
+                        },
                     ) {
-                        Text(stringResource(R.string.device_button_update))
+                        Text(stringResource(R.string.button_register))
                     }
                 }
 
@@ -72,18 +87,18 @@ fun PreferredLanguageComponent(
                 ) {
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = onClearPreferredLanguage,
+                        onClick = onAssignDeviceToAnonymous,
                     ) {
-                        Text(stringResource(R.string.device_button_clear))
+                        Text(stringResource(R.string.device_button_anonymous))
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = { onUpdatePreferredLanguage(SAMPLE_PREFERRED_LANGUAGE) },
+                        onClick = { onAssignDeviceToUser(SAMPLE_USER_ID, SAMPLE_USER_NAME) },
                     ) {
-                        Text(stringResource(R.string.device_button_sample_language))
+                        Text(stringResource(R.string.device_button_sample_user))
                     }
                 }
             }

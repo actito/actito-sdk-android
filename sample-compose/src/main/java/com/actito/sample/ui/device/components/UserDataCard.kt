@@ -23,7 +23,7 @@ import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowHeader
 
 @Composable
-fun UserDataComponent(
+fun UserDataCard(
     userData: Map<String, String>?,
     onUpdateUserData: (userData: Map<String, String?>) -> Unit,
 ) {

@@ -24,9 +24,10 @@ import com.actito.sample.ui.components.SampleHorizontalDivider
 import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleRowStatus
 import com.actito.sample.ui.components.SampleScaffold
-import com.actito.sample.ui.device.components.AssignUserComponent
-import com.actito.sample.ui.device.components.PreferredLanguageComponent
-import com.actito.sample.ui.device.components.UserDataComponent
+import com.actito.sample.ui.device.components.AssignUserCard
+import com.actito.sample.ui.device.components.DoNotDisturbCard
+import com.actito.sample.ui.device.components.PreferredLanguageCard
+import com.actito.sample.ui.device.components.UserDataCard
 
 @Composable
 fun DeviceScreen(
@@ -35,9 +36,10 @@ fun DeviceScreen(
     viewModel: DeviceViewModel = viewModel(),
 ) {
     val currentDevice by viewModel.currentDevice.collectAsState()
+    val dnd by viewModel.currentDnd.collectAsState()
     val preferredLanguage by viewModel.preferredLanguage.collectAsState()
     val userData by viewModel.userData.collectAsState()
-    val dnd = currentDevice?.dnd?.let { dnd ->
+    val deviceDnd = currentDevice?.dnd?.let { dnd ->
         "${dnd.start.hours}:${dnd.start.minutes} to ${dnd.end.hours}:${dnd.end.minutes}"
     }
 
@@ -87,7 +89,7 @@ fun DeviceScreen(
                     SampleRowStatus(
                         label = stringResource(R.string.dnd_short_title),
                         isSDK = false,
-                        status = dnd.toString(),
+                        status = deviceDnd.toString(),
                     )
 
                     SampleRowStatus(
@@ -125,17 +127,23 @@ fun DeviceScreen(
                 }
             }
 
-            AssignUserComponent(
+            DoNotDisturbCard(
+                dnd = dnd,
+                onUpdateDndStatus = { enabled -> viewModel.updateDndStatus(enabled) },
+                onUpdateDndTime = { newDnd -> viewModel.updateDndTime(newDnd) },
+            )
+
+            AssignUserCard(
                 onAssignDeviceToAnonymous = { viewModel.assignDeviceToAnonymous() },
                 onAssignDeviceToUser = { id, name -> viewModel.assignDeviceToUser(id, name) },
             )
 
-            PreferredLanguageComponent(
+            PreferredLanguageCard(
                 onClearPreferredLanguage = { viewModel.clearPreferredLanguage() },
                 onUpdatePreferredLanguage = { language -> viewModel.updatePreferredLanguage(language) },
             )
 
-            UserDataComponent(
+            UserDataCard(
                 userData = userData,
                 onUpdateUserData = { data -> viewModel.updateUserData(data) },
             )

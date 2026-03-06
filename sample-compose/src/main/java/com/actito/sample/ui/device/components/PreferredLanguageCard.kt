@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.input.TextFieldLineLimits
-import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -22,16 +21,14 @@ import androidx.compose.ui.unit.dp
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowHeader
 
-private const val SAMPLE_USER_ID = "sample.user@actito.com"
-private const val SAMPLE_USER_NAME = "Sample User"
+private const val SAMPLE_PREFERRED_LANGUAGE = "nl-NL"
 
 @Composable
-fun AssignUserComponent(
-    onAssignDeviceToAnonymous: () -> Unit,
-    onAssignDeviceToUser: (id: String, name: String) -> Unit,
+fun PreferredLanguageCard(
+    onClearPreferredLanguage: () -> Unit,
+    onUpdatePreferredLanguage: (language: String) -> Unit,
 ) {
-    val userId = rememberTextFieldState()
-    val userName = rememberTextFieldState()
+    val language = rememberTextFieldState()
 
     Card(
         modifier = Modifier
@@ -44,21 +41,14 @@ fun AssignUserComponent(
         ) {
             SampleRowHeader(
                 icon = painterResource(R.drawable.ic_baseline_text_fields_24),
-                text = stringResource(R.string.device_assign_user),
+                text = stringResource(R.string.device_preferred_language),
             )
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                state = userId,
+                state = language,
                 lineLimits = TextFieldLineLimits.SingleLine,
-                placeholder = { Text(stringResource(R.string.device_user_id)) },
-            )
-
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                state = userName,
-                lineLimits = TextFieldLineLimits.SingleLine,
-                placeholder = { Text(stringResource(R.string.device_user_name)) },
+                placeholder = { Text(stringResource(R.string.device_language)) },
             )
 
             Column(
@@ -70,15 +60,10 @@ fun AssignUserComponent(
                 ) {
                     Button(
                         modifier = Modifier.weight(1f),
-                        enabled = !userId.text.isEmpty() && !userName.text.isEmpty(),
-                        onClick = {
-                            onAssignDeviceToUser(userId.text.toString(), userName.text.toString())
-
-                            userId.clearText()
-                            userName.clearText()
-                        },
+                        enabled = !language.text.isEmpty(),
+                        onClick = { onUpdatePreferredLanguage(language.text.toString()) },
                     ) {
-                        Text(stringResource(R.string.button_register))
+                        Text(stringResource(R.string.device_button_update))
                     }
                 }
 
@@ -87,18 +72,18 @@ fun AssignUserComponent(
                 ) {
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = onAssignDeviceToAnonymous,
+                        onClick = onClearPreferredLanguage,
                     ) {
-                        Text(stringResource(R.string.device_button_anonymous))
+                        Text(stringResource(R.string.device_button_clear))
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = { onAssignDeviceToUser(SAMPLE_USER_ID, SAMPLE_USER_NAME) },
+                        onClick = { onUpdatePreferredLanguage(SAMPLE_PREFERRED_LANGUAGE) },
                     ) {
-                        Text(stringResource(R.string.device_button_sample_user))
+                        Text(stringResource(R.string.device_button_sample_language))
                     }
                 }
             }
