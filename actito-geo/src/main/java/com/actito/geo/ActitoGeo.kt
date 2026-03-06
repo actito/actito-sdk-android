@@ -106,7 +106,7 @@ public object ActitoGeo {
         get() = GoogleApiAvailability.getInstance()
             .isGooglePlayServicesAvailable(Actito.requireContext()) == ConnectionResult.SUCCESS
 
-    private val hasForegroundLocationPermission: Boolean
+    internal val hasForegroundLocationPermission: Boolean
         get() {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 ContextCompat.checkSelfPermission(
@@ -121,7 +121,7 @@ public object ActitoGeo {
             }
         }
 
-    private val hasBackgroundLocationPermission: Boolean
+    internal val hasBackgroundLocationPermission: Boolean
         get() {
             val hasBackgroundAccess = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ContextCompat.checkSelfPermission(
@@ -135,7 +135,7 @@ public object ActitoGeo {
             return hasBackgroundAccess && hasForegroundLocationPermission
         }
 
-    private val hasPreciseLocationPermission: Boolean
+    internal val hasPreciseLocationPermission: Boolean
         get() {
             return ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
@@ -143,7 +143,7 @@ public object ActitoGeo {
             ) == PackageManager.PERMISSION_GRANTED
         }
 
-    private val hasBluetoothPermission: Boolean
+    internal val hasBluetoothPermission: Boolean
         get() {
             return ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
@@ -151,7 +151,7 @@ public object ActitoGeo {
             ) == PackageManager.PERMISSION_GRANTED
         }
 
-    private val hasBluetoothScanPermission: Boolean
+    internal val hasBluetoothScanPermission: Boolean
         get() {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 ContextCompat.checkSelfPermission(
@@ -163,7 +163,7 @@ public object ActitoGeo {
             }
         }
 
-    private val locationServicesAuthStatus: String
+    internal val locationServicesAuthStatus: String
         get() {
             return when {
                 hasBackgroundLocationPermission -> "always"
@@ -172,7 +172,7 @@ public object ActitoGeo {
             }
         }
 
-    private val locationServicesAccuracyAuth: String
+    internal val locationServicesAccuracyAuth: String
         get() {
             return when {
                 hasForegroundLocationPermission && !hasPreciseLocationPermission -> "reduced"
@@ -220,7 +220,7 @@ public object ActitoGeo {
             return ActitoBeaconSupport.Enabled
         }
 
-    private val monitoredRegionsLimit: Int
+    internal val monitoredRegionsLimit: Int
         get() {
             val options = Actito.options
             if (options == null) {
