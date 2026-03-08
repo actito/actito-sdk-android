@@ -19,21 +19,25 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleHorizontalDivider
-import com.actito.sample.ui.components.SampleRowNavigation
 import com.actito.sample.ui.components.SampleRowStatus
 import com.actito.sample.ui.components.SampleSwitchRow
+import com.actito.sample.ui.home.location.components.BeaconsRowNavigation
+import com.actito.sample.ui.home.location.components.RegionsRowNavigation
 import com.actito.sample.utils.permissions.Permission
 import com.actito.sample.utils.permissions.rememberPermissionManager
 import kotlinx.coroutines.launch
 
 @Composable
 fun LocationCard(
+    onNavigateToRegions: () -> Unit,
     onNavigateToBeacons: () -> Unit,
     viewModel: LocationViewModel = viewModel(),
 ) {
     val hasLocationUpdatesEnabled by viewModel.hasLocationUpdatesEnabled.collectAsState()
     val hasBluetoothEnabled by viewModel.hasBluetoothEnabled.collectAsState()
+    val monitoredRegions by viewModel.monitoredRegions.collectAsState()
     val enteredRegions by viewModel.enteredRegions.collectAsState()
+    val rangedBeacons by viewModel.rangedBeacons.collectAsState()
 
     val scope = rememberCoroutineScope()
     val permissionManager = rememberPermissionManager()
@@ -116,24 +120,21 @@ fun LocationCard(
                 isSDK = true,
                 status = hasBluetoothEnabled.toString(),
             )
-
-            SampleRowStatus(
-                label = stringResource(R.string.location_regions_entered),
-                isSDK = true,
-                status = if (enteredRegions.isEmpty()) {
-                    stringResource(R.string.location_regions_no_entered)
-                } else {
-                    enteredRegions.joinToString(", ") { it.name }
-                },
-            )
         }
 
         Column {
             SampleHorizontalDivider()
 
-            SampleRowNavigation(
-                icon = painterResource(R.drawable.ic_baseline_bluetooth_searching_24),
-                text = stringResource(R.string.location_beacons),
+            RegionsRowNavigation(
+                monitoredRegions = monitoredRegions.size,
+                enteredRegions = enteredRegions.size,
+                onNavigate = onNavigateToRegions,
+            )
+
+            SampleHorizontalDivider()
+
+            BeaconsRowNavigation(
+                rangedBeacons = rangedBeacons.size,
                 onNavigate = onNavigateToBeacons,
             )
         }

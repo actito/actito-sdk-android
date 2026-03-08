@@ -43,6 +43,7 @@ import com.actito.sample.ui.events.EventsScreen
 import com.actito.sample.ui.home.HomeScreen
 import com.actito.sample.ui.inbox.InboxScreen
 import com.actito.sample.ui.live_activity.LiveActivityScreen
+import com.actito.sample.ui.regions.RegionsScreen
 import com.actito.sample.ui.tags.TagsScreen
 import com.actito.sample.ui.theme.ActitoSampleTheme
 import kotlinx.coroutines.launch
@@ -66,6 +67,9 @@ private data object RouteLiveActivity : NavKey
 
 @Serializable
 private data object RouteTags : NavKey
+
+@Serializable
+private data object RouteRegions : NavKey
 
 @Serializable
 private data object RouteBeacons : NavKey
@@ -130,6 +134,9 @@ class MainActivity : ComponentActivity() {
                                 onNavigateToTags = {
                                     backStack.add(RouteTags)
                                 },
+                                onNavigateToRegions = {
+                                    backStack.add(RouteRegions)
+                                },
                                 onNavigateToBeacons = {
                                     backStack.add(RouteBeacons)
                                 },
@@ -172,6 +179,13 @@ class MainActivity : ComponentActivity() {
 
                         entry<RouteTags> {
                             TagsScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                            )
+                        }
+
+                        entry<RouteRegions> {
+                            RegionsScreen(
                                 snackbarHostState = snackbarHostState,
                                 onNavigateBack = { backStack.removeLastOrNull() },
                             )

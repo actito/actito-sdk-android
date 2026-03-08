@@ -29,6 +29,7 @@ fun HomeScreen(
     onNavigateToLiveActivity: () -> Unit,
     onNavigateToInbox: () -> Unit,
     onNavigateToTags: () -> Unit,
+    onNavigateToRegions: () -> Unit,
     onNavigateToBeacons: () -> Unit,
     onNavigateToAssets: () -> Unit,
     onNavigateToEvents: () -> Unit,
@@ -60,7 +61,10 @@ fun HomeScreen(
                     onNavigateToLiveActivity = onNavigateToLiveActivity,
                 )
 
-                LocationCard(onNavigateToBeacons = onNavigateToBeacons)
+                LocationCard(
+                    onNavigateToRegions = onNavigateToRegions,
+                    onNavigateToBeacons = onNavigateToBeacons,
+                )
 
                 InAppMessagingCard()
 

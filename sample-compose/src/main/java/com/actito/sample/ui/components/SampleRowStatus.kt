@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,13 +26,19 @@ fun SampleRowStatus(
     ) {
         Text(
             text = label,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         if (isSDK) {
             Spacer(modifier = Modifier.width(6.dp))
 
-            Text("SDK")
+            Text(
+                text = "SDK",
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
 
         Spacer(modifier = Modifier.width(24.dp))
@@ -39,6 +46,7 @@ fun SampleRowStatus(
 
         Text(
             text = status,
+            style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.End,
         )
     }
