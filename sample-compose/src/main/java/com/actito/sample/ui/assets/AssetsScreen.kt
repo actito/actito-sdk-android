@@ -23,15 +23,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.assets.models.ActitoAsset
 import com.actito.sample.R
 import com.actito.sample.ui.assets.components.AssetOverview
-import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleScaffold
+import com.actito.sample.ui.components.SampleSectionHeader
 
 @Composable
 fun AssetsScreen(
@@ -58,39 +57,40 @@ fun AssetsScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                Column(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    SampleSectionHeader(stringResource(R.string.assets_fetch_assets_title))
+
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
-                        SampleRowHeader(
-                            icon = painterResource(R.drawable.ic_baseline_folder_24),
-                            text = stringResource(R.string.assets_fetch_assets_title),
-                        )
-
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            state = assetsGroup,
-                            lineLimits = TextFieldLineLimits.SingleLine,
-                            placeholder = { Text(stringResource(R.string.assets_asset_group)) },
-                        )
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
                         ) {
-                            Button(
-                                modifier = Modifier.weight(1f),
-                                enabled = !assetsGroup.text.isEmpty(),
-                                onClick = {
-                                    viewModel.fetchAssets(assetsGroup.text.toString())
-                                    assetsGroup.clearText()
-                                },
+                            OutlinedTextField(
+                                modifier = Modifier.fillMaxWidth(),
+                                state = assetsGroup,
+                                lineLimits = TextFieldLineLimits.SingleLine,
+                                placeholder = { Text(stringResource(R.string.assets_asset_group)) },
+                            )
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center,
                             ) {
-                                Text(stringResource(R.string.button_search))
+                                Button(
+                                    modifier = Modifier.weight(1f),
+                                    enabled = !assetsGroup.text.isEmpty(),
+                                    onClick = {
+                                        viewModel.fetchAssets(assetsGroup.text.toString())
+                                        assetsGroup.clearText()
+                                    },
+                                ) {
+                                    Text(stringResource(R.string.button_search))
+                                }
                             }
                         }
                     }

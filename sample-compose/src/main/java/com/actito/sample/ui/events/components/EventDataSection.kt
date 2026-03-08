@@ -5,11 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,44 +28,45 @@ fun EventDataSection(
     onAddRow: () -> Unit,
     onRemoveRow: (EventDataRow) -> Unit,
 ) {
-    Card {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End,
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(R.string.events_include_data),
-                    modifier = Modifier.weight(1f),
-                )
+            Text(
+                text = stringResource(R.string.events_include_data),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
 
-                Checkbox(
-                    checked = includeEventData,
-                    onCheckedChange = onToggle,
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Checkbox(
+                checked = includeEventData,
+                onCheckedChange = onToggle,
+            )
+        }
+
+        if (includeEventData) {
+            rows.forEach { row ->
+                KeyValueInputRow(
+                    row = row,
+                    onRemove = { onRemoveRow(row) },
                 )
             }
 
-            if (includeEventData) {
-                rows.forEach { row ->
-                    KeyValueInputRow(
-                        row = row,
-                        onRemove = { onRemoveRow(row) },
-                    )
-                }
+            OutlinedButton(onClick = onAddRow) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_baseline_add_24),
+                    contentDescription = null,
+                )
 
-                OutlinedButton(onClick = onAddRow) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_baseline_add_24),
-                        contentDescription = null,
-                    )
+                Spacer(Modifier.width(6.dp))
 
-                    Spacer(Modifier.width(6.dp))
-
-                    Text(stringResource(R.string.events_add_data_field))
-                }
+                Text(stringResource(R.string.events_add_data_field))
             }
         }
     }

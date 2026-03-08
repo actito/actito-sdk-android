@@ -11,14 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
 import com.actito.sample.ui.beacons.components.Beacon
-import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleScaffold
+import com.actito.sample.ui.components.SampleSectionHeaderWithCounter
 
 @Composable
 fun BeaconsScreen(
@@ -41,20 +40,16 @@ fun BeaconsScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             item {
-                SampleRowHeader(
-                    icon = painterResource(R.drawable.ic_baseline_bluetooth_searching_24),
-                    text = stringResource(R.string.location_beacons_ranged),
+                SampleSectionHeaderWithCounter(
+                    title = stringResource(R.string.location_beacons_ranged),
+                    count = rangedBeacons?.beacons?.size ?: 0,
                 )
             }
 
             val ranged = rangedBeacons
 
             when {
-                ranged == null -> {
-                    item {
-                        Text(stringResource(R.string.location_beacons_no_ranged_beacons))
-                    }
-                }
+                ranged == null -> {}
 
                 ranged.beacons.isEmpty() -> {
                     item {

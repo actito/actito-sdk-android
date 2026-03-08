@@ -123,15 +123,16 @@
     <string name="location_beacons">Beacons</string>
     <string name="location_beacons_no_ranged_beacons">Beacons not found!</string>
     <string name="location_beacons_scanning_for_region">Scanning beacons for region: %1$s</string>
-    <string name="location_beacons_ranged">Ranged beacons</string>
+    <string name="location_beacons_ranged">Ranged</string>
     <string name="location_beacons_title">Beacons</string>
     <string name="location_bluetooth_enabled">Bluetooth Enabled</string>
     <string name="location_permission_background">Permission Background</string>
     <string name="location_permission_bluetooth">Permission Bluetooth</string>
     <string name="location_permission_foreground">Permission Foreground</string>
     <string name="location_region_name">Region name: %1$s</string>
-    <string name="location_regions_entered">Entered regions</string>
-    <string name="location_regions_no_entered">No entered regions</string>
+    <string name="location_regions">Regions</string>
+    <string name="location_regions_entered">Entered</string>
+    <string name="location_regions_monitored">Monitored</string>
     <string name="location_title">Location</string>
     <string name="location_updates_enabled">Enabled</string>
 
