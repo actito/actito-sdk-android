@@ -2,36 +2,36 @@ package com.actito.sample.ui.events
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.actito.ActitoEventData
 import com.actito.sample.R
-import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleScaffold
+import com.actito.sample.ui.events.components.EventDataSection
+import com.actito.sample.ui.events.components.EventNameSection
+
+data class EventDataRow(
+    val keyState: TextFieldState = TextFieldState(),
+    val valueState: TextFieldState = TextFieldState(),
+)
 
 @Composable
 fun EventsScreen(
@@ -39,9 +39,10 @@ fun EventsScreen(
     onNavigateBack: () -> Unit,
     viewModel: EventsViewModel = viewModel(),
 ) {
-    val defaultEventData: ActitoEventData = mapOf("key_1" to "value_1", "key_2" to "value_2")
+    val defaultEventData = mapOf("key_1" to "value_1", "key_2" to "value_2")
     val eventName = rememberTextFieldState()
     var includeEventData by remember { mutableStateOf(false) }
+    val eventRows = remember { mutableStateListOf<EventDataRow>() }
 
     SampleScaffold(
         snackbarHostState = snackbarHostState,
@@ -52,61 +53,60 @@ fun EventsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    SampleRowHeader(
-                        icon = painterResource(R.drawable.ic_baseline_event_24),
-                        text = stringResource(R.string.events_register_event),
-                    )
+            EventNameSection(eventName)
 
-                    OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        state = eventName,
-                        lineLimits = TextFieldLineLimits.SingleLine,
-                        placeholder = { Text(stringResource(R.string.events_event_name)) },
-                    )
+            EventDataSection(
+                includeEventData = includeEventData,
+                rows = eventRows,
+                onToggle = { enabled ->
+                    includeEventData = enabled
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(stringResource(R.string.events_event_data))
-
-                        Checkbox(
-                            checked = includeEventData,
-                            onCheckedChange = { includeEventData = it },
-                        )
+                    if (enabled) {
+                        eventRows.clear()
+                        eventRows.addAll(defaultEventData.toRows())
+                    } else {
+                        eventRows.clear()
                     }
+                },
+                onAddRow = { eventRows.add(EventDataRow()) },
+                onRemoveRow = { eventRows.remove(it) },
+            )
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        Button(
-                            modifier = Modifier.weight(1f),
-                            enabled = !eventName.text.isEmpty(),
-                            onClick = {
-                                viewModel.logCustomEvent(
-                                    name = eventName.text.toString(),
-                                    data = if (includeEventData) defaultEventData else null,
-                                )
-
-                                eventName.clearText()
-                            },
-                        ) {
-                            Text(stringResource(R.string.button_register))
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                enabled = eventName.text.isNotEmpty(),
+                onClick = {
+                    val data = eventRows
+                        .filter { it.keyState.text.isNotBlank() }
+                        .associate {
+                            it.keyState.text.toString() to it.valueState.text.toString()
                         }
-                    }
-                }
+                        .takeIf { it.isNotEmpty() }
+
+                    viewModel.logCustomEvent(
+                        name = eventName.text.toString(),
+                        data = data,
+                    )
+
+                    eventName.clearText()
+                    eventRows.clear()
+                    includeEventData = false
+                },
+            ) {
+                Text(stringResource(R.string.button_register))
             }
         }
     }
 }
+
+private fun Map<String, String>.toRows(): List<EventDataRow> =
+    map {
+        EventDataRow(
+            keyState = TextFieldState(it.key),
+            valueState = TextFieldState(it.value),
+        )
+    }

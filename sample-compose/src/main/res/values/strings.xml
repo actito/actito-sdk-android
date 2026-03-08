@@ -85,7 +85,8 @@
     <string name="dnd_time_picker_to">To</string>
     <string name="dnd_title">Do not disturb</string>
 
-    <string name="events_event_data">Event Data</string>
+    <string name="events_add_data_field">Add data field</string>
+    <string name="events_include_data">Include Data</string>
     <string name="events_event_name">Event Name</string>
     <string name="events_register_event">Register Event</string>
     <string name="events_title">Events</string>
