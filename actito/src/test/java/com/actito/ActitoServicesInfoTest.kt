@@ -2,7 +2,7 @@ package com.actito
 
 import org.junit.Test
 
-public class ActitoServicesInfoTests {
+public class ActitoServicesInfoTest {
     @Test
     public fun testRegexValidation() {
         val servicesInfo = ActitoServicesInfo(
