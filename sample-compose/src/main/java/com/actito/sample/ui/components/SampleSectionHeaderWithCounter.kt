@@ -23,7 +23,8 @@ fun SampleSectionHeaderWithCounter(
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary,
         )
 
         Spacer(Modifier.width(8.dp))

@@ -58,6 +58,7 @@
     <string name="button_no">No</string>
     <string name="button_ok">OK</string>
     <string name="button_register">Register</string>
+    <string name="button_remove">Remove</string>
     <string name="button_search">Search</string>
     <string name="button_yes">Yes</string>
 
@@ -144,6 +145,7 @@
 
     <string name="other_features_title">Other Features</string>
 
+    <string name="tags_device_tags">Device Tags</string>
     <string name="tags_manual_input">Manual Input</string>
     <string name="tags_quick_fill">Quick Fill</string>
     <string name="tags_title">Tags</string>
