@@ -37,7 +37,7 @@ fun BeaconsRowNavigation(
 
         Spacer(Modifier.width(12.dp))
 
-        Text(stringResource(R.string.location_beacons))
+        Text(stringResource(R.string.location_beacons_title))
 
         Spacer(Modifier.weight(1f))
 

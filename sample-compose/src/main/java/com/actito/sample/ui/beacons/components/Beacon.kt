@@ -18,6 +18,7 @@ import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoRegion
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleInfoChip
+import com.actito.sample.ui.components.SampleRowStatus
 
 @Composable
 fun Beacon(
@@ -32,32 +33,48 @@ fun Beacon(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                stringResource(
-                    R.string.location_region_name,
-                    region.name,
-                ),
-                style = MaterialTheme.typography.titleMedium,
-            )
-
-            Text(
-                stringResource(
-                    R.string.location_beacon_name,
-                    beacon.name,
-                ),
+                text = beacon.name,
                 style = MaterialTheme.typography.titleMedium,
             )
 
             Spacer(Modifier.height(4.dp))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                SampleInfoChip("Minor", beacon.minor.toString())
+                SampleInfoChip(
+                    label = stringResource(R.string.location_minor),
+                    value = beacon.minor.toString(),
+                )
 
-                SampleInfoChip("Major", beacon.major.toString())
+                SampleInfoChip(
+                    label = stringResource(R.string.location_major),
+                    value = beacon.major.toString(),
+                )
 
-                SampleInfoChip("Proximity", beacon.proximity.toString())
+                SampleInfoChip(
+                    label = stringResource(R.string.location_beacon_proximity),
+                    value = beacon.proximity.toString(),
+                )
             }
+
+            Spacer(Modifier.height(4.dp))
+
+            SampleRowStatus(
+                label = stringResource(R.string.location_region_name),
+                status = region.name,
+            )
+
+            SampleRowStatus(
+                label = stringResource(R.string.location_beacon_triggers),
+                status = beacon.triggers.toString(),
+            )
+
+            SampleRowStatus(
+                label = stringResource(R.string.location_beacon_id),
+                status = beacon.id,
+            )
         }
     }
 }

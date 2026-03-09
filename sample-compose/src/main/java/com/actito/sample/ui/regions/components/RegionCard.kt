@@ -12,8 +12,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.actito.geo.models.ActitoRegion
+import com.actito.sample.R
 import com.actito.sample.ui.components.SampleInfoChip
 import com.actito.sample.ui.components.SampleRowStatus
 
@@ -21,6 +23,14 @@ import com.actito.sample.ui.components.SampleRowStatus
 fun RegionCard(
     region: ActitoRegion,
 ) {
+    val geometry = region.geometry.let { geometry ->
+        "${geometry.type}\nlat ${geometry.coordinate.latitude}, long ${geometry.coordinate.longitude}"
+    }
+
+    val advancedGeometry = region.advancedGeometry?.let { advancedGeometry ->
+        "$advancedGeometry.type: " + advancedGeometry.coordinates.joinToString { "(${it.latitude}, ${it.longitude})" }
+    }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -44,36 +54,49 @@ fun RegionCard(
             Spacer(Modifier.height(4.dp))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                SampleInfoChip("Distance", "${region.distance} m")
+                SampleInfoChip(
+                    label = stringResource(R.string.location_region_distance),
+                    value = "${region.distance} m",
+                )
 
-                region.major?.let {
-                    SampleInfoChip("Major", it.toString())
-                }
-            }
-
-            Spacer(Modifier.height(6.dp))
-
-            region.referenceKey?.let {
-                SampleRowStatus(
-                    label = "Reference key",
-                    status = it,
+                SampleInfoChip(
+                    label = stringResource(R.string.location_major),
+                    value = region.major.toString(),
                 )
             }
 
+            Spacer(Modifier.height(4.dp))
+
             SampleRowStatus(
-                label = "Timezone",
+                label = stringResource(R.string.location_region_geometry),
+                status = geometry,
+            )
+
+            SampleRowStatus(
+                label = stringResource(R.string.location_region_advanced_geometry),
+                status = advancedGeometry.toString(),
+            )
+
+            SampleRowStatus(
+                label = stringResource(R.string.location_region_reference_key),
+                status = region.referenceKey.toString(),
+            )
+
+            SampleRowStatus(
+                label = stringResource(R.string.location_region_timezone),
                 status = region.timeZone,
             )
 
             SampleRowStatus(
-                label = "Offset",
-                status = "${region.timeZoneOffset}",
+                label = stringResource(R.string.location_region_timezone_offset),
+                status = region.timeZoneOffset.toString(),
             )
 
             SampleRowStatus(
-                label = "Region ID",
+                label = stringResource(R.string.location_region_id),
                 status = region.id,
             )
         }
