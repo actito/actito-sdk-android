@@ -1,10 +1,12 @@
-package com.actito.e2e.common.network
+package com.actito.network
 
+import com.actito.InternalActitoApi
 import com.actito.internal.network.request.ActitoRequest
 import org.json.JSONObject
 
-internal object ActitoTestRestApiClient {
-    internal suspend fun get(url: String): JSONObject {
+public object ActitoTestRestApiClient {
+    @OptIn(InternalActitoApi::class)
+    public suspend fun get(url: String, query: Map<String, String?> = emptyMap()): JSONObject {
         val responseString = ActitoRequest.Builder()
             .authentication(
                 ActitoRequest.Authentication.Basic(
@@ -13,6 +15,7 @@ internal object ActitoTestRestApiClient {
 
                 ),
             )
+            .query(query)
             .get(url)
             .responseString()
 

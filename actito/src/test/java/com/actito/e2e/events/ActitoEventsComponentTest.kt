@@ -2,8 +2,8 @@ package com.actito.e2e.events
 
 import com.actito.Actito
 import com.actito.ActitoContentTooLargeException
-import com.actito.e2e.common.network.ActitoTestRestApiClient
 import com.actito.ktx.session
+import com.actito.network.ActitoTestRestApiClient
 import com.actito.rules.ActitoConfigurationTestRule
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert

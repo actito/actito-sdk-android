@@ -1,7 +1,7 @@
 package com.actito.e2e.device
 
 import com.actito.Actito
-import com.actito.e2e.common.network.ActitoTestRestApiClient
+import com.actito.network.ActitoTestRestApiClient
 import com.actito.rules.ActitoConfigurationTestRule
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
