@@ -1,10 +1,11 @@
 [versions]
+actito-services = "1.0.0"
+activityCompose = "1.12.2"
 android-application = "8.13.0"
-android-compileSdk = "36"
 android-buildTools = "35.0.0"
+android-compileSdk = "36"
 android-minSdk = "23"
 android-targetSdk = "36"
-kotlinx-coroutines = "1.10.2"
 androidx-appCompat = "1.7.1"
 androidx-contraintLayout = "2.2.1"
 androidx-core = "1.17.0"
@@ -13,18 +14,30 @@ androidx-fragment = "1.8.9"
 androidx-lifecycle = "2.9.4"
 androidx-navigation = "2.9.5"
 androidx-work = "2.10.5"
-actito-services = "1.0.0"
 auth0 = "3.10.0"
+coil = "3.3.0"
+composeBom = "2026.01.00"
 glide = "5.0.5"
 google-material = "1.13.0"
 google-services = "4.4.3"
+kotlin = "2.2.20"
+kotlinSerialization = "2.2.21"
+kotlinx-coroutines = "1.10.2"
+lifecycleViewmodelNav3 = "2.10.0"
 moshi = "1.15.2"
+nav3Core = "1.0.0"
 retrofit = "3.0.0"
 timber = "5.0.1"
 
 [libraries]
-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appCompat" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-contraintLayout" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
@@ -32,26 +45,37 @@ androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle"}
+androidx-lifecycle-viewModel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle"}
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
 androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 auth0 = { module = "com.auth0.android:auth0", version.ref="auth0" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
 moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref="retrofit" }
 retrofit-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref="retrofit" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "android-application" }
 actito-services = { id = "com.actito.gradle.actito-services", version.ref = "actito-services" }
+android-application = { id = "com.android.application", version.ref = "android-application" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization"}
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [bundles]
-androidx-lifecycle = ["androidx-lifecycle-livedata", "androidx-lifecycle-runtime", "androidx-lifecycle-viewModel"]
+androidx-lifecycle = ["androidx-lifecycle-livedata", "androidx-lifecycle-runtime", "androidx-lifecycle-viewModel", "androidx-lifecycle-viewModel-compose"]
 androidx-navigation = ["androidx-navigation-fragment", "androidx-navigation-ui"]
+coil = ["coil-compose", "coil-network-okhttp"]
+nav3 = ["androidx-navigation3-runtime", "androidx-navigation3-ui", "androidx-lifecycle-viewmodel-navigation3"]
 retrofit = ["retrofit", "retrofit-scalars"]
