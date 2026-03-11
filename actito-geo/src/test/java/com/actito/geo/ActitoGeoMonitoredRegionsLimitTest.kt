@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class ActitoMonitoredRegionsLimitTest {
+class ActitoGeoMonitoredRegionsLimitTest {
     @get:Rule
     val configurationRule = ActitoConfigurationTestRule(
         workflow = ActitoConfigurationTestRule.Workflow.CONFIGURATION_ONLY,
@@ -18,7 +18,7 @@ class ActitoMonitoredRegionsLimitTest {
 
     @Test
     fun `ensure options are loaded from manifest`() {
-        assertEquals(100, Actito.options?.monitoredRegionsLimit)
+        assertEquals(99, Actito.options?.monitoredRegionsLimit)
     }
 
     @Test
