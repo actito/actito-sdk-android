@@ -4,7 +4,7 @@ import android.Manifest
 import android.os.Build
 import com.actito.Actito
 import com.actito.geo.ktx.geo
-import com.actito.geo.permissions.utils.TestPermissionsShadows
+import com.actito.geo.permissions.shadows.ShadowPermissions
 import com.actito.rules.ActitoConfigurationTestRule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -40,7 +40,7 @@ class ActitoGeoPermissionsForegroundTest {
     @Test
     @Config(sdk = [NEWEST_SDK])
     fun `newest sdk ensure granted with coarse permission`() {
-        TestPermissionsShadows.grant(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION))
+        ShadowPermissions.grant(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION))
 
         assertTrue(Actito.geo().hasForegroundLocationPermission)
         assertFalse(Actito.geo().hasPreciseLocationPermission)
@@ -50,7 +50,7 @@ class ActitoGeoPermissionsForegroundTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.R])
     fun `older sdk ensure granted with fine permission`() {
-        TestPermissionsShadows.grant(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+        ShadowPermissions.grant(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
 
         assertTrue(Actito.geo().hasForegroundLocationPermission)
         assertTrue(Actito.geo().hasPreciseLocationPermission)

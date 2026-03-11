@@ -3,7 +3,7 @@ package com.actito.geo.permissions
 import android.Manifest
 import com.actito.Actito
 import com.actito.geo.ktx.geo
-import com.actito.geo.permissions.utils.TestPermissionsShadows
+import com.actito.geo.permissions.shadows.ShadowPermissions
 import com.actito.rules.ActitoConfigurationTestRule
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -31,7 +31,7 @@ class ActitoGeoPermissionsBluetoothTest {
     @Test
     @Config(sdk = [NEWEST_SDK])
     fun `check permissions when bluetooth only permission is granted`() {
-        TestPermissionsShadows.grant(arrayOf(Manifest.permission.BLUETOOTH))
+        ShadowPermissions.grant(arrayOf(Manifest.permission.BLUETOOTH))
 
         assertTrue(Actito.geo().hasBluetoothPermission)
         assertFalse(Actito.geo().hasBluetoothScanPermission)
@@ -40,7 +40,7 @@ class ActitoGeoPermissionsBluetoothTest {
     @Test
     @Config(sdk = [NEWEST_SDK])
     fun `check permissions when bluetooth and scanning permissions are granted`() {
-        TestPermissionsShadows.grant(
+        ShadowPermissions.grant(
             arrayOf(
                 Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_SCAN,

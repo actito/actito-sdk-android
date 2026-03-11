@@ -4,7 +4,7 @@ import android.Manifest
 import android.os.Build
 import com.actito.Actito
 import com.actito.geo.ktx.geo
-import com.actito.geo.permissions.utils.TestPermissionsShadows
+import com.actito.geo.permissions.shadows.ShadowPermissions
 import com.actito.rules.ActitoConfigurationTestRule
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -40,7 +40,7 @@ class ActitoGeoPermissionsBackgroundTest {
     @Test
     @Config(sdk = [NEWEST_SDK])
     fun `newer sdk ensure not granted with coarse permissions`() {
-        TestPermissionsShadows.grant(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION))
+        ShadowPermissions.grant(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION))
 
         assertFalse(Actito.geo().hasBackgroundLocationPermission)
         assertEquals("use", Actito.geo().locationServicesAuthStatus)
@@ -49,7 +49,7 @@ class ActitoGeoPermissionsBackgroundTest {
     @Test
     @Config(sdk = [NEWEST_SDK])
     fun `newer sdk ensure granted with coarse and background permissions`() {
-        TestPermissionsShadows.grant(
+        ShadowPermissions.grant(
             arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION,
@@ -64,7 +64,7 @@ class ActitoGeoPermissionsBackgroundTest {
     @Test
     @Config(sdk = [Build.VERSION_CODES.P])
     fun `older sdk ensure granted with fine permission`() {
-        TestPermissionsShadows.grant(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
+        ShadowPermissions.grant(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
 
         assertTrue(Actito.geo().hasBackgroundLocationPermission)
         assertEquals("always", Actito.geo().locationServicesAuthStatus)
