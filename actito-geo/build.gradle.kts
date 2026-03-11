@@ -69,4 +69,5 @@ dependencies {
     testImplementation(testFixtures(project(":actito")))
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
