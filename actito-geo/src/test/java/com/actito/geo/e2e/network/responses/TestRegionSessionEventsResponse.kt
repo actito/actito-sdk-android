@@ -15,8 +15,6 @@ data class TestRegionSessionEventsResponse(
         val data: EventData,
         val time: String,
         val deviceID: String,
-        val userID: String,
-        val medium: String,
     )
 
     @JsonClass(generateAdapter = true)

@@ -65,7 +65,7 @@ class ActitoGeoRegionTriggersTest {
         var deviceRegionState =
             ActitoTestRestApiClient.getDeviceRegionStateForRegion(TestLocations.FOZ_DO_DOURO_REGION_ID)
 
-        assertEquals(TestDeviceRegionStateResponse.State.IN, deviceRegionState?.regionState?.state)
+        assertEquals(TestDeviceRegionStateResponse.State.IN, deviceRegionState.regionState.state)
 
         Actito.geo().triggerRegionExit(region)
         withContext(Dispatchers.Default) {
@@ -75,6 +75,6 @@ class ActitoGeoRegionTriggersTest {
         deviceRegionState =
             ActitoTestRestApiClient.getDeviceRegionStateForRegion(TestLocations.FOZ_DO_DOURO_REGION_ID)
 
-        assertEquals(TestDeviceRegionStateResponse.State.OUT, deviceRegionState?.regionState?.state)
+        assertEquals(TestDeviceRegionStateResponse.State.OUT, deviceRegionState.regionState.state)
     }
 }
