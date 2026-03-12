@@ -1,6 +1,7 @@
 package com.actito.e2e.device
 
 import com.actito.Actito
+import com.actito.e2e.network.ktx.getRemoteDevice
 import com.actito.network.ActitoTestRestApiClient
 import com.actito.rules.ActitoConfigurationTestRule
 import com.actito.utilities.device.deviceLanguage
@@ -42,10 +43,10 @@ class ActitoDeviceLanguageTest {
     @Test
     fun `ensure no preferred language set initially`() = runTest {
         val localPreferredLanguage = Actito.device().preferredLanguage
-        val remoteLanguage = getRemoteLanguage()
+        val remoteDevice = ActitoTestRestApiClient.getRemoteDevice()
 
         assertNull(localPreferredLanguage)
-        assertEquals(remoteLanguage, deviceLanguage)
+        assertEquals(deviceLanguage, remoteDevice.language)
     }
 
     @Test
@@ -53,10 +54,10 @@ class ActitoDeviceLanguageTest {
         Actito.device().updatePreferredLanguage("$samplePreferredLanguage-$sampleLanguageRegion")
 
         val localPreferredLanguage = Actito.device().preferredLanguage
-        val remoteLanguage = getRemoteLanguage()
+        val remoteDevice = ActitoTestRestApiClient.getRemoteDevice()
 
         assertEquals("$samplePreferredLanguage-$sampleLanguageRegion", localPreferredLanguage)
-        assertEquals(samplePreferredLanguage, remoteLanguage)
+        assertEquals(samplePreferredLanguage, remoteDevice.language)
     }
 
     @Test
@@ -65,18 +66,9 @@ class ActitoDeviceLanguageTest {
         Actito.device().updatePreferredLanguage(null)
 
         val localPreferredLanguage = Actito.device().preferredLanguage
-        val remoteLanguage = getRemoteLanguage()
+        val remoteDevice = ActitoTestRestApiClient.getRemoteDevice()
 
         assertNull(localPreferredLanguage)
-        assertEquals(deviceLanguage, remoteLanguage)
-    }
-
-    private suspend fun getRemoteLanguage(): String {
-        val localDevice = checkNotNull(Actito.device().currentDevice)
-        val responseJson = ActitoTestRestApiClient.get("/device/${localDevice.id}")
-        val responseDevice = responseJson.getJSONObject("device")
-        val responseLanguage = responseDevice.getString("language")
-
-        return responseLanguage
+        assertEquals(deviceLanguage, remoteDevice.language)
     }
 }
