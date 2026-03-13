@@ -40,16 +40,19 @@ class ActitoGeoUpdateLocationTest {
 
     @Test
     fun `ensure initially device has no associated location`() = runTest {
-        val remoteDevice = ActitoTestRestApiClient.getRemoteDevice()
+        val currentDevice = requireNotNull(Actito.device().currentDevice)
+        val remoteDevice = ActitoTestRestApiClient.getRemoteDevice(currentDevice.id)
+
         assertNull(remoteDevice.device.location.coordinates)
     }
 
     @Test
     fun `update and clear device location`() = runTest {
+        val currentDevice = requireNotNull(Actito.device().currentDevice)
         val location = TestLocations.fozDoDouro
         Actito.geo().updateLocation(location, null)
 
-        var remoteDevice = ActitoTestRestApiClient.getRemoteDevice()
+        var remoteDevice = ActitoTestRestApiClient.getRemoteDevice(currentDevice.id)
         val latitude = remoteDevice.device.location.coordinates?.get(1)
         val longitude = remoteDevice.device.location.coordinates?.get(0)
 
@@ -58,7 +61,7 @@ class ActitoGeoUpdateLocationTest {
 
         Actito.geo().clearLocation()
 
-        remoteDevice = ActitoTestRestApiClient.getRemoteDevice()
+        remoteDevice = ActitoTestRestApiClient.getRemoteDevice(currentDevice.id)
         assertNull(remoteDevice.device.location.coordinates)
     }
 }

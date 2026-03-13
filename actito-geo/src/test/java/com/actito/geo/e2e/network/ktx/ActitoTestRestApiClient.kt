@@ -1,6 +1,5 @@
 package com.actito.geo.e2e.network.ktx
 
-import com.actito.Actito
 import com.actito.geo.e2e.network.responses.TestDeviceRegionStateResponse
 import com.actito.geo.e2e.network.responses.TestDeviceResponse
 import com.actito.geo.e2e.network.responses.TestRegionSessionEventsResponse
@@ -10,10 +9,9 @@ import com.actito.network.ActitoTestRestApiClient
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-suspend fun ActitoTestRestApiClient.getRemoteDevice(): TestDeviceResponse {
-    val localDevice = requireNotNull(Actito.device().currentDevice)
+suspend fun ActitoTestRestApiClient.getRemoteDevice(deviceId: String): TestDeviceResponse {
     val device = get(
-        url = "/device/${localDevice.id}",
+        url = "/device/$deviceId",
         klass = TestDeviceResponse::class,
     )
 
@@ -29,7 +27,7 @@ suspend fun ActitoTestRestApiClient.getRegion(id: String): ActitoRegion {
     return regionResponse.region.toModel()
 }
 
-suspend fun ActitoTestRestApiClient.getDeviceRegionSessions(deviceId: String): TestRegionSessionEventsResponse {
+suspend fun ActitoTestRestApiClient.getTodayDeviceRegionSessions(deviceId: String): TestRegionSessionEventsResponse {
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val sinceToday = LocalDate.now().format(formatter)
     val beforeTomorrow = LocalDate.now().plusDays(1).format(formatter)
@@ -47,10 +45,12 @@ suspend fun ActitoTestRestApiClient.getDeviceRegionSessions(deviceId: String): T
     return regionSessionEvents
 }
 
-suspend fun ActitoTestRestApiClient.getDeviceRegionStateForRegion(regionId: String): TestDeviceRegionStateResponse {
-    val device = requireNotNull(Actito.device().currentDevice)
+suspend fun ActitoTestRestApiClient.getDeviceRegionStateForRegion(
+    deviceId: String,
+    regionId: String,
+): TestDeviceRegionStateResponse {
     val deviceRegionState = ActitoTestRestApiClient.get(
-        url = "/device/${device.id}/regionstate/forregion/$regionId",
+        url = "/device/$deviceId/regionstate/forregion/$regionId",
         klass = TestDeviceRegionStateResponse::class,
     )
 

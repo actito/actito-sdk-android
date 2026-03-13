@@ -46,15 +46,21 @@ class ActitoGeoRegionTriggersTest {
 
     @Test
     fun `ensure initially device is not in region`() {
+        val currentDevice = requireNotNull(Actito.device().currentDevice)
+
         assertThrows(NetworkException.ValidationException::class.java) {
             runTest {
-                ActitoTestRestApiClient.getDeviceRegionStateForRegion(TestLocations.FOZ_DO_DOURO_REGION_ID)
+                ActitoTestRestApiClient.getDeviceRegionStateForRegion(
+                    currentDevice.id,
+                    TestLocations.FOZ_DO_DOURO_REGION_ID,
+                )
             }
         }
     }
 
     @Test
     fun `trigger enter and exit region`() = runTest {
+        val currentDevice = requireNotNull(Actito.device().currentDevice)
         val region = ActitoTestRestApiClient.getRegion(TestLocations.FOZ_DO_DOURO_REGION_ID)
 
         Actito.geo().triggerRegionEnter(region)
@@ -63,7 +69,10 @@ class ActitoGeoRegionTriggersTest {
         }
 
         var deviceRegionState =
-            ActitoTestRestApiClient.getDeviceRegionStateForRegion(TestLocations.FOZ_DO_DOURO_REGION_ID)
+            ActitoTestRestApiClient.getDeviceRegionStateForRegion(
+                deviceId = currentDevice.id,
+                regionId = TestLocations.FOZ_DO_DOURO_REGION_ID,
+            )
 
         assertEquals(TestDeviceRegionStateResponse.State.IN, deviceRegionState.regionState.state)
 
@@ -73,7 +82,10 @@ class ActitoGeoRegionTriggersTest {
         }
 
         deviceRegionState =
-            ActitoTestRestApiClient.getDeviceRegionStateForRegion(TestLocations.FOZ_DO_DOURO_REGION_ID)
+            ActitoTestRestApiClient.getDeviceRegionStateForRegion(
+                deviceId = currentDevice.id,
+                regionId = TestLocations.FOZ_DO_DOURO_REGION_ID,
+            )
 
         assertEquals(TestDeviceRegionStateResponse.State.OUT, deviceRegionState.regionState.state)
     }

@@ -2,8 +2,8 @@ package com.actito.geo.e2e.region
 
 import com.actito.Actito
 import com.actito.geo.e2e.common.TestLocations
-import com.actito.geo.e2e.network.ktx.getDeviceRegionSessions
 import com.actito.geo.e2e.network.ktx.getRegion
+import com.actito.geo.e2e.network.ktx.getTodayDeviceRegionSessions
 import com.actito.geo.ktx.geo
 import com.actito.geo.models.ActitoLocation
 import com.actito.network.ActitoTestRestApiClient
@@ -45,7 +45,7 @@ class ActitoGeoRegionSessionTest {
     @Test
     fun `ensure initially no region sessions exist`() = runTest {
         val device = requireNotNull(Actito.device().currentDevice)
-        val sessionEvents = ActitoTestRestApiClient.getDeviceRegionSessions(device.id)
+        val sessionEvents = ActitoTestRestApiClient.getTodayDeviceRegionSessions(device.id)
 
         assertEquals(0, sessionEvents.count)
     }
@@ -64,7 +64,7 @@ class ActitoGeoRegionSessionTest {
             delay(500)
         }
 
-        val sessionEvents = ActitoTestRestApiClient.getDeviceRegionSessions(device.id)
+        val sessionEvents = ActitoTestRestApiClient.getTodayDeviceRegionSessions(device.id)
         val sessionLocation = sessionEvents.events.first().data.locations.first()
 
         assertEquals(1, sessionEvents.count)
