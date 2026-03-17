@@ -1070,8 +1070,8 @@ public object ActitoPush {
 
         val device = checkNotNull(Actito.device().currentDevice)
 
-        val previousTransport = transport
-        val previousSubscription = subscription
+        val previousTransport = this@ActitoPush.transport
+        val previousSubscription = this@ActitoPush.subscription
 
         if (previousTransport == transport && previousSubscription?.token == token) {
             logger.debug("Push subscription unmodified. Updating notification settings instead.")
