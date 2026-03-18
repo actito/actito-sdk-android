@@ -2,8 +2,8 @@ package com.actito.geo.e2e.network.ktx
 
 import com.actito.geo.e2e.network.responses.TestDeviceRegionStateResponse
 import com.actito.geo.e2e.network.responses.TestDeviceResponse
+import com.actito.geo.e2e.network.responses.TestRegionResponse
 import com.actito.geo.e2e.network.responses.TestRegionSessionEventsResponse
-import com.actito.geo.e2e.network.responses.TestRegionsResponse
 import com.actito.geo.models.ActitoRegion
 import com.actito.network.ActitoTestRestApiClient
 import java.time.LocalDate
@@ -21,7 +21,7 @@ suspend fun ActitoTestRestApiClient.getRemoteDevice(deviceId: String): TestDevic
 suspend fun ActitoTestRestApiClient.getRegion(id: String): ActitoRegion {
     val regionResponse = ActitoTestRestApiClient.get(
         url = "/region/$id",
-        klass = TestRegionsResponse::class,
+        klass = TestRegionResponse::class,
     )
 
     return regionResponse.region.toModel()

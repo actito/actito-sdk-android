@@ -4,6 +4,6 @@ import com.actito.geo.internal.network.push.FetchRegionsResponse
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class TestRegionsResponse(
+internal data class TestRegionResponse(
     val region: FetchRegionsResponse.Region,
 )
