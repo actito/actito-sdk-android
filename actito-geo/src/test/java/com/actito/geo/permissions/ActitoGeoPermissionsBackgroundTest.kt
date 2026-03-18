@@ -25,7 +25,7 @@ class ActitoGeoPermissionsBackgroundTest {
 
     @Test
     @Config(sdk = [NEWEST_SDK])
-    fun `newer sdk ensure not granted initially`() {
+    fun `newest sdk ensure not granted initially`() {
         assertFalse(Actito.geo().hasBackgroundLocationPermission)
         assertEquals("none", Actito.geo().locationServicesAuthStatus)
     }
@@ -39,7 +39,7 @@ class ActitoGeoPermissionsBackgroundTest {
 
     @Test
     @Config(sdk = [NEWEST_SDK])
-    fun `newer sdk ensure not granted with coarse permissions`() {
+    fun `newest sdk ensure not granted with coarse permissions`() {
         ShadowPermissions.grant(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION))
 
         assertFalse(Actito.geo().hasBackgroundLocationPermission)
@@ -48,7 +48,7 @@ class ActitoGeoPermissionsBackgroundTest {
 
     @Test
     @Config(sdk = [NEWEST_SDK])
-    fun `newer sdk ensure granted with coarse and background permissions`() {
+    fun `newest sdk ensure granted with coarse and background permissions`() {
         ShadowPermissions.grant(
             arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
