@@ -7,20 +7,20 @@ import androidx.work.WorkManager
 import com.actito.push.ActitoPushIntentReceiver
 import com.actito.push.models.ActitoLiveActivityUpdate
 import com.actito.push.models.ActitoPushSubscription
-import com.actito.sample.live_activities.LiveActivitiesController
-import com.actito.sample.live_activities.LiveActivity
-import com.actito.sample.live_activities.models.CoffeeBrewerContentState
+import com.actito.sample.core.SampleNotifier
+import com.actito.sample.live_activity.LiveActivity
+import com.actito.sample.live_activity.LiveActivityController
+import com.actito.sample.live_activity.models.CoffeeBrewerContentState
 import com.actito.sample.workers.CoffeeBrewerDismissalWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class SamplePushIntentReceiver : ActitoPushIntentReceiver() {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-    private val liveActivitiesController = LiveActivitiesController
+    private val liveActivitiesController = LiveActivityController
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
@@ -35,7 +35,7 @@ class SamplePushIntentReceiver : ActitoPushIntentReceiver() {
             try {
                 liveActivitiesController.handleSubscriptionChanged(subscription)
             } catch (e: Exception) {
-                Timber.e(e, "Failed to update registered live activities.")
+                SampleNotifier.emitError("Failed to update registered live activities.", e)
             }
         }
     }
@@ -68,14 +68,14 @@ class SamplePushIntentReceiver : ActitoPushIntentReceiver() {
 
                             WorkManager.getInstance(context).enqueue(request)
 
-                            LiveActivitiesController.updateCoffeeBrewerState(null)
+                            LiveActivityController.updateCoffeeBrewerState(null)
                         }
                     }
 
                     null -> {}
                 }
             } catch (e: Exception) {
-                Timber.e(e, "Failed to update the live activity.")
+                SampleNotifier.emitError("Failed to update the live activity.", e)
             }
         }
     }
@@ -87,7 +87,7 @@ class SamplePushIntentReceiver : ActitoPushIntentReceiver() {
                     LiveActivity.COFFEE_BREWER -> liveActivitiesController.clearCoffeeActivity()
                 }
             } catch (e: Exception) {
-                Timber.e(e, "Failed to end the live activity.")
+                SampleNotifier.emitError("Failed to end the live activity.", e)
             }
         }
     }

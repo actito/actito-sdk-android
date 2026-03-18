@@ -1,28 +1,28 @@
 package com.actito.sample.ui.inbox
 
 import android.app.Activity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.actito.Actito
 import com.actito.inbox.ktx.inbox
 import com.actito.inbox.models.ActitoInboxItem
 import com.actito.push.ui.ktx.pushUI
-import com.actito.sample.core.BaseViewModel
+import com.actito.sample.core.SampleNotifier
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
-class InboxViewModel : BaseViewModel() {
-    private val _items = MutableLiveData<List<ActitoInboxItem>>()
-    val items: LiveData<List<ActitoInboxItem>> = _items
+class InboxViewModel : ViewModel() {
+    private val _items = MutableStateFlow<List<ActitoInboxItem>>(listOf())
+    val items: StateFlow<List<ActitoInboxItem>> = _items
 
     init {
         viewModelScope.launch {
             Actito.inbox().observableItems
                 .asFlow()
                 .collect { result ->
-                    _items.postValue(result.toList())
+                    _items.value = result.toList()
                 }
         }
     }
@@ -33,11 +33,9 @@ class InboxViewModel : BaseViewModel() {
                 val notification = Actito.inbox().open(item)
                 Actito.pushUI().presentNotification(activity, notification)
 
-                Timber.i("Opened inbox item successfully.")
-                showSnackBar("Opened inbox item successfully.")
+                SampleNotifier.emitInfo("Opened inbox item successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to open inbox item.")
-                showSnackBar("Failed to open inbox item.")
+                SampleNotifier.emitError("Failed to open inbox item.", e)
             }
         }
     }
@@ -46,12 +44,9 @@ class InboxViewModel : BaseViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().markAsRead(item)
-
-                Timber.i("Mark inbox item as read successfully.")
-                showSnackBar("Mark inbox item as read successfully.")
+                SampleNotifier.emitInfo("Mark inbox item as read successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to mark inbox item as read.")
-                showSnackBar("Failed to mark inbox item as read.")
+                SampleNotifier.emitError("Failed to mark inbox item as read.", e)
             }
         }
     }
@@ -60,12 +55,9 @@ class InboxViewModel : BaseViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().remove(item)
-
-                Timber.i("Removed inbox item successfully.")
-                showSnackBar("Removed inbox item successfully.")
+                SampleNotifier.emitInfo("Removed inbox item successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to remove inbox item.")
-                showSnackBar("Failed to remove inbox item.")
+                SampleNotifier.emitError("Failed to remove inbox item.", e)
             }
         }
     }
@@ -74,12 +66,9 @@ class InboxViewModel : BaseViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().markAllAsRead()
-
-                Timber.i("Marked all items as read successfully.")
-                showSnackBar("Marked all items as read successfully.")
+                SampleNotifier.emitInfo("Marked all items as read successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to mark all items as read.")
-                showSnackBar("Failed to mark all items as read.")
+                SampleNotifier.emitError("Failed to mark all items as read.", e)
             }
         }
     }
@@ -88,12 +77,9 @@ class InboxViewModel : BaseViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().clear()
-
-                Timber.i("Inbox cleared successfully.")
-                showSnackBar("Inbox cleared successfully.")
+                SampleNotifier.emitInfo("Inbox cleared successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to clear inbox.")
-                showSnackBar("Failed to remove clear inbox.")
+                SampleNotifier.emitError("Failed to clear inbox.", e)
             }
         }
     }
@@ -102,12 +88,9 @@ class InboxViewModel : BaseViewModel() {
         viewModelScope.launch {
             try {
                 Actito.inbox().refresh()
-
-                Timber.i("Refreshed inbox successfully.")
-                showSnackBar("Refreshed inbox successfully.")
+                SampleNotifier.emitInfo("Refreshed inbox successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to refresh inbox.")
-                showSnackBar("Failed to refresh inbox.")
+                SampleNotifier.emitError("Failed to refresh inbox.", e)
             }
         }
     }
