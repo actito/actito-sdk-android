@@ -182,7 +182,7 @@ public object ActitoLoyalty {
         }
     }
 
-    private fun extractPassSerial(notification: ActitoNotification): String? {
+    internal fun extractPassSerial(notification: ActitoNotification): String? {
         if (notification.type != ActitoNotification.TYPE_PASSBOOK) return null
 
         val content = notification.content
