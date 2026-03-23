@@ -2,8 +2,8 @@ package com.actito.e2e.events
 
 import com.actito.Actito
 import com.actito.ActitoContentTooLargeException
-import com.actito.e2e.common.network.ActitoTestRestApiClient
-import com.actito.ktx.session
+import com.actito.e2e.network.ktx.getDeviceCustomEvents
+import com.actito.network.ActitoTestRestApiClient
 import com.actito.rules.ActitoConfigurationTestRule
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -52,16 +52,15 @@ class ActitoEventsComponentTest {
 
     @Test
     fun `events log custom event`() = runTest {
+        val device = requireNotNull(Actito.device().currentDevice)
         val eventName = "test_event_data"
         val eventData = mapOf("test_key" to "test_value")
 
         Actito.events().logCustom(eventName, eventData)
+        val remoteCustomEvents = ActitoTestRestApiClient.getDeviceCustomEvents(device.id, eventName)
 
-        val responseJson = ActitoTestRestApiClient.get("/event/fortype/re.notifica.event.custom.test_event_data")
-        val eventsArray = responseJson.getJSONArray("events")
-        val lastEvent = eventsArray.getJSONObject(0)
-        val lastEventSessionId = lastEvent.getString("sessionID")
-
-        assert(lastEventSessionId == Actito.session().sessionId)
+        assert(remoteCustomEvents.count == 1)
+        assert(remoteCustomEvents.events.first().type == "re.notifica.event.custom.$eventName")
+        assert(remoteCustomEvents.events.first().data == eventData)
     }
 }
