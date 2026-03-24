@@ -12,6 +12,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Parcelable
+import androidx.car.app.notification.CarAppExtender
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
@@ -31,6 +32,7 @@ import com.actito.ActitoServiceUnavailableException
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
+import com.actito.push.ActitoPush.allowedUI
 import com.actito.push.internal.ActitoPushSystemIntentReceiver
 import com.actito.push.internal.ActitoSharedPreferences
 import com.actito.push.internal.InboxIntegration
@@ -909,6 +911,9 @@ public object ActitoPush {
 
         // Extend for Android Wear
         val wearableExtender = NotificationCompat.WearableExtender()
+
+        // Extend for Android Auto
+        builder.extend(CarAppExtender.Builder().build())
 
         // Handle action category
         val application = Actito.application ?: run {

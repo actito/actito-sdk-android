@@ -48,6 +48,7 @@ dependencies {
     // Android
     implementation(libs.androidx.core)
     implementation(libs.bundles.androidx.lifecycle)
+    implementation(libs.androidx.carApp)
 
     implementation(libs.google.playServices.base)
 

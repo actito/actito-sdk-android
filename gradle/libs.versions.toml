@@ -10,6 +10,7 @@ kotlinx-coroutines = "1.10.2"
 androidx-activity = "1.11.0"
 androidx-appCompat = "1.7.1"
 androidx-browser = "1.9.0"
+androidx-carApp = "1.7.0"
 androidx-cardView = "1.0.0"
 androidx-contraintLayout = "2.2.1"
 androidx-core = "1.17.0"
@@ -45,6 +46,7 @@ kotlinx-coroutines-playServices = { module = "org.jetbrains.kotlinx:kotlinx-coro
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appCompat" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidx-browser" }
+androidx-carApp = { module = "androidx.car.app:app", version.ref = "androidx-carApp" }
 androidx-cardView = { module = "androidx.cardview:cardview", version.ref = "androidx-cardView" }
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-contraintLayout" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
