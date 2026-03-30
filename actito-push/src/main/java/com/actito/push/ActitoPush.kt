@@ -138,6 +138,16 @@ public object ActitoPush {
     public var intentReceiver: Class<out ActitoPushIntentReceiver> = ActitoPushIntentReceiver::class.java
 
     /**
+     * Optional customizer invoked before each lock screen notification is posted.
+     *
+     * When set, [ActitoLockScreenNotificationCustomizer.customizeLockScreenNotification] is called
+     * with the raw FCM message, the parsed [com.actito.models.ActitoNotification], and the
+     * [androidx.core.app.NotificationCompat.Builder] that will be used to post the notification.
+     */
+    @JvmStatic
+    public var lockScreenNotificationCustomizer: ActitoLockScreenNotificationCustomizer? = null
+
+    /**
      * Indicates whether remote notifications are enabled.
      *
      * This property returns `true` if remote notifications are enabled for the application, and `false` otherwise.
@@ -1040,6 +1050,9 @@ public object ActitoPush {
                 logger.warning("The color '$lightsColor' could not be parsed.")
             }
         }
+
+        // Let the integration party customize the lockscreen notification.
+        lockScreenNotificationCustomizer?.customizeLockScreenNotification(message.rawMessage, notification, builder)
 
         notificationManager.notify(message.notificationId, 0, builder.build())
     }

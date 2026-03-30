@@ -11,6 +11,8 @@ import java.util.Date
 
 @Parcelize
 internal data class ActitoNotificationRemoteMessage(
+    val rawMessage: RemoteMessage,
+
     // Notification properties
     val id: String,
     val notificationId: String,
@@ -89,6 +91,7 @@ internal data class ActitoNotificationRemoteMessage(
             }
 
             return ActitoNotificationRemoteMessage(
+                rawMessage = message,
                 // Notification properties
                 id = requireNotNull(message.data["id"]),
                 notificationId = requireNotNull(message.data["notification_id"]),
