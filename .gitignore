@@ -27,6 +27,7 @@ local.properties
 /**/build
 /dist
 /.gradle
+.kotlin/
 
 # Android Studio
 /.idea
