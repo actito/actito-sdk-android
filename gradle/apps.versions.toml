@@ -1,6 +1,7 @@
 [versions]
 actito-services = "1.0.0"
 activityCompose = "1.12.2"
+androidx-carApp = "1.7.0"
 android-application = "8.13.0"
 android-buildTools = "35.0.0"
 android-compileSdk = "36"
@@ -31,6 +32,7 @@ timber = "5.0.1"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-carApp = { module = "androidx.car.app:app", version.ref = "androidx-carApp" }
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appCompat" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
