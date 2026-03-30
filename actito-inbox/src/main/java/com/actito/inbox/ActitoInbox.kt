@@ -295,12 +295,7 @@ public object ActitoInbox {
     public suspend fun clear(): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
-        val device = checkNotNull(Actito.device().currentDevice)
-
-        ActitoRequest.Builder()
-            .delete("/notification/inbox/fordevice/${device.id}", null)
-            .response()
-
+        clearRemoteInbox()
         clearLocalInbox()
         clearNotificationCenter()
     }
