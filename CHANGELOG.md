@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 5.1.0
+
+- Add a hook to customise the notification generated for the lock screen. 
+
 ## 5.0.0
 
 Prior to upgrading to v5.x, consult the [Migration Guide](./MIGRATION.md), which outlines all necessary changes and procedures to ensure a smooth migration.
