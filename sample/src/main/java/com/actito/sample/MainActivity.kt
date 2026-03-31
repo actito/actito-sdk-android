@@ -49,6 +49,7 @@ import com.actito.sample.ui.theme.ActitoSampleTheme
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
+import timber.log.Timber
 
 @Serializable
 private data object RouteHome : NavKey
@@ -262,6 +263,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
+        Timber.d("[APP] Handling intent: ${intent.action}")
+
         if (Actito.push().handleTrampolineIntent(intent)) return
         if (Actito.handleTestDeviceIntent(intent)) return
         if (Actito.handleDynamicLinkIntent(this, intent)) return

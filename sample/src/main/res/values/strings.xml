@@ -168,6 +168,13 @@
     <string name="permissions_rationale_bluetooth">We need bluetooth permission in order to perform beacons scanning.</string>
     <string name="permissions_rationale_bluetooth_settings">Bluetooth permission is denied. Enable the permission in the application settings.</string>
 
+    <string name="auto_home_notifications_title">Notifications</string>
+    <string name="auto_home_notifications_description">View and manage push notifications</string>
+    <string name="auto_home_inbox_title">Inbox</string>
+    <string name="auto_home_inbox_description">Access your notification inbox</string>
+    <string name="auto_home_device_title">Device</string>
+    <string name="auto_home_device_description">View device and user information</string>
+
     <string name="coffee_headline_served_title">Coffee is served!</string>
     <plurals name="coffee_headline_pick_up_title">
         <item quantity="one">Pick-up in %1$d min</item>

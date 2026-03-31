@@ -140,4 +140,7 @@ dependencies {
     implementation(project(":actito-loyalty"))
     implementation(project(":actito-push"))
     implementation(project(":actito-push-ui"))
+
+    // Android Auto
+    implementation(apps.androidx.carApp)
 }
