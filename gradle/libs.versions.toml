@@ -1,6 +1,6 @@
 [versions]
 maven-artifactGroup = "com.actito"
-maven-artifactVersion = "5.0.0"
+maven-artifactVersion = "5.1.0"
 android-library = "8.13.0"
 android-compileSdk = "36"
 android-buildTools = "35.0.0"
@@ -35,10 +35,12 @@ junit = "4.13.2"
 ktlint = "12.3.0"
 mavenPublish = "0.34.0"
 mockito = "5.20.0"
+mockk = "1.14.9"
 robolectric = "4.16"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-playServices = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinx-coroutines" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appCompat" }
@@ -72,6 +74,7 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 junit = { module = "junit:junit", version.ref = "junit"}
 mockito = { module = "org.mockito:mockito-core", version.ref = "mockito"}
+mockk = { module = "io.mockk:mockk", version.ref = "mockk"}
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 
 [plugins]

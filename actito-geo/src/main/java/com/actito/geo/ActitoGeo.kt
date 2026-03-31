@@ -95,8 +95,8 @@ public object ActitoGeo {
     internal var lastKnownLocation: Location? = null
     private val listeners = mutableListOf<WeakReference<Listener>>()
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var geofencingClient: GeofencingClient
+    internal lateinit var fusedLocationClient: FusedLocationProviderClient
+    internal lateinit var geofencingClient: GeofencingClient
 
     private var locationUpdatesStarted = false
     private lateinit var locationPendingIntent: PendingIntent
@@ -106,7 +106,7 @@ public object ActitoGeo {
         get() = GoogleApiAvailability.getInstance()
             .isGooglePlayServicesAvailable(Actito.requireContext()) == ConnectionResult.SUCCESS
 
-    private val hasForegroundLocationPermission: Boolean
+    internal val hasForegroundLocationPermission: Boolean
         get() {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 ContextCompat.checkSelfPermission(
@@ -121,7 +121,7 @@ public object ActitoGeo {
             }
         }
 
-    private val hasBackgroundLocationPermission: Boolean
+    internal val hasBackgroundLocationPermission: Boolean
         get() {
             val hasBackgroundAccess = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ContextCompat.checkSelfPermission(
@@ -135,7 +135,7 @@ public object ActitoGeo {
             return hasBackgroundAccess && hasForegroundLocationPermission
         }
 
-    private val hasPreciseLocationPermission: Boolean
+    internal val hasPreciseLocationPermission: Boolean
         get() {
             return ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
@@ -143,7 +143,7 @@ public object ActitoGeo {
             ) == PackageManager.PERMISSION_GRANTED
         }
 
-    private val hasBluetoothPermission: Boolean
+    internal val hasBluetoothPermission: Boolean
         get() {
             return ContextCompat.checkSelfPermission(
                 Actito.requireContext(),
@@ -151,7 +151,7 @@ public object ActitoGeo {
             ) == PackageManager.PERMISSION_GRANTED
         }
 
-    private val hasBluetoothScanPermission: Boolean
+    internal val hasBluetoothScanPermission: Boolean
         get() {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 ContextCompat.checkSelfPermission(
@@ -163,7 +163,7 @@ public object ActitoGeo {
             }
         }
 
-    private val locationServicesAuthStatus: String
+    internal val locationServicesAuthStatus: String
         get() {
             return when {
                 hasBackgroundLocationPermission -> "always"
@@ -172,7 +172,7 @@ public object ActitoGeo {
             }
         }
 
-    private val locationServicesAccuracyAuth: String
+    internal val locationServicesAccuracyAuth: String
         get() {
             return when {
                 hasForegroundLocationPermission && !hasPreciseLocationPermission -> "reduced"
@@ -220,7 +220,7 @@ public object ActitoGeo {
             return ActitoBeaconSupport.Enabled
         }
 
-    private val monitoredRegionsLimit: Int
+    internal val monitoredRegionsLimit: Int
         get() {
             val options = Actito.options
             if (options == null) {
@@ -983,7 +983,7 @@ public object ActitoGeo {
         return false
     }
 
-    private suspend fun updateLocation(location: Location, country: String?): Unit = withContext(Dispatchers.IO) {
+    internal suspend fun updateLocation(location: Location, country: String?): Unit = withContext(Dispatchers.IO) {
         val device = Actito.device().currentDevice ?: run {
             logger.warning("Unable to update location without a device.")
             throw IllegalStateException("Unable to update location without a device.")
@@ -1207,7 +1207,7 @@ public object ActitoGeo {
         beaconServiceManager?.stopMonitoring(region)
     }
 
-    private fun triggerRegionEnter(region: ActitoRegion) {
+    internal fun triggerRegionEnter(region: ActitoRegion) {
         val device = Actito.device().currentDevice ?: run {
             logger.warning("Cannot process region enter trigger without a device.")
             return
@@ -1233,7 +1233,7 @@ public object ActitoGeo {
             })
     }
 
-    private fun triggerRegionExit(region: ActitoRegion) {
+    internal fun triggerRegionExit(region: ActitoRegion) {
         val device = Actito.device().currentDevice ?: run {
             logger.warning("Cannot process region exit trigger without a device.")
             return
@@ -1311,7 +1311,7 @@ public object ActitoGeo {
             })
     }
 
-    private fun startRegionSession(region: ActitoRegion) {
+    internal fun startRegionSession(region: ActitoRegion) {
         logger.debug("Starting session for region '${region.name}'.")
         val session = RegionSessionPayload(
             regionId = region.id,
@@ -1328,12 +1328,12 @@ public object ActitoGeo {
         localStorage.addRegionSession(session)
     }
 
-    private fun updateRegionSessions(location: ActitoLocation) {
+    internal fun updateRegionSessions(location: ActitoLocation) {
         logger.debug("Updating region sessions.")
         localStorage.updateRegionSessions(location)
     }
 
-    private fun stopRegionSession(region: ActitoRegion) {
+    internal fun stopRegionSession(region: ActitoRegion) {
         logger.debug("Stopping session for region '${region.name}'.")
 
         var session = localStorage.regionSessions[region.id] ?: run {

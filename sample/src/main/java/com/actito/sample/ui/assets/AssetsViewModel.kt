@@ -1,29 +1,27 @@
 package com.actito.sample.ui.assets
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.actito.Actito
 import com.actito.assets.ktx.assets
 import com.actito.assets.models.ActitoAsset
+import com.actito.sample.core.SampleNotifier
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
-class AssetsViewModel : com.actito.sample.core.BaseViewModel() {
-    private val _assets = MutableLiveData<List<ActitoAsset>>()
-    val assets: LiveData<List<ActitoAsset>> = _assets
+class AssetsViewModel : ViewModel() {
+    private val _assets = MutableStateFlow<List<ActitoAsset>>(listOf())
+    val assets: StateFlow<List<ActitoAsset>> = _assets
 
-    fun fetchAssets(group: String) {
+    fun fetchAssets(assetGroup: String) {
         viewModelScope.launch {
             try {
-                val assets = Actito.assets().fetch(group)
-                _assets.postValue(assets)
-
-                Timber.i("Fetch assets successfully")
-                showSnackBar("Fetch assets successfully")
+                val fetchedAssets = Actito.assets().fetch(assetGroup)
+                _assets.value = fetchedAssets
             } catch (e: Exception) {
-                Timber.e(e, "Failed to fetch assets")
-                showSnackBar("Failed to fetch assets: ${e.message}")
+                _assets.value = listOf()
+                SampleNotifier.emitError("Failed to fetch assets group $assetGroup.", e)
             }
         }
     }

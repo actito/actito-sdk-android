@@ -31,6 +31,7 @@ import com.actito.ActitoServiceUnavailableException
 import com.actito.internal.network.request.ActitoRequest
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoNotification
+import com.actito.push.ActitoPush.allowedUI
 import com.actito.push.internal.ActitoPushSystemIntentReceiver
 import com.actito.push.internal.ActitoSharedPreferences
 import com.actito.push.internal.InboxIntegration
@@ -135,6 +136,16 @@ public object ActitoPush {
      */
     @JvmStatic
     public var intentReceiver: Class<out ActitoPushIntentReceiver> = ActitoPushIntentReceiver::class.java
+
+    /**
+     * Optional customizer invoked before each lock screen notification is posted.
+     *
+     * When set, [ActitoLockScreenNotificationCustomizer.customizeLockScreenNotification] is called
+     * with the raw FCM message, the parsed [com.actito.models.ActitoNotification], and the
+     * [androidx.core.app.NotificationCompat.Builder] that will be used to post the notification.
+     */
+    @JvmStatic
+    public var lockScreenNotificationCustomizer: ActitoLockScreenNotificationCustomizer? = null
 
     /**
      * Indicates whether remote notifications are enabled.
@@ -1040,6 +1051,9 @@ public object ActitoPush {
             }
         }
 
+        // Let the integration party customize the lockscreen notification.
+        lockScreenNotificationCustomizer?.customizeLockScreenNotification(message.rawMessage, notification, builder)
+
         notificationManager.notify(message.notificationId, 0, builder.build())
     }
 
@@ -1070,8 +1084,8 @@ public object ActitoPush {
 
         val device = checkNotNull(Actito.device().currentDevice)
 
-        val previousTransport = transport
-        val previousSubscription = subscription
+        val previousTransport = this@ActitoPush.transport
+        val previousSubscription = this@ActitoPush.subscription
 
         if (previousTransport == transport && previousSubscription?.token == token) {
             logger.debug("Push subscription unmodified. Updating notification settings instead.")

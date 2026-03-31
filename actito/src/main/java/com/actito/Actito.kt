@@ -78,7 +78,8 @@ public object Actito {
     }
 
     // Configurations
-    private var context: WeakReference<Context>? = null
+    internal var context: WeakReference<Context>? = null
+        private set
 
     @JvmStatic
     public var servicesInfo: ActitoServicesInfo? = null
@@ -89,7 +90,8 @@ public object Actito {
         private set
 
     // Launch / application state
-    private var state: ActitoLaunchState = ActitoLaunchState.NONE
+    internal var state: ActitoLaunchState = ActitoLaunchState.NONE
+        private set
 
     // Listeners
     private val listeners = hashSetOf<WeakReference<Listener>>()

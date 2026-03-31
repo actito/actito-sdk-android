@@ -9,6 +9,7 @@ import com.actito.internal.storage.preferences.entities.StoredDevice
 import com.actito.utilities.device.deviceLanguage
 import com.actito.utilities.device.deviceRegion
 import org.json.JSONObject
+import kotlin.jvm.Throws
 
 internal class SharedPreferencesMigration(
     private val context: Context,
@@ -39,37 +40,7 @@ internal class SharedPreferencesMigration(
             val jsonStr = v2SavedState.getString("registeredDevice", null)
             if (jsonStr != null) {
                 try {
-                    val json = JSONObject(jsonStr)
-
-                    val device = StoredDevice(
-                        id = json.getString("deviceID"),
-                        userId = if (!json.isNull("userID")) json.getString("userID") else null,
-                        userName = if (!json.isNull("userName")) json.getString("userName") else null,
-                        timeZoneOffset = if (!json.isNull("timeZoneOffset")) {
-                            json.getDouble("timeZoneOffset")
-                        } else {
-                            0.toDouble()
-                        },
-                        osVersion = json.getString("osVersion"),
-                        sdkVersion = json.getString("sdkVersion"),
-                        appVersion = json.getString("appVersion"),
-                        deviceString = json.getString("deviceString"),
-                        language = if (!json.isNull("language")) {
-                            json.getString("language")
-                        } else {
-                            deviceLanguage
-                        },
-                        region = if (!json.isNull("region")) {
-                            json.getString("region")
-                        } else {
-                            deviceRegion
-                        },
-                        dnd = null,
-                        userData = mapOf(),
-                        transport = json.optString("transport", "Notificare"),
-                    )
-
-                    preferences.device = device
+                    preferences.device = parseDeviceFromV2(jsonStr)
                 } catch (e: Exception) {
                     logger.error("Failed to migrate v2 device.", e)
                 }
@@ -101,5 +72,38 @@ internal class SharedPreferencesMigration(
         // Remove all data from the legacy files
         v2SavedState.edit { clear() }
         v2Settings.edit { clear() }
+    }
+
+    @Throws
+    internal fun parseDeviceFromV2(jsonStr: String): StoredDevice {
+        val json = JSONObject(jsonStr)
+
+        return StoredDevice(
+            id = json.getString("deviceID"),
+            userId = if (!json.isNull("userID")) json.getString("userID") else null,
+            userName = if (!json.isNull("userName")) json.getString("userName") else null,
+            timeZoneOffset = if (!json.isNull("timeZoneOffset")) {
+                json.getDouble("timeZoneOffset")
+            } else {
+                0.toDouble()
+            },
+            osVersion = json.getString("osVersion"),
+            sdkVersion = json.getString("sdkVersion"),
+            appVersion = json.getString("appVersion"),
+            deviceString = json.getString("deviceString"),
+            language = if (!json.isNull("language")) {
+                json.getString("language")
+            } else {
+                deviceLanguage
+            },
+            region = if (!json.isNull("region")) {
+                json.getString("region")
+            } else {
+                deviceRegion
+            },
+            dnd = null,
+            userData = mapOf(),
+            transport = json.optString("transport", "Notificare"),
+        )
     }
 }

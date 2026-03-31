@@ -1,30 +1,31 @@
 package com.actito.sample.ui.tags
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.actito.Actito
+import com.actito.sample.core.SampleNotifier
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlin.collections.listOf
 
-class TagsViewModel : com.actito.sample.core.BaseViewModel() {
-    private val _fetchedTags = MutableLiveData<List<String>>()
-    val fetchedTags: LiveData<List<String>> = _fetchedTags
+class TagsViewModel : ViewModel() {
+    private val _tags = MutableStateFlow<List<String>>(listOf())
+    val tags: StateFlow<List<String>> = _tags
 
-    val defaultTags = listOf("Kotlin", "Java", "Swift", "Python")
+    init {
+        fetchTags()
+    }
 
-    fun fetchTags() {
+    fun addTag(tag: String) {
         viewModelScope.launch {
             try {
-                val tags = Actito.device().fetchTags()
-                _fetchedTags.postValue(tags)
-
-                Timber.i("Tags fetched successfully.")
-                showSnackBar("Tags fetched successfully.")
+                Actito.device().addTag(tag)
             } catch (e: Exception) {
-                Timber.e(e, "Failed to fetch tags.")
-                showSnackBar("Failed to fetch tags: ${e.message}")
+                SampleNotifier.emitError("Failed to add tag.", e)
             }
+
+            fetchTags()
         }
     }
 
@@ -32,14 +33,11 @@ class TagsViewModel : com.actito.sample.core.BaseViewModel() {
         viewModelScope.launch {
             try {
                 Actito.device().addTags(tags)
-                fetchTags()
-
-                Timber.i("Tags add successfully.")
-                showSnackBar("Tags add successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to add tags.")
-                showSnackBar("Failed to add tags: ${e.message}")
+                SampleNotifier.emitError("Failed to add tags.", e)
             }
+
+            fetchTags()
         }
     }
 
@@ -47,14 +45,23 @@ class TagsViewModel : com.actito.sample.core.BaseViewModel() {
         viewModelScope.launch {
             try {
                 Actito.device().removeTag(tag)
-                fetchTags()
-
-                Timber.i("Tag removed successfully.")
-                showSnackBar("Tag removed successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to remove tag.")
-                showSnackBar("Failed to remove tag: ${e.message}")
+                SampleNotifier.emitError("Failed to remove tag.", e)
             }
+
+            fetchTags()
+        }
+    }
+
+    fun removeTags(tags: List<String>) {
+        viewModelScope.launch {
+            try {
+                Actito.device().removeTags(tags)
+            } catch (e: Exception) {
+                SampleNotifier.emitError("Failed to remove tags.", e)
+            }
+
+            fetchTags()
         }
     }
 
@@ -62,13 +69,21 @@ class TagsViewModel : com.actito.sample.core.BaseViewModel() {
         viewModelScope.launch {
             try {
                 Actito.device().clearTags()
-                fetchTags()
-
-                Timber.i("Cleared tags successfully.")
-                showSnackBar("Cleared tags successfully.")
             } catch (e: Exception) {
-                Timber.e(e, "Failed to clear tags.")
-                showSnackBar("Failed to clear tags: ${e.message}")
+                SampleNotifier.emitError("Failed to clear tags.", e)
+            }
+
+            fetchTags()
+        }
+    }
+
+    private fun fetchTags() {
+        viewModelScope.launch {
+            try {
+                val currentTags = Actito.device().fetchTags()
+                _tags.value = currentTags
+            } catch (e: Exception) {
+                SampleNotifier.emitError("Failed to fetch tags.", e)
             }
         }
     }

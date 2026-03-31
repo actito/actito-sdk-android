@@ -106,8 +106,8 @@ public class ResponsesTest {
                 ),
             ),
             enforceSizeLimit = true,
-            enforceTagRestriction = true,
-            enforceEventNameRestriction = true,
+            enforceTagRestrictions = true,
+            enforceEventNameRestrictions = true,
         ).toModel()
 
         assertEquals(expectedApplication, application)

@@ -4,6 +4,8 @@ import org.jetbrains.kotlin.konan.properties.loadProperties
 plugins {
     id("linting")
     id("actito-application")
+    alias(apps.plugins.kotlin.compose)
+    alias(apps.plugins.jetbrains.kotlin.serialization)
 }
 
 val properties = loadProperties("local.properties")
@@ -11,7 +13,6 @@ val properties = loadProperties("local.properties")
 android {
     namespace = "com.actito.sample"
     compileSdk = apps.versions.android.compileSdk.get().toInt()
-    buildToolsVersion = apps.versions.android.buildTools.get()
 
     defaultConfig {
         applicationId = "com.actito.sample.app"
@@ -90,7 +91,7 @@ android {
 
     buildFeatures {
         buildConfig = true
-        viewBinding = true
+        compose = true
     }
 
     compileOptions {
@@ -106,28 +107,29 @@ android {
 }
 
 dependencies {
-    implementation(apps.kotlinx.coroutines)
-
     implementation(apps.androidx.appCompat)
-    implementation(apps.androidx.constraintLayout)
     implementation(apps.androidx.core)
-    implementation(apps.androidx.datastore.preferences)
-    implementation(apps.androidx.fragment)
-    implementation(apps.bundles.androidx.lifecycle)
-    implementation(apps.bundles.androidx.navigation)
-    implementation(apps.androidx.work.runtime)
-
+    implementation(apps.androidx.lifecycle.viewModel.compose)
+    implementation(apps.androidx.activity.compose)
+    implementation(platform(apps.androidx.compose.bom))
+    implementation(apps.androidx.compose.ui)
+    implementation(apps.androidx.compose.ui.graphics)
+    implementation(apps.androidx.compose.ui.tooling.preview)
     implementation(apps.google.material)
-    implementation(apps.timber)
-
-    // Glide
-    implementation(apps.glide)
-    ksp(apps.glide.ksp)
+    implementation(apps.androidx.compose.material3)
+    debugImplementation(apps.androidx.compose.ui.tooling)
+    implementation(apps.androidx.work.runtime)
+    implementation(apps.androidx.datastore.preferences)
 
     // Moshi
     implementation(apps.moshi.kotlin)
     implementation(apps.moshi.adapters)
     ksp(apps.moshi.codegen)
+
+    implementation(apps.bundles.coil)
+    implementation(apps.bundles.nav3)
+
+    implementation(apps.timber)
 
     implementation(project(":actito"))
     implementation(project(":actito-assets"))
@@ -138,4 +140,7 @@ dependencies {
     implementation(project(":actito-loyalty"))
     implementation(project(":actito-push"))
     implementation(project(":actito-push-ui"))
+
+    // Android Auto
+    implementation(apps.androidx.carApp)
 }
