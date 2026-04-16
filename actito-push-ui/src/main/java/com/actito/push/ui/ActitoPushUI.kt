@@ -129,7 +129,9 @@ public object ActitoPushUI {
             ActitoNotification.NotificationType.URL_RESOLVER -> {
                 handleUrlResolver(activity, notification)
             }
-            ActitoNotification.NotificationType.PASSBOOK -> {
+            ActitoNotification.NotificationType.PASSBOOK,
+            ActitoNotification.NotificationType.PASS,
+            -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
                 }
@@ -142,13 +144,6 @@ public object ActitoPushUI {
                 }
 
                 handleInAppBrowser(activity, notification)
-            }
-            ActitoNotification.NotificationType.PASS -> {
-                onMainThread {
-                    lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
-                }
-
-                handlePass(activity, notification)
             }
             else -> {
                 onMainThread {
@@ -569,7 +564,7 @@ public object ActitoPushUI {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                module.executeCommand("handlePassBookPresentation", data)
+                module.executeCommand("handlePassPresentation", data)
             } catch (e: Exception) {
                 logger.error("Failed to execute pass presentation command", e)
                 openNotificationActivity(activity, notification)
@@ -603,40 +598,6 @@ public object ActitoPushUI {
 
             onMainThread {
                 lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
-            }
-        }
-    }
-
-    private fun handlePass(activity: Activity, notification: ActitoNotification) {
-        val module = ActitoLaunchComponent.Module.LOYALTY.instance ?: run {
-            openNotificationActivity(activity, notification)
-            return
-        }
-
-        val data = mapOf(
-            "activity" to activity,
-            "notification" to notification,
-            "callback" to object : ActitoCallback<Unit> {
-                override fun onSuccess(result: Unit) {
-                    onMainThread {
-                        lifecycleListeners.forEach { it.get()?.onNotificationPresented(notification) }
-                    }
-                }
-
-                override fun onFailure(e: Exception) {
-                    onMainThread {
-                        lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
-                    }
-                }
-            },
-        )
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                module.executeCommand("handlePassPresentation", data)
-            } catch (e: Exception) {
-                logger.error("Failed to execute pass presentation command", e)
-                openNotificationActivity(activity, notification)
             }
         }
     }
