@@ -39,13 +39,11 @@ public class ActitoWebPassFragment : NotificationFragment() {
 
     private fun setupContent() {
         val content = notification.content.firstOrNull()
-        val passUrlStr = content?.data as? String
         val application = Actito.application
         val host = Actito.servicesInfo?.hosts?.restApi
 
         if (
-            content?.type != ActitoNotification.Content.TYPE_PK_PASS ||
-            passUrlStr == null ||
+            content == null ||
             application == null ||
             host == null
         ) {
@@ -58,11 +56,48 @@ public class ActitoWebPassFragment : NotificationFragment() {
             return
         }
 
-        val components = passUrlStr.split("/")
-        val id = components.last()
+        val id = when (notification.type) {
+            ActitoNotification.TYPE_PASSBOOK -> extractPassBookId(content)
+            ActitoNotification.TYPE_PASS -> extractPassId(content)
+            else -> null
+        }
+
+        if (id == null) {
+            onMainThread {
+                ActitoPushUI.lifecycleListeners.forEach {
+                    it.get()?.onNotificationFailedToPresent(notification)
+                }
+            }
+
+            return
+        }
 
         val url = "$host/pass/web/$id?showWebVersion=1"
 
         binding.webView.loadUrl(url)
+    }
+
+    private fun extractPassBookId(content: ActitoNotification.Content): String? {
+        if (content.type != ActitoNotification.Content.TYPE_PK_PASS) return null
+
+        val passUrlStr = content.data as? String ?: return null
+        val components = passUrlStr.split("/")
+        return components.last()
+    }
+
+    private fun extractPassId(content: ActitoNotification.Content): String? {
+        if (content.type != ActitoNotification.Content.TYPE_PASS) return null
+
+        @Suppress("UNCHECKED_CAST")
+        val data = content.data as? Map<String, String> ?: return null
+
+        val serial = data["serial"]
+        val barcode = data["barcode"]
+
+        return when {
+            !serial.isNullOrBlank() -> serial
+            !barcode.isNullOrBlank() -> barcode
+            else -> null
+        }
     }
 }

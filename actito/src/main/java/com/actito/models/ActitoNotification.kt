@@ -125,6 +125,11 @@ public data class ActitoNotification(
          */
         public const val TYPE_STORE: String = "re.notifica.notification.Store"
 
+        /**
+         * Displays a Google Wallet compatible card created on Actito.
+         */
+        public const val TYPE_PASS: String = "re.notifica.notification.Pass"
+
         private val adapter = Actito.moshi.adapter(ActitoNotification::class.java)
 
         /**
@@ -201,6 +206,11 @@ public data class ActitoNotification(
              * Opens an AppGallery search results page for a specific query.
              */
             public const val TYPE_APP_GALLERY_SEARCH: String = "re.notifica.content.AppGallerySearch"
+
+            /**
+             * Pass associated with a Pass notification.
+             */
+            public const val TYPE_PASS: String = "re.notifica.content.Pass"
 
             private val adapter = Actito.moshi.adapter(Content::class.java)
 
@@ -499,7 +509,12 @@ public data class ActitoNotification(
         /**
          * Opens an application store page.
          */
-        STORE;
+        STORE,
+
+        /**
+         * Displays a Google Wallet compatible card created on Actito.
+         */
+        PASS;
 
         public companion object {
             /**
@@ -523,6 +538,7 @@ public data class ActitoNotification(
                     TYPE_RATE -> RATE
                     TYPE_PASSBOOK -> PASSBOOK
                     TYPE_STORE -> STORE
+                    TYPE_PASS -> PASS
                     else -> null
                 }
         }
