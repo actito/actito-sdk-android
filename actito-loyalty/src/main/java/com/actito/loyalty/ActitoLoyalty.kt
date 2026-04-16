@@ -11,7 +11,6 @@ import com.actito.ActitoDeviceUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
 import com.actito.internal.network.request.ActitoRequest
-import com.actito.loyalty.ActitoLoyalty.passbookActivity
 import com.actito.loyalty.internal.logger
 import com.actito.loyalty.internal.network.push.FetchPassResponse
 import com.actito.loyalty.internal.network.push.FetchPassbookTemplateResponse
