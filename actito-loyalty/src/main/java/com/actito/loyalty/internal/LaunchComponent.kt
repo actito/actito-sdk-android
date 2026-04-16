@@ -44,7 +44,7 @@ public class LaunchComponent : ActitoLaunchComponent {
 
             when (notification.type) {
                 ActitoNotification.TYPE_PASSBOOK ->
-                    ActitoLoyalty.handlePassBookPresentation(activity, notification, callback)
+                    ActitoLoyalty.handlePassbookPresentation(activity, notification, callback)
 
                 ActitoNotification.TYPE_PASS ->
                     ActitoLoyalty.handlePassPresentation(activity, notification, callback)

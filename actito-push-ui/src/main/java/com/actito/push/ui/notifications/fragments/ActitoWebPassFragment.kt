@@ -56,9 +56,24 @@ public class ActitoWebPassFragment : NotificationFragment() {
             return
         }
 
-        val id = when (notification.type) {
-            ActitoNotification.TYPE_PASSBOOK -> extractPassBookId(content)
-            ActitoNotification.TYPE_PASS -> extractPassId(content)
+        val id = when (content.type) {
+            ActitoNotification.Content.TYPE_PK_PASS -> {
+                val passUrlStr = content.data as? String
+                passUrlStr?.split("/")?.last()
+            }
+            ActitoNotification.Content.TYPE_PASS -> {
+                @Suppress("UNCHECKED_CAST")
+                val data = content.data as? Map<String, String>
+
+                val serial = data?.get("serial")
+                val barcode = data?.get("barcode")
+
+                when {
+                    !serial.isNullOrBlank() -> serial
+                    !barcode.isNullOrBlank() -> barcode
+                    else -> null
+                }
+            }
             else -> null
         }
 
@@ -72,32 +87,8 @@ public class ActitoWebPassFragment : NotificationFragment() {
             return
         }
 
-        val url = "$host/pass/web/$id?showWebVersion=1"
+        val url = "$host/pass/forapplication/${application.id}/$id"
 
         binding.webView.loadUrl(url)
-    }
-
-    private fun extractPassBookId(content: ActitoNotification.Content): String? {
-        if (content.type != ActitoNotification.Content.TYPE_PK_PASS) return null
-
-        val passUrlStr = content.data as? String ?: return null
-        val components = passUrlStr.split("/")
-        return components.last()
-    }
-
-    private fun extractPassId(content: ActitoNotification.Content): String? {
-        if (content.type != ActitoNotification.Content.TYPE_PASS) return null
-
-        @Suppress("UNCHECKED_CAST")
-        val data = content.data as? Map<String, String> ?: return null
-
-        val serial = data["serial"]
-        val barcode = data["barcode"]
-
-        return when {
-            !serial.isNullOrBlank() -> serial
-            !barcode.isNullOrBlank() -> barcode
-            else -> null
-        }
     }
 }
