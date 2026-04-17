@@ -56,7 +56,7 @@ public class ActitoWebPassFragment : NotificationFragment() {
             return
         }
 
-        val id = when (content.type) {
+        val code = when (content.type) {
             ActitoNotification.Content.TYPE_PK_PASS -> {
                 val passUrlStr = content.data as? String
                 passUrlStr?.split("/")?.last()
@@ -77,7 +77,7 @@ public class ActitoWebPassFragment : NotificationFragment() {
             else -> null
         }
 
-        if (id == null) {
+        if (code == null) {
             onMainThread {
                 ActitoPushUI.lifecycleListeners.forEach {
                     it.get()?.onNotificationFailedToPresent(notification)
@@ -87,7 +87,7 @@ public class ActitoWebPassFragment : NotificationFragment() {
             return
         }
 
-        val url = "$host/pass/forapplication/${application.id}/$id"
+        val url = "$host/pass/forapplication/${application.id}/$code"
 
         binding.webView.loadUrl(url)
     }
