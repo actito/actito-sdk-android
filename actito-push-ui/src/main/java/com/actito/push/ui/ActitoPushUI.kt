@@ -129,7 +129,9 @@ public object ActitoPushUI {
             ActitoNotification.NotificationType.URL_RESOLVER -> {
                 handleUrlResolver(activity, notification)
             }
-            ActitoNotification.NotificationType.PASSBOOK -> {
+            ActitoNotification.NotificationType.PASSBOOK,
+            ActitoNotification.NotificationType.PASS,
+            -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
                 }
@@ -420,6 +422,7 @@ public object ActitoPushUI {
             ActitoNotification.NotificationType.MAP -> ActitoMapFragment::class.java.canonicalName
             ActitoNotification.NotificationType.RATE -> ActitoRateFragment::class.java.canonicalName
             ActitoNotification.NotificationType.STORE -> ActitoStoreFragment::class.java.canonicalName
+            ActitoNotification.NotificationType.PASS -> ActitoWebPassFragment::class.java.canonicalName
         }
     }
 
