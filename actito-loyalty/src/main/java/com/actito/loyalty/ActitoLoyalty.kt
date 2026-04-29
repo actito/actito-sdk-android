@@ -129,7 +129,7 @@ public object ActitoLoyalty {
 
     // region Actito Loyalty Integration
 
-    public fun handlePassbookPresentation(
+    internal fun handlePassbookPresentation(
         activity: Activity,
         notification: ActitoNotification,
         callback: ActitoCallback<Unit>,
@@ -158,7 +158,7 @@ public object ActitoLoyalty {
         )
     }
 
-    public fun handlePassPresentation(
+    internal fun handlePassPresentation(
         activity: Activity,
         notification: ActitoNotification,
         callback: ActitoCallback<Unit>,
