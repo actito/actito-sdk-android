@@ -29,6 +29,9 @@ public class ActitoVideoFragment : NotificationFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Skip when notification isn't initialized
+        if (!isNotificationInitialized) return
+
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.mediaPlaybackRequiresUserGesture = false
         binding.webView.settings.loadWithOverviewMode = true

@@ -27,6 +27,9 @@ public class ActitoImageFragment : NotificationFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Skip when notification isn't initialized
+        if (!isNotificationInitialized) return
+
         if (isAdded) {
             binding.pager.adapter = ImageAdapter(notification, this)
         }

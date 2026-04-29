@@ -5,6 +5,7 @@ import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.ActitoPushUI
+import com.actito.push.ui.internal.logger
 import com.actito.utilities.parcel.parcelable
 import com.actito.utilities.threading.onMainThread
 import com.actito.utilities.view.waitForLayout
@@ -51,7 +52,11 @@ public class ActitoMapFragment : SupportMapFragment(), OnMapReadyCallback {
 
         notification = savedInstanceState?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
             ?: arguments?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
-            ?: throw IllegalArgumentException("Missing required notification parameter.")
+            ?: run {
+                logger.warning("Missing required notification parameter.")
+                activity?.finish()
+                return
+            }
 
         getMapAsync(this)
     }

@@ -5,12 +5,16 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.actito.Actito
 import com.actito.models.ActitoNotification
+import com.actito.push.ui.internal.logger
 import com.actito.utilities.parcel.parcelable
 
 public open class NotificationFragment : Fragment() {
 
     protected lateinit var notification: ActitoNotification
     protected lateinit var callback: Callback
+
+    protected val isNotificationInitialized: Boolean
+        get() = ::notification.isInitialized
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +27,11 @@ public open class NotificationFragment : Fragment() {
 
         notification = savedInstanceState?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
             ?: arguments?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
-            ?: throw IllegalArgumentException("Missing required notification parameter.")
+            ?: run {
+                logger.warning("Missing required notification parameter.")
+                activity?.finish()
+                return
+            }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
