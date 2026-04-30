@@ -143,4 +143,7 @@ dependencies {
 
     // Android Auto
     implementation(apps.androidx.carApp)
+
+    // Qualifio
+    implementation(apps.qualifio)
 }
