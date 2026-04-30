@@ -24,6 +24,7 @@ import com.actito.push.ui.actions.NotificationSmsAction
 import com.actito.push.ui.actions.NotificationTelephoneAction
 import com.actito.push.ui.actions.base.NotificationAction
 import com.actito.push.ui.internal.NotificationUrlResolver
+import com.actito.push.ui.internal.QualifioIntegration
 import com.actito.push.ui.internal.logger
 import com.actito.push.ui.notifications.fragments.ActitoAlertFragment
 import com.actito.push.ui.notifications.fragments.ActitoImageFragment
@@ -119,6 +120,7 @@ public object ActitoPushUI {
                     "Attempting to present a notification of type 'none'. These should be handled by the application instead.",
                 )
             }
+
             ActitoNotification.NotificationType.URL_SCHEME -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
@@ -126,9 +128,11 @@ public object ActitoPushUI {
 
                 handleUrlScheme(activity, notification)
             }
+
             ActitoNotification.NotificationType.URL_RESOLVER -> {
                 handleUrlResolver(activity, notification)
             }
+
             ActitoNotification.NotificationType.PASSBOOK -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
@@ -136,6 +140,7 @@ public object ActitoPushUI {
 
                 handlePassbook(activity, notification)
             }
+
             ActitoNotification.NotificationType.IN_APP_BROWSER -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
@@ -143,6 +148,15 @@ public object ActitoPushUI {
 
                 handleInAppBrowser(activity, notification)
             }
+
+            ActitoNotification.NotificationType.QUALIFIO_CAMPAIGN -> {
+                onMainThread {
+                    lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
+                }
+
+                handleQualifio(notification)
+            }
+
             else -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
@@ -420,6 +434,14 @@ public object ActitoPushUI {
             ActitoNotification.NotificationType.MAP -> ActitoMapFragment::class.java.canonicalName
             ActitoNotification.NotificationType.RATE -> ActitoRateFragment::class.java.canonicalName
             ActitoNotification.NotificationType.STORE -> ActitoStoreFragment::class.java.canonicalName
+            ActitoNotification.NotificationType.QUALIFIO_CAMPAIGN -> {
+                @Suppress("detekt:MaxLineLength")
+                logger.debug(
+                    "Attempting to create a fragment for a notification of type 'QualifioCampaign'. This type is handled by Qualifio SDK.",
+                )
+
+                return null
+            }
         }
     }
 
@@ -595,6 +617,66 @@ public object ActitoPushUI {
 
             onMainThread {
                 lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
+            }
+        }
+    }
+
+    private fun handleQualifio(notification: ActitoNotification) {
+        if (!QualifioIntegration.isAvailable) {
+            logger.error(
+                "The Qualifio notification cannot be presented. Qualifio SDK is not implemented by the application.",
+            )
+
+            onMainThread {
+                lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
+            }
+
+            return
+        }
+
+        val content = notification.content.firstOrNull() ?: run {
+            logger.error("The Qualifio notification cannot be presented. Content is missing.")
+
+            onMainThread {
+                lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
+            }
+
+            return
+        }
+
+        when (content.type) {
+            "re.notifica.content.qualifio.Campaign" -> {
+                val campaign = content.data as? String ?: run {
+                    logger.error("The Qualifio campaign failed to present. Campaign name is missing.")
+
+                    onMainThread {
+                        lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
+                    }
+
+                    return
+                }
+
+                QualifioIntegration.launchCampaign(campaign)
+                    .onSuccess {
+                        onMainThread {
+                            lifecycleListeners.forEach { it.get()?.onNotificationPresented(notification) }
+                        }
+                    }
+                    .onFailure { e ->
+                        logger.error("The Qualifio campaign failed to present.", e)
+
+                        onMainThread {
+                            lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
+                        }
+                    }
+            }
+
+            else -> {
+                logger.error("The Qualifio notification failed to present. Unknown content type: ${content.type}.")
+
+                onMainThread {
+                    lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
+                }
             }
         }
     }

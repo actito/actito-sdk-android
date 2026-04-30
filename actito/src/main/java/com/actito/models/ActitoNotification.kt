@@ -125,6 +125,11 @@ public data class ActitoNotification(
          */
         public const val TYPE_STORE: String = "re.notifica.notification.Store"
 
+        /**
+         * Displays a Qualifio campaign via the Qualifio SDK, if available.
+         */
+        public const val TYPE_QUALIFIO_CAMPAIGN: String = "re.notifica.notification.QualifioCampaign"
+
         private val adapter = Actito.moshi.adapter(ActitoNotification::class.java)
 
         /**
@@ -499,7 +504,12 @@ public data class ActitoNotification(
         /**
          * Opens an application store page.
          */
-        STORE;
+        STORE,
+
+        /**
+         * Displays a Qualifio campaign via the Qualifio SDK, if available.
+         */
+        QUALIFIO_CAMPAIGN;
 
         public companion object {
             /**
@@ -523,6 +533,7 @@ public data class ActitoNotification(
                     TYPE_RATE -> RATE
                     TYPE_PASSBOOK -> PASSBOOK
                     TYPE_STORE -> STORE
+                    TYPE_QUALIFIO_CAMPAIGN -> QUALIFIO_CAMPAIGN
                     else -> null
                 }
         }
