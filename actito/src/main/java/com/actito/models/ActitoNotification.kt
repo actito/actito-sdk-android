@@ -126,6 +126,11 @@ public data class ActitoNotification(
         public const val TYPE_STORE: String = "re.notifica.notification.Store"
 
         /**
+         * Displays a Google Wallet compatible card created on Actito.
+         */
+        public const val TYPE_PASS: String = "re.notifica.notification.Pass"
+
+        /**
          * Displays a Qualifio campaign via the Qualifio SDK, if available.
          */
         public const val TYPE_QUALIFIO_CAMPAIGN: String = "re.notifica.notification.QualifioCampaign"
@@ -206,6 +211,11 @@ public data class ActitoNotification(
              * Opens an AppGallery search results page for a specific query.
              */
             public const val TYPE_APP_GALLERY_SEARCH: String = "re.notifica.content.AppGallerySearch"
+
+            /**
+             * Pass associated with a Pass notification.
+             */
+            public const val TYPE_PASS: String = "re.notifica.content.Pass"
 
             private val adapter = Actito.moshi.adapter(Content::class.java)
 
@@ -507,6 +517,11 @@ public data class ActitoNotification(
         STORE,
 
         /**
+         * Displays a Google Wallet compatible card created on Actito.
+         */
+        PASS,
+
+        /**
          * Displays a Qualifio campaign via the Qualifio SDK, if available.
          */
         QUALIFIO_CAMPAIGN;
@@ -533,6 +548,7 @@ public data class ActitoNotification(
                     TYPE_RATE -> RATE
                     TYPE_PASSBOOK -> PASSBOOK
                     TYPE_STORE -> STORE
+                    TYPE_PASS -> PASS
                     TYPE_QUALIFIO_CAMPAIGN -> QUALIFIO_CAMPAIGN
                     else -> null
                 }
