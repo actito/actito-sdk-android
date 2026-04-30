@@ -1,14 +1,11 @@
 package com.actito.push.ui.internal
 
+import com.actito.models.ActitoNotification
 import java.lang.reflect.Method
 
 internal object QualifioIntegration {
     private const val CLASS_NAME = "com.qualifio.internal.ActitoIntegration"
     private const val LAUNCH_CAMPAIGN_METHOD = "launchCampaign"
-
-    internal val isAvailable: Boolean by lazy {
-        qClass != null
-    }
 
     private val qClass: Class<*>? by lazy {
         runCatching {
@@ -28,13 +25,41 @@ internal object QualifioIntegration {
         }.getOrNull()
     }
 
-    internal fun launchCampaign(campaign: String) = runCatching {
+    internal fun handleCampaign(notification: ActitoNotification): Result<Unit> {
+        if (qClass == null) {
+            return Result.failure(
+                ClassNotFoundException("Qualifio SDK is not implemented by the application."),
+            )
+        }
+
+        val content = notification.content.firstOrNull() ?: run {
+            return Result.failure(IllegalArgumentException("Notification content is missing."))
+        }
+
+        when (content.type) {
+            "re.notifica.content.qualifio.Campaign" -> {
+                val campaign = content.data as? String ?: run {
+                    return Result.failure(IllegalArgumentException("Campaign name is missing."))
+                }
+
+                return launchCampaign(campaign)
+            }
+
+            else -> {
+                return Result.failure(IllegalArgumentException("Unknown content type: ${content.type}."))
+            }
+        }
+    }
+
+    private fun launchCampaign(campaign: String): Result<Unit> {
         val method = launchMethod
-            ?: error("Qualifio SDK integration method not found.")
+            ?: return Result.failure(NoSuchMethodException("Qualifio SDK integration method not found."))
 
         val target = instance
-            ?: error("Qualifio SDK integration class could not be initiated.")
+            ?: return Result.failure(IllegalStateException("Qualifio SDK integration class could not be initiated."))
 
-        method.invoke(target, campaign)
+        return runCatching {
+            method.invoke(target, campaign)
+        }
     }
 }
