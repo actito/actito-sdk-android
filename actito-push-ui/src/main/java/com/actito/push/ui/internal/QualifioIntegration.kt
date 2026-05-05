@@ -26,12 +26,6 @@ internal object QualifioIntegration {
     }
 
     internal fun handleCampaign(notification: ActitoNotification): Result<Unit> {
-        if (qClass == null) {
-            return Result.failure(
-                ClassNotFoundException("Qualifio SDK is not implemented by the application."),
-            )
-        }
-
         val content = notification.content.firstOrNull() ?: run {
             return Result.failure(IllegalArgumentException("Notification content is missing."))
         }
@@ -52,6 +46,12 @@ internal object QualifioIntegration {
     }
 
     private fun launchCampaign(campaign: String): Result<Unit> {
+        if (qClass == null) {
+            return Result.failure(
+                ClassNotFoundException("Qualifio SDK is not implemented by the application."),
+            )
+        }
+
         val method = launchMethod
             ?: return Result.failure(NoSuchMethodException("Qualifio SDK integration method not found."))
 
