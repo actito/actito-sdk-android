@@ -133,7 +133,7 @@ public data class ActitoNotification(
         /**
          * Displays a Qualifio campaign via the Qualifio SDK, if available.
          */
-        public const val TYPE_QUALIFIO_CAMPAIGN: String = "re.notifica.notification.QualifioCampaign"
+        public const val TYPE_QUALIFIO_CAMPAIGN: String = "re.notifica.notification.qualifio.Campaign"
 
         private val adapter = Actito.moshi.adapter(ActitoNotification::class.java)
 
