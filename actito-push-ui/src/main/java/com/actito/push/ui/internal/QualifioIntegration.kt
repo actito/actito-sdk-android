@@ -1,29 +1,15 @@
 package com.actito.push.ui.internal
 
 import com.actito.models.ActitoNotification
-import java.lang.reflect.Method
 
 internal object QualifioIntegration {
     private const val CLASS_NAME = "com.qualifio.internal.ActitoIntegration"
     private const val LAUNCH_CAMPAIGN_METHOD = "launchCampaign"
 
-    private val qClass: Class<*>? by lazy {
-        runCatching {
+    private val qClass: Class<*>?
+        get() = runCatching {
             Class.forName(CLASS_NAME)
         }.getOrNull()
-    }
-
-    private val instance: Any? by lazy {
-        runCatching {
-            qClass?.getDeclaredConstructor()?.newInstance()
-        }.getOrNull()
-    }
-
-    private val launchMethod: Method? by lazy {
-        runCatching {
-            qClass?.getMethod(LAUNCH_CAMPAIGN_METHOD, String::class.java)
-        }.getOrNull()
-    }
 
     internal fun handleCampaign(notification: ActitoNotification): Result<Unit> {
         val content = notification.content.firstOrNull() ?: run {
@@ -45,21 +31,11 @@ internal object QualifioIntegration {
         }
     }
 
-    private fun launchCampaign(campaign: String): Result<Unit> {
-        if (qClass == null) {
-            return Result.failure(
-                ClassNotFoundException("Qualifio SDK is not implemented by the application."),
-            )
-        }
+    private fun launchCampaign(campaign: String): Result<Unit> = runCatching {
+        val qClass = qClass ?: throw ClassNotFoundException("Qualifio SDK is not implemented by the application.")
+        val method = qClass.getMethod(LAUNCH_CAMPAIGN_METHOD, String::class.java)
+        val instance = qClass.getDeclaredConstructor().newInstance()
 
-        val method = launchMethod
-            ?: return Result.failure(NoSuchMethodException("Qualifio SDK integration method not found."))
-
-        val target = instance
-            ?: return Result.failure(IllegalStateException("Qualifio SDK integration class could not be initiated."))
-
-        return runCatching {
-            method.invoke(target, campaign)
-        }
+        method.invoke(instance, campaign)
     }
 }
