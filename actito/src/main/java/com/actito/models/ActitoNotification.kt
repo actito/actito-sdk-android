@@ -217,6 +217,11 @@ public data class ActitoNotification(
              */
             public const val TYPE_PASS: String = "re.notifica.content.Pass"
 
+            /**
+             * Qualifio campaign path.
+             */
+            public const val TYPE_QUALIFIO_CAMPAIGN: String = "re.notifica.content.qualifio.Campaign"
+
             private val adapter = Actito.moshi.adapter(Content::class.java)
 
             /**
