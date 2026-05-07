@@ -43,11 +43,7 @@ internal object QualifioIntegration {
         }
 
         try {
-            @Suppress("SpreadOperator")
-            val result = method.invoke(
-                instance,
-                *arrayOf(campaign, continuation),
-            )
+            val result = method.invoke(instance, campaign, continuation)
 
             if (result !== COROUTINE_SUSPENDED) {
                 cont.resume(result)
