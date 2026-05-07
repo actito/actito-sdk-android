@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Upcoming release
+
+- Add integration with Qualifio SDK
+
 ## 5.1.0
 
 - Add a hook to customise the notification generated for the lock screen. 
