@@ -156,19 +156,21 @@ public object ActitoPushUI {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
                 }
 
-                QualifioIntegration.handleCampaign(notification)
-                    .onSuccess {
+                actitoCoroutineScope.launch {
+                    try {
+                        QualifioIntegration.handleCampaign(notification)
+
                         onMainThread {
                             lifecycleListeners.forEach { it.get()?.onNotificationPresented(notification) }
                         }
-                    }
-                    .onFailure { e ->
+                    } catch (e: Exception) {
                         logger.error("The Qualifio campaign failed to present.", e)
 
                         onMainThread {
                             lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
                         }
                     }
+                }
             }
 
             else -> {
@@ -426,6 +428,7 @@ public object ActitoPushUI {
                 )
                 return null
             }
+
             ActitoNotification.NotificationType.ALERT -> ActitoAlertFragment::class.java.canonicalName
             ActitoNotification.NotificationType.IN_APP_BROWSER -> {
                 logger.debug(
@@ -433,6 +436,7 @@ public object ActitoPushUI {
                 )
                 return null
             }
+
             ActitoNotification.NotificationType.WEB_VIEW -> ActitoWebViewFragment::class.java.canonicalName
             ActitoNotification.NotificationType.URL -> ActitoUrlFragment::class.java.canonicalName
             ActitoNotification.NotificationType.URL_RESOLVER -> ActitoUrlFragment::class.java.canonicalName
@@ -442,6 +446,7 @@ public object ActitoPushUI {
                 )
                 return null
             }
+
             ActitoNotification.NotificationType.IMAGE -> ActitoImageFragment::class.java.canonicalName
             ActitoNotification.NotificationType.PASSBOOK -> ActitoWebPassFragment::class.java.canonicalName
             ActitoNotification.NotificationType.VIDEO -> ActitoVideoFragment::class.java.canonicalName
@@ -542,6 +547,7 @@ public object ActitoPushUI {
             NotificationUrlResolver.UrlResolverResult.NONE -> {
                 logger.debug("Resolving as 'none' notification.")
             }
+
             NotificationUrlResolver.UrlResolverResult.URL_SCHEME -> {
                 logger.debug("Resolving as 'url scheme' notification.")
 
@@ -551,6 +557,7 @@ public object ActitoPushUI {
 
                 handleUrlScheme(activity, notification)
             }
+
             NotificationUrlResolver.UrlResolverResult.WEB_VIEW -> {
                 logger.debug("Resolving as 'web view' notification.")
 
@@ -560,6 +567,7 @@ public object ActitoPushUI {
 
                 openNotificationActivity(activity, notification)
             }
+
             NotificationUrlResolver.UrlResolverResult.IN_APP_BROWSER -> {
                 logger.debug("Resolving as 'in-app browser' notification.")
 
@@ -671,6 +679,7 @@ public object ActitoPushUI {
             ActitoNotification.Action.TYPE_WEB_VIEW,
             ActitoNotification.Action.TYPE_IN_APP_BROWSER,
                 -> NotificationInAppBrowserAction(activity, notification, action)
+
             else -> {
                 logger.warning("Unhandled action type '${action.type}'.")
                 null
