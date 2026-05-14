@@ -8,6 +8,7 @@ import com.actito.ActitoCallback
 import com.actito.internal.ActitoLaunchComponent
 import com.actito.loyalty.ActitoLoyalty
 import com.actito.models.ActitoNotification
+import com.actito.utilities.collections.require
 
 @Keep
 public class LaunchComponent : ActitoLaunchComponent {
@@ -38,9 +39,9 @@ public class LaunchComponent : ActitoLaunchComponent {
     override suspend fun executeCommand(command: String, data: Any?): Any = when (command) {
         "handlePassPresentation" -> {
             val map = data as? Map<*, *> ?: throw IllegalArgumentException("Invalid command data.")
-            val activity = map["activity"] as Activity
-            val notification = map["notification"] as ActitoNotification
-            val callback = map["callback"] as ActitoCallback<Unit>
+            val activity: Activity = map.require("activity")
+            val notification: ActitoNotification = map.require("notification")
+            val callback: ActitoCallback<Unit> = map.require("callback")
 
             when (notification.type) {
                 ActitoNotification.TYPE_PASSBOOK ->

@@ -1,6 +1,7 @@
 package com.actito.utilities.collections
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -133,5 +134,31 @@ public class MapTests {
         println(actual)
 
         assertEquals(expected, expected)
+    }
+
+    @Test
+    fun testMapRequireWhenTypeMatches() {
+        val map = mapOf(
+            "name" to "John",
+            "age" to 30,
+        )
+
+        val name: String = map.require("name")
+        val age: Int = map.require("age")
+
+        assertEquals("John", name)
+        assertEquals(30, age)
+    }
+
+    @Test
+    fun testMapRequiresWhenKeyIsMissing() {
+        val map = mapOf(
+            "name" to "John",
+            "age" to 30,
+        )
+
+        assertThrows(IllegalArgumentException::class.java) {
+            map.require<String>("gender")
+        }
     }
 }
