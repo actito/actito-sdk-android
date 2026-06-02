@@ -584,13 +584,6 @@ public object ActitoPush {
         action: ActitoNotification.Action?,
     ) {
         actitoCoroutineScope.launch {
-            // Log the notification open event.
-            Actito.events().logNotificationOpen(notification.id)
-            Actito.events().logNotificationInfluenced(notification.id)
-
-            // Notify the inbox to mark the item as read.
-            InboxIntegration.markItemAsRead(message)
-
             @Suppress("NAME_SHADOWING")
             val notification: ActitoNotification = try {
                 if (notification.partial) {
@@ -602,6 +595,24 @@ public object ActitoPush {
                 logger.error("Failed to fetch notification.", e)
                 return@launch
             }
+
+            // Log the notification open event.
+            try {
+                Actito.events().logNotificationOpen(notification.id)
+            } catch (e: Exception) {
+                logger.error("Failed to log the notification open.", e)
+                return@launch
+            }
+
+            try {
+                Actito.events().logNotificationInfluenced(notification.id)
+            } catch (e: Exception) {
+                logger.error("Failed to log the notification influenced open.", e)
+                return@launch
+            }
+
+            // Notify the inbox to mark the item as read.
+            InboxIntegration.markItemAsRead(message)
 
             // Notify the consumer's intent receiver.
             if (action == null) {
