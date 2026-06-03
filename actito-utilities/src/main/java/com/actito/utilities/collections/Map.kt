@@ -41,8 +41,3 @@ public fun <K, V, R : Any> Map<out K, V>.filterNotNullRecursive(predicate: (Map.
     }
     return result
 }
-
-public inline fun <reified T> Map<*, *>.require(key: String): T {
-    return this[key] as? T
-        ?: throw IllegalArgumentException("Missing or invalid '$key'")
-}
