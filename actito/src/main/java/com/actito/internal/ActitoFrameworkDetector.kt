@@ -4,13 +4,13 @@ import android.content.Context
 import com.actito.Actito
 import java.util.zip.ZipFile
 
-public object ActitoFrameworkDetector {
+internal object ActitoFrameworkDetector {
     internal fun detect(): FrameworkInfo {
         return when {
             isFlutter() -> FrameworkInfo("Flutter", null)
-            isExpo() -> FrameworkInfo("Expo", null)
+            isExpo() -> FrameworkInfo("Expo(RN)", getReactNativeVersion())
             isReactNative() -> FrameworkInfo("React Native", getReactNativeVersion())
-            isCapacitor() -> FrameworkInfo("Ionic Native", null)
+            isCapacitor() -> FrameworkInfo("Capacitor", null)
             isCordova() -> FrameworkInfo("Cordova", getCordovaVersion(Actito.requireContext()))
             isDotNETMAUI(Actito.requireContext()) -> FrameworkInfo(".NET MAUI", null)
             else -> FrameworkInfo(null, null)
@@ -36,7 +36,7 @@ public object ActitoFrameworkDetector {
                     it.name.contains("libmonosgen")
                 }
             }
-        } catch (_: Exception) {
+        } catch (_: Throwable) {
             false
         }
     }
@@ -46,13 +46,12 @@ public object ActitoFrameworkDetector {
             val clazz = Class.forName("com.facebook.react.modules.systeminfo.ReactNativeVersion")
 
             @Suppress("UNCHECKED_CAST")
-            val versionMap = clazz
-                .getField("VERSION")
-                .get(null) as? Map<String, Any>
+            val versionMap = clazz.getField("VERSION").get(null) as? Map<String, Any>
+                ?: throw IllegalArgumentException("Version field not found")
 
-            val major = versionMap?.get("major")
-            val minor = versionMap?.get("minor")
-            val patch = versionMap?.get("patch")
+            val major = requireNotNull(versionMap["major"])
+            val minor = requireNotNull(versionMap["minor"])
+            val patch = requireNotNull(versionMap["patch"])
 
             "$major.$minor.$patch"
         } catch (_: Throwable) {

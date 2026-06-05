@@ -22,6 +22,7 @@ internal data class CreateDevicePayload(
     val frameworkVersion: String?,
 )
 
+@EncodeNulls
 @JsonClass(generateAdapter = true)
 internal data class UpdateDevicePayload(
     val language: String,
