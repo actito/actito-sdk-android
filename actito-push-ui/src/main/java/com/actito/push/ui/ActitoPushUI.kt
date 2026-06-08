@@ -24,6 +24,7 @@ import com.actito.push.ui.actions.NotificationSmsAction
 import com.actito.push.ui.actions.NotificationTelephoneAction
 import com.actito.push.ui.actions.base.NotificationAction
 import com.actito.push.ui.internal.NotificationUrlResolver
+import com.actito.push.ui.internal.QualifioIntegration
 import com.actito.push.ui.internal.logger
 import com.actito.push.ui.notifications.fragments.ActitoAlertFragment
 import com.actito.push.ui.notifications.fragments.ActitoImageFragment
@@ -119,6 +120,7 @@ public object ActitoPushUI {
                     "Attempting to present a notification of type 'none'. These should be handled by the application instead.",
                 )
             }
+
             ActitoNotification.NotificationType.URL_SCHEME -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
@@ -126,16 +128,21 @@ public object ActitoPushUI {
 
                 handleUrlScheme(activity, notification)
             }
+
             ActitoNotification.NotificationType.URL_RESOLVER -> {
                 handleUrlResolver(activity, notification)
             }
-            ActitoNotification.NotificationType.PASSBOOK -> {
+
+            ActitoNotification.NotificationType.PASSBOOK,
+            ActitoNotification.NotificationType.PASS,
+            -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
                 }
 
                 handlePassbook(activity, notification)
             }
+
             ActitoNotification.NotificationType.IN_APP_BROWSER -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
@@ -143,6 +150,29 @@ public object ActitoPushUI {
 
                 handleInAppBrowser(activity, notification)
             }
+
+            ActitoNotification.NotificationType.QUALIFIO_CAMPAIGN -> {
+                onMainThread {
+                    lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
+                }
+
+                actitoCoroutineScope.launch {
+                    try {
+                        QualifioIntegration.handleCampaign(notification)
+
+                        onMainThread {
+                            lifecycleListeners.forEach { it.get()?.onNotificationPresented(notification) }
+                        }
+                    } catch (e: Exception) {
+                        logger.error("The Qualifio campaign failed to present.", e)
+
+                        onMainThread {
+                            lifecycleListeners.forEach { it.get()?.onNotificationFailedToPresent(notification) }
+                        }
+                    }
+                }
+            }
+
             else -> {
                 onMainThread {
                     lifecycleListeners.forEach { it.get()?.onNotificationWillPresent(notification) }
@@ -398,6 +428,7 @@ public object ActitoPushUI {
                 )
                 return null
             }
+
             ActitoNotification.NotificationType.ALERT -> ActitoAlertFragment::class.java.canonicalName
             ActitoNotification.NotificationType.IN_APP_BROWSER -> {
                 logger.debug(
@@ -405,6 +436,7 @@ public object ActitoPushUI {
                 )
                 return null
             }
+
             ActitoNotification.NotificationType.WEB_VIEW -> ActitoWebViewFragment::class.java.canonicalName
             ActitoNotification.NotificationType.URL -> ActitoUrlFragment::class.java.canonicalName
             ActitoNotification.NotificationType.URL_RESOLVER -> ActitoUrlFragment::class.java.canonicalName
@@ -414,12 +446,22 @@ public object ActitoPushUI {
                 )
                 return null
             }
+
             ActitoNotification.NotificationType.IMAGE -> ActitoImageFragment::class.java.canonicalName
             ActitoNotification.NotificationType.PASSBOOK -> ActitoWebPassFragment::class.java.canonicalName
             ActitoNotification.NotificationType.VIDEO -> ActitoVideoFragment::class.java.canonicalName
             ActitoNotification.NotificationType.MAP -> ActitoMapFragment::class.java.canonicalName
             ActitoNotification.NotificationType.RATE -> ActitoRateFragment::class.java.canonicalName
             ActitoNotification.NotificationType.STORE -> ActitoStoreFragment::class.java.canonicalName
+            ActitoNotification.NotificationType.PASS -> ActitoWebPassFragment::class.java.canonicalName
+            ActitoNotification.NotificationType.QUALIFIO_CAMPAIGN -> {
+                @Suppress("detekt:MaxLineLength")
+                logger.debug(
+                    "Attempting to create a fragment for a notification of type 'QualifioCampaign'. This type is handled by Qualifio SDK.",
+                )
+
+                return null
+            }
         }
     }
 
@@ -505,6 +547,7 @@ public object ActitoPushUI {
             NotificationUrlResolver.UrlResolverResult.NONE -> {
                 logger.debug("Resolving as 'none' notification.")
             }
+
             NotificationUrlResolver.UrlResolverResult.URL_SCHEME -> {
                 logger.debug("Resolving as 'url scheme' notification.")
 
@@ -514,6 +557,7 @@ public object ActitoPushUI {
 
                 handleUrlScheme(activity, notification)
             }
+
             NotificationUrlResolver.UrlResolverResult.WEB_VIEW -> {
                 logger.debug("Resolving as 'web view' notification.")
 
@@ -523,6 +567,7 @@ public object ActitoPushUI {
 
                 openNotificationActivity(activity, notification)
             }
+
             NotificationUrlResolver.UrlResolverResult.IN_APP_BROWSER -> {
                 logger.debug("Resolving as 'in-app browser' notification.")
 
@@ -634,6 +679,7 @@ public object ActitoPushUI {
             ActitoNotification.Action.TYPE_WEB_VIEW,
             ActitoNotification.Action.TYPE_IN_APP_BROWSER,
                 -> NotificationInAppBrowserAction(activity, notification, action)
+
             else -> {
                 logger.warning("Unhandled action type '${action.type}'.")
                 null

@@ -42,7 +42,15 @@ public class LaunchComponent : ActitoLaunchComponent {
             val notification = map["notification"] as ActitoNotification
             val callback = map["callback"] as ActitoCallback<Unit>
 
-            ActitoLoyalty.handlePassPresentation(activity, notification, callback)
+            when (notification.type) {
+                ActitoNotification.TYPE_PASSBOOK ->
+                    ActitoLoyalty.handlePassbookPresentation(activity, notification, callback)
+
+                ActitoNotification.TYPE_PASS ->
+                    ActitoLoyalty.handlePassPresentation(activity, notification, callback)
+
+                else -> throw IllegalArgumentException("Wrong type for pass presentation: ${notification.type}")
+            }
         }
 
         else -> throw UnsupportedOperationException("Function '$command' not supported in Loyalty Implementation")

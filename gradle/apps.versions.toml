@@ -29,6 +29,8 @@ moshi = "1.15.2"
 nav3Core = "1.0.0"
 retrofit = "3.0.0"
 timber = "5.0.1"
+qualifio = "1.0.0"
+qualifio-services = "1.0.0"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -67,6 +69,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref="retrofit" 
 retrofit-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref="retrofit" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+qualifio = { module = "com.qualifio:qualifio", version.ref = "qualifio" }
 
 [plugins]
 actito-services = { id = "com.actito.gradle.actito-services", version.ref = "actito-services" }
@@ -74,6 +77,7 @@ android-application = { id = "com.android.application", version.ref = "android-a
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization"}
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+qualifio-services = { id = "com.qualifio.gradle.qualifio-services", version.ref = "qualifio-services" }
 
 [bundles]
 androidx-lifecycle = ["androidx-lifecycle-livedata", "androidx-lifecycle-runtime", "androidx-lifecycle-viewModel", "androidx-lifecycle-viewModel-compose"]
