@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import com.actito.Actito
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.databinding.ActitoNotificationActivityBinding
+import com.actito.push.ui.internal.logger
 import com.actito.push.ui.notifications.NotificationContainerFragment
 import com.actito.utilities.parcel.parcelable
 import com.actito.utilities.threading.onMainThread
@@ -28,14 +29,19 @@ public open class NotificationActivity :
             overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, 0, 0)
         }
 
+        super.onCreate(savedInstanceState)
+
         notification = savedInstanceState?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
             ?: intent.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
-            ?: throw IllegalArgumentException("Missing required notification parameter.")
+            ?: run {
+                logger.warning("Missing required notification parameter.")
+                finish()
+                return
+            }
 
         action = savedInstanceState?.parcelable(Actito.INTENT_EXTRA_ACTION)
             ?: intent.parcelable(Actito.INTENT_EXTRA_ACTION)
 
-        super.onCreate(savedInstanceState)
         binding = ActitoNotificationActivityBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
@@ -91,6 +97,9 @@ public open class NotificationActivity :
 
     override fun finish() {
         super.finish()
+
+        // Skip when notification isn't initialized
+        if (!::notification.isInitialized) return
 
         onMainThread {
             ActitoPushUI.lifecycleListeners.forEach {
