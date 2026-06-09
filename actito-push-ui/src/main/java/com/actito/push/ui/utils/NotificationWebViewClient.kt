@@ -31,6 +31,7 @@ internal open class NotificationWebViewClient(
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean =
         handleOpenActions(request.url) || handleOpenAction(request.url) || handleUri(view, request.url)
 
+    @Suppress("OVERRIDE_DEPRECATION")
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         val uri = url.toUri()
         return handleOpenActions(uri) || handleOpenAction(uri) || handleUri(view, uri)

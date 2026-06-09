@@ -38,9 +38,11 @@ public class LaunchComponent : ActitoLaunchComponent {
     override suspend fun executeCommand(command: String, data: Any?): Any = when (command) {
         "handlePassPresentation" -> {
             val map = data as? Map<*, *> ?: throw IllegalArgumentException("Invalid command data.")
-            val activity = map["activity"] as Activity
-            val notification = map["notification"] as ActitoNotification
-            val callback = map["callback"] as ActitoCallback<Unit>
+            val activity = requireNotNull(map["activity"] as? Activity)
+            val notification = requireNotNull(map["notification"] as? ActitoNotification)
+
+            @Suppress("UNCHECKED_CAST")
+            val callback = requireNotNull(map["callback"] as? ActitoCallback<Unit>)
 
             when (notification.type) {
                 ActitoNotification.TYPE_PASSBOOK ->
