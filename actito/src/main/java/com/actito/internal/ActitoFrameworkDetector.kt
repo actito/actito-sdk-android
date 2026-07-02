@@ -1,19 +1,18 @@
 package com.actito.internal
 
 import android.content.Context
-import com.actito.Actito
 import java.util.zip.ZipFile
 
 internal object ActitoFrameworkDetector {
-    internal fun detect(): FrameworkInfo {
+    internal fun detect(context: Context): FrameworkInfo? {
         return when {
             isFlutter() -> FrameworkInfo("Flutter", null)
-            isExpo() -> FrameworkInfo("Expo(RN)", getReactNativeVersion())
+            isExpo() -> FrameworkInfo("Expo (React Native)", getReactNativeVersion())
             isReactNative() -> FrameworkInfo("React Native", getReactNativeVersion())
             isCapacitor() -> FrameworkInfo("Capacitor", null)
-            isCordova() -> FrameworkInfo("Cordova", getCordovaVersion(Actito.requireContext()))
-            isDotNETMAUI(Actito.requireContext()) -> FrameworkInfo(".NET MAUI", null)
-            else -> FrameworkInfo(null, null)
+            isCordova() -> FrameworkInfo("Cordova", getCordovaVersion(context))
+            isDotNETMAUI(context) -> FrameworkInfo(".NET MAUI", null)
+            else -> null
         }
     }
 
@@ -86,7 +85,7 @@ internal object ActitoFrameworkDetector {
     }
 
     internal data class FrameworkInfo(
-        val name: String?,
+        val name: String,
         val version: String?,
     )
 }

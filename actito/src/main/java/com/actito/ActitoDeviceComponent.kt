@@ -580,7 +580,7 @@ public class ActitoDeviceComponent internal constructor() {
     }
 
     private suspend fun createDevice(): Unit = withContext(Dispatchers.IO) {
-        val frameworkInfo = ActitoFrameworkDetector.detect()
+        val frameworkInfo = ActitoFrameworkDetector.detect(Actito.requireContext())
 
         val payload = CreateDevicePayload(
             language = getDeviceLanguage(),
@@ -592,8 +592,8 @@ public class ActitoDeviceComponent internal constructor() {
             deviceString = deviceString,
             timeZoneOffset = timeZoneOffset,
             backgroundAppRefresh = true,
-            framework = frameworkInfo.name,
-            frameworkVersion = frameworkInfo.version,
+            framework = frameworkInfo?.name,
+            frameworkVersion = frameworkInfo?.version,
         )
 
         val response = ActitoRequest.Builder()
@@ -620,7 +620,7 @@ public class ActitoDeviceComponent internal constructor() {
 
     private suspend fun updateDevice(): Unit = withContext(Dispatchers.IO) {
         val storedDevice = checkNotNull(storedDevice)
-        val frameworkInfo = ActitoFrameworkDetector.detect()
+        val frameworkInfo = ActitoFrameworkDetector.detect(Actito.requireContext())
 
         val payload = UpdateDevicePayload(
             language = getDeviceLanguage(),
@@ -631,8 +631,8 @@ public class ActitoDeviceComponent internal constructor() {
             appVersion = Actito.requireContext().applicationVersion,
             deviceString = deviceString,
             timeZoneOffset = timeZoneOffset,
-            framework = frameworkInfo.name,
-            frameworkVersion = frameworkInfo.version,
+            framework = frameworkInfo?.name,
+            frameworkVersion = frameworkInfo?.version,
         )
 
         ActitoRequest.Builder()
