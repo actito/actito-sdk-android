@@ -2,6 +2,7 @@ package com.actito
 
 import android.content.Intent
 import com.actito.internal.ACTITO_VERSION
+import com.actito.internal.ActitoFrameworkDetector
 import com.actito.internal.components.ActitoSessionComponent
 import com.actito.internal.logger
 import com.actito.internal.network.NetworkException
@@ -579,6 +580,8 @@ public class ActitoDeviceComponent internal constructor() {
     }
 
     private suspend fun createDevice(): Unit = withContext(Dispatchers.IO) {
+        val frameworkInfo = ActitoFrameworkDetector.detect(Actito.requireContext())
+
         val payload = CreateDevicePayload(
             language = getDeviceLanguage(),
             region = getDeviceRegion(),
@@ -589,6 +592,8 @@ public class ActitoDeviceComponent internal constructor() {
             deviceString = deviceString,
             timeZoneOffset = timeZoneOffset,
             backgroundAppRefresh = true,
+            framework = frameworkInfo?.name,
+            frameworkVersion = frameworkInfo?.version,
         )
 
         val response = ActitoRequest.Builder()
@@ -608,11 +613,14 @@ public class ActitoDeviceComponent internal constructor() {
             region = payload.region,
             dnd = null,
             userData = mapOf(),
+            framework = payload.framework,
+            frameworkVersion = payload.frameworkVersion,
         )
     }
 
     private suspend fun updateDevice(): Unit = withContext(Dispatchers.IO) {
         val storedDevice = checkNotNull(storedDevice)
+        val frameworkInfo = ActitoFrameworkDetector.detect(Actito.requireContext())
 
         val payload = UpdateDevicePayload(
             language = getDeviceLanguage(),
@@ -623,6 +631,8 @@ public class ActitoDeviceComponent internal constructor() {
             appVersion = Actito.requireContext().applicationVersion,
             deviceString = deviceString,
             timeZoneOffset = timeZoneOffset,
+            framework = frameworkInfo?.name,
+            frameworkVersion = frameworkInfo?.version,
         )
 
         ActitoRequest.Builder()
@@ -639,6 +649,8 @@ public class ActitoDeviceComponent internal constructor() {
             region = payload.region,
             dnd = storedDevice.dnd,
             userData = storedDevice.userData,
+            framework = payload.framework,
+            frameworkVersion = payload.frameworkVersion,
         )
     }
 
@@ -666,6 +678,8 @@ public class ActitoDeviceComponent internal constructor() {
             appVersion = currentDevice.appVersion,
             deviceString = currentDevice.deviceString,
             timeZoneOffset = currentDevice.timeZoneOffset,
+            framework = currentDevice.framework,
+            frameworkVersion = currentDevice.frameworkVersion,
         )
 
         @Suppress("detekt:MagicNumber")
@@ -695,6 +709,8 @@ public class ActitoDeviceComponent internal constructor() {
             region = currentDevice.region,
             dnd = currentDevice.dnd,
             userData = currentDevice.userData,
+            framework = currentDevice.framework,
+            frameworkVersion = currentDevice.frameworkVersion,
         )
     }
 
