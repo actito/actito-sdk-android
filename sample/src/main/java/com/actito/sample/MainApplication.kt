@@ -1,5 +1,6 @@
 package com.actito.sample
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Build
 import android.os.StrictMode
@@ -89,15 +90,21 @@ class MainApplication : Application(), Actito.Listener {
     }
 
     private fun registerUser() {
-        val userId = getString(R.string.sample_user_id).ifBlank { null }
-        val userName = getString(R.string.sample_user_name).ifBlank { null }
+        val userId = optionalStringResource("sample_user_id") ?: return
+        val userName = optionalStringResource("sample_user_name") ?: return
 
         applicationScope.launch {
             try {
-                Actito.device().updateUser(userId, userName)
+                Actito.device().updateUser(userId.ifBlank { null }, userName.ifBlank { null })
             } catch (e: Exception) {
                 SampleNotifier.emitError("Failed to update the user.", e)
             }
         }
+    }
+
+    @SuppressLint("DiscouragedApi")
+    private fun optionalStringResource(name: String): String? {
+        val id = resources.getIdentifier(name, "string", packageName)
+        return if (id != 0) getString(id) else null
     }
 }
