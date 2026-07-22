@@ -123,6 +123,7 @@ public class NotificationContainerFragment :
             action == null &&
             notification.type != ActitoNotification.TYPE_ALERT &&
             notification.type != ActitoNotification.TYPE_PASSBOOK &&
+            notification.type != ActitoNotification.TYPE_PASS &&
             notification.actions.isNotEmpty()
         ) {
             setupMenu()
