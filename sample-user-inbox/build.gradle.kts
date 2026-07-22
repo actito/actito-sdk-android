@@ -107,5 +107,5 @@ dependencies {
     implementation(project(":actito-user-inbox"))
 
     // Qualifio
-    implementation(apps.qualifio)
+    // implementation(apps.qualifio)
 }
