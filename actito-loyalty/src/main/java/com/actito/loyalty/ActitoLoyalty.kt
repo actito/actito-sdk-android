@@ -134,7 +134,7 @@ public object ActitoLoyalty {
         notification: ActitoNotification,
         callback: ActitoCallback<Unit>,
     ) {
-        val serial = extractPassSerial(notification) ?: run {
+        val serial = extractPassbookSerial(notification) ?: run {
             logger.warning("Unable to extract the pass' serial from the notification.")
 
             val error = IllegalArgumentException("Unable to extract the pass' serial from the notification.")
@@ -228,7 +228,7 @@ public object ActitoLoyalty {
         }
     }
 
-    private fun extractPassSerial(notification: ActitoNotification): String? {
+    private fun extractPassbookSerial(notification: ActitoNotification): String? {
         if (notification.type != ActitoNotification.TYPE_PASSBOOK) return null
 
         val content = notification.content
