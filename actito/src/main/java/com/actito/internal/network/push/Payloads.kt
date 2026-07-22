@@ -18,8 +18,11 @@ internal data class CreateDevicePayload(
     val deviceString: String,
     val timeZoneOffset: Double,
     val backgroundAppRefresh: Boolean,
+    val framework: String?,
+    val frameworkVersion: String?,
 )
 
+@EncodeNulls
 @JsonClass(generateAdapter = true)
 internal data class UpdateDevicePayload(
     val language: String,
@@ -30,6 +33,8 @@ internal data class UpdateDevicePayload(
     val appVersion: String,
     val deviceString: String,
     val timeZoneOffset: Double,
+    val framework: String?,
+    val frameworkVersion: String?,
 )
 
 @EncodeNulls
@@ -64,6 +69,8 @@ internal data class UpgradeToLongLivedDevicePayload(
     val appVersion: String,
     val deviceString: String,
     val timeZoneOffset: Double,
+    val framework: String?,
+    val frameworkVersion: String?,
 )
 
 @JsonClass(generateAdapter = true)

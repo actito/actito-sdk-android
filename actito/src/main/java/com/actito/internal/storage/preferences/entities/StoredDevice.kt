@@ -19,6 +19,8 @@ internal data class StoredDevice(
     val transport: String? = null,
     val dnd: ActitoDoNotDisturb?,
     val userData: ActitoUserData,
+    val framework: String? = null,
+    val frameworkVersion: String? = null,
 ) {
 
     val isLongLived: Boolean

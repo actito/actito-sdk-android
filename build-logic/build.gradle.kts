@@ -23,6 +23,7 @@ dependencies {
     implementation(apps.plugins.android.application.asDependency())
     implementation(apps.plugins.actito.services.asDependency())
     implementation(apps.plugins.google.services.asDependency())
+    // implementation(apps.plugins.qualifio.services.asDependency())
 }
 
 private fun Provider<PluginDependency>.asDependency(): Provider<String> =

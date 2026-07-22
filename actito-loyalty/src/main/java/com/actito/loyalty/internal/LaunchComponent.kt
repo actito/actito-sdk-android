@@ -38,11 +38,21 @@ public class LaunchComponent : ActitoLaunchComponent {
     override suspend fun executeCommand(command: String, data: Any?): Any = when (command) {
         "handlePassPresentation" -> {
             val map = data as? Map<*, *> ?: throw IllegalArgumentException("Invalid command data.")
-            val activity = map["activity"] as Activity
-            val notification = map["notification"] as ActitoNotification
-            val callback = map["callback"] as ActitoCallback<Unit>
+            val activity = requireNotNull(map["activity"] as? Activity)
+            val notification = requireNotNull(map["notification"] as? ActitoNotification)
 
-            ActitoLoyalty.handlePassPresentation(activity, notification, callback)
+            @Suppress("UNCHECKED_CAST")
+            val callback = requireNotNull(map["callback"] as? ActitoCallback<Unit>)
+
+            when (notification.type) {
+                ActitoNotification.TYPE_PASSBOOK ->
+                    ActitoLoyalty.handlePassbookPresentation(activity, notification, callback)
+
+                ActitoNotification.TYPE_PASS ->
+                    ActitoLoyalty.handlePassPresentation(activity, notification, callback)
+
+                else -> throw IllegalArgumentException("Wrong type for pass presentation: ${notification.type}")
+            }
         }
 
         else -> throw UnsupportedOperationException("Function '$command' not supported in Loyalty Implementation")

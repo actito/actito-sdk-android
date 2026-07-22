@@ -26,6 +26,9 @@ public class ActitoWebViewFragment : NotificationFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Skip when notification isn't initialized
+        if (!isNotificationInitialized) return
+
         // Configure the WebView.
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.domStorageEnabled = true

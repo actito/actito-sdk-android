@@ -4,6 +4,7 @@ import android.net.Uri
 import com.actito.models.ActitoNotification
 import com.actito.push.internal.firebase.messages.ActitoNotificationRemoteMessage
 import com.actito.push.internal.firebase.messages.ActitoUnknownRemoteMessage
+import com.google.firebase.messaging.RemoteMessage
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -184,6 +185,7 @@ public class ActitoRemoteMessageTest {
             lightsColor = "testColor",
             lightsOn = 1,
             lightsOff = 1,
+            rawMessage = RemoteMessage.Builder("test_sender").build(),
         ).toNotification()
 
         assertEquals(expectedNotification, notification)
@@ -227,6 +229,7 @@ public class ActitoRemoteMessageTest {
             lightsColor = null,
             lightsOn = null,
             lightsOff = null,
+            rawMessage = RemoteMessage.Builder("test_sender").build(),
         ).toNotification()
 
         assertEquals(expectedNotification, notification)

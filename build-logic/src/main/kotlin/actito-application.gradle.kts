@@ -4,4 +4,5 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.actito.gradle.actito-services")
     id("com.google.gms.google-services")
+    // id("com.qualifio.gradle.qualifio-services")
 }

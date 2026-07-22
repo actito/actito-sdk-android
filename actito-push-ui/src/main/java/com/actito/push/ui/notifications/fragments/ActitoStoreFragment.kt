@@ -25,6 +25,9 @@ public class ActitoStoreFragment : NotificationFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val context = context ?: return
 
+        // Skip when notification isn't initialized
+        if (!isNotificationInitialized) return
+
         val referrer = context.packageName
         var uri: Uri? = null
         var altUri: Uri? = null

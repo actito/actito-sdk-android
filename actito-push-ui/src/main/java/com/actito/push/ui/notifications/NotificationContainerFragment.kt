@@ -91,7 +91,11 @@ public class NotificationContainerFragment :
 
         notification = savedInstanceState?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
             ?: arguments?.parcelable(Actito.INTENT_EXTRA_NOTIFICATION)
-            ?: throw IllegalArgumentException("Missing required notification parameter.")
+            ?: run {
+                logger.warning("Missing required notification parameter.")
+                activity?.finish()
+                return
+            }
 
         action = savedInstanceState?.parcelable(Actito.INTENT_EXTRA_ACTION)
             ?: arguments?.parcelable(Actito.INTENT_EXTRA_ACTION)
@@ -111,11 +115,15 @@ public class NotificationContainerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Skip when notification isn't initialized
+        if (!::notification.isInitialized) return
+
         // Inform user that this type has actions attached
         if (
             action == null &&
             notification.type != ActitoNotification.TYPE_ALERT &&
             notification.type != ActitoNotification.TYPE_PASSBOOK &&
+            notification.type != ActitoNotification.TYPE_PASS &&
             notification.actions.isNotEmpty()
         ) {
             setupMenu()

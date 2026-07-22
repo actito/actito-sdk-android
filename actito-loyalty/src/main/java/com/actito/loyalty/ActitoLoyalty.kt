@@ -11,6 +11,7 @@ import com.actito.ActitoDeviceUnavailableException
 import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
 import com.actito.internal.network.request.ActitoRequest
+import com.actito.loyalty.ActitoLoyalty.passbookActivity
 import com.actito.loyalty.internal.logger
 import com.actito.loyalty.internal.network.push.FetchPassResponse
 import com.actito.loyalty.internal.network.push.FetchPassbookTemplateResponse
@@ -128,12 +129,12 @@ public object ActitoLoyalty {
 
     // region Actito Loyalty Integration
 
-    public fun handlePassPresentation(
+    internal fun handlePassbookPresentation(
         activity: Activity,
         notification: ActitoNotification,
         callback: ActitoCallback<Unit>,
     ) {
-        val serial = extractPassSerial(notification) ?: run {
+        val serial = extractPassbookSerial(notification) ?: run {
             logger.warning("Unable to extract the pass' serial from the notification.")
 
             val error = IllegalArgumentException("Unable to extract the pass' serial from the notification.")
@@ -155,6 +156,51 @@ public object ActitoLoyalty {
                 }
             },
         )
+    }
+
+    internal fun handlePassPresentation(
+        activity: Activity,
+        notification: ActitoNotification,
+        callback: ActitoCallback<Unit>,
+    ) {
+        val content = notification.content
+            .firstOrNull { it.type == ActitoNotification.Content.TYPE_PASS }
+
+        if (content == null) {
+            logger.error("Missing Pass content for Pass type notification.")
+
+            val error = IllegalArgumentException("Missing Pass content for Pass type notification.")
+            callback.onFailure(error)
+
+            return
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        val data = content.data as? Map<String, String> ?: return
+
+        val serial = data["serial"]
+        val barcode = data["barcode"]
+
+        val passCallback = object : ActitoCallback<ActitoPass> {
+            override fun onSuccess(result: ActitoPass) {
+                present(activity, result, callback)
+            }
+
+            override fun onFailure(e: Exception) {
+                logger.error("Failed to fetch the pass.", e)
+                callback.onFailure(e)
+            }
+        }
+
+        when {
+            serial != null -> fetchPassBySerial(serial, passCallback)
+            barcode != null -> fetchPassByBarcode(barcode, passCallback)
+            else -> {
+                val error = IllegalArgumentException("Malformed Pass notification. No serial or barcode found.")
+                logger.error("Malformed Pass notification. No serial or barcode found.")
+                callback.onFailure(error)
+            }
+        }
     }
 
     // endregion
@@ -182,7 +228,7 @@ public object ActitoLoyalty {
         }
     }
 
-    private fun extractPassSerial(notification: ActitoNotification): String? {
+    private fun extractPassbookSerial(notification: ActitoNotification): String? {
         if (notification.type != ActitoNotification.TYPE_PASSBOOK) return null
 
         val content = notification.content

@@ -23,8 +23,8 @@ android {
 
         manifestPlaceholders["googleMapsApiKey"] = properties.getProperty("google.maps.key")
 
-        resValue("string", "sample_user_id", properties.getProperty("userId"))
-        resValue("string", "sample_user_name", properties.getProperty("userName"))
+        properties.getProperty("sample.userId")?.let { resValue("string", "sample_user_id", it) }
+        properties.getProperty("sample.userName")?.let { resValue("string", "sample_user_name", it) }
     }
 
     signingConfigs {
@@ -143,4 +143,7 @@ dependencies {
 
     // Android Auto
     implementation(apps.androidx.carApp)
+
+    // Qualifio
+    // implementation(apps.qualifio)
 }

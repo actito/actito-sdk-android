@@ -105,4 +105,7 @@ dependencies {
     implementation(project(":actito-push"))
     implementation(project(":actito-push-ui"))
     implementation(project(":actito-user-inbox"))
+
+    // Qualifio
+    // implementation(apps.qualifio)
 }
