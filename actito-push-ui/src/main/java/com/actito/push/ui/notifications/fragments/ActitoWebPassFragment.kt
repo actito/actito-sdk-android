@@ -90,7 +90,7 @@ public class ActitoWebPassFragment : NotificationFragment() {
             return
         }
 
-        val url = "$host/pass/forapplication/${application.id}/$code"
+        val url = "$host/pass/forapplication/${application.id}/$code?showWebVersion=1"
 
         binding.webView.loadUrl(url)
     }
