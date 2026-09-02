@@ -6,6 +6,8 @@ import android.os.Build
 import android.os.StrictMode
 import androidx.car.app.notification.CarAppExtender
 import com.actito.Actito
+import com.actito.geo.beacons.ActitoBeaconServiceNotificationCustomizer
+import com.actito.geo.beacons.ActitoGeoBeacons
 import com.actito.geo.ktx.geo
 import com.actito.models.ActitoApplication
 import com.actito.push.ActitoLockScreenNotificationCustomizer
@@ -16,7 +18,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class MainApplication : Application(), Actito.Listener {
+class MainApplication :
+    Application(),
+    Actito.Listener {
     private val applicationScope = MainScope()
 
     override fun onCreate() {
@@ -29,6 +33,11 @@ class MainApplication : Application(), Actito.Listener {
 
         Actito.push().intentReceiver = SamplePushIntentReceiver::class.java
         Actito.geo().intentReceiver = SampleGeoIntentReceiver::class.java
+
+        ActitoGeoBeacons.beaconServiceNotificationCustomizer =
+            ActitoBeaconServiceNotificationCustomizer { builder ->
+                builder.setContentTitle("Scanning for beacons (customized title)")
+            }
 
         Actito.push().lockScreenNotificationCustomizer =
             ActitoLockScreenNotificationCustomizer { message, notification, builder ->

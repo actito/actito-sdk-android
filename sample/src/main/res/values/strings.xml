@@ -123,6 +123,8 @@
     <string name="location_beacons_scanning_for_region">Scanning beacons for region: %1$s</string>
     <string name="location_beacons_ranged">Ranged</string>
     <string name="location_beacons_title">Beacons</string>
+    <string name="location_beacons_notification_title">Scanning for beacons</string>
+    <string name="location_beacons_notification_text">Actito Sample is scanning for nearby beacons</string>
     <string name="location_bluetooth_enabled">Bluetooth Enabled</string>
     <string name="location_permission_background">Permission Background</string>
     <string name="location_permission_bluetooth">Permission Bluetooth</string>
