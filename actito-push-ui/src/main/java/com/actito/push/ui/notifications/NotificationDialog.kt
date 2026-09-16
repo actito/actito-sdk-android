@@ -1,11 +1,15 @@
 package com.actito.push.ui.notifications
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.ArrayAdapter
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.use
 import androidx.fragment.app.DialogFragment
 import com.actito.models.ActitoNotification
 import com.actito.push.ui.ActitoPushUI
@@ -47,27 +51,18 @@ public class NotificationDialog : DialogFragment() {
         if (icon != null) builder.setIcon(icon)
 
         builder.setTitle(notification.title ?: requireContext().applicationName)
-        builder.setMessage(notification.message)
 
         val type = ActitoNotification.NotificationType.from(notification.type)
         if (type == ActitoNotification.NotificationType.ALERT && notification.actions.isNotEmpty()) {
-            val binding = ActitoAlertDialogBinding.inflate(LayoutInflater.from(context))
-
-            binding.list.adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_list_item_1,
-                notification.actions.map {
-                    it.getLocalizedLabel(requireContext())
-                },
-            )
-
-            binding.list.setOnItemClickListener { _, _, position, _ ->
-                callback?.onNotificationDialogActionClick(
-                    position,
-                )
+            val alertWithActionsView = buildAlertWithActions(
+                builder.context,
+                notification.message,
+                notification.actions,
+            ) { index ->
+                callback?.onNotificationDialogActionClick(index)
             }
 
-            builder.setView(binding.root)
+            builder.setView(alertWithActionsView)
             builder.setNeutralButton(R.string.actito_dialog_cancel_button) { _, _ ->
                 callback?.onNotificationDialogCancelClick()
             }
@@ -122,5 +117,47 @@ public class NotificationDialog : DialogFragment() {
         public fun onNotificationDialogDismiss()
 
         public fun onNotificationDialogActionClick(position: Int)
+    }
+
+    private fun buildAlertWithActions(
+        context: Context,
+        message: String,
+        actions: List<ActitoNotification.Action>,
+        onActionClick: (Int) -> Unit,
+    ): View {
+        val binding = ActitoAlertDialogBinding.inflate(LayoutInflater.from(context))
+        val inflater = LayoutInflater.from(context)
+
+        binding.message.text = message
+
+        try {
+            actions.forEachIndexed { index, action ->
+                val itemView = inflater.inflate(
+                    android.R.layout.simple_list_item_1,
+                    binding.actions,
+                    false,
+                ) as TextView
+
+                itemView.text = action.getLocalizedLabel(context)
+                itemView.isFocusable = true
+                itemView.background = resolveSelectableItemBackground(context)
+                itemView.setOnClickListener { onActionClick(index) }
+
+                binding.actions.addView(itemView)
+            }
+        } catch (e: Exception) {
+            logger.warning("Unable to build the actions list.", e)
+        }
+
+        return binding.root
+    }
+
+    private fun resolveSelectableItemBackground(context: Context): Drawable? = try {
+        context.obtainStyledAttributes(intArrayOf(android.R.attr.selectableItemBackground)).use {
+            it.getDrawable(0)
+        }
+    } catch (e: Exception) {
+        logger.warning("Failed to resolve the selectable item background.", e)
+        null
     }
 }
