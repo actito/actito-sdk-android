@@ -1,7 +1,9 @@
 package com.actito.geo.beacons
 
 import android.os.Build
+import android.os.Bundle
 import com.actito.Actito
+import com.actito.geo.beacons.internal.logger
 import com.actito.internal.ActitoOptions
 
 private const val DEFAULT_FOREGROUND_SCAN_INTERVAL: Long = 0L // always-on
@@ -51,17 +53,35 @@ public val ActitoOptions.beaconServiceNotificationSmallIcon: Int
 
 public val ActitoOptions.beaconServiceNotificationContentTitle: String?
     get() {
-        return metadata.getString("com.actito.geo.beacons.service_notification_content_title", null)
+        return metadata.resolveValueOrResourceString("com.actito.geo.beacons.service_notification_content_title")
     }
 
 public val ActitoOptions.beaconServiceNotificationContentText: String
     get() {
         val defaultText = Actito.requireContext().getString(R.string.actito_beacons_notification_content_text)
 
-        return metadata.getString("com.actito.geo.beacons.service_notification_content_text", defaultText)
+        return metadata.resolveValueOrResourceString("com.actito.geo.beacons.service_notification_content_text")
+            ?: defaultText
     }
 
 public val ActitoOptions.beaconServiceNotificationProgress: Boolean
     get() {
         return metadata.getBoolean("com.actito.geo.beacons.service_notification_progress", false)
     }
+
+@Suppress("DEPRECATION")
+private fun Bundle.resolveValueOrResourceString(
+    key: String,
+): String? = when (val value = get(key)) {
+    is String -> value
+    is Int -> {
+        try {
+            Actito.requireContext().getString(value)
+        } catch (e: Exception) {
+            logger.error("Failed to resolve string resource for '$key'.", e)
+            null
+        }
+    }
+
+    else -> null
+}
