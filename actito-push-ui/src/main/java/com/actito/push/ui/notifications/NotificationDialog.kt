@@ -125,8 +125,8 @@ public class NotificationDialog : DialogFragment() {
         actions: List<ActitoNotification.Action>,
         onActionClick: (Int) -> Unit,
     ): View {
-        val binding = ActitoAlertDialogBinding.inflate(LayoutInflater.from(context))
         val inflater = LayoutInflater.from(context)
+        val binding = ActitoAlertDialogBinding.inflate(inflater)
 
         binding.message.text = message
 
