@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Upcoming release
+
+- Fix alert type notification dismissal during configuration changes
+- Fix notification activity action bar state during configuration changes
+- Add string resources support for beacons foreground service notification title and text
+
 ## 5.2.0
 
 - Add framework detection

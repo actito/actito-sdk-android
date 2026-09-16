@@ -16,6 +16,7 @@ import com.actito.geo.beacons.beaconServiceNotificationProgress
 import com.actito.geo.beacons.beaconServiceNotificationSmallIcon
 import com.actito.geo.internal.BeaconServiceManager
 import com.actito.geo.ktx.INTENT_ACTION_BEACON_NOTIFICATION_OPENED
+import com.actito.geo.ktx.geo
 import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoRegion
 import org.altbeacon.beacon.BeaconManager
@@ -41,7 +42,9 @@ internal class BeaconServiceManager(
     onBeaconEnter: (String, Int?) -> Unit,
     onBeaconExit: (String, Int?) -> Unit,
     onBeaconsRanged: (String, List<Beacon>) -> Unit,
-) : BeaconServiceManager(proximityUUID, onBeaconEnter, onBeaconExit, onBeaconsRanged), MonitorNotifier, RangeNotifier {
+) : BeaconServiceManager(proximityUUID, onBeaconEnter, onBeaconExit, onBeaconsRanged),
+    MonitorNotifier,
+    RangeNotifier {
 
     private val beaconManager: BeaconManager
     private val notificationSequence = AtomicInteger()
@@ -150,7 +153,7 @@ internal class BeaconServiceManager(
                 null
             }
 
-        val notification = NotificationCompat.Builder(Actito.requireContext(), channel)
+        val builder = NotificationCompat.Builder(Actito.requireContext(), channel)
             .setContentIntent(openPendingIntent)
             .setSmallIcon(options.beaconServiceNotificationSmallIcon)
             .setContentTitle(options.beaconServiceNotificationContentTitle)
@@ -160,9 +163,10 @@ internal class BeaconServiceManager(
                     setProgress(100, 0, true)
                 }
             }
-            .build()
 
-        beaconManager.enableForegroundServiceScanning(notification, 456)
+        Actito.geo().beaconServiceNotificationCustomizer?.customizeBeaconServiceNotification(builder)
+
+        beaconManager.enableForegroundServiceScanning(builder.build(), 456)
     }
 
     private fun createUniqueNotificationId(): Int = notificationSequence.incrementAndGet()
