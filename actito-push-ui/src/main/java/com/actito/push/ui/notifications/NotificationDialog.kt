@@ -146,7 +146,7 @@ public class NotificationDialog : DialogFragment() {
                 binding.actions.addView(itemView)
             }
         } catch (e: Exception) {
-            logger.warning("Unable to build the actions list.", e)
+            logger.error("Failed to build the actions list.", e)
         }
 
         return binding.root
