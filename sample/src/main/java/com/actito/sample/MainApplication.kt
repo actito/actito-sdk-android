@@ -6,8 +6,7 @@ import android.os.Build
 import android.os.StrictMode
 import androidx.car.app.notification.CarAppExtender
 import com.actito.Actito
-import com.actito.geo.beacons.ActitoBeaconServiceNotificationCustomizer
-import com.actito.geo.beacons.ActitoGeoBeacons
+import com.actito.geo.ActitoBeaconServiceNotificationCustomizer
 import com.actito.geo.ktx.geo
 import com.actito.models.ActitoApplication
 import com.actito.push.ActitoLockScreenNotificationCustomizer
@@ -34,7 +33,7 @@ class MainApplication :
         Actito.push().intentReceiver = SamplePushIntentReceiver::class.java
         Actito.geo().intentReceiver = SampleGeoIntentReceiver::class.java
 
-        ActitoGeoBeacons.beaconServiceNotificationCustomizer =
+        Actito.geo().beaconServiceNotificationCustomizer =
             ActitoBeaconServiceNotificationCustomizer { builder ->
                 builder.setContentTitle("Scanning for beacons (customized title)")
             }
