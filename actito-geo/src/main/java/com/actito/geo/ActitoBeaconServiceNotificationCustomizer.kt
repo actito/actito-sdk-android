@@ -1,4 +1,4 @@
-package com.actito.geo.beacons
+package com.actito.geo
 
 import androidx.core.app.NotificationCompat
 
@@ -6,14 +6,14 @@ import androidx.core.app.NotificationCompat
  * Callback interface for customizing the beacon foreground service notification while it is
  * being built.
  *
- * Assign an implementation to [ActitoGeoBeacons.beaconServiceNotificationCustomizer] to intercept
- * the notification build process and apply custom modifications to the
+ * Assign an implementation to [ActitoGeo.beaconServiceNotificationCustomizer] to intercept the
+ * notification build process and apply custom modifications to the
  * [NotificationCompat.Builder] used for the foreground service.
  *
  * This is a functional interface, so it can be implemented as a lambda:
  *
  * ```kotlin
- * ActitoGeoBeacons.beaconServiceNotificationCustomizer =
+ * Actito.geo().beaconServiceNotificationCustomizer =
  *     ActitoBeaconServiceNotificationCustomizer { builder ->
  *         builder.setContentTitle("Scanning nearby")
  *     }

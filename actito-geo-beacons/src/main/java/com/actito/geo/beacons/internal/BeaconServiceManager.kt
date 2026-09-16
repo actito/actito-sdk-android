@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.annotation.Keep
 import androidx.core.app.NotificationCompat
 import com.actito.Actito
-import com.actito.geo.beacons.ActitoGeoBeacons
 import com.actito.geo.beacons.beaconBackgroundScanInterval
 import com.actito.geo.beacons.beaconForegroundScanInterval
 import com.actito.geo.beacons.beaconForegroundServiceEnabled
@@ -17,6 +16,7 @@ import com.actito.geo.beacons.beaconServiceNotificationProgress
 import com.actito.geo.beacons.beaconServiceNotificationSmallIcon
 import com.actito.geo.internal.BeaconServiceManager
 import com.actito.geo.ktx.INTENT_ACTION_BEACON_NOTIFICATION_OPENED
+import com.actito.geo.ktx.geo
 import com.actito.geo.models.ActitoBeacon
 import com.actito.geo.models.ActitoRegion
 import org.altbeacon.beacon.BeaconManager
@@ -164,7 +164,7 @@ internal class BeaconServiceManager(
                 }
             }
 
-        ActitoGeoBeacons.beaconServiceNotificationCustomizer?.customizeBeaconServiceNotification(builder)
+        Actito.geo().beaconServiceNotificationCustomizer?.customizeBeaconServiceNotification(builder)
 
         beaconManager.enableForegroundServiceScanning(builder.build(), 456)
     }
