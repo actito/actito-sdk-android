@@ -1,6 +1,7 @@
 package com.actito.geo.beacons
 
 import android.os.Build
+import android.os.Bundle
 import com.actito.Actito
 import com.actito.geo.beacons.internal.logger
 import com.actito.internal.ActitoOptions
@@ -52,14 +53,14 @@ public val ActitoOptions.beaconServiceNotificationSmallIcon: Int
 
 public val ActitoOptions.beaconServiceNotificationContentTitle: String?
     get() {
-        return resolveMetadataValueOrResourceString("com.actito.geo.beacons.service_notification_content_title")
+        return metadata.resolveValueOrResourceString("com.actito.geo.beacons.service_notification_content_title")
     }
 
 public val ActitoOptions.beaconServiceNotificationContentText: String
     get() {
         val defaultText = Actito.requireContext().getString(R.string.actito_beacons_notification_content_text)
 
-        return resolveMetadataValueOrResourceString("com.actito.geo.beacons.service_notification_content_text")
+        return metadata.resolveValueOrResourceString("com.actito.geo.beacons.service_notification_content_text")
             ?: defaultText
     }
 
@@ -69,9 +70,9 @@ public val ActitoOptions.beaconServiceNotificationProgress: Boolean
     }
 
 @Suppress("DEPRECATION")
-private fun ActitoOptions.resolveMetadataValueOrResourceString(
+private fun Bundle.resolveValueOrResourceString(
     key: String,
-): String? = when (val value = metadata.get(key)) {
+): String? = when (val value = get(key)) {
     is String -> value
     is Int -> {
         try {
