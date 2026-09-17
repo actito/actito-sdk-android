@@ -243,7 +243,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        if (intent != null) handleIntent(intent)
+        if (intent != null && savedInstanceState == null) handleIntent(intent)
 
         Actito.pushUI().addLifecycleListener(notificationLifecycleListener)
         Actito.inAppMessaging().addLifecycleListener(messageLifecycleListener)
