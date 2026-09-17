@@ -129,6 +129,7 @@ public class NotificationDialog : DialogFragment() {
         val binding = ActitoAlertDialogBinding.inflate(inflater)
 
         binding.message.text = message
+        binding.actions.removeAllViews()
 
         try {
             actions.forEachIndexed { index, action ->
