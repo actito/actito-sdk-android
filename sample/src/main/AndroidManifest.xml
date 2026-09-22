@@ -116,6 +116,12 @@
             android:name="com.actito.geo.beacons.service_notification_small_icon"
             android:resource="@drawable/ic_baseline_bluetooth_searching_24" />
         <meta-data
+            android:name="com.actito.geo.beacons.service_notification_content_title"
+            android:resource="@string/location_beacons_notification_title" />
+        <meta-data
+            android:name="com.actito.geo.beacons.service_notification_content_text"
+            android:resource="@string/location_beacons_notification_text" />
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${googleMapsApiKey}" />
         <meta-data

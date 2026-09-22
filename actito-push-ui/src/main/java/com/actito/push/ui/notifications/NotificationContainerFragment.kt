@@ -129,9 +129,19 @@ public class NotificationContainerFragment :
             setupMenu()
         }
 
-        if (savedInstanceState != null) return
-
         val type = ActitoNotification.NotificationType.from(notification.type)
+
+        if (savedInstanceState != null) {
+            if (action == null && type == ActitoNotification.NotificationType.ALERT) {
+                notificationDialog = childFragmentManager.findFragmentByTag("dialog") as? NotificationDialog
+                callback.onNotificationFragmentCanHideActionBar(notification)
+            } else {
+                callback.onNotificationFragmentShouldShowActionBar(notification)
+            }
+
+            return
+        }
+
         val fragmentClassName = ActitoPushUI.getFragmentCanonicalClassName(notification)
 
         val fragment = fragmentClassName?.let {
@@ -190,14 +200,12 @@ public class NotificationContainerFragment :
                     menu.findItem(R.id.actito_action_show_actions)?.isVisible = showActionsMenuItem
                 }
 
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.actito_action_show_actions -> {
-                            showActionsDialog()
-                            true
-                        }
-                        else -> false
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
+                    R.id.actito_action_show_actions -> {
+                        showActionsDialog()
+                        true
                     }
+                    else -> false
                 }
             },
             viewLifecycleOwner,
@@ -458,12 +466,10 @@ public class NotificationContainerFragment :
         public fun newInstance(
             notification: ActitoNotification,
             action: ActitoNotification.Action?,
-        ): NotificationContainerFragment {
-            return NotificationContainerFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(Actito.INTENT_EXTRA_NOTIFICATION, notification)
-                    putParcelable(Actito.INTENT_EXTRA_ACTION, action)
-                }
+        ): NotificationContainerFragment = NotificationContainerFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(Actito.INTENT_EXTRA_NOTIFICATION, notification)
+                putParcelable(Actito.INTENT_EXTRA_ACTION, action)
             }
         }
     }

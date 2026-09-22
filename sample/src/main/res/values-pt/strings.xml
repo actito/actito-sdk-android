@@ -1,0 +1,4 @@
+<resources>
+    <string name="location_beacons_notification_title">A procurar beacons</string>
+    <string name="location_beacons_notification_text">A Actito Sample está à procura de beacons próximos</string>
+</resources>
