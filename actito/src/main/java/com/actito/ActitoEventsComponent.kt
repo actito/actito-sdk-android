@@ -93,12 +93,13 @@ public class ActitoEventsComponent internal constructor() {
      * specific notifications.
      *
      * @param id The unique identifier of the opened notification.
+     * @param trackerId The unique interaction identifier of the opened notification.
      */
-    public suspend fun logNotificationOpen(id: String) {
+    public suspend fun logNotificationOpen(id: String, trackerId: String?) {
         logInternalEvent(
             event = EVENT_NOTIFICATION_OPEN,
-            data = null,
             notificationId = id,
+            data = mapOf("trackerId" to trackerId),
         )
     }
 
@@ -109,10 +110,11 @@ public class ActitoEventsComponent internal constructor() {
      * specific notifications.
      *
      * @param id The unique identifier of the opened notification.
+     * @param trackerId The unique interaction identifier of the opened notification.
      * @param callback The callback invoked upon completion of the logging operation.
      */
-    public fun logNotificationOpen(id: String, callback: ActitoCallback<Unit>): Unit =
-        toCallbackFunction(::logNotificationOpen)(id, callback::onSuccess, callback::onFailure)
+    public fun logNotificationOpen(id: String, trackerId: String?, callback: ActitoCallback<Unit>): Unit =
+        toCallbackFunction(::logNotificationOpen)(id, trackerId, callback::onSuccess, callback::onFailure)
 
     /**
      * Logs in Actito a custom event in the application.

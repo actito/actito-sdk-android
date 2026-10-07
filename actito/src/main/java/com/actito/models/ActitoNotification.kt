@@ -21,6 +21,7 @@ import java.util.Date
  * and additional data may need to be fetched.
  *
  * @property id Unique identifier of the notification.
+ * @property trackerId Unique interaction identifier of the notification.
  * @property partial Indicates whether this notification is partial. When `true`,
  * the notification does not contain the full payload.
  * @property type Type of the notification. This value is defined by Actito and
@@ -39,6 +40,7 @@ import java.util.Date
 @JsonClass(generateAdapter = true)
 public data class ActitoNotification(
     val id: String,
+    val trackerId: String?,
     val partial: Boolean = false,
     val type: String,
     val time: Date,
