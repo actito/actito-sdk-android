@@ -49,7 +49,7 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
     ) {
         actitoCoroutineScope.launch {
             // Log the notification open event.
-            Actito.events().logNotificationOpen(notification.id)
+            Actito.events().logNotificationOpen(notification.id, notification.trackerId)
 
             @Suppress("NAME_SHADOWING")
             val notification = try {

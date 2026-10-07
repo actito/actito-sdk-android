@@ -16,6 +16,7 @@ internal data class ActitoNotificationRemoteMessage(
     // Notification properties
     val id: String,
     val notificationId: String,
+    val trackerId: String?,
     val notificationType: String,
     val notificationChannel: String?,
     val notificationGroup: String?,
@@ -49,6 +50,7 @@ internal data class ActitoNotificationRemoteMessage(
     internal fun toNotification(): ActitoNotification {
         return ActitoNotification(
             id = notificationId,
+            trackerId = trackerId,
             partial = true,
             type = notificationType,
             time = Date(sentTime),
@@ -67,6 +69,7 @@ internal data class ActitoNotificationRemoteMessage(
             val ignoreKeys = listOf(
                 "id",
                 "notification_id",
+                "tracker_id",
                 "notification_type",
                 "notification_channel",
                 "notification_group",
@@ -95,6 +98,7 @@ internal data class ActitoNotificationRemoteMessage(
                 // Notification properties
                 id = requireNotNull(message.data["id"]),
                 notificationId = requireNotNull(message.data["notification_id"]),
+                trackerId = message.data["tracker_id"],
                 notificationType = message.data["notification_type"] ?: "re.notifica.notification.Alert",
                 notificationChannel = message.data["notification_channel"],
                 notificationGroup = message.data["notification_group"],
