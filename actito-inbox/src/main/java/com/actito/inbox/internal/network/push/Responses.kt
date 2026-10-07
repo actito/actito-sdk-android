@@ -18,6 +18,7 @@ internal data class InboxResponse(
     data class InboxItem(
         @param:Json(name = "_id") val id: String,
         @param:Json(name = "notification") val notificationId: String,
+        val trackerId: String?,
         val type: String,
         val time: Date,
         val title: String?,

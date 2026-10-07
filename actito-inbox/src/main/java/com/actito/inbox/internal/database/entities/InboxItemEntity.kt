@@ -48,6 +48,7 @@ internal data class InboxItemEntity(
                 notificationId = item.notificationId,
                 notification = ActitoNotification(
                     partial = true,
+                    trackerId = item.trackerId,
                     id = item.notificationId,
                     type = item.type,
                     time = item.time,
