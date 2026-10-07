@@ -113,7 +113,7 @@ public object ActitoUserInbox {
     public suspend fun markAsRead(item: ActitoUserInboxItem): Unit = withContext(Dispatchers.IO) {
         checkPrerequisites()
 
-        Actito.events().logNotificationOpen(item.notification.id)
+        Actito.events().logNotificationOpen(item.notification.id, item.notification.trackerId)
 
         Actito.cancelNotification(item.notification.id)
     }

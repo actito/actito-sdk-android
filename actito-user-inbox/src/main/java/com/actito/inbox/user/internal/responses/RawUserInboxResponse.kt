@@ -17,6 +17,7 @@ internal data class RawUserInboxResponse(
     @JsonClass(generateAdapter = true)
     internal data class RawUserInboxItem(
         val _id: String,
+        val trackerId: String?,
         val notification: String,
         val type: String,
         val time: Date,
@@ -35,6 +36,7 @@ internal data class RawUserInboxResponse(
                 notification = ActitoNotification(
                     partial = true,
                     id = notification,
+                    trackerId = trackerId,
                     type = type,
                     time = time,
                     title = title,
