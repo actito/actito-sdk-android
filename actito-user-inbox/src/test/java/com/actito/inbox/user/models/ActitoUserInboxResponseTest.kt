@@ -21,6 +21,7 @@ public class ActitoUserInboxResponseTest {
                     id = "testId",
                     notification = ActitoNotification(
                         id = "testId",
+                        trackerId = "testTrackerId",
                         type = "testType",
                         time = Date(),
                         title = "testTitle",

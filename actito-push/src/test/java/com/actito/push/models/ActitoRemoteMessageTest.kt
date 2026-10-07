@@ -143,6 +143,7 @@ public class ActitoRemoteMessageTest {
     public fun testRemoteMessageToNotification() {
         val expectedNotification = ActitoNotification(
             id = "testNotificationId",
+            trackerId = "testTrackerId",
             partial = true,
             type = "testNotificationType",
             time = Date(1),
@@ -163,6 +164,7 @@ public class ActitoRemoteMessageTest {
         val notification = ActitoNotificationRemoteMessage(
             id = "testId",
             notificationId = "testNotificationId",
+            trackerId = "testTrackerId",
             notificationType = "testNotificationType",
             notificationChannel = "testNotificationChannel",
             notificationGroup = "testNotificationGroup",
@@ -195,6 +197,7 @@ public class ActitoRemoteMessageTest {
     public fun testRemoteMessageWithNullPropsToNotification() {
         val expectedNotification = ActitoNotification(
             id = "testNotificationId",
+            trackerId = null,
             partial = true,
             type = "testNotificationType",
             time = Date(1),
@@ -210,6 +213,7 @@ public class ActitoRemoteMessageTest {
         val notification = ActitoNotificationRemoteMessage(
             id = "testId",
             notificationId = "testNotificationId",
+            trackerId = null,
             notificationType = "testNotificationType",
             notificationChannel = null,
             notificationGroup = null,

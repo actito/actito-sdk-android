@@ -17,6 +17,7 @@ public class ActitoInboxItemTest {
             id = "testId",
             notification = ActitoNotification(
                 id = "testId",
+                trackerId = "testTrackerId",
                 type = ActitoNotification.TYPE_NONE,
                 time = Date(),
                 title = "testTitle",
@@ -39,6 +40,7 @@ public class ActitoInboxItemTest {
             id = "testId",
             notification = ActitoNotification(
                 id = "testId",
+                trackerId = null,
                 type = ActitoNotification.TYPE_NONE,
                 time = Date(),
                 title = "testTitle",
