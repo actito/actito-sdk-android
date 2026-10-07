@@ -14,6 +14,7 @@ import org.json.JSONObject
  * the application. Messages may include text, images, and actions for user interaction.
  *
  * @property id Unique identifier of the in-app message.
+ * @property trackerId Unique interaction identifier of the in-app message.
  * @property name Human-readable name of the message.
  * @property type Type of the message.
  * @property context List of contexts where the message should be displayed.
@@ -29,6 +30,7 @@ import org.json.JSONObject
 @JsonClass(generateAdapter = true)
 public data class ActitoInAppMessage(
     val id: String,
+    val trackerId: String?,
     val name: String,
     val type: String,
     val context: List<String>,
