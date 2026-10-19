@@ -1,11 +1,14 @@
 package com.actito.push.models
 
 import android.net.Uri
+import android.os.Bundle
 import com.actito.models.ActitoNotification
 import com.actito.push.internal.firebase.messages.ActitoNotificationRemoteMessage
 import com.actito.push.internal.firebase.messages.ActitoUnknownRemoteMessage
 import com.google.firebase.messaging.RemoteMessage
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -237,5 +240,49 @@ public class ActitoRemoteMessageTest {
         ).toNotification()
 
         assertEquals(expectedNotification, notification)
+    }
+
+    @Test
+    public fun testRemoteMessageCreation() {
+        val payload = mapOf(
+            "id" to "message-id",
+            "notification_id" to "notification-id",
+            "tracker_id" to "tracker-id",
+            "notification_type" to "re.notifica.notification.URL",
+            "alert" to "Hello world",
+            "alert_title" to "Title",
+            "alert_subtitle" to "Subtitle",
+            "notify" to "1",
+            "custom_key" to "custom-value",
+            "x-internal" to "ignored",
+        )
+
+        val bundle = Bundle().apply {
+            payload.forEach { (key, value) -> putString(key, value) }
+            putLong("google.sent_time", 1_700_000_000_000L)
+        }
+
+        val remoteMessage = ActitoNotificationRemoteMessage.create(RemoteMessage(bundle))
+        val notification = remoteMessage.toNotification()
+
+        assertEquals("message-id", remoteMessage.id)
+        assertEquals("notification-id", remoteMessage.notificationId)
+        assertEquals("re.notifica.notification.URL", remoteMessage.notificationType)
+        assertEquals("Hello world", remoteMessage.alert)
+        assertEquals("Title", remoteMessage.alertTitle)
+        assertEquals("Subtitle", remoteMessage.alertSubtitle)
+        assertEquals(1_700_000_000_000L, remoteMessage.sentTime)
+        assertTrue(remoteMessage.notify)
+
+        assertEquals("tracker-id", remoteMessage.trackerId)
+        assertEquals("tracker-id", notification.trackerId)
+
+        assertFalse(remoteMessage.extra.containsKey("tracker_id"))
+        assertFalse(notification.extra.containsKey("tracker_id"))
+
+        assertEquals(mapOf("custom_key" to "custom-value"), remoteMessage.extra)
+        assertEquals(mapOf("custom_key" to "custom-value"), notification.extra)
+
+        assertTrue(notification.partial)
     }
 }
