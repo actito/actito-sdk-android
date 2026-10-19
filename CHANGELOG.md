@@ -3,6 +3,7 @@
 ## Upcoming release
 
 - Add `trackerId` prop to `ActitoNotification` and `ActitoInAppMessage`
+- Fix uncaught exception from notification open event during quick action reply
 
 ## 5.3.0
 
