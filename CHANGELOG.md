@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Upcoming release
+
+- Fix uncaught exception from notification open event during quick action reply
+
 ## 5.3.0
 
 - Add string resources support for beacons foreground service notification title and text
