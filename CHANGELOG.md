@@ -3,6 +3,7 @@
 ## Upcoming release
 
 - Fix uncaught exception from notification open event during quick action reply
+- Fix launch flow by ensuring the post launch flow runs independently
 
 ## 5.3.0
 
