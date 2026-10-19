@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Upcoming release
+
+- Add `trackerId` prop to `ActitoNotification` and `ActitoInAppMessage`
+
 ## 5.3.0
 
 - Add string resources support for beacons foreground service notification title and text
