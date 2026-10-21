@@ -40,7 +40,7 @@ import java.util.Date
 @JsonClass(generateAdapter = true)
 public data class ActitoNotification(
     val id: String,
-    val trackerId: String?,
+    val trackerId: String? = null,
     val partial: Boolean = false,
     val type: String,
     val time: Date,

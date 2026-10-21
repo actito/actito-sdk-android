@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 @Suppress("unused")
 public suspend fun ActitoEventsComponent.logNotificationReceived(
     id: String,
-    trackerId: String?,
+    trackerId: String? = null,
 ): Unit = withContext(Dispatchers.IO) {
     logInternalEvent(
         event = "re.notifica.event.notification.Receive",
@@ -20,7 +20,7 @@ public suspend fun ActitoEventsComponent.logNotificationReceived(
 
 public fun ActitoEventsComponent.logNotificationReceived(
     id: String,
-    trackerId: String?,
+    trackerId: String? = null,
     callback: ActitoCallback<Unit>,
 ): Unit =
     toCallbackFunction(::logNotificationReceived)(id, trackerId, callback::onSuccess, callback::onFailure)
@@ -28,7 +28,7 @@ public fun ActitoEventsComponent.logNotificationReceived(
 @Suppress("unused")
 public suspend fun ActitoEventsComponent.logNotificationInfluenced(
     id: String,
-    trackerId: String?,
+    trackerId: String? = null,
 ): Unit = withContext(Dispatchers.IO) {
     logInternalEvent(
         event = "re.notifica.event.notification.Influenced",
@@ -39,7 +39,7 @@ public suspend fun ActitoEventsComponent.logNotificationInfluenced(
 
 public fun ActitoEventsComponent.logNotificationInfluenced(
     id: String,
-    trackerId: String?,
+    trackerId: String? = null,
     callback: ActitoCallback<Unit>,
 ): Unit =
     toCallbackFunction(::logNotificationInfluenced)(id, trackerId, callback::onSuccess, callback::onFailure)

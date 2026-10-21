@@ -30,7 +30,7 @@ import org.json.JSONObject
 @JsonClass(generateAdapter = true)
 public data class ActitoInAppMessage(
     val id: String,
-    val trackerId: String?,
+    val trackerId: String? = null,
     val name: String,
     val type: String,
     val context: List<String>,

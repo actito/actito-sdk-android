@@ -95,7 +95,7 @@ public class ActitoEventsComponent internal constructor() {
      * @param id The unique identifier of the opened notification.
      * @param trackerId The unique interaction identifier of the opened notification.
      */
-    public suspend fun logNotificationOpen(id: String, trackerId: String?) {
+    public suspend fun logNotificationOpen(id: String, trackerId: String? = null) {
         logInternalEvent(
             event = EVENT_NOTIFICATION_OPEN,
             notificationId = id,
@@ -113,7 +113,7 @@ public class ActitoEventsComponent internal constructor() {
      * @param trackerId The unique interaction identifier of the opened notification.
      * @param callback The callback invoked upon completion of the logging operation.
      */
-    public fun logNotificationOpen(id: String, trackerId: String?, callback: ActitoCallback<Unit>): Unit =
+    public fun logNotificationOpen(id: String, trackerId: String? = null, callback: ActitoCallback<Unit>): Unit =
         toCallbackFunction(::logNotificationOpen)(id, trackerId, callback::onSuccess, callback::onFailure)
 
     /**
