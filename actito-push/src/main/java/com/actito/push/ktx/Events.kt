@@ -18,10 +18,11 @@ public suspend fun ActitoEventsComponent.logNotificationReceived(
     )
 }
 
+@JvmOverloads
 public fun ActitoEventsComponent.logNotificationReceived(
     id: String,
-    trackerId: String? = null,
     callback: ActitoCallback<Unit>,
+    trackerId: String? = null,
 ): Unit =
     toCallbackFunction(::logNotificationReceived)(id, trackerId, callback::onSuccess, callback::onFailure)
 
@@ -37,10 +38,11 @@ public suspend fun ActitoEventsComponent.logNotificationInfluenced(
     )
 }
 
+@JvmOverloads
 public fun ActitoEventsComponent.logNotificationInfluenced(
     id: String,
-    trackerId: String? = null,
     callback: ActitoCallback<Unit>,
+    trackerId: String? = null,
 ): Unit =
     toCallbackFunction(::logNotificationInfluenced)(id, trackerId, callback::onSuccess, callback::onFailure)
 

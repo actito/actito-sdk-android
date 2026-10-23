@@ -113,7 +113,8 @@ public class ActitoEventsComponent internal constructor() {
      * @param trackerId The unique interaction identifier of the opened notification.
      * @param callback The callback invoked upon completion of the logging operation.
      */
-    public fun logNotificationOpen(id: String, trackerId: String? = null, callback: ActitoCallback<Unit>): Unit =
+    @JvmOverloads
+    public fun logNotificationOpen(id: String, callback: ActitoCallback<Unit>, trackerId: String? = null): Unit =
         toCallbackFunction(::logNotificationOpen)(id, trackerId, callback::onSuccess, callback::onFailure)
 
     /**
