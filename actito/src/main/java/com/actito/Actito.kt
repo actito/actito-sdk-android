@@ -31,6 +31,7 @@ import com.actito.internal.storage.preferences.ActitoSharedPreferences
 import com.actito.models.ActitoApplication
 import com.actito.models.ActitoDynamicLink
 import com.actito.models.ActitoNotification
+import com.actito.utilities.coroutines.actitoCoroutineScope
 import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.utilities.threading.onMainThread
 import com.android.installreferrer.api.InstallReferrerClient
@@ -389,7 +390,7 @@ public object Actito {
             throw e
         }
 
-        launch {
+        actitoCoroutineScope.launch {
             try {
                 device().postLaunch()
             } catch (e: Exception) {
