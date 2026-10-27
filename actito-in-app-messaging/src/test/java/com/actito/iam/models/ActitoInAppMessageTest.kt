@@ -13,6 +13,7 @@ public class ActitoInAppMessageTest {
     public fun testActitoInAppMessageSerialization() {
         val inAppMessage = ActitoInAppMessage(
             id = "testId",
+            trackerId = "testTrackerId",
             name = "testName",
             type = ActitoInAppMessage.TYPE_BANNER,
             context = listOf("testContext"),
@@ -42,6 +43,7 @@ public class ActitoInAppMessageTest {
     public fun testActitoInAppMessageSerializationWithNullProps() {
         val inAppMessage = ActitoInAppMessage(
             id = "testId",
+            trackerId = null,
             name = "testName",
             type = ActitoInAppMessage.TYPE_BANNER,
             context = listOf("testContext"),

@@ -13,6 +13,7 @@ internal data class InAppMessageResponse(
     @JsonClass(generateAdapter = true)
     data class Message(
         val _id: String,
+        val trackerId: String?,
         val name: String,
         val type: String,
         val context: List<String> = listOf(),
@@ -36,6 +37,7 @@ internal data class InAppMessageResponse(
         fun toModel(): ActitoInAppMessage =
             ActitoInAppMessage(
                 id = _id,
+                trackerId = trackerId,
                 name = name,
                 type = type,
                 context = context,

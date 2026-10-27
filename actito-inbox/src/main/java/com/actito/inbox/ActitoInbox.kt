@@ -209,7 +209,7 @@ public object ActitoInbox {
         checkPrerequisites()
 
         // Send an event to mark the notification as read in the remote inbox.
-        Actito.events().logNotificationOpen(item.notification.id)
+        Actito.events().logNotificationOpen(item.notification.id, item.notification.trackerId)
 
         // Mark the item as read in the local inbox.
         val entity = cachedEntities.find { it.id == item.id }

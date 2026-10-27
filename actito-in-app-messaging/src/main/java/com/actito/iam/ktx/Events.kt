@@ -12,6 +12,7 @@ internal suspend fun ActitoEventsComponent.logInAppMessageViewed(
         event = "re.notifica.event.inappmessage.View",
         data = mapOf(
             "message" to message.id,
+            "trackerId" to message.trackerId,
         ),
     )
 }
@@ -24,6 +25,7 @@ internal suspend fun ActitoEventsComponent.logInAppMessageActionClicked(
         event = "re.notifica.event.inappmessage.Action",
         data = mapOf(
             "message" to message.id,
+            "trackerId" to message.trackerId,
             "action" to action.rawValue,
         ),
     )
