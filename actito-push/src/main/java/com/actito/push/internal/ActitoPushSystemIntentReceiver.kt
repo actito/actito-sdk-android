@@ -50,7 +50,7 @@ internal class ActitoPushSystemIntentReceiver : BroadcastReceiver() {
         actitoCoroutineScope.launch {
             // Log the notification open event.
             try {
-                Actito.events().logNotificationOpen(notification.id)
+                Actito.events().logNotificationOpen(notification.id, notification.trackerId)
             } catch (e: Exception) {
                 logger.error("Failed to log the notification open.", e)
                 return@launch

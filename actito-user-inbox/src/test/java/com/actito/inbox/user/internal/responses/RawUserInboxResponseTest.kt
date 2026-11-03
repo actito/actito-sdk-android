@@ -18,6 +18,7 @@ public class RawUserInboxResponseTest {
             id = "testId",
             notification = ActitoNotification(
                 id = "testNotification",
+                trackerId = "testTrackerId",
                 partial = true,
                 type = ActitoNotification.TYPE_NONE,
                 time = Date(1),
@@ -39,6 +40,7 @@ public class RawUserInboxResponseTest {
 
         val item = RawUserInboxResponse.RawUserInboxItem(
             _id = "testId",
+            trackerId = "testTrackerId",
             notification = "testNotification",
             type = ActitoNotification.TYPE_NONE,
             time = Date(1),
@@ -63,6 +65,7 @@ public class RawUserInboxResponseTest {
             id = "testId",
             notification = ActitoNotification(
                 id = "testNotification",
+                trackerId = null,
                 partial = true,
                 type = ActitoNotification.TYPE_NONE,
                 time = Date(1),
@@ -79,6 +82,7 @@ public class RawUserInboxResponseTest {
 
         val item = RawUserInboxResponse.RawUserInboxItem(
             _id = "testId",
+            trackerId = null,
             notification = "testNotification",
             type = ActitoNotification.TYPE_NONE,
             time = Date(1),

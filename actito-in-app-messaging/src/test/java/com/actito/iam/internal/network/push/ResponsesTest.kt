@@ -14,6 +14,7 @@ public class ResponsesTest {
     public fun testMessageToModel() {
         val expectedMessage = ActitoInAppMessage(
             id = "testId",
+            trackerId = "testTrackerId",
             name = "testName",
             type = ActitoInAppMessage.TYPE_BANNER,
             context = listOf("testContext"),
@@ -36,6 +37,7 @@ public class ResponsesTest {
 
         val message = InAppMessageResponse.Message(
             _id = "testId",
+            trackerId = "testTrackerId",
             name = "testName",
             type = ActitoInAppMessage.TYPE_BANNER,
             context = listOf("testContext"),
@@ -63,6 +65,7 @@ public class ResponsesTest {
     public fun testMessageToModelWithNullProps() {
         val expectedMessage = ActitoInAppMessage(
             id = "testId",
+            trackerId = null,
             name = "testName",
             type = ActitoInAppMessage.TYPE_BANNER,
             context = listOf("testContext"),
@@ -77,6 +80,7 @@ public class ResponsesTest {
 
         val message = InAppMessageResponse.Message(
             _id = "testId",
+            trackerId = null,
             name = "testName",
             type = ActitoInAppMessage.TYPE_BANNER,
             context = listOf("testContext"),

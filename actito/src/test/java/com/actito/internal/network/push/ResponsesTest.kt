@@ -117,6 +117,7 @@ public class ResponsesTest {
     public fun testNotificationToModel() {
         val expectedNotification = ActitoNotification(
             id = "testId",
+            trackerId = "testTrackerId",
             partial = true,
             type = TYPE_NONE,
             time = Date(1),
@@ -127,6 +128,7 @@ public class ResponsesTest {
 
         val notification = NotificationResponse.Notification(
             id = "testId",
+            trackerId = "testTrackerId",
             partial = true,
             type = TYPE_NONE,
             time = Date(1),

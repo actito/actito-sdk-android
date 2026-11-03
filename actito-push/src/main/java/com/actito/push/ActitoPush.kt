@@ -598,14 +598,14 @@ public object ActitoPush {
 
             // Log the notification open event.
             try {
-                Actito.events().logNotificationOpen(notification.id)
+                Actito.events().logNotificationOpen(notification.id, notification.trackerId)
             } catch (e: Exception) {
                 logger.error("Failed to log the notification open.", e)
                 return@launch
             }
 
             try {
-                Actito.events().logNotificationInfluenced(notification.id)
+                Actito.events().logNotificationInfluenced(notification.id, notification.trackerId)
             } catch (e: Exception) {
                 logger.error("Failed to log the notification influenced open.", e)
                 return@launch
@@ -707,7 +707,7 @@ public object ActitoPush {
     private fun handleNotificationRemoteMessage(message: ActitoNotificationRemoteMessage) {
         actitoCoroutineScope.launch {
             try {
-                Actito.events().logNotificationReceived(message.notificationId)
+                Actito.events().logNotificationReceived(message.notificationId, message.trackerId)
 
                 val notification = try {
                     Actito.fetchNotification(message.id)

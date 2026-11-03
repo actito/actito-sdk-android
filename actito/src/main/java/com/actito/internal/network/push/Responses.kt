@@ -96,6 +96,7 @@ public data class NotificationResponse(
     @JsonClass(generateAdapter = true)
     public data class Notification(
         @param:Json(name = "_id") val id: String,
+        val trackerId: String?,
         val partial: Boolean = false,
         val type: String,
         val time: Date,
@@ -137,6 +138,7 @@ public data class NotificationResponse(
         public fun toModel(): ActitoNotification =
             ActitoNotification(
                 id,
+                trackerId,
                 partial,
                 type,
                 time,

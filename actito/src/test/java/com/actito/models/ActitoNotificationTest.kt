@@ -14,6 +14,7 @@ public class ActitoNotificationTest {
     public fun testActitoNotificationSerialization() {
         val notification = ActitoNotification(
             id = "testId",
+            trackerId = "testTrackerId",
             partial = true,
             type = ActitoNotification.TYPE_ALERT,
             time = Date(),
@@ -59,6 +60,7 @@ public class ActitoNotificationTest {
     public fun testActitoNotificationSerializationWithNullProps() {
         val notification = ActitoNotification(
             id = "testId",
+            trackerId = null,
             partial = true,
             type = ActitoNotification.TYPE_ALERT,
             time = Date(),
