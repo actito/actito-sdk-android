@@ -18,6 +18,7 @@ import com.actito.sample.ui.components.SampleRowNavigation
 fun OtherFeaturesCard(
     onNavigateToAssets: () -> Unit,
     onNavigateToEvents: () -> Unit,
+    onNavigateToQualifio: () -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -47,6 +48,14 @@ fun OtherFeaturesCard(
             icon = painterResource(R.drawable.ic_baseline_event_24),
             text = stringResource(R.string.events_title),
             onNavigate = onNavigateToEvents,
+        )
+
+        SampleHorizontalDivider()
+
+        SampleRowNavigation(
+            icon = painterResource(R.drawable.ic_baseline_emoji_events_24),
+            text = stringResource(R.string.qualifio_title),
+            onNavigate = onNavigateToQualifio,
         )
     }
 }
