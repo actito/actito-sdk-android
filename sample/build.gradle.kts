@@ -145,5 +145,6 @@ dependencies {
     implementation(apps.androidx.carApp)
 
     // Qualifio
-    // implementation(apps.qualifio)
+    implementation(apps.qualifio)
+    implementation(apps.qualifio.compose)
 }
