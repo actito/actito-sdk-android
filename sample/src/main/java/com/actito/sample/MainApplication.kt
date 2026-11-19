@@ -13,6 +13,7 @@ import com.actito.push.ActitoLockScreenNotificationCustomizer
 import com.actito.push.ktx.push
 import com.actito.sample.core.SampleNotifier
 import com.actito.sample.live_activity.LiveActivityController
+import com.actito.sample.qualifio.QualifioSecureToken
 import com.qualifio.Qualifio
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -56,8 +57,7 @@ class MainApplication :
         Actito.addListener(this)
 
         Qualifio.setSecureTokenProvider { campaign ->
-            Timber.i("Providing a sample Qualifio secure token for campaign '$campaign'.")
-            "actito-sample-secure-token"
+            QualifioSecureToken.generate(campaign)
         }
 
         applicationScope.launch {

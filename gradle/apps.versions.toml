@@ -1,4 +1,5 @@
 [versions]
+auth0-jwt = "4.5.0"
 actito-services = "1.0.0"
 activityCompose = "1.12.2"
 androidx-carApp = "1.7.0"
@@ -33,6 +34,7 @@ qualifio = "1.0.0-beta.1"
 qualifio-services = "1.0.0"
 
 [libraries]
+auth0-jwt = { module = "com.auth0:java-jwt", version.ref = "auth0-jwt" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-carApp = { module = "androidx.car.app:app", version.ref = "androidx-carApp" }
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appCompat" }

@@ -70,3 +70,13 @@ dependencyResolutionManagement {
 3. Make sure the `qualifio` version in `gradle/apps.versions.toml` matches `maven-artifactVersion` in `qualifio-sdk-android/gradle/libs.versions.toml`.
 
 Never commit `settings.gradle.kts` with `mavenLocal()`, or a `qualifio` version that isn't released.
+
+#### Secure token
+
+The sample app signs a Qualifio secure token that prefills the campaign form with sample data. To enable it, add the campaign's signing secret to `local.properties`:
+
+```
+secure.token.secret=
+```
+
+Without a secret, campaigns load without a token.
