@@ -21,6 +21,7 @@ import com.actito.sample.ui.home.location.LocationCard
 import com.actito.sample.ui.home.notifications.NotificationsCard
 import com.actito.sample.ui.home.others.OtherFeaturesCard
 
+@Suppress("LongParameterList")
 @Composable
 fun HomeScreen(
     snackbarHostState: SnackbarHostState,
@@ -33,6 +34,7 @@ fun HomeScreen(
     onNavigateToBeacons: () -> Unit,
     onNavigateToAssets: () -> Unit,
     onNavigateToEvents: () -> Unit,
+    onNavigateToQualifio: () -> Unit,
     viewModel: HomeViewModel = viewModel(),
 ) {
     val isReady by viewModel.isReady.collectAsState()
@@ -71,6 +73,7 @@ fun HomeScreen(
                 OtherFeaturesCard(
                     onNavigateToAssets = onNavigateToAssets,
                     onNavigateToEvents = onNavigateToEvents,
+                    onNavigateToQualifio = onNavigateToQualifio,
                 )
             }
         }

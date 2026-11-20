@@ -1,3 +1,4 @@
+import groovy.json.StringEscapeUtils
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
@@ -25,6 +26,12 @@ android {
 
         properties.getProperty("sample.userId")?.let { resValue("string", "sample_user_id", it) }
         properties.getProperty("sample.userName")?.let { resValue("string", "sample_user_name", it) }
+
+        buildConfigField(
+            "String",
+            "SECURE_TOKEN_SECRET",
+            "\"${StringEscapeUtils.escapeJava(properties.getProperty("secure.token.secret", ""))}\"",
+        )
     }
 
     signingConfigs {
@@ -145,5 +152,7 @@ dependencies {
     implementation(apps.androidx.carApp)
 
     // Qualifio
-    // implementation(apps.qualifio)
+    implementation(apps.qualifio)
+    implementation(apps.qualifio.compose)
+    implementation(apps.auth0.jwt)
 }
