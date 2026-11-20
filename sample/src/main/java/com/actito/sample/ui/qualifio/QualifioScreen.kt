@@ -2,12 +2,14 @@ package com.actito.sample.ui.qualifio
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -29,10 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.actito.sample.R
 import com.actito.sample.ui.components.SampleRowHeader
 import com.actito.sample.ui.components.SampleScaffold
-import com.qualifio.Qualifio
 import com.qualifio.compose.QualifioInlineCampaign
-
-private val INLINE_CAMPAIGNS = listOf(Qualifio.DEFAULT_CAMPAIGN, "sdk-xmas")
 
 @Composable
 fun QualifioScreen(
@@ -64,7 +63,7 @@ fun QualifioScreen(
 private fun CampaignCard(
     onLaunchCampaign: (String) -> Unit,
 ) {
-    var campaign by rememberSaveable { mutableStateOf("") }
+    val campaign = rememberTextFieldState(initialText = SAMPLE_CAMPAIGN)
 
     Card(
         modifier = Modifier
@@ -81,14 +80,13 @@ private fun CampaignCard(
             )
 
             CampaignTextField(
-                value = campaign,
-                onValueChange = { campaign = it },
-                label = stringResource(R.string.qualifio_campaign_input),
+                state = campaign,
+                placeholder = stringResource(R.string.qualifio_campaign_input),
             )
 
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { onLaunchCampaign(campaign.trim()) },
+                onClick = { onLaunchCampaign(resolveCampaign(campaign.text)) },
             ) {
                 Text(stringResource(R.string.qualifio_campaign_button))
             }
@@ -98,7 +96,8 @@ private fun CampaignCard(
 
 @Composable
 private fun InlineCampaignCard() {
-    var campaign by rememberSaveable { mutableStateOf(Qualifio.DEFAULT_CAMPAIGN) }
+    val campaignInput = rememberTextFieldState(initialText = SAMPLE_CAMPAIGN)
+    var campaign by rememberSaveable { mutableStateOf(SAMPLE_CAMPAIGN) }
     var isCampaignVisible by rememberSaveable { mutableStateOf(true) }
 
     Card(
@@ -114,6 +113,18 @@ private fun InlineCampaignCard() {
                 icon = painterResource(R.drawable.ic_news_24),
                 text = stringResource(R.string.qualifio_inline_campaign_title),
             )
+
+            CampaignTextField(
+                state = campaignInput,
+                placeholder = stringResource(R.string.qualifio_inline_campaign_input),
+            )
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { campaign = resolveCampaign(campaignInput.text) },
+            ) {
+                Text(stringResource(R.string.qualifio_inline_campaign_load))
+            }
 
             if (isCampaignVisible) {
                 QualifioInlineCampaign(
@@ -137,39 +148,27 @@ private fun InlineCampaignCard() {
                     ),
                 )
             }
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                INLINE_CAMPAIGNS.forEach { inlineCampaign ->
-                    Button(
-                        modifier = Modifier.weight(1f),
-                        onClick = { campaign = inlineCampaign },
-                    ) {
-                        Text(stringResource(R.string.qualifio_inline_campaign_load, inlineCampaign))
-                    }
-                }
-            }
         }
     }
 }
 
 @Composable
 private fun CampaignTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
+    state: TextFieldState,
+    placeholder: String,
 ) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(text = label) },
+        state = state,
+        lineLimits = TextFieldLineLimits.SingleLine,
+        placeholder = { Text(placeholder) },
         keyboardOptions = KeyboardOptions(
             capitalization = KeyboardCapitalization.None,
             keyboardType = KeyboardType.Uri,
             autoCorrectEnabled = false,
         ),
-        singleLine = true,
     )
 }
+
+private fun resolveCampaign(text: CharSequence): String =
+    text.trim().toString().ifEmpty { SAMPLE_CAMPAIGN }

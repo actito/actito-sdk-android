@@ -160,7 +160,8 @@
     <string name="qualifio_inline_campaign_title">Inline Campaign</string>
     <string name="qualifio_inline_campaign_add_view">Add View</string>
     <string name="qualifio_inline_campaign_remove_view">Remove View</string>
-    <string name="qualifio_inline_campaign_load">Load %1$s</string>
+    <string name="qualifio_inline_campaign_input">Inline Campaign Path</string>
+    <string name="qualifio_inline_campaign_load">Load Inline Campaign</string>
 
     <string name="tags_device_tags">Device Tags</string>
     <string name="tags_manual_input">Manual Input</string>
