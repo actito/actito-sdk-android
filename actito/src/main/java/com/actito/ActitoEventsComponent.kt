@@ -18,11 +18,11 @@ import com.actito.utilities.content.applicationVersion
 import com.actito.utilities.coroutines.toCallbackFunction
 import com.actito.utilities.device.deviceString
 import com.actito.utilities.device.osVersion
-import com.actito.utilities.networking.isRecoverable
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Types
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 
 public typealias ActitoEventData = Map<String, Any?>
 
@@ -30,6 +30,7 @@ private const val MAX_DATA_SIZE_BYTES = 2 * 1024
 private const val MIN_EVENT_NAME_SIZE_CHAR = 3
 private const val MAX_EVENT_NAME_SIZE_CHAR = 64
 private const val EVENT_NAME_REGEX = "^[a-zA-Z0-9]([a-zA-Z0-9_-]+[a-zA-Z0-9])?$"
+private const val WORKER_UPLOAD_EVENTS_INITIAL_DELAY_SECONDS = 5L
 
 private const val EVENT_APPLICATION_INSTALL = "re.notifica.event.application.Install"
 private const val EVENT_APPLICATION_REGISTRATION = "re.notifica.event.application.Registration"
@@ -263,18 +264,17 @@ public class ActitoEventsComponent internal constructor() {
                 .response()
 
             logger.info("Event '${payload.type}' sent successfully.")
-        } catch (e: Exception) {
+        } catch (e: NetworkException.InaccessibleServiceException) {
             logger.warning("Failed to send the event: ${payload.type}", e)
 
-            if (!discardableEvents.contains(payload.type) && e.isRecoverable) {
-                logger.info("Queuing event to be sent whenever possible.")
+            if (discardableEvents.contains(payload.type)) throw e
 
-                Actito.database.events().insert(payload.toEntity())
-                scheduleUploadWorker()
+            logger.info("Queuing event to be sent whenever possible.")
 
-                return@withContext
-            }
-
+            Actito.database.events().insert(payload.toEntity())
+            scheduleUploadWorker()
+        } catch (e: Exception) {
+            logger.warning("Failed to send the event: ${payload.type}", e)
             throw e
         }
     }
@@ -312,6 +312,8 @@ public class ActitoEventsComponent internal constructor() {
                 TASK_UPLOAD_EVENTS,
                 ExistingWorkPolicy.KEEP,
                 OneTimeWorkRequestBuilder<ProcessEventsWorker>()
+                    // Failed DNS lookups are cached, so starting right after a failed request would fail again
+                    .setInitialDelay(WORKER_UPLOAD_EVENTS_INITIAL_DELAY_SECONDS, TimeUnit.SECONDS)
                     .setConstraints(
                         Constraints.Builder()
                             .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -319,5 +321,13 @@ public class ActitoEventsComponent internal constructor() {
                     )
                     .build(),
             )
+    }
+
+    internal fun cancelUploadWorker() {
+        logger.debug("Cancelling the worker that processes stored events.")
+
+        WorkManager
+            .getInstance(Actito.requireContext())
+            .cancelUniqueWork(TASK_UPLOAD_EVENTS)
     }
 }

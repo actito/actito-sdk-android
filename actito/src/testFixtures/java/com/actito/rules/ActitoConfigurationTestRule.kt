@@ -72,6 +72,7 @@ public class ActitoConfigurationTestRule(
     private fun setupMocks() {
         val events = spyk(ActitoEventsComponent())
         every { events.scheduleUploadWorker() } returns Unit
+        every { events.cancelUploadWorker() } returns Unit
 
         mockkObject(Actito)
         every { Actito.events() } returns events
