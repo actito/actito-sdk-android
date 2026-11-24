@@ -5,6 +5,7 @@
 - Add `trackerId` prop to `ActitoNotification` and `ActitoInAppMessage`
 - Fix uncaught exception from notification open event during quick action reply
 - Fix launch flow by ensuring the post launch flow runs independently
+- Fix events lost when the service can't be reached, including events sent in the background on Android 15+. They are now stored and sent when possible
 
 ## 5.3.0
 

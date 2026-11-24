@@ -453,6 +453,10 @@ public object Actito {
         logger.debug("Removing device.")
         device().delete()
 
+        // Discard the events stored for the removed device.
+        events().cancelUploadWorker()
+        database.events().clear()
+
         logger.info("Un-launched Actito.")
         state = ActitoLaunchState.CONFIGURED
 
