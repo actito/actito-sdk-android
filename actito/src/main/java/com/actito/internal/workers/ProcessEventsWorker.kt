@@ -12,6 +12,7 @@ import com.actito.internal.storage.database.ktx.toPayload
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
+import kotlin.coroutines.cancellation.CancellationException
 
 private const val MAX_RETRIES = 5
 
@@ -59,6 +60,8 @@ internal class ProcessEventsWorker(context: Context, params: WorkerParameters) :
 
             logger.debug("Event processed. Removing from storage...")
             Actito.database.events().delete(entity)
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: NetworkException.InaccessibleServiceException) {
             logger.debug("Failed to process event.")
 
