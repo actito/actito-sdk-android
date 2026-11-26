@@ -5,6 +5,7 @@
 - Add `trackerId` prop to `ActitoNotification` and `ActitoInAppMessage`
 - Fix uncaught exception from notification open event during quick action reply
 - Fix launch flow by ensuring the post launch flow runs independently
+- Fix notification center not being cleared on unlaunch when the inbox module is not used
 
 ## 5.3.0
 
