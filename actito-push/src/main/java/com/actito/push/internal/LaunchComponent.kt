@@ -94,6 +94,8 @@ public class LaunchComponent : ActitoLaunchComponent {
         ActitoPush.transport = null
         ActitoPush.subscription = null
         ActitoPush.allowedUI = false
+
+        ActitoPush.clearNotificationCenter()
     }
 
     override suspend fun executeCommand(command: String, data: Any?) {
