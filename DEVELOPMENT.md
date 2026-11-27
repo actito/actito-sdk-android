@@ -42,3 +42,41 @@ This hook requires the installation of Commitlint. To do so, global installation
 ```shell
 npm install -g --save-dev @commitlint/{cli,config-conventional}
 ```
+
+### Qualifio SDK
+
+The sample apps depend on the Qualifio SDK released on Maven Central. They also need a `qualifio-services.json` in their module folder, which is ignored by git.
+
+To test unreleased changes in the Qualifio SDK, publish a local build and let Gradle resolve it from Maven Local:
+
+1. Publish the SDK from your `qualifio-sdk-android` checkout. Run it again after each change.
+
+```shell
+./gradlew publishToMavenLocal
+```
+
+2. Add `mavenLocal()` as the first repository in `settings.gradle.kts`, so the local build takes precedence over the released one.
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+    }
+}
+```
+
+3. Make sure the `qualifio` version in `gradle/apps.versions.toml` matches `maven-artifactVersion` in `qualifio-sdk-android/gradle/libs.versions.toml`.
+
+Never commit `settings.gradle.kts` with `mavenLocal()`, or a `qualifio` version that isn't released.
+
+#### Secure token
+
+The sample app signs a Qualifio secure token that prefills the campaign form with sample data. To enable it, add the campaign's signing secret to `local.properties`:
+
+```
+secure.token.secret=
+```
+
+Without a secret, campaigns load without a token.

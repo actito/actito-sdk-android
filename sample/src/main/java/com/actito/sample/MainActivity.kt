@@ -43,6 +43,7 @@ import com.actito.sample.ui.events.EventsScreen
 import com.actito.sample.ui.home.HomeScreen
 import com.actito.sample.ui.inbox.InboxScreen
 import com.actito.sample.ui.live_activity.LiveActivityScreen
+import com.actito.sample.ui.qualifio.QualifioScreen
 import com.actito.sample.ui.regions.RegionsScreen
 import com.actito.sample.ui.tags.TagsScreen
 import com.actito.sample.ui.theme.ActitoSampleTheme
@@ -80,6 +81,9 @@ private data object RouteEvents : NavKey
 
 @Serializable
 private data object RouteAssets : NavKey
+
+@Serializable
+private data object RouteQualifio : NavKey
 
 @Serializable
 private data class RouteAssetDetails(val asset: @Contextual ActitoAsset) : NavKey
@@ -147,6 +151,9 @@ class MainActivity : ComponentActivity() {
                                 onNavigateToEvents = {
                                     backStack.add(RouteEvents)
                                 },
+                                onNavigateToQualifio = {
+                                    backStack.add(RouteQualifio)
+                                },
                             )
                         }
 
@@ -209,6 +216,13 @@ class MainActivity : ComponentActivity() {
 
                         entry<RouteEvents> {
                             EventsScreen(
+                                snackbarHostState = snackbarHostState,
+                                onNavigateBack = { backStack.removeLastOrNull() },
+                            )
+                        }
+
+                        entry<RouteQualifio> {
+                            QualifioScreen(
                                 snackbarHostState = snackbarHostState,
                                 onNavigateBack = { backStack.removeLastOrNull() },
                             )
