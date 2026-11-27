@@ -17,6 +17,7 @@ import com.actito.ActitoNotReadyException
 import com.actito.ActitoServiceUnavailableException
 import com.actito.inbox.internal.database.InboxDatabase
 import com.actito.inbox.internal.database.entities.InboxItemEntity
+import com.actito.inbox.internal.ktx.hasInboxServiceEnabled
 import com.actito.inbox.internal.logger
 import com.actito.inbox.internal.network.push.InboxResponse
 import com.actito.inbox.internal.workers.ExpireItemWorker
@@ -321,12 +322,7 @@ public object ActitoInbox {
             throw ActitoApplicationUnavailableException()
         }
 
-        if (application.services[ActitoApplication.ServiceKeys.INBOX] != true) {
-            logger.warning("Actito inbox functionality is not enabled.")
-            throw ActitoServiceUnavailableException(service = ActitoApplication.ServiceKeys.INBOX)
-        }
-
-        if (application.inboxConfig?.useInbox != true) {
+        if (!application.hasInboxServiceEnabled) {
             logger.warning("Actito inbox functionality is not enabled.")
             throw ActitoServiceUnavailableException(service = ActitoApplication.ServiceKeys.INBOX)
         }
