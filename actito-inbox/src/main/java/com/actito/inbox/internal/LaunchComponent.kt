@@ -35,7 +35,6 @@ public class LaunchComponent : ActitoLaunchComponent {
 
     override suspend fun unlaunch() {
         ActitoInbox.clearLocalInbox()
-        ActitoInbox.clearNotificationCenter()
         ActitoInbox.clearRemoteInbox()
     }
 

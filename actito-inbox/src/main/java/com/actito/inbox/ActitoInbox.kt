@@ -465,7 +465,7 @@ public object ActitoInbox {
             .enqueueUniqueWork("com.actito.task.inbox.Expire", ExistingWorkPolicy.REPLACE, task)
     }
 
-    internal fun clearNotificationCenter() {
+    private fun clearNotificationCenter() {
         logger.debug("Removing all messages from the notification center.")
         NotificationManagerCompat.from(Actito.requireContext())
             .cancelAll()

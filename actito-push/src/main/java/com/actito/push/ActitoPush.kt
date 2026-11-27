@@ -702,6 +702,12 @@ public object ActitoPush {
         notificationManager.createNotificationChannel(defaultChannel)
     }
 
+    internal fun clearNotificationCenter() {
+        logger.debug("Removing all messages from the notification center.")
+        NotificationManagerCompat.from(Actito.requireContext())
+            .cancelAll()
+    }
+
     private fun createUniqueNotificationId(): Int = notificationSequence.incrementAndGet()
 
     private fun handleNotificationRemoteMessage(message: ActitoNotificationRemoteMessage) {
