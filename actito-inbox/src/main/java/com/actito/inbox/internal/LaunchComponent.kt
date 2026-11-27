@@ -5,7 +5,7 @@ import androidx.annotation.Keep
 import com.actito.Actito
 import com.actito.inbox.ActitoInbox
 import com.actito.inbox.internal.database.InboxDatabase
-import com.actito.inbox.internal.ktx.isInboxEnabled
+import com.actito.inbox.internal.ktx.hasInboxServiceEnabled
 import com.actito.internal.ActitoLaunchComponent
 
 @Keep
@@ -27,7 +27,7 @@ public class LaunchComponent : ActitoLaunchComponent {
     }
 
     override suspend fun launch() {
-        if (Actito.application?.isInboxEnabled != true) {
+        if (Actito.application?.hasInboxServiceEnabled != true) {
             logger.warning("Actito inbox functionality is not enabled. Skipping the inbox sync.")
             return
         }
